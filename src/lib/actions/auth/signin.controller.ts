@@ -1,0 +1,111 @@
+// Directives
+"use server";
+import "server-only";
+
+// Local imports
+import { AuthFormStatusTypes, type AuthFormStateType, type SigninFormDataType } from "@/lib/types";
+import { AuthMessages } from "./auth.messages";
+import { connectToDB } from "@/lib/configs/mongoose";
+import UserModel from "@/lib/models/User";
+import SigninService from "./signin.service";
+
+export async function signin(
+  state: AuthFormStateType,
+  formData: FormData,
+): Promise<AuthFormStateType> {
+  // 1. Get form fields
+  // @ts-expect-error
+  const data: SigninFormDataType = Object.fromEntries(formData);
+
+  // 2. Form validation
+  if (!data.identifier && !data.password) {
+    return {
+      status: AuthFormStatusTypes.Error,
+      toastNeed: false,
+      redirectNeed: false,
+      properties: {
+        identifier: {
+          errors: [AuthMessages.Error_FieldEmpty],
+        },
+        password: {
+          errors: [AuthMessages.Error_FieldEmpty],
+        },
+      },
+    };
+  }
+  if (!data.identifier) {
+    return {
+      status: AuthFormStatusTypes.Error,
+      toastNeed: false,
+      redirectNeed: false,
+      properties: {
+        identifier: {
+          errors: [AuthMessages.Error_FieldEmpty],
+        },
+      },
+    };
+  }
+  if (!data.password) {
+    return {
+      status: AuthFormStatusTypes.Error,
+      toastNeed: false,
+      redirectNeed: false,
+      properties: {
+        password: {
+          errors: [AuthMessages.Error_FieldEmpty],
+        },
+      },
+    };
+  }
+
+  try {
+    // 3. Get user DB document
+    await connectToDB();
+    await UserModel.model.init();
+
+    const userData = await UserModel.model.findOne(
+      {
+        $or: [{ username: data.identifier }, { phoneNumber: data.identifier }],
+      },
+      "username password phoneNumber isVerified",
+    );
+
+    if (!userData) {
+      return {
+        status: AuthFormStatusTypes.Error,
+        toastNeed: false,
+        redirectNeed: false,
+        properties: {
+          password: {
+            errors: [AuthMessages.Error_SigninIncorrectData],
+          },
+        },
+      };
+    }
+
+    if (!userData?.isVerified) {
+      return {
+        status: AuthFormStatusTypes.Error,
+        redirectNeed: true,
+        redirectPath: `/auth/verify?username=${userData?.username}`,
+        toastNeed: true,
+        toastMessage: AuthMessages.Error_SigninNotVerifiedAccount,
+      };
+    }
+
+    return SigninService.signinUser(
+      userData.username,
+      userData.phoneNumber,
+      data.password,
+      userData.password,
+    );
+  } catch (err) {
+    console.log("Error in signin controller ->", err);
+    return {
+      status: AuthFormStatusTypes.Error,
+      redirectNeed: false,
+      toastNeed: true,
+      toastMessage: AuthMessages.Error_CatchHandler,
+    };
+  }
+}

@@ -10,7 +10,7 @@ import The_404 from "@/components/ui/shared/404/404";
 // Functional component
 export default function NotFound() {
   return (
-    <div className="w-screen h-screen">
+    <div className="h-screen w-full">
       <The_404 />
     </div>
   );
