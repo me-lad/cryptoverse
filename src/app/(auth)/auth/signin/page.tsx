@@ -17,7 +17,11 @@ export default function SigninPage() {
       subtitleText="Sign in to your account throw the bottom form"
     >
       <AuthFormContext formType={AuthFormTypes.Signin} formAction={signin}>
-        <AuthFormUnit submitButtonText="Sign in" formFields={signinFormFields} />
+        <AuthFormUnit
+          submitButtonText="Sign in"
+          formType={AuthFormTypes.Signin}
+          formFields={signinFormFields}
+        />
 
         {/* Signup page link */}
         <p className="mt-4 text-center">

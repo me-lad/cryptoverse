@@ -12,8 +12,6 @@ import { resetPasswordFormFields } from "@/lib/constants";
 import { minutesToMillisecond } from "@/lib/helpers";
 import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 
-// Local types
-
 // Functional component
 export default function AuthResetPasswordFormUnit() {
   const { resetPasswordForm } = use(FormContext);

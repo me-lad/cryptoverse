@@ -55,12 +55,7 @@ export default function AuthPageView({
             </div>
 
             {/* Title */}
-            <h2
-              className={clsx(
-                "mt-8 flex gap-2 text-3xl font-bold text-white",
-                flexCenter,
-              )}
-            >
+            <h2 className={clsx("mt-8 flex gap-2 text-3xl font-bold text-white", flexCenter)}>
               Welcome to
               <Link href={"/"} className="text-primary">
                 CryptoVerse

@@ -9,8 +9,6 @@ import clsx from "clsx";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/shadcn/input-otp";
 import { FormContext } from "./AuthForm.context";
 
-// Local types
-
 // Functional component
 export default function AuthVerifyFormOtpInputUnit() {
   // Layer codes

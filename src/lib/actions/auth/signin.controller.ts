@@ -67,7 +67,7 @@ export async function signin(
       {
         $or: [{ username: data.identifier }, { phoneNumber: data.identifier }],
       },
-      "username password phoneNumber isVerified",
+      "username password phoneNumber isVerified isRestricted",
     );
 
     if (!userData) {
@@ -93,11 +93,21 @@ export async function signin(
       };
     }
 
+    if (userData.isRestricted) {
+      return {
+        status: AuthFormStatusTypes.Error,
+        redirectNeed: false,
+        toastNeed: true,
+        toastMessage: AuthMessages.Error_SigninWithRestrictedAccount,
+      };
+    }
+
     return SigninService.signinUser(
       userData.username,
       userData.phoneNumber,
       data.password,
       userData.password,
+      data?.remember === "on" ? true : undefined,
     );
   } catch (err) {
     console.log("Error in signin controller ->", err);

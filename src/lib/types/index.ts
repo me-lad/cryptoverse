@@ -94,6 +94,7 @@ export type SignupFormDataType = {
 export type SigninFormDataType = {
   identifier: string;
   password: string;
+  remember?: "on";
 };
 
 export type VerifyFormDataType = {

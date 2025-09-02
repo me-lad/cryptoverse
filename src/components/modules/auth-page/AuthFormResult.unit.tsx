@@ -11,8 +11,6 @@ import { AuthFormStatusTypes, AuthFormTypes } from "@/lib/types";
 import { FormContext } from "./AuthForm.context";
 import { toastsCustomID } from "@/lib/configs/react-toastify";
 
-// Local types
-
 // Functional component
 export default function AuthFormResultUnit() {
   const router = useRouter();
@@ -23,7 +21,6 @@ export default function AuthFormResultUnit() {
       toast(state.toastMessage, {
         type: state.status === AuthFormStatusTypes.Error ? "error" : "success",
         autoClose: state.toastMessage.length >= 100 ? 25000 : 10000,
-        toastId: toastsCustomID,
         onClose: () => state.redirectPath.startsWith("/") && router.push(state.redirectPath),
       });
 

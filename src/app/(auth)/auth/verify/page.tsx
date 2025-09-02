@@ -5,11 +5,13 @@ import { redirect } from "next/navigation";
 import { connectToDB } from "@/lib/configs/mongoose";
 import { verify } from "@/lib/actions/auth/verify.controller";
 import { AuthFormTypes } from "@/lib/types";
+import { daysToMinutes, isDatePassedTime } from "@/lib/helpers";
 import AuthFormContext from "@/components/modules/auth-page/AuthForm.context";
 import AuthPageWrapper from "@/components/modules/auth-page/AuthPage.wrapper";
 import AuthVerifyFormFn from "@/components/modules/auth-page/AuthVerifyForm.fn";
-import UserModel from "@/lib/models/User";
 import AuthVerifyFormErrorUnit from "@/components/modules/auth-page/AuthVerifyFormError.unit";
+import RedirectClient from "@/components/modules/global/RedirectClient";
+import UserModel from "@/lib/models/User";
 
 // Local types
 type PropsType = {
@@ -29,12 +31,27 @@ export default async function VerifyPage({ searchParams }: PropsType) {
   await connectToDB();
   const userToVerify = await UserModel.model.findOne(
     { username },
-    "phoneNumber username isVerified isRestricted",
+    "phoneNumber username isVerified isRestricted refreshTokenExpiresAt updatedAt",
   );
   if (!userToVerify) return redirect("/auth/signup");
 
   // 3. Check founded user to be unverified to access verify page
-  if (userToVerify.isVerified) return redirect("/auth/signin");
+  let isClientRedirectNeed = false;
+  if (userToVerify.isVerified) {
+    if (!userToVerify.refreshTokenExpiresAt) return redirect("/auth/signin");
+
+    const isRefreshTokenExpired = isDatePassedTime(
+      userToVerify.refreshTokenExpiresAt,
+      daysToMinutes(14),
+    );
+    if (isRefreshTokenExpired) return redirect("/auth/signin");
+
+    // @ts-expect-error
+    const isNotRecentlyUpdated = isDatePassedTime(userToVerify.updatedAt, 1);
+    if (isNotRecentlyUpdated) return redirect("/dashboard");
+
+    isClientRedirectNeed = true;
+  }
 
   return (
     <AuthPageWrapper
@@ -47,10 +64,14 @@ export default async function VerifyPage({ searchParams }: PropsType) {
         <AuthVerifyFormErrorUnit />
       ) : (
         <AuthFormContext formType={AuthFormTypes.Verify} formAction={verify}>
-          <AuthVerifyFormFn
-            phoneNumber={userToVerify.phoneNumber}
-            username={userToVerify.username}
-          />
+          {isClientRedirectNeed ? (
+            <RedirectClient path="/auth/dashboard" delay={10000} />
+          ) : (
+            <AuthVerifyFormFn
+              phoneNumber={userToVerify.phoneNumber}
+              username={userToVerify.username}
+            />
+          )}
         </AuthFormContext>
       )}
     </AuthPageWrapper>

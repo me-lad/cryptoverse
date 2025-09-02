@@ -5,6 +5,7 @@ import mongoose, { Model } from "mongoose";
 import type { UserDocumentType } from "./types";
 import { UserRolesEnum } from "../types";
 import { daysToMillisecond, hoursToMillisecond } from "@/lib/helpers";
+import { connectToDB } from "@/lib/configs/mongoose";
 
 class UserModel {
   private schema;
@@ -14,6 +15,7 @@ class UserModel {
     this.schema = this.createSchema();
     this.attachHooks();
     this.model = this.createModel();
+    this.createTTLIndex();
   }
 
   private createModel(): Model<UserDocumentType> {
@@ -72,7 +74,6 @@ class UserModel {
         },
         expiresAt: {
           type: Date,
-          index: { expires: 0 },
         },
         passwordChangedAt: {
           type: Date,
@@ -85,7 +86,7 @@ class UserModel {
   private attachHooks() {
     this.schema ||= this.createSchema();
     this.schema.pre("save", function (next) {
-      if (!this.isVerified) {
+      if (!this.isVerified && !this.expiresAt) {
         this.expiresAt = new Date(Date.now() + hoursToMillisecond(24));
       }
       if (this.refreshToken) {
@@ -93,6 +94,25 @@ class UserModel {
       }
       next();
     });
+  }
+
+  private async createTTLIndex() {
+    await connectToDB();
+    this.model ||= this.createModel();
+    try {
+      await this.model.collection.createIndex(
+        {
+          expiresAt: 1,
+        },
+        {
+          expireAfterSeconds: 0,
+          partialFilterExpression: { isVerified: false },
+        },
+      );
+      console.log("TTL index for unverified users created.");
+    } catch (err) {
+      console.log("Failed to create TTL index:", err);
+    }
   }
 }
 

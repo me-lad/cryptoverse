@@ -6,6 +6,7 @@ import type { UserModelType } from "@/lib/models/User/types";
 import { AuthFormStatusTypes, type AuthFormStateType } from "@/lib/types";
 import { AuthMessages } from "./auth.messages";
 import { AuthService } from "./auth.service";
+import { connectToDB } from "@/lib/configs/mongoose";
 import UserModel from "@/lib/models/User";
 
 class SignupService extends AuthService {
@@ -19,6 +20,8 @@ class SignupService extends AuthService {
     password: string,
   ): Promise<AuthFormStateType> {
     try {
+      await connectToDB();
+
       // 1. Hash password
       const hashedPassword = await this.passwordHasher(password);
 
@@ -49,7 +52,7 @@ class SignupService extends AuthService {
     } catch (err) {
       console.log("Error in Signup services", err);
       return {
-        status: "Error",
+        status: AuthFormStatusTypes.Error,
         toastNeed: true,
         toastMessage: AuthMessages.Error_CatchHandler,
         redirectNeed: false,

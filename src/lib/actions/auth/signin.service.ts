@@ -14,6 +14,7 @@ class SigninService extends AuthService {
     phoneNumber: string,
     enteredPassword: string,
     hashedPassword: string,
+    remember?: true,
   ): Promise<AuthFormStateType> {
     // 1. Password correctness checking
     const isPasswordTrue = await this.passwordVerifier(enteredPassword, hashedPassword);
@@ -29,7 +30,7 @@ class SigninService extends AuthService {
     }
 
     // 2. Create user sessions and redirect to dashboard
-    const sessionCreationResult = await this.createUserSessions(username);
+    const sessionCreationResult = await this.createUserSessions(username, remember);
     if (!sessionCreationResult) {
       return {
         status: AuthFormStatusTypes.Error,

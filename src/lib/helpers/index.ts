@@ -18,6 +18,9 @@ export const hoursToMillisecond = (hr: number): number => {
 export const daysToMillisecond = (day: number): number => {
   return day * 24 * 60 * 60 * 1000;
 };
+export const daysToMinutes = (day: number): number => {
+  return day * 24 * 60;
+};
 export const millisecondToMinutes = (ms: number): number => {
   return ms / 1000 / 60;
 };

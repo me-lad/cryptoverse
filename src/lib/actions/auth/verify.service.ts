@@ -119,12 +119,9 @@ class VerifyService extends AuthService {
         if (recentOTPs === 10) {
           // Add phone number to block list
           await BlockedNumberModel.model.create({ phoneNumber });
-          await UserModel.model.updateOne(
-            { phoneNumber },
-            {
-              $set: { isRestricted: true },
-            },
-          );
+          await userData.updateOne({
+            $set: { isRestricted: true },
+          });
 
           // Return state
           return { status: "Limited" };

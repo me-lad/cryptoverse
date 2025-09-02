@@ -93,7 +93,7 @@ export class AuthService {
   }
 
   // Authorization session related methods
-  async createUserSessions(username: string) {
+  async createUserSessions(username: string, remember?: true) {
     try {
       await connectToDB();
       await SessionModel.model.init();
@@ -121,7 +121,9 @@ export class AuthService {
         "14d",
         this.refreshTokenEncodedKey,
       );
-      const refresh_token_exp = new Date(Date.now() + daysToMillisecond(14));
+      const refresh_token_exp = new Date(
+        Date.now() + (!remember ? hoursToMillisecond(12) : daysToMillisecond(14)),
+      );
       this.setCookie("refresh_token", refresh_token, refresh_token_exp);
 
       const hashed_refresh_token = await this.passwordHasher(refresh_token);

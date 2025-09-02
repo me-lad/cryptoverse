@@ -10,8 +10,9 @@ import { type SignupFormDataType, type AuthFormStateType, AuthFormStatusTypes } 
 import { SignupFormSchema } from "./signup.validator";
 import { connectToDB } from "@/lib/configs/mongoose";
 import { AuthMessages } from "./auth.messages";
-import UserModel from "@/lib/models/User";
 import SignupService from "./signup.service";
+import UserModel from "@/lib/models/User";
+import BlockedNumberModel from "@/lib/models/BlockedNumber";
 
 export async function signup(
   state: AuthFormStateType,
@@ -36,8 +37,22 @@ export async function signup(
     // DB connection ensure
     await connectToDB();
     await UserModel.model.init();
+    await BlockedNumberModel.model.init();
 
-    // 3. Check user existence in DB (phone number | username)
+    // 3. Check phone number to be unblocked
+    const isPhoneNumberBlocked = await BlockedNumberModel.model.findOne({
+      phoneNumber: data.phoneNumber,
+    });
+    if (isPhoneNumberBlocked) {
+      return {
+        status: AuthFormStatusTypes.Error,
+        redirectNeed: false,
+        toastNeed: true,
+        toastMessage: AuthMessages.Error_VerificationPermanentLimit,
+      };
+    }
+
+    // 4. Check user existence in DB (phone number | username)
     const userExistence = await UserModel.model.findOne({
       $or: [{ username: data.username }, { phoneNumber: data.phoneNumber }],
     });
@@ -68,7 +83,7 @@ export async function signup(
       }
     }
 
-    // 4. Create user in DB
+    // 5. Create user in DB
     return await SignupService.createUser(data.username, data.phoneNumber, data.password);
   } catch (err) {
     console.log("Error in signup controller ->", err);
