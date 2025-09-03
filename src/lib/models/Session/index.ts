@@ -1,7 +1,7 @@
 import mongoose, { Model } from "mongoose";
 import type { SessionDocumentType } from "./types";
 import { UserRolesEnum } from "../types";
-import { daysToMillisecond } from "@/lib/helpers";
+import { daysToMillisecond, hoursToMillisecond } from "@/lib/helpers";
 
 class SessionModel {
   private schema;
@@ -9,6 +9,7 @@ class SessionModel {
 
   constructor() {
     this.schema = this.createSchema();
+    this.attachHooks();
     this.model = this.createModel();
   }
 
@@ -23,11 +24,13 @@ class SessionModel {
 
   createSchema() {
     const Schema = mongoose.Schema;
-    return new Schema<SessionDocumentType>(
+    const schema = new Schema<SessionDocumentType>(
       {
         userId: {
           type: Schema.Types.ObjectId,
           required: true,
+          unique: true,
+          index: true,
         },
         role: {
           type: String,
@@ -37,11 +40,24 @@ class SessionModel {
         expiresAt: {
           type: Date,
           index: { expires: 0 },
-          default: () => Date.now() + daysToMillisecond(14),
         },
       },
       { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } },
     );
+    schema.virtual("rememberMe");
+    return schema;
+  }
+
+  async attachHooks() {
+    this.schema ||= this.createSchema();
+    this.schema.pre("save", function (next) {
+      let exp = new Date(Date.now() + hoursToMillisecond(12));
+      if (this.rememberMe) {
+        exp = new Date(Date.now() + daysToMillisecond(14));
+      }
+      this.expiresAt = exp;
+      next();
+    });
   }
 }
 

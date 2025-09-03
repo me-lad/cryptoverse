@@ -9,23 +9,25 @@ import { connectToDB } from "@/lib/configs/mongoose";
 import { AuthMessages } from "./auth.messages";
 import { isDatePassedTime, makeRandomCode } from "@/lib/helpers";
 import { restrictionThresholds } from "@/lib/constants";
-import OtpModel from "@/lib/models/Otp";
-import UserModel from "@/lib/models/User";
-import BlockedNumberModel from "@/lib/models/BlockedNumber";
+import OtpService from "@/lib/services/OtpService";
+import UserService from "@/lib/services/UserService";
+import BlockedNumberService from "@/lib/services/BlockedNumberService";
 
 class VerifyService extends AuthService {
   constructor() {
     super();
   }
 
-  async sendOtp(phoneNumber: string): Promise<OtpDocumentType | null> {
+  async sendOtp(phoneNumber: string, isResetPassword?: true): Promise<OtpDocumentType | null> {
     try {
       const data = {
         phoneNumber,
         code: makeRandomCode(),
+        usage: isResetPassword ? "ResetPassword" : "Verify",
       };
+
       await this.sms(data.phoneNumber, data.code);
-      return await OtpModel.model.create(data);
+      return await OtpService.createOtp(data);
     } catch (err) {
       console.log("Error in create otp document ->", err);
       return null;
@@ -36,7 +38,7 @@ class VerifyService extends AuthService {
     const userOtpStatus = await this.checkUserOtpStatus(username);
     const { status } = userOtpStatus;
 
-    const userData = await UserModel.model.findOne({ username });
+    const userData = await UserService.getUserData(username);
     if (!userData || status === "Error") {
       return { success: false, message: AuthMessages.Error_CatchHandler };
     }
@@ -86,12 +88,9 @@ class VerifyService extends AuthService {
     try {
       // 1. DB connection ensure
       await connectToDB();
-      await UserModel.model.init();
-      await OtpModel.model.init();
-      await BlockedNumberModel.model.init();
 
       // 2. Find user data to access the phone number
-      const userData = await UserModel.model.findOne({ username }, "phoneNumber");
+      const userData = await UserService.getUserData(username);
 
       if (!userData) {
         return { status: "Error", message: AuthMessages.Error_CatchHandler };
@@ -99,10 +98,7 @@ class VerifyService extends AuthService {
       const { phoneNumber } = userData;
 
       // 3. Check for valid otp document
-      const validExistOtpData = await OtpModel.model.findOne({
-        phoneNumber,
-        expiresAt: { $gte: new Date() },
-      });
+      const validExistOtpData = await OtpService.getValidOtp(phoneNumber);
 
       if (validExistOtpData && validExistOtpData.createdAt) {
         const { createdAt } = validExistOtpData;
@@ -110,15 +106,12 @@ class VerifyService extends AuthService {
       }
 
       // 4. Count recent codes
-      const recentOTPs = await OtpModel.model.countDocuments({
-        phoneNumber,
-        expiresAt: { $lte: new Date() },
-      });
+      const recentOTPs = await OtpService.countExpiredOTPs(phoneNumber);
 
       if (restrictionThresholds.includes(recentOTPs)) {
         if (recentOTPs === 10) {
           // Add phone number to block list
-          await BlockedNumberModel.model.create({ phoneNumber });
+          await BlockedNumberService.blockNumber(phoneNumber);
           await userData.updateOne({
             $set: { isRestricted: true },
           });
@@ -127,9 +120,7 @@ class VerifyService extends AuthService {
           return { status: "Limited" };
         }
 
-        const lastExpiredCode = await OtpModel.model
-          .findOne({ phoneNumber, expiresAt: { $lte: new Date() } })
-          .sort({ createdAt: -1 });
+        const lastExpiredCode = await OtpService.getLastExpiredOtp(phoneNumber);
 
         if (!lastExpiredCode || !lastExpiredCode.expiresAt) {
           return { status: "Error", message: AuthMessages.Error_CatchHandler };

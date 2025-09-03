@@ -2,7 +2,8 @@
 import { AuthFormStatusTypes, type AuthFormStateType } from "@/lib/types";
 import { AuthService } from "./auth.service";
 import { AuthMessages } from "./auth.messages";
-import OtpModel from "@/lib/models/Otp";
+import { catchErrorFormState } from "@/lib/constants";
+import OtpService from "@/lib/services/OtpService";
 
 class SigninService extends AuthService {
   constructor() {
@@ -14,7 +15,7 @@ class SigninService extends AuthService {
     phoneNumber: string,
     enteredPassword: string,
     hashedPassword: string,
-    remember?: true,
+    remember?: "on",
   ): Promise<AuthFormStateType> {
     // 1. Password correctness checking
     const isPasswordTrue = await this.passwordVerifier(enteredPassword, hashedPassword);
@@ -31,17 +32,9 @@ class SigninService extends AuthService {
 
     // 2. Create user sessions and redirect to dashboard
     const sessionCreationResult = await this.createUserSessions(username, remember);
-    if (!sessionCreationResult) {
-      return {
-        status: AuthFormStatusTypes.Error,
-        redirectNeed: false,
-        toastNeed: true,
-        toastMessage: AuthMessages.Error_CatchHandler,
-      };
-    }
+    if (!sessionCreationResult) return catchErrorFormState;
 
-    await OtpModel.model.init();
-    await OtpModel.model.deleteMany({ phoneNumber });
+    await OtpService.deleteOTPs(phoneNumber);
 
     return {
       status: AuthFormStatusTypes.Success,

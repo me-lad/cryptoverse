@@ -1,6 +1,6 @@
 import { Document, Types } from "mongoose";
 
-export const BlockSourcesEnum = ["OTP", "SIGNIN"] as const;
+export const BlockSourcesEnum = ["Otp", "Signin"] as const;
 type BlockSourcesType = (typeof BlockSourcesEnum)[number];
 
 export type BlockedNumberType = {

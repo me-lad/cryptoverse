@@ -7,9 +7,10 @@ import { AuthFormStatusTypes, type AuthFormStateType, type VerifyFormDataType } 
 import { AuthMessages } from "./auth.messages";
 import { isDatePassedTime } from "@/lib/helpers";
 import { connectToDB } from "@/lib/configs/mongoose";
-import UserModel from "@/lib/models/User";
-import OtpModel from "@/lib/models/Otp";
 import AuthService from "./auth.service";
+import OtpService from "@/lib/services/OtpService";
+import UserService from "@/lib/services/UserService";
+import { catchErrorFormState } from "@/lib/constants";
 
 export async function verify(
   state: AuthFormStateType,
@@ -34,10 +35,7 @@ export async function verify(
     const { code, username } = data;
 
     // 3. Find user data to access phone number
-    const userData = await UserModel.model.findOne(
-      { username },
-      "phoneNumber isVerified isRestricted",
-    );
+    const userData = await UserService.getUserData(username);
     if (!userData || userData.isVerified || userData.isRestricted) {
       return {
         status: AuthFormStatusTypes.Error,
@@ -50,19 +48,12 @@ export async function verify(
     // 4. Find the last send otp data
     const { phoneNumber } = userData;
 
-    const lastOtpData = await OtpModel.model.findOne({ phoneNumber }).sort({ createdAt: -1 });
-    if (!lastOtpData || !lastOtpData.createdAt) {
-      return {
-        status: AuthFormStatusTypes.Error,
-        redirectNeed: false,
-        toastNeed: true,
-        toastMessage: AuthMessages.Error_CatchHandler,
-      };
-    }
+    const otpData = await OtpService.getValidOtp(phoneNumber);
+    if (!otpData || !otpData.createdAt) return catchErrorFormState;
 
     // 5. Check code use time passed and usage count passed
-    const isCodeUseTimePassed = isDatePassedTime(lastOtpData.createdAt, 2);
-    const isCodeUsageCountPassed = lastOtpData.usageCount >= 3;
+    const isCodeUseTimePassed = isDatePassedTime(otpData.createdAt, 2);
+    const isCodeUsageCountPassed = otpData.usageCount >= 3;
     if (isCodeUseTimePassed || isCodeUsageCountPassed) {
       return {
         status: AuthFormStatusTypes.Error,
@@ -73,9 +64,9 @@ export async function verify(
     }
 
     // 6. Checking the correctness of the input code
-    if (lastOtpData.code !== code) {
-      lastOtpData.usageCount += 1;
-      await lastOtpData.save();
+    if (otpData.code !== code) {
+      otpData.usageCount += 1;
+      await otpData.save();
 
       return {
         status: AuthFormStatusTypes.Error,
@@ -85,7 +76,7 @@ export async function verify(
       };
     }
 
-    if (lastOtpData.code === code) {
+    if (otpData.code === code) {
       // .7 Create user sessions
       const sessionsCreationResult = await AuthService.createUserSessions(username);
 
@@ -96,7 +87,7 @@ export async function verify(
         await userData.save();
 
         // Delete all otp documents related to the user
-        await OtpModel.model.deleteMany({ phoneNumber });
+        await OtpService.deleteOTPs(phoneNumber);
 
         return {
           status: AuthFormStatusTypes.Success,
@@ -108,19 +99,9 @@ export async function verify(
       }
     }
 
-    return {
-      status: AuthFormStatusTypes.Error,
-      redirectNeed: false,
-      toastNeed: true,
-      toastMessage: AuthMessages.Error_CatchHandler,
-    };
+    return catchErrorFormState;
   } catch (err) {
     console.log("Error in verify controller ->", err);
-    return {
-      status: AuthFormStatusTypes.Error,
-      redirectNeed: false,
-      toastNeed: true,
-      toastMessage: AuthMessages.Error_CatchHandler,
-    };
+    return catchErrorFormState;
   }
 }

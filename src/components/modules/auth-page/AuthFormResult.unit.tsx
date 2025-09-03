@@ -3,7 +3,7 @@
 
 // Packages imports
 import { useEffect, use } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, redirect } from "next/navigation";
 import { toast } from "react-toastify";
 
 // Local imports

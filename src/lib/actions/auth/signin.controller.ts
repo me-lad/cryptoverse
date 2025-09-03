@@ -6,8 +6,9 @@ import "server-only";
 import { AuthFormStatusTypes, type AuthFormStateType, type SigninFormDataType } from "@/lib/types";
 import { AuthMessages } from "./auth.messages";
 import { connectToDB } from "@/lib/configs/mongoose";
-import UserModel from "@/lib/models/User";
+import { catchErrorFormState } from "@/lib/constants";
 import SigninService from "./signin.service";
+import UserService from "@/lib/services/UserService";
 
 export async function signin(
   state: AuthFormStateType,
@@ -21,8 +22,8 @@ export async function signin(
   if (!data.identifier && !data.password) {
     return {
       status: AuthFormStatusTypes.Error,
-      toastNeed: false,
       redirectNeed: false,
+      toastNeed: false,
       properties: {
         identifier: {
           errors: [AuthMessages.Error_FieldEmpty],
@@ -36,8 +37,8 @@ export async function signin(
   if (!data.identifier) {
     return {
       status: AuthFormStatusTypes.Error,
-      toastNeed: false,
       redirectNeed: false,
+      toastNeed: false,
       properties: {
         identifier: {
           errors: [AuthMessages.Error_FieldEmpty],
@@ -48,8 +49,8 @@ export async function signin(
   if (!data.password) {
     return {
       status: AuthFormStatusTypes.Error,
-      toastNeed: false,
       redirectNeed: false,
+      toastNeed: false,
       properties: {
         password: {
           errors: [AuthMessages.Error_FieldEmpty],
@@ -61,20 +62,14 @@ export async function signin(
   try {
     // 3. Get user DB document
     await connectToDB();
-    await UserModel.model.init();
 
-    const userData = await UserModel.model.findOne(
-      {
-        $or: [{ username: data.identifier }, { phoneNumber: data.identifier }],
-      },
-      "username password phoneNumber isVerified isRestricted",
-    );
+    const userData = await UserService.getUserData(data.identifier);
 
     if (!userData) {
       return {
         status: AuthFormStatusTypes.Error,
-        toastNeed: false,
         redirectNeed: false,
+        toastNeed: false,
         properties: {
           password: {
             errors: [AuthMessages.Error_SigninIncorrectData],
@@ -107,15 +102,10 @@ export async function signin(
       userData.phoneNumber,
       data.password,
       userData.password,
-      data?.remember === "on" ? true : undefined,
+      data?.remember,
     );
   } catch (err) {
     console.log("Error in signin controller ->", err);
-    return {
-      status: AuthFormStatusTypes.Error,
-      redirectNeed: false,
-      toastNeed: true,
-      toastMessage: AuthMessages.Error_CatchHandler,
-    };
+    return catchErrorFormState;
   }
 }

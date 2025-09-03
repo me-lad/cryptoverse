@@ -23,9 +23,11 @@ export enum AuthMessages {
   Error_VerificationTemporaryLimit = "You' ve been temporary limited due to high code request . Please wait.",
   Error_VerificationIncorrectCode = "The entered code is incorrect.",
   Error_VerifyCodeExpire = "The code has been expired. Please get a new one.",
+  Error_VerifyCodeLength = "The verification code is 6 character length.",
 
   //Success
   Success_CompleteSignup = "Your initial registration was successful. Please confirm the entered Phone Number to complete the registration.",
   Success_CompleteSignin = "Signin to account successfully completed. :))",
   Success_CompleteVerify = "Verification has successfully done. you' ll be redirecting to your dashboard.",
+  Success_CompleteResetPassword = "Your password changed successfully. Please signin with new data.",
 }

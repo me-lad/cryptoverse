@@ -1,9 +1,11 @@
+import { AuthMessages } from "../actions/auth/auth.messages";
 import { makeRandomID } from "../helpers";
 import {
   type AuthFormFieldType,
   type AuthFormStateType,
   AuthFormFieldNames,
   AuthFormFieldTypes,
+  AuthFormStatusTypes,
 } from "../types";
 
 // Globals
@@ -17,9 +19,16 @@ export const headerLessRoutes = [...footerLessRoutes];
 
 // Auth Route group
 export const initialFormState: AuthFormStateType = {
-  status: "Error",
+  status: AuthFormStatusTypes.Error,
   redirectNeed: false,
   toastNeed: false,
+};
+
+export const catchErrorFormState: AuthFormStateType = {
+  status: AuthFormStatusTypes.Error,
+  redirectNeed: false,
+  toastNeed: true,
+  toastMessage: AuthMessages.Error_CatchHandler,
 };
 
 export const signupFormFields: AuthFormFieldType[] = [

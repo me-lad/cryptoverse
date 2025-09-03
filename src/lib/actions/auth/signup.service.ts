@@ -7,7 +7,8 @@ import { AuthFormStatusTypes, type AuthFormStateType } from "@/lib/types";
 import { AuthMessages } from "./auth.messages";
 import { AuthService } from "./auth.service";
 import { connectToDB } from "@/lib/configs/mongoose";
-import UserModel from "@/lib/models/User";
+import { catchErrorFormState } from "@/lib/constants";
+import UserService from "@/lib/services/UserService";
 
 class SignupService extends AuthService {
   constructor() {
@@ -26,7 +27,7 @@ class SignupService extends AuthService {
       const hashedPassword = await this.passwordHasher(password);
 
       // 2. Check DB user collection length to set user role
-      const usersCollectionLength = await UserModel.model.countDocuments({});
+      const usersCollectionLength = await UserService.countUsers();
 
       // 3. Create user index in DB (isVerified: false)
       const userData: UserModelType = {
@@ -35,9 +36,9 @@ class SignupService extends AuthService {
         password: hashedPassword,
         isVerified: usersCollectionLength === 0 ? true : false,
         isRestricted: false,
-        role: usersCollectionLength === 0 ? "ADMIN" : "USER",
+        role: usersCollectionLength === 0 ? "Admin" : "User",
       };
-      const createdUser = await UserModel.model.create(userData);
+      const createdUser = await UserService.createUser(userData);
 
       // 4. Return propriate result
       return {
@@ -51,12 +52,7 @@ class SignupService extends AuthService {
       };
     } catch (err) {
       console.log("Error in Signup services", err);
-      return {
-        status: AuthFormStatusTypes.Error,
-        toastNeed: true,
-        toastMessage: AuthMessages.Error_CatchHandler,
-        redirectNeed: false,
-      };
+      return catchErrorFormState;
     }
   }
 }

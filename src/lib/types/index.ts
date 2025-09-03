@@ -102,12 +102,15 @@ export type VerifyFormDataType = {
   username: string;
 };
 
+export type ResetPasswordFormStepType = "1" | "2";
+
 export type ResetPasswordFormDataType = {
   identifier: string;
   code: string;
   password: string;
   passwordRepeat: string;
-  formStep: "1" | "2";
+  formStep: ResetPasswordFormStepType;
+  username: string;
 };
 
 export type UserOtpCheckerResultType =

@@ -15,7 +15,6 @@ class BlockedNumberModel {
 
   private createModel(): Model<BlockedNumberDocumentType> {
     this.schema ||= this.createSchema();
-
     return (
       (mongoose.models.BlockedNumber as Model<BlockedNumberDocumentType>) ||
       mongoose.model<BlockedNumberDocumentType>("BlockedNumber", this.schema)
@@ -51,7 +50,7 @@ class BlockedNumberModel {
         source: {
           type: String,
           enum: BlockSourcesEnum,
-          default: "OTP",
+          default: "Otp",
         },
         note: {
           type: String,

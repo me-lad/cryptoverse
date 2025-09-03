@@ -11,11 +11,7 @@ import AuthFormFieldTogglerPasswordFn from "./AuthFormFieldTogglerPassword.fn";
 import AuthFormFieldIconUnit from "./AuthFormFieldIcon.unit";
 
 // Functional component
-export default function AuthFormFieldInputUnit({
-  type,
-  name,
-  placeholder,
-}: AuthFormFieldType) {
+export default function AuthFormFieldInputUnit({ type, name, placeholder }: AuthFormFieldType) {
   const copyPasteBlocker = (event: React.ClipboardEvent) => {
     if (type === AuthFormFieldTypes.Password) {
       event.preventDefault();
@@ -47,10 +43,7 @@ export default function AuthFormFieldInputUnit({
       </span>
 
       {/* Field icons */}
-      <label
-        htmlFor={`${name}-input`}
-        className="absolute top-[0.575rem] left-2 h-fit w-fit"
-      >
+      <label htmlFor={`${name}-input`} className="absolute top-[0.575rem] left-2 h-fit w-fit">
         <AuthFormFieldIconUnit fieldName={name} />
       </label>
 

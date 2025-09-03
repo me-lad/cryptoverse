@@ -11,7 +11,7 @@ import AuthPageWrapper from "@/components/modules/auth-page/AuthPage.wrapper";
 import AuthVerifyFormFn from "@/components/modules/auth-page/AuthVerifyForm.fn";
 import AuthVerifyFormErrorUnit from "@/components/modules/auth-page/AuthVerifyFormError.unit";
 import RedirectClient from "@/components/modules/global/RedirectClient";
-import UserModel from "@/lib/models/User";
+import UserService from "@/lib/services/UserService";
 
 // Local types
 type PropsType = {
@@ -22,17 +22,15 @@ type PropsType = {
 
 // Functional component
 export default async function VerifyPage({ searchParams }: PropsType) {
-  const { username } = await searchParams;
+  let { username } = await searchParams;
 
   // 1. Check username existence as search param
   if (!username) return redirect("/auth/signup");
+  if (typeof username === "object") username = username[0];
 
   // 2. Check user account existence with given username
   await connectToDB();
-  const userToVerify = await UserModel.model.findOne(
-    { username },
-    "phoneNumber username isVerified isRestricted refreshTokenExpiresAt updatedAt",
-  );
+  const userToVerify = await UserService.getUserData(username);
   if (!userToVerify) return redirect("/auth/signup");
 
   // 3. Check founded user to be unverified to access verify page

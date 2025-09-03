@@ -10,8 +10,8 @@ import { cookies } from "next/headers";
 // Local imports
 import { daysToMillisecond, durationToSeconds, hoursToMillisecond } from "@/lib/helpers";
 import { connectToDB } from "@/lib/configs/mongoose";
-import UserModel from "@/lib/models/User";
-import SessionModel from "@/lib/models/Session";
+import SessionService from "@/lib/services/SessionService";
+import UserService from "@/lib/services/UserService";
 
 export class AuthService {
   accessTokenSecretKey: string | undefined;
@@ -50,9 +50,9 @@ export class AuthService {
       .sign(secret);
   }
 
-  async decrypt(session: string) {
+  async decrypt(session: string, secret: Uint8Array) {
     try {
-      const { payload } = await jwtVerify(session, this.accessTokenEncodedKey, {
+      const { payload } = await jwtVerify(session, secret, {
         algorithms: ["HS256"],
       });
 
@@ -93,18 +93,23 @@ export class AuthService {
   }
 
   // Authorization session related methods
-  async createUserSessions(username: string, remember?: true) {
+  async createUserSessions(username: string, remember?: "on") {
     try {
       await connectToDB();
-      await SessionModel.model.init();
 
       // 1. Find user data
-      const userData = await UserModel.model.findOne({ username });
+      const userData = await UserService.getUserData(username);
       if (!userData) return false;
 
       // 2. Create DB session to use that ID in tokens
-      const sessionData = { userId: userData._id, role: userData.role };
-      const createdSession = await SessionModel.model.create(sessionData);
+      const createdSession = await SessionService.createSession(
+        userData._id as Schema.Types.ObjectId,
+        userData.role,
+      );
+      if (remember) {
+        createdSession.rememberMe = true;
+        await createdSession.save();
+      }
 
       // 3. Set Access token in cookies
       const access_token = await this.encrypt(
@@ -118,7 +123,7 @@ export class AuthService {
       // 4. Set refresh token in user document
       const refresh_token = await this.encrypt(
         String(createdSession._id),
-        "14d",
+        !remember ? "12h" : "14d",
         this.refreshTokenEncodedKey,
       );
       const refresh_token_exp = new Date(
