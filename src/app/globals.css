@@ -194,26 +194,14 @@
   transition: width 0.2s ease-in-out;
 }
 .Toastify__toast--success .Toastify__progress-bar {
-  background: linear-gradient(
-    to right,
-    var(--status-success-200),
-    var(--status-success-200)
-  );
+  background: linear-gradient(to right, var(--status-success-200), var(--status-success-200));
   box-shadow: 0 0 6px #2fa76688;
 }
 .Toastify__toast--error .Toastify__progress-bar {
-  background: linear-gradient(
-    to right,
-    var(--status-error-200),
-    var(--status-error-200)
-  );
+  background: linear-gradient(to right, var(--status-error-200), var(--status-error-200));
   box-shadow: 0 0 6px #e2464a88;
 }
 .Toastify__toast--info .Toastify__progress-bar {
-  background: linear-gradient(
-    to right,
-    var(--status-warning-200),
-    var(--status-warning-200)
-  );
+  background: linear-gradient(to right, var(--status-warning-200), var(--status-warning-200));
   box-shadow: 0 0 6px #f6ba4788;
 }

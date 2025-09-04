@@ -7,6 +7,18 @@ import { AuthPatterns } from "./auth.patterns";
 
 export const ResetPasswordFormSchema = z
   .object({
+    username: z
+      .string()
+      .min(4, {
+        error: `${AuthMessages.Error_FieldEmpty} (min-length: 4)`,
+        abort: true,
+      })
+      .max(64, AuthMessages.Error_UsernameMaxLengthViolation)
+      .regex(AuthPatterns.UsernameLetter, {
+        error: AuthMessages.Error_UsernameLetterCheck,
+      })
+      .trim(),
+
     code: z
       .string()
       .length(6, { error: `${AuthMessages.Error_FieldEmpty} (length: 6)`, abort: true }),

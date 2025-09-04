@@ -7,6 +7,7 @@ import { AuthFormStatusTypes, type AuthFormStateType, type SigninFormDataType } 
 import { AuthMessages } from "./auth.messages";
 import { connectToDB } from "@/lib/configs/mongoose";
 import { catchErrorFormState } from "@/lib/constants";
+import { sanitizeFormData } from "@/lib/helpers";
 import SigninService from "./signin.service";
 import UserService from "@/lib/services/UserService";
 
@@ -18,8 +19,11 @@ export async function signin(
   // @ts-expect-error
   const data: SigninFormDataType = Object.fromEntries(formData);
 
-  // 2. Form validation
-  if (!data.identifier && !data.password) {
+  // 2. Sanitize form
+  const sanitizedData = sanitizeFormData<SigninFormDataType>(data);
+
+  // 3. Form validation
+  if (!sanitizedData.identifier && !sanitizedData.password) {
     return {
       status: AuthFormStatusTypes.Error,
       redirectNeed: false,
@@ -34,7 +38,7 @@ export async function signin(
       },
     };
   }
-  if (!data.identifier) {
+  if (!sanitizedData.identifier) {
     return {
       status: AuthFormStatusTypes.Error,
       redirectNeed: false,
@@ -46,7 +50,7 @@ export async function signin(
       },
     };
   }
-  if (!data.password) {
+  if (!sanitizedData.password) {
     return {
       status: AuthFormStatusTypes.Error,
       redirectNeed: false,
@@ -60,10 +64,10 @@ export async function signin(
   }
 
   try {
-    // 3. Get user DB document
+    // 4. Get user DB document
     await connectToDB();
 
-    const userData = await UserService.getUserData(data.identifier);
+    const userData = await UserService.getUserData(sanitizedData.identifier);
 
     if (!userData) {
       return {
@@ -100,9 +104,9 @@ export async function signin(
     return SigninService.signinUser(
       userData.username,
       userData.phoneNumber,
-      data.password,
+      sanitizedData.password,
       userData.password,
-      data?.remember,
+      sanitizedData?.remember,
     );
   } catch (err) {
     console.log("Error in signin controller ->", err);

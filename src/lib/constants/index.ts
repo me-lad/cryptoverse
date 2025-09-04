@@ -18,6 +18,14 @@ export const footerLessRoutes = [
 export const headerLessRoutes = [...footerLessRoutes];
 
 // Auth Route group
+export const sessionNeedRoutes = ["/dashboard"];
+export const sessionLessRoutes = [
+  "/auth/signin",
+  "/auth/signup",
+  "/auth/verify",
+  "/auth/reset-password",
+];
+
 export const initialFormState: AuthFormStateType = {
   status: AuthFormStatusTypes.Error,
   redirectNeed: false,

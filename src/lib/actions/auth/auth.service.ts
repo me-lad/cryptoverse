@@ -102,6 +102,9 @@ export class AuthService {
       if (!userData) return false;
 
       // 2. Create DB session to use that ID in tokens
+      const existSession = await SessionService.deleteSession(
+        userData._id as Schema.Types.ObjectId,
+      );
       const createdSession = await SessionService.createSession(
         userData._id as Schema.Types.ObjectId,
         userData.role,

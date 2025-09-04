@@ -1,3 +1,10 @@
+// Packages imports
+import { jwtVerify } from "jose";
+import validator from "validator";
+
+// Local imports
+import { AuthPatterns } from "../actions/auth/auth.patterns";
+
 export const jsonParser = (value: any) => {
   return JSON.parse(JSON.stringify(value));
 };
@@ -81,3 +88,41 @@ export const startCountdownTimer = (
 
   return () => clearInterval(timer);
 };
+
+export const decrypt = async (session: string, secret: Uint8Array) => {
+  try {
+    const { payload } = await jwtVerify(session, secret, {
+      algorithms: ["HS256"],
+    });
+
+    return payload;
+  } catch (err: any) {
+    if (err.name === "TokenExpiredError") {
+      console.log("Token has expired");
+    } else if (err.name === "JWTInvalid") {
+      console.log("Invalid token");
+    } else {
+      console.log("Other JWT error:", err);
+    }
+    return false;
+  }
+};
+export const isValidObjectId = (val?: string) => {
+  return AuthPatterns.ObjectId.test(val || "");
+};
+
+export function sanitizeFormData<T extends Record<string, any>>(data: T): T {
+  const sanitized: Record<string, any> = {};
+
+  for (const key in data) {
+    const value = data[key];
+
+    if (typeof value === "string") {
+      sanitized[key] = validator.escape(value.trim());
+    } else {
+      sanitized[key] = value;
+    }
+  }
+
+  return sanitized as T;
+}

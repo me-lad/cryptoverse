@@ -4,4 +4,5 @@ export const AuthPatterns = Object.freeze({
   PasswordNumber: /[0-9]/,
   PasswordCharacter: /[^a-zA-Z0-9]/,
   UsernameLetter: /^[A-Za-z]+$/,
+  ObjectId: /^[a-f\d]{24}$/i,
 });

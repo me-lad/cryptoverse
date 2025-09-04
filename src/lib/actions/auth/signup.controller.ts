@@ -14,6 +14,7 @@ import { catchErrorFormState } from "@/lib/constants";
 import SignupService from "./signup.service";
 import UserService from "@/lib/services/UserService";
 import BlockedNumberService from "@/lib/services/BlockedNumberService";
+import { sanitizeFormData } from "@/lib/helpers";
 
 export async function signup(
   state: AuthFormStateType,
@@ -23,8 +24,11 @@ export async function signup(
   // @ts-expect-error
   const data: SignupFormDataType = Object.fromEntries(formData);
 
-  // 2. Form validation
-  const validatedFields = SignupFormSchema.safeParse(data);
+  // 2. Sanitize form
+  const sanitizedData = sanitizeFormData<SignupFormDataType>(data);
+
+  // 3. Form validation
+  const validatedFields = SignupFormSchema.safeParse(sanitizedData);
   if (!validatedFields.success) {
     return {
       status: AuthFormStatusTypes.Error,
@@ -38,8 +42,10 @@ export async function signup(
     // DB connection ensure
     await connectToDB();
 
-    // 3. Check phone number to be unblocked
-    const phoneNumberBlockStatus = await BlockedNumberService.checkBlockStatus(data.phoneNumber);
+    // 4. Check phone number to be unblocked
+    const phoneNumberBlockStatus = await BlockedNumberService.checkBlockStatus(
+      validatedFields.data.phoneNumber,
+    );
     if (phoneNumberBlockStatus === "Blocked") {
       return {
         status: AuthFormStatusTypes.Error,
@@ -49,11 +55,11 @@ export async function signup(
       };
     }
 
-    // 4. Check user existence in DB (phone number | username)
-    let userExistence = await UserService.getUserData(data.username);
-    if (!userExistence) await UserService.getUserData(data.phoneNumber);
+    // 5. Check user existence in DB (phone number | username)
+    let userExistence = await UserService.getUserData(validatedFields.data.username);
+    if (!userExistence) await UserService.getUserData(validatedFields.data.phoneNumber);
     if (userExistence) {
-      if (userExistence.phoneNumber === data.phoneNumber) {
+      if (userExistence.phoneNumber === validatedFields.data.phoneNumber) {
         return {
           status: AuthFormStatusTypes.Error,
           redirectNeed: false,
@@ -65,7 +71,7 @@ export async function signup(
           },
         };
       }
-      if (userExistence.username === data.username) {
+      if (userExistence.username === validatedFields.data.username) {
         return {
           status: AuthFormStatusTypes.Error,
           redirectNeed: false,
@@ -79,8 +85,12 @@ export async function signup(
       }
     }
 
-    // 5. Create user in DB
-    return await SignupService.createUser(data.username, data.phoneNumber, data.password);
+    // 6. Create user in DB
+    return await SignupService.createUser(
+      validatedFields.data.username,
+      validatedFields.data.phoneNumber,
+      validatedFields.data.password,
+    );
   } catch (err) {
     console.log("Error in signup controller ->", err);
     return catchErrorFormState;

@@ -19,6 +19,10 @@ class SessionService {
     if (!mongoose.models.Session) await SessionModel.model.init();
   }
 
+  async getCurrentSession(id: Schema.Types.ObjectId) {
+    return await SessionModel.model.findOne({ userId: id });
+  }
+
   async createSession(id: Schema.Types.ObjectId, role: UserRolesType = "User") {
     const data = { userId: id, role };
     return await SessionModel.model.create(data);

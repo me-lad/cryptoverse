@@ -5,7 +5,7 @@ import "server-only";
 // Local imports
 import { AuthFormStatusTypes, type AuthFormStateType, type VerifyFormDataType } from "@/lib/types";
 import { AuthMessages } from "./auth.messages";
-import { isDatePassedTime } from "@/lib/helpers";
+import { isDatePassedTime, sanitizeFormData } from "@/lib/helpers";
 import { connectToDB } from "@/lib/configs/mongoose";
 import AuthService from "./auth.service";
 import OtpService from "@/lib/services/OtpService";
@@ -20,8 +20,11 @@ export async function verify(
   // @ts-expect-error
   const data: VerifyFormDataType = Object.fromEntries(formData);
 
-  // 2. Form validation
-  if (!data.code || !data.username) {
+  // 2. Sanitize form
+  const sanitizedData = sanitizeFormData<VerifyFormDataType>(data);
+
+  // 3. Form validation
+  if (!sanitizedData.code || !sanitizedData.username) {
     return {
       status: AuthFormStatusTypes.Error,
       redirectNeed: false,
@@ -32,9 +35,9 @@ export async function verify(
 
   try {
     await connectToDB();
-    const { code, username } = data;
+    const { code, username } = sanitizedData;
 
-    // 3. Find user data to access phone number
+    // 4. Find user data to access phone number
     const userData = await UserService.getUserData(username);
     if (!userData || userData.isVerified || userData.isRestricted) {
       return {
@@ -45,13 +48,13 @@ export async function verify(
       };
     }
 
-    // 4. Find the last send otp data
+    // 5. Find the last send otp data
     const { phoneNumber } = userData;
 
     const otpData = await OtpService.getValidOtp(phoneNumber);
     if (!otpData || !otpData.createdAt) return catchErrorFormState;
 
-    // 5. Check code use time passed and usage count passed
+    // 6. Check code use time passed and usage count passed
     const isCodeUseTimePassed = isDatePassedTime(otpData.createdAt, 2);
     const isCodeUsageCountPassed = otpData.usageCount >= 3;
     if (isCodeUseTimePassed || isCodeUsageCountPassed) {
@@ -63,7 +66,7 @@ export async function verify(
       };
     }
 
-    // 6. Checking the correctness of the input code
+    // 7. Checking the correctness of the input code
     if (otpData.code !== code) {
       otpData.usageCount += 1;
       await otpData.save();

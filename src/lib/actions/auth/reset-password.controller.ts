@@ -17,6 +17,7 @@ import { AuthMessages } from "./auth.messages";
 import { connectToDB } from "@/lib/configs/mongoose";
 import { ResetPasswordFormSchema } from "./reset-password.validator";
 import { catchErrorFormState } from "@/lib/constants";
+import { sanitizeFormData } from "@/lib/helpers";
 import VerifyService from "./verify.service";
 import AuthService from "./auth.service";
 import OtpService from "@/lib/services/OtpService";
@@ -31,8 +32,11 @@ export async function resetPassword(
   // @ts-expect-error
   const data: ResetPasswordFormDataType = Object.fromEntries(formData);
 
-  // 2. Check the reset process step
-  if (!data.formStep) {
+  // 2. Sanitize form
+  const sanitizedData = sanitizeFormData<ResetPasswordFormDataType>(data);
+
+  // 3. Check the reset process step
+  if (!sanitizedData.formStep) {
     return {
       status: AuthFormStatusTypes.Error,
       redirectNeed: false,
@@ -42,9 +46,9 @@ export async function resetPassword(
   }
 
   try {
-    if (data.formStep === "1") {
-      // 3. Form validation
-      if (!data.identifier) {
+    if (sanitizedData.formStep === "1") {
+      // 4. Form validation
+      if (!sanitizedData.identifier) {
         return {
           status: AuthFormStatusTypes.Error,
           redirectNeed: false,
@@ -57,9 +61,9 @@ export async function resetPassword(
         };
       }
 
-      // 4. Find user with identifier
+      // 5. Find user with identifier
       await connectToDB();
-      const userData = await UserService.getUserData(data.identifier);
+      const userData = await UserService.getUserData(sanitizedData.identifier);
       if (!userData) return catchErrorFormState;
 
       if (!userData.isVerified) {
@@ -71,7 +75,7 @@ export async function resetPassword(
         };
       }
 
-      // 5. Find related otp data
+      // 6. Find related otp data
       const userOtpStatus = await VerifyService.checkUserOtpStatus(userData.username);
       const { status } = userOtpStatus;
 
@@ -98,9 +102,9 @@ export async function resetPassword(
       }
     }
 
-    if (data.formStep === "2") {
-      // 3. Form validation
-      const validatedFields = ResetPasswordFormSchema.safeParse(data);
+    if (sanitizedData.formStep === "2") {
+      // 4. Form validation
+      const validatedFields = ResetPasswordFormSchema.safeParse(sanitizeFormData);
       if (!validatedFields.success) {
         return {
           status: AuthFormStatusTypes.Error,
@@ -112,16 +116,16 @@ export async function resetPassword(
 
       if (!data.username) return catchErrorFormState;
 
-      // 4. Find user data
-      const userData = await UserService.getUserData(data.username);
+      // 5. Find user data
+      const userData = await UserService.getUserData(validatedFields.data.username);
       if (!userData) return catchErrorFormState;
 
-      // 5. Find otp data
+      // 6. Find otp data
       const otpData = await OtpService.getValidOtp(userData.phoneNumber);
       if (!otpData) return catchErrorFormState;
 
-      // 6. Check code existence
-      if (data.code !== otpData.code) {
+      // 7. Check code existence
+      if (validatedFields.data.code !== otpData.code) {
         otpData.usageCount += 1;
         await otpData.save();
         return {
@@ -134,7 +138,7 @@ export async function resetPassword(
         };
       }
 
-      const hashedPassword = await AuthService.passwordHasher(data.password);
+      const hashedPassword = await AuthService.passwordHasher(validatedFields.data.password);
       userData.password = hashedPassword;
       userData.passwordChangedAt = new Date();
       userData.refreshToken = undefined;
