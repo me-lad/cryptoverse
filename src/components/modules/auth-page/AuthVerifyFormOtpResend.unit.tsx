@@ -8,8 +8,9 @@ import { useLayoutEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 // Local imports
-import type { OtpResendResultType } from "@/lib/types";
-import { isDatePassedTime, startCountdownTimer } from "@/lib/helpers";
+import type { OtpResendResultType } from "~types/form";
+import { isDatePassedTime } from "~helpers/time";
+import { startCountdownTimer } from "~helpers/format";
 import { toastsCustomID } from "@/lib/configs/react-toastify";
 
 // Local types
@@ -38,7 +39,8 @@ export default function AuthVerifyFormOtpResendUnit({
   }, [referenceTime, waitDuration]);
 
   const resendHandler = async () => {
-    const resp = await fetch("/api/auth/verify", {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const resp = await fetch(`${baseUrl}/api/auth/resend-otp`, {
       method: "POST",
       body: JSON.stringify({ username }),
       headers: { "Content-Type": "application/json" },

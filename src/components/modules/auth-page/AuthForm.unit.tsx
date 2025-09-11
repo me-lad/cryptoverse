@@ -3,7 +3,8 @@ import { Checkbox } from "@/components/ui/shadcn/checkbox";
 import Link from "next/link";
 
 // Local imports
-import { AuthFormTypes, type AuthFormFieldType, type AuthFormTypesType } from "@/lib/types";
+import type { FormFieldType, FormTypesType } from "~types/form";
+import { FormTypes } from "~constants/forms";
 import { flexCenter } from "@/lib/shared/tw-custom";
 import AuthFormFieldInputUnit from "./AuthFormFieldInput.unit";
 import AuthFormFieldErrorsFn from "./AuthFormFieldErrors.fn";
@@ -11,9 +12,9 @@ import AuthFormButtonUnit from "./AuthFormButton.unit";
 
 // Local types
 type PropsType = {
-  formFields: AuthFormFieldType[];
+  formFields: FormFieldType[];
   submitButtonText: string;
-  formType?: AuthFormTypesType;
+  formType?: FormTypesType;
 };
 
 // Functional component
@@ -28,7 +29,7 @@ export default function AuthFormUnit({ formFields, formType, submitButtonText }:
         </div>
       ))}
 
-      {formType === AuthFormTypes.Signin && (
+      {formType === FormTypes.Signin && (
         <div className="mt-4 flex items-center justify-between px-1 text-sm">
           <Link className="hover:text-primary-400 transition-all" href={"/auth/reset-password"}>
             Forget your password ?{" "}

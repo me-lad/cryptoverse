@@ -2,15 +2,16 @@
 import { redirect } from "next/navigation";
 
 // Local imports
+import type { ResetPasswordFormStepType } from "~types/form";
 import { resetPassword } from "@/lib/actions/auth/reset-password.controller";
-import { AuthFormTypes, ResetPasswordFormStepType } from "@/lib/types";
+import { FormTypes } from "~constants/forms";
 import { connectToDB } from "@/lib/configs/mongoose";
+import { OtpService } from "~services/otp.service";
+import { UserService } from "~services/user.service";
 import AuthPageWrapper from "@/components/modules/auth-page/AuthPage.wrapper";
 import AuthFormContext from "@/components/modules/auth-page/AuthForm.context";
 import AuthResetPasswordFormUnit from "@/components/modules/auth-page/AuthResetPasswordForm.unit";
 import AuthVerifyFormErrorUnit from "@/components/modules/auth-page/AuthVerifyFormError.unit";
-import OtpService from "@/lib/services/OtpService";
-import UserService from "@/lib/services/UserService";
 
 // Local types
 type PropsType = {
@@ -32,7 +33,7 @@ export default async function ResetPasswordPage({ searchParams }: PropsType) {
     if (typeof username === "object") username = username[0];
 
     // Find user by username to access the phone number
-    const userData = await UserService.getUserData(username);
+    const userData = await UserService.getUserDataByIdentifier(username);
     if (!userData) {
       return redirect("/auth/reset-password");
     }
@@ -65,7 +66,7 @@ export default async function ResetPasswordPage({ searchParams }: PropsType) {
         <AuthVerifyFormErrorUnit />
       ) : (
         <AuthFormContext
-          formType={AuthFormTypes.ResetPassword}
+          formType={FormTypes.ResetPassword}
           formAction={resetPassword}
           resetPasswordFormStep={step}
         >

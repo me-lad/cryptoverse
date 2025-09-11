@@ -2,24 +2,24 @@
 import Link from "next/link";
 
 // Local imports
-import { signinFormFields } from "@/lib/constants";
+import { signinFormFields } from "~constants/forms";
 import { signin } from "@/lib/actions/auth/signin.controller";
-import { AuthFormTypes } from "@/lib/types";
+import { FormTypes } from "~constants/forms";
 import AuthPageWrapper from "@/components/modules/auth-page/AuthPage.wrapper";
 import AuthFormContext from "@/components/modules/auth-page/AuthForm.context";
 import AuthFormUnit from "@/components/modules/auth-page/AuthForm.unit";
 
 // Functional component
-export default function SigninPage() {
+export default async function SigninPage() {
   return (
     <AuthPageWrapper
       iconPath="/svgs/logo/logo.svg"
       subtitleText="Sign in to your account throw the bottom form"
     >
-      <AuthFormContext formType={AuthFormTypes.Signin} formAction={signin}>
+      <AuthFormContext formType={FormTypes.Signin} formAction={signin}>
         <AuthFormUnit
           submitButtonText="Sign in"
-          formType={AuthFormTypes.Signin}
+          formType={FormTypes.Signin}
           formFields={signinFormFields}
         />
 

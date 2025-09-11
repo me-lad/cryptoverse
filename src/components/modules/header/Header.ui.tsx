@@ -1,5 +1,3 @@
-// Directives
-
 // Packages imports
 import Image from "next/image";
 import Link from "next/link";
@@ -9,8 +7,6 @@ import clsx from "clsx";
 import { flexBetween } from "@/lib/shared/tw-custom";
 import HeaderSearchFn from "./HeaderSearch.fn";
 import HeaderAccountFn from "./HeaderAccount.fn";
-
-// Local types
 
 // Functional component
 export default function HeaderUi() {
@@ -29,7 +25,7 @@ export default function HeaderUi() {
             />
           </Link>
         </div>
-        {/* Navbar */}|
+        {/* Navbar */}
         <div>
           <nav>
             <ul className="flex items-center gap-8 pt-1">
@@ -44,7 +40,7 @@ export default function HeaderUi() {
       </div>
 
       {/* Search & Account center */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-6">
         {/* Search button & Search modal */}
         <HeaderSearchFn />
 

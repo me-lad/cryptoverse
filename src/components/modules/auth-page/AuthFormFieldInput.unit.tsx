@@ -2,18 +2,19 @@
 "use client";
 
 // Packages imports
+import { Input } from "@/components/ui/shadcn/input";
 import clsx from "clsx";
 
 // Local imports
-import { Input } from "@/components/ui/shadcn/input";
-import { AuthFormFieldTypes, type AuthFormFieldType } from "@/lib/types";
+import type { FormFieldType } from "~types/form";
+import { FormFieldTypes } from "~constants/forms";
 import AuthFormFieldTogglerPasswordFn from "./AuthFormFieldTogglerPassword.fn";
 import AuthFormFieldIconUnit from "./AuthFormFieldIcon.unit";
 
 // Functional component
-export default function AuthFormFieldInputUnit({ type, name, placeholder }: AuthFormFieldType) {
+export default function AuthFormFieldInputUnit({ type, name, placeholder }: FormFieldType) {
   const copyPasteBlocker = (event: React.ClipboardEvent) => {
-    if (type === AuthFormFieldTypes.Password) {
+    if (type === FormFieldTypes.Password) {
       event.preventDefault();
       return false;
     }
@@ -48,7 +49,7 @@ export default function AuthFormFieldInputUnit({ type, name, placeholder }: Auth
       </label>
 
       {/* Password visibility toggler */}
-      {type === AuthFormFieldTypes.Password && (
+      {type === FormFieldTypes.Password && (
         <AuthFormFieldTogglerPasswordFn parentInputID={`${name}-input`} />
       )}
     </>

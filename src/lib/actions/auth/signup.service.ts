@@ -3,58 +3,57 @@ import "server-only";
 
 // Local imports
 import type { UserModelType } from "@/lib/models/User/types";
-import { AuthFormStatusTypes, type AuthFormStateType } from "@/lib/types";
-import { AuthMessages } from "./auth.messages";
-import { AuthService } from "./auth.service";
+import type { FormStateType } from "~types/form";
+import { AuthMessages } from "~constants/messages";
 import { connectToDB } from "@/lib/configs/mongoose";
-import { catchErrorFormState } from "@/lib/constants";
-import UserService from "@/lib/services/UserService";
+import { catchErrorFormState, FormStatusTypes } from "~constants/forms";
+import { UserService } from "~services/user.service";
+import { doHash } from "~helpers/hash";
 
-class SignupService extends AuthService {
-  constructor() {
-    super();
+const signupUser = async (
+  username: string,
+  phoneNumber: string,
+  password: string,
+): Promise<FormStateType> => {
+  try {
+    await connectToDB();
+
+    // 1. Hash password
+    const hashedPassword = await doHash(password);
+
+    // 2. Determine user role based on collection length
+    const usersCollectionLength = await UserService.countUsers();
+    const isFirstUser = usersCollectionLength === 0;
+
+    // 3. Prepare user data
+    const userData: UserModelType = {
+      username,
+      phoneNumber,
+      password: hashedPassword,
+      isVerified: isFirstUser,
+      isRestricted: false,
+      role: isFirstUser ? "Admin" : "User",
+    };
+
+    // 4. Create user in DB
+    const createdUser = await UserService.createUser(userData);
+
+    // 5. Return appropriate result
+    return {
+      status: FormStatusTypes.Success,
+      toastNeed: true,
+      toastMessage: AuthMessages.Success.CompleteSignup,
+      redirectNeed: true,
+      redirectPath: createdUser.isVerified
+        ? "/auth/signin"
+        : `/auth/verify?username=${createdUser.username}`,
+    };
+  } catch (err) {
+    console.log("Error in Signup handler", err);
+    return catchErrorFormState;
   }
+};
 
-  async createUser(
-    username: string,
-    phoneNumber: string,
-    password: string,
-  ): Promise<AuthFormStateType> {
-    try {
-      await connectToDB();
-
-      // 1. Hash password
-      const hashedPassword = await this.passwordHasher(password);
-
-      // 2. Check DB user collection length to set user role
-      const usersCollectionLength = await UserService.countUsers();
-
-      // 3. Create user index in DB (isVerified: false)
-      const userData: UserModelType = {
-        username,
-        phoneNumber,
-        password: hashedPassword,
-        isVerified: usersCollectionLength === 0 ? true : false,
-        isRestricted: false,
-        role: usersCollectionLength === 0 ? "Admin" : "User",
-      };
-      const createdUser = await UserService.createUser(userData);
-
-      // 4. Return propriate result
-      return {
-        status: AuthFormStatusTypes.Success,
-        toastNeed: true,
-        toastMessage: AuthMessages.Success_CompleteSignup,
-        redirectNeed: true,
-        redirectPath: createdUser.isVerified
-          ? "/auth/signin"
-          : `/auth/verify?username=${createdUser.username}`,
-      };
-    } catch (err) {
-      console.log("Error in Signup services", err);
-      return catchErrorFormState;
-    }
-  }
-}
-
-export default new SignupService();
+export const SignupService = {
+  signupUser,
+} as const;

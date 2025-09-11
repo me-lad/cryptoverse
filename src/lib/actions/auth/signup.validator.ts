@@ -2,57 +2,57 @@
 import { z } from "zod";
 
 // Local imports
-import { AuthMessages } from "./auth.messages";
-import { AuthPatterns } from "./auth.patterns";
+import { AuthMessages } from "~constants/messages";
+import { AuthPatterns } from "~constants/patterns";
 
 export const SignupFormSchema = z
   .object({
     username: z
       .string()
       .min(4, {
-        error: `${AuthMessages.Error_FieldEmpty} (min-length: 4)`,
+        error: `${AuthMessages.Error.FieldEmpty} (min-length: 4)`,
         abort: true,
       })
-      .max(64, AuthMessages.Error_UsernameMaxLengthViolation)
+      .max(64, AuthMessages.Error.UsernameMaxLengthViolation)
       .regex(AuthPatterns.UsernameLetter, {
-        error: AuthMessages.Error_UsernameLetterCheck,
+        error: AuthMessages.Error.UsernameLetterCheck,
       })
       .trim(),
 
     phoneNumber: z
       .string()
-      .min(1, { error: AuthMessages.Error_FieldEmpty, abort: true })
-      .max(11, { error: AuthMessages.Error_InvalidPhoneNumber, abort: true })
+      .min(1, { error: AuthMessages.Error.FieldEmpty, abort: true })
+      .max(11, { error: AuthMessages.Error.InvalidPhoneNumber, abort: true })
       .regex(AuthPatterns.Phone, {
-        error: AuthMessages.Error_InvalidPhoneNumber,
+        error: AuthMessages.Error.InvalidPhoneNumber,
       })
       .trim(),
 
     password: z
       .string()
       .min(1, {
-        error: AuthMessages.Error_FieldEmpty,
+        error: AuthMessages.Error.FieldEmpty,
         abort: true,
       })
-      .max(64, AuthMessages.Error_PasswordLengthViolation)
+      .max(64, AuthMessages.Error.PasswordLengthViolation)
       .regex(AuthPatterns.PasswordLetter, {
-        error: AuthMessages.Error_PasswordLetterLack,
+        error: AuthMessages.Error.PasswordLetterLack,
       })
       .regex(AuthPatterns.PasswordCharacter, {
-        error: AuthMessages.Error_PasswordCharacterLack,
+        error: AuthMessages.Error.PasswordCharacterLack,
       })
       .regex(AuthPatterns.PasswordNumber, {
-        error: AuthMessages.Error_PasswordNumberLack,
+        error: AuthMessages.Error.PasswordNumberLack,
       })
       .trim(),
 
     passwordRepeat: z
       .string()
-      .min(1, AuthMessages.Error_FieldEmpty)
-      .max(64, AuthMessages.Error_PasswordLengthViolation)
+      .min(1, AuthMessages.Error.FieldEmpty)
+      .max(64, AuthMessages.Error.PasswordLengthViolation)
       .trim(),
   })
   .refine((data) => data.password === data.passwordRepeat, {
-    error: AuthMessages.Error_PasswordConfirmMismatch,
+    error: AuthMessages.Error.PasswordConfirmMismatch,
     path: ["passwordRepeat"],
   });

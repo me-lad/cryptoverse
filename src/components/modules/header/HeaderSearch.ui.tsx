@@ -13,7 +13,7 @@ export default function HeaderSearchUi() {
   return (
     <div className="relative">
       {/* Icon */}
-      <Button className="cursor-pointer" size="icon" variant="secondary">
+      <Button className="cursor-pointer" size="lg" variant="secondary">
         <Search strokeWidth={2.5} color="#fff" />
       </Button>
 

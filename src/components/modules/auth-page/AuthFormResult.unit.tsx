@@ -3,11 +3,11 @@
 
 // Packages imports
 import { useEffect, use } from "react";
-import { useRouter, redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
 // Local imports
-import { AuthFormStatusTypes, AuthFormTypes } from "@/lib/types";
+import { FormStatusTypes, FormTypes } from "~constants/forms";
 import { FormContext } from "./AuthForm.context";
 import { toastsCustomID } from "@/lib/configs/react-toastify";
 
@@ -19,14 +19,14 @@ export default function AuthFormResultUnit() {
   useEffect(() => {
     if (state.redirectNeed && state.toastNeed) {
       toast(state.toastMessage, {
-        type: state.status === AuthFormStatusTypes.Error ? "error" : "success",
+        type: state.status === FormStatusTypes.Error ? "error" : "success",
         autoClose: state.toastMessage.length >= 100 ? 25000 : 10000,
         onClose: () => state.redirectPath.startsWith("/") && router.push(state.redirectPath),
       });
 
       if (
-        activeForm === AuthFormTypes.ResetPassword &&
-        state.status === AuthFormStatusTypes.Success &&
+        activeForm === FormTypes.ResetPassword &&
+        state.status === FormStatusTypes.Success &&
         state.redirectPath === "2"
       ) {
         resetPasswordForm.setFormStep(state.redirectPath);
@@ -41,7 +41,7 @@ export default function AuthFormResultUnit() {
 
     if (state.toastNeed) {
       toast(state.toastMessage, {
-        type: state.status === AuthFormStatusTypes.Error ? "error" : "success",
+        type: state.status === FormStatusTypes.Error ? "error" : "success",
         toastId: toastsCustomID,
         autoClose: state.toastMessage.length >= 100 ? 25000 : 10000,
       });

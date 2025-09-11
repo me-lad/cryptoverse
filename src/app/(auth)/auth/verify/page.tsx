@@ -4,14 +4,12 @@ import { redirect } from "next/navigation";
 // Local imports
 import { connectToDB } from "@/lib/configs/mongoose";
 import { verify } from "@/lib/actions/auth/verify.controller";
-import { AuthFormTypes } from "@/lib/types";
-import { daysToMinutes, isDatePassedTime } from "@/lib/helpers";
+import { FormTypes } from "~constants/forms";
+import { UserService } from "~services/user.service";
 import AuthFormContext from "@/components/modules/auth-page/AuthForm.context";
 import AuthPageWrapper from "@/components/modules/auth-page/AuthPage.wrapper";
 import AuthVerifyFormFn from "@/components/modules/auth-page/AuthVerifyForm.fn";
 import AuthVerifyFormErrorUnit from "@/components/modules/auth-page/AuthVerifyFormError.unit";
-import RedirectClient from "@/components/modules/global/RedirectClient";
-import UserService from "@/lib/services/UserService";
 
 // Local types
 type PropsType = {
@@ -30,26 +28,11 @@ export default async function VerifyPage({ searchParams }: PropsType) {
 
   // 2. Check user account existence with given username
   await connectToDB();
-  const userToVerify = await UserService.getUserData(username);
+  const userToVerify = await UserService.getUserDataByIdentifier(username);
   if (!userToVerify) return redirect("/auth/signup");
 
   // 3. Check founded user to be unverified to access verify page
-  let isClientRedirectNeed = false;
-  if (userToVerify.isVerified) {
-    if (!userToVerify.refreshTokenExpiresAt) return redirect("/auth/signin");
-
-    const isRefreshTokenExpired = isDatePassedTime(
-      userToVerify.refreshTokenExpiresAt,
-      daysToMinutes(14),
-    );
-    if (isRefreshTokenExpired) return redirect("/auth/signin");
-
-    // @ts-expect-error
-    const isNotRecentlyUpdated = isDatePassedTime(userToVerify.updatedAt, 1);
-    if (isNotRecentlyUpdated) return redirect("/dashboard");
-
-    isClientRedirectNeed = true;
-  }
+  if (userToVerify.isVerified) return redirect("/auth/signin");
 
   return (
     <AuthPageWrapper
@@ -61,15 +44,11 @@ export default async function VerifyPage({ searchParams }: PropsType) {
       {userToVerify.isRestricted ? (
         <AuthVerifyFormErrorUnit />
       ) : (
-        <AuthFormContext formType={AuthFormTypes.Verify} formAction={verify}>
-          {isClientRedirectNeed ? (
-            <RedirectClient path="/auth/dashboard" delay={10000} />
-          ) : (
-            <AuthVerifyFormFn
-              phoneNumber={userToVerify.phoneNumber}
-              username={userToVerify.username}
-            />
-          )}
+        <AuthFormContext formType={FormTypes.Verify} formAction={verify}>
+          <AuthVerifyFormFn
+            phoneNumber={userToVerify.phoneNumber}
+            username={userToVerify.username}
+          />
         </AuthFormContext>
       )}
     </AuthPageWrapper>

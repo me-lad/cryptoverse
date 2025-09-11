@@ -7,7 +7,7 @@ import React from "react";
 import { usePathname } from "next/navigation";
 
 // Local imports
-import { footerLessRoutes } from "@/lib/constants";
+import { footerLessRoutes } from "~constants/routes";
 import FooterUi from "./Footer.ui";
 
 // Local types

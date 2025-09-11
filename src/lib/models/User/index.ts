@@ -1,13 +1,11 @@
 // Packages imports
 import mongoose, { Model } from "mongoose";
-import { cookies } from "next/headers";
 
 // Local imports
 import type { UserDocumentType } from "./types";
 import { UserRolesEnum } from "../types";
-import { daysToMillisecond, hoursToMillisecond } from "@/lib/helpers";
+import { daysToMillisecond, hoursToMillisecond } from "~helpers/time";
 import { connectToDB } from "@/lib/configs/mongoose";
-import AuthService from "@/lib/actions/auth/auth.service";
 
 class UserModel {
   private schema;
@@ -90,22 +88,6 @@ class UserModel {
     this.schema.pre("save", async function () {
       if (!this.isVerified && !this.expiresAt) {
         this.expiresAt = new Date(Date.now() + hoursToMillisecond(24));
-      }
-      if (this.refreshToken) {
-        try {
-          const cookieStore = await cookies();
-          const token = cookieStore.get("refresh_token")?.value;
-          let exp = Date.now() + daysToMillisecond(14);
-
-          if (token) {
-            const session = await AuthService.decrypt(token, AuthService.refreshTokenEncodedKey);
-            if (session) exp = Number(session.exp) * 1000;
-          }
-
-          this.refreshTokenExpiresAt = new Date(exp);
-        } catch {
-          this.refreshTokenExpiresAt = new Date(Date.now() + daysToMillisecond(14));
-        }
       }
     });
   }

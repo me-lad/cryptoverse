@@ -3,18 +3,15 @@
 import "server-only";
 
 // Local imports
-import { AuthFormStatusTypes, type AuthFormStateType, type SigninFormDataType } from "@/lib/types";
-import { AuthMessages } from "./auth.messages";
+import type { SigninFormDataType, FormStateType } from "~types/form";
+import { AuthMessages } from "~constants/messages";
 import { connectToDB } from "@/lib/configs/mongoose";
-import { catchErrorFormState } from "@/lib/constants";
-import { sanitizeFormData } from "@/lib/helpers";
-import SigninService from "./signin.service";
-import UserService from "@/lib/services/UserService";
+import { catchErrorFormState, FormStatusTypes } from "~constants/forms";
+import { sanitizeFormData } from "~helpers/sanitize";
+import { UserService } from "~services/user.service";
+import { SigninService } from "./signin.service";
 
-export async function signin(
-  state: AuthFormStateType,
-  formData: FormData,
-): Promise<AuthFormStateType> {
+export async function signin(state: FormStateType, formData: FormData): Promise<FormStateType> {
   // 1. Get form fields
   // @ts-expect-error
   const data: SigninFormDataType = Object.fromEntries(formData);
@@ -25,39 +22,39 @@ export async function signin(
   // 3. Form validation
   if (!sanitizedData.identifier && !sanitizedData.password) {
     return {
-      status: AuthFormStatusTypes.Error,
+      status: FormStatusTypes.Error,
       redirectNeed: false,
       toastNeed: false,
       properties: {
         identifier: {
-          errors: [AuthMessages.Error_FieldEmpty],
+          errors: [AuthMessages.Error.FieldEmpty],
         },
         password: {
-          errors: [AuthMessages.Error_FieldEmpty],
+          errors: [AuthMessages.Error.FieldEmpty],
         },
       },
     };
   }
   if (!sanitizedData.identifier) {
     return {
-      status: AuthFormStatusTypes.Error,
+      status: FormStatusTypes.Error,
       redirectNeed: false,
       toastNeed: false,
       properties: {
         identifier: {
-          errors: [AuthMessages.Error_FieldEmpty],
+          errors: [AuthMessages.Error.FieldEmpty],
         },
       },
     };
   }
   if (!sanitizedData.password) {
     return {
-      status: AuthFormStatusTypes.Error,
+      status: FormStatusTypes.Error,
       redirectNeed: false,
       toastNeed: false,
       properties: {
         password: {
-          errors: [AuthMessages.Error_FieldEmpty],
+          errors: [AuthMessages.Error.FieldEmpty],
         },
       },
     };
@@ -67,16 +64,16 @@ export async function signin(
     // 4. Get user DB document
     await connectToDB();
 
-    const userData = await UserService.getUserData(sanitizedData.identifier);
+    const userData = await UserService.getUserDataByIdentifier(sanitizedData.identifier);
 
     if (!userData) {
       return {
-        status: AuthFormStatusTypes.Error,
+        status: FormStatusTypes.Error,
         redirectNeed: false,
         toastNeed: false,
         properties: {
           password: {
-            errors: [AuthMessages.Error_SigninIncorrectData],
+            errors: [AuthMessages.Error.SigninIncorrectData],
           },
         },
       };
@@ -84,20 +81,20 @@ export async function signin(
 
     if (!userData?.isVerified) {
       return {
-        status: AuthFormStatusTypes.Error,
+        status: FormStatusTypes.Error,
         redirectNeed: true,
         redirectPath: `/auth/verify?username=${userData?.username}`,
         toastNeed: true,
-        toastMessage: AuthMessages.Error_SigninNotVerifiedAccount,
+        toastMessage: AuthMessages.Error.SigninNotVerifiedAccount,
       };
     }
 
     if (userData.isRestricted) {
       return {
-        status: AuthFormStatusTypes.Error,
+        status: FormStatusTypes.Error,
         redirectNeed: false,
         toastNeed: true,
-        toastMessage: AuthMessages.Error_SigninWithRestrictedAccount,
+        toastMessage: AuthMessages.Error.SigninWithRestrictedAccount,
       };
     }
 

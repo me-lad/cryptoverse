@@ -4,9 +4,9 @@ import mongoose, { Model } from "mongoose";
 // Local imports
 import type { OtpDocumentType } from "./types";
 import { OtpUsagesEnum } from "../types";
-import { AuthPatterns } from "@/lib/actions/auth/auth.patterns";
-import { AuthMessages } from "@/lib/actions/auth/auth.messages";
-import { minutesToMillisecond } from "@/lib/helpers";
+import { AuthPatterns } from "~constants/patterns";
+import { AuthMessages } from "~constants/messages";
+import { minutesToMillisecond } from "~helpers/time";
 
 class OtpModel {
   private schema;
@@ -34,7 +34,7 @@ class OtpModel {
           required: true,
           validate: {
             validator: (value: string) => AuthPatterns.Phone.test(value),
-            message: AuthMessages.Error_InvalidPhoneNumber,
+            message: AuthMessages.Error.InvalidPhoneNumber,
           },
         },
         code: {
@@ -61,7 +61,7 @@ class OtpModel {
           default: 0,
         },
       },
-      { timestamps: true },
+      { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } },
     );
   }
 
@@ -70,10 +70,6 @@ class OtpModel {
     this.schema.pre("save", function (next) {
       if (this.usage && this.usage === "ResetPassword") {
         this.expiresAt = new Date(Date.now() + minutesToMillisecond(6));
-      }
-
-      if (this.usageCount && this.usageCount >= 3) {
-        this.expiresAt = new Date(Date.now() - minutesToMillisecond(2));
       }
       next();
     });

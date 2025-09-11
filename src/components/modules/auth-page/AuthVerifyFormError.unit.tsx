@@ -5,7 +5,7 @@
 import { useLayoutEffect } from "react";
 
 // Local imports
-import { AuthMessages } from "@/lib/actions/auth/auth.messages";
+import { AuthMessages } from "~constants/messages";
 
 // Functional component
 export default function AuthVerifyFormErrorUnit() {
@@ -18,7 +18,7 @@ export default function AuthVerifyFormErrorUnit() {
 
   return (
     <p className="text-status-error-200 mt-6 text-center text-xl font-bold tracking-wider">
-      {AuthMessages.Error_VerificationPermanentLimit}
+      {AuthMessages.Error.VerificationPermanentLimit}
     </p>
   );
 }

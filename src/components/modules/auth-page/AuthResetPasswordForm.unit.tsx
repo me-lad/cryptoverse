@@ -6,7 +6,7 @@ import { use } from "react";
 
 // Local imports
 import { FormContext } from "./AuthForm.context";
-import { resetPasswordFormFields } from "@/lib/constants";
+import { resetPasswordFormFields } from "~constants/forms";
 import AuthFormUnit from "./AuthForm.unit";
 
 // Functional component

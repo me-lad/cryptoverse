@@ -5,13 +5,13 @@
 import { useEffect, useState, use } from "react";
 
 // Local imports
-import type { AuthFormFieldNamesType } from "@/lib/types";
-import AuthFormFieldErrorsUi from "./AuthFormFieldErrors.ui";
+import type { FormFieldNamesType } from "~types/form";
 import { FormContext } from "./AuthForm.context";
+import AuthFormFieldErrorsUi from "./AuthFormFieldErrors.ui";
 
 // Local types
 type ProsType = {
-  fieldName: AuthFormFieldNamesType;
+  fieldName: FormFieldNamesType;
 };
 
 // Functional component

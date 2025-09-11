@@ -2,8 +2,8 @@
 import { NextResponse } from "next/server";
 
 // Local imports
-import VerifyService from "@/lib/actions/auth/verify.service";
-import { AuthMessages } from "@/lib/actions/auth/auth.messages";
+import { VerifyService } from "@/lib/actions/auth/verify.service";
+import { AuthMessages } from "~constants/messages";
 
 export async function POST(req: Request) {
   const { username } = await req.json();
@@ -11,7 +11,7 @@ export async function POST(req: Request) {
   if (!username) {
     return NextResponse.json({
       success: false,
-      message: AuthMessages.Error_DataLack,
+      message: AuthMessages.Error.DataLack,
     });
   }
 

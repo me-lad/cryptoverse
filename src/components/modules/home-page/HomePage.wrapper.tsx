@@ -4,6 +4,7 @@
 
 // Local imports
 import HomePagePatternUnit from "./HomePagePattern.unit";
+import IntroUnit from "./sections/Intro.unit";
 
 // Local types
 
@@ -15,6 +16,7 @@ export default function HomePageWrapper() {
       <HomePagePatternUnit />
 
       {/* Page sections */}
+      <IntroUnit />
     </>
   );
 }

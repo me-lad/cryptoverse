@@ -2,18 +2,19 @@
 import { LockKeyhole, Phone, ShieldUser, User, BadgeCheck } from "lucide-react";
 
 // Local imports
-import { AuthFormFieldNames, type AuthFormFieldNamesType } from "@/lib/types";
+import type { FormFieldNamesType } from "~types/form";
+import { FormFieldNames } from "~constants/forms";
 
 // Local types
 type PropsType = {
-  fieldName: AuthFormFieldNamesType;
+  fieldName: FormFieldNamesType;
 };
 
 // Functional component
 export default function AuthFormFieldIconUnit({ fieldName }: PropsType) {
-  if (fieldName === AuthFormFieldNames.Username) return <User size={18} />;
-  if (fieldName === AuthFormFieldNames.Identifier) return <ShieldUser size={18} />;
-  if (fieldName === AuthFormFieldNames.PhoneNumber) return <Phone size={18} />;
-  if (fieldName === AuthFormFieldNames.Code) return <BadgeCheck size={18} />;
+  if (fieldName === FormFieldNames.Username) return <User size={18} />;
+  if (fieldName === FormFieldNames.Identifier) return <ShieldUser size={18} />;
+  if (fieldName === FormFieldNames.PhoneNumber) return <Phone size={18} />;
+  if (fieldName === FormFieldNames.Code) return <BadgeCheck size={18} />;
   return <LockKeyhole size={18} />;
 }

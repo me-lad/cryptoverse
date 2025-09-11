@@ -1,7 +1,7 @@
 // Local imports
-import { minutesToMillisecond } from "@/lib/helpers";
+import { minutesToMillisecond } from "~helpers/time";
 import AuthVerifyFormUi from "./AuthVerifyForm.ui";
-import VerifyService from "@/lib/actions/auth/verify.service";
+import { VerifyService } from "@/lib/actions/auth/verify.service";
 import AuthVerifyFormErrorUnit from "./AuthVerifyFormError.unit";
 import AuthVerifyFormOtpResendUnit from "./AuthVerifyFormOtpResend.unit";
 
