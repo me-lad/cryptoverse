@@ -20,7 +20,7 @@ const SubtitleItem: React.FC<LISTEntity> = ({
   return (
     <Link
       href={`/coin/${SYMBOL}`}
-      className={`${flexCenter} hover:bg-background h-full min-w-[10%] gap-4 rounded-xs`}
+      className={`${flexCenter} hover:bg-primary-800 h-full min-w-[10%] gap-4 rounded-xs transition-colors`}
     >
       <div>
         <Image
