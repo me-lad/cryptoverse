@@ -1,31 +1,34 @@
-import type { Metadata } from "next";
-import { IBM_Plex_Sans, Roboto } from "next/font/google";
-import clsx from "clsx";
+import type { Metadata } from 'next';
+import { IBM_Plex_Sans, Roboto } from 'next/font/google';
+import clsx from 'clsx';
 
-import { containerDefault } from "@/lib/shared/tw-custom";
-import HeaderFn from "@/components/modules/header/Header.fn";
-import FooterFn from "@/components/modules/footer/Footer.fn";
-import ReactToastify from "@/lib/configs/react-toastify";
-import "./globals.css";
+import ReactQueryProvider from '~configs/react-query';
+import ReactToastify from '~configs/react-toastify';
+import HeaderFn from '~core/layout/header/Header.fn';
+import FooterFn from '~core/layout/footer/Footer.fn';
+import '../lib/styles/global.css';
+import '../lib/styles/override.css';
+import '../lib/styles/utilities.css';
+import '../lib/styles/react-toastify.css';
 
 // Metadata
 export const metadata: Metadata = {
-  title: "Crypto Verse",
+  title: 'Crypto Verse',
   icons: {
-    icon: "/svgs/logo/logo.svg",
+    icon: '/svgs/logo/logo.svg',
   },
 };
 
 // Fonts
 const ibmPlexSans = IBM_Plex_Sans({
-  variable: "--font-ibm-plex-sans",
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700"],
+  variable: '--font-ibm-plex-sans',
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700'],
 });
 const roboto = Roboto({
-  variable: "--font-roboto",
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: '--font-roboto',
+  subsets: ['latin'],
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 });
 
 export default function RootLayout({
@@ -37,27 +40,24 @@ export default function RootLayout({
     <html
       lang="en"
       dir="ltr"
-      className="relative z-[2] min-h-screen min-w-screen overflow-x-hidden"
+      className="*:selection:bg-primary min-h-screen min-w-screen overflow-x-hidden *:selection:text-white"
     >
       <body
-        className={clsx(
-          ibmPlexSans.variable,
-          roboto.variable,
-          containerDefault,
-          "min-h-screen antialiased",
-        )}
+        className={clsx(ibmPlexSans.variable, roboto.variable, 'antialiased')}
       >
-        {/* Header */}
-        <HeaderFn />
+        <ReactQueryProvider>
+          {/* Header */}
+          <HeaderFn />
 
-        {/* Route interface */}
-        <main className="w-full">{children}</main>
+          {/* Route interface */}
+          <main className="w-full">{children}</main>
 
-        {/* Footer */}
-        <FooterFn />
+          {/* Footer */}
+          <FooterFn />
 
-        {/* Packages initialize */}
-        <ReactToastify />
+          {/* Packages initialize */}
+          <ReactToastify />
+        </ReactQueryProvider>
       </body>
     </html>
   );

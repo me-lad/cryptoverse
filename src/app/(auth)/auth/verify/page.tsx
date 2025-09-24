@@ -1,38 +1,39 @@
-// Packages imports
-import { redirect } from "next/navigation";
+// 📦 Third-Party imports
+import React from 'react';
+import { redirect } from 'next/navigation';
 
-// Local imports
-import { connectToDB } from "@/lib/configs/mongoose";
-import { verify } from "@/lib/actions/auth/verify.controller";
-import { FormTypes } from "~constants/forms";
-import { UserService } from "~services/user.service";
-import AuthFormContext from "@/components/modules/auth-page/AuthForm.context";
-import AuthPageWrapper from "@/components/modules/auth-page/AuthPage.wrapper";
-import AuthVerifyFormFn from "@/components/modules/auth-page/AuthVerifyForm.fn";
-import AuthVerifyFormErrorUnit from "@/components/modules/auth-page/AuthVerifyFormError.unit";
+// 📦 Internal imports
+import { connectToDB } from '~configs/mongoose';
+import { verify } from '~actions/auth/verify.controller';
+import { FormKinds } from '~constants/form';
+import { UserServices } from '~services/user';
+import AuthFormContext from '~modules/auth-page/AuthForm.context';
+import AuthPageWrapper from '~modules/auth-page/AuthPage.wrapper';
+import VerifyFormFn from '~modules/auth-page/form-containers/VerifyForm.fn';
+import AuthVerifyFormErrorUnit from '~modules/auth-page/form-parts/VerifyFormError';
 
-// Local types
-type PropsType = {
+// 🧾 Local types
+type PropsT = {
   searchParams: {
     [key: string]: string | string[] | undefined;
   };
 };
 
-// Functional component
-export default async function VerifyPage({ searchParams }: PropsType) {
+// ⚙️ Functional component
+const VerifyPage: React.FC<PropsT> = async ({ searchParams }) => {
   let { username } = await searchParams;
 
   // 1. Check username existence as search param
-  if (!username) return redirect("/auth/signup");
-  if (typeof username === "object") username = username[0];
+  if (!username) return redirect('/auth/signup');
+  if (typeof username === 'object') username = username[0];
 
   // 2. Check user account existence with given username
   await connectToDB();
-  const userToVerify = await UserService.getUserDataByIdentifier(username);
-  if (!userToVerify) return redirect("/auth/signup");
+  const userToVerify = await UserServices.getUserDataByIdentifier(username);
+  if (!userToVerify) return redirect('/auth/signup');
 
   // 3. Check founded user to be unverified to access verify page
-  if (userToVerify.isVerified) return redirect("/auth/signin");
+  if (userToVerify.isVerified) return redirect('/auth/signin');
 
   return (
     <AuthPageWrapper
@@ -44,8 +45,8 @@ export default async function VerifyPage({ searchParams }: PropsType) {
       {userToVerify.isRestricted ? (
         <AuthVerifyFormErrorUnit />
       ) : (
-        <AuthFormContext formType={FormTypes.Verify} formAction={verify}>
-          <AuthVerifyFormFn
+        <AuthFormContext formType={FormKinds.Verify} formAction={verify}>
+          <VerifyFormFn
             phoneNumber={userToVerify.phoneNumber}
             username={userToVerify.username}
           />
@@ -53,4 +54,5 @@ export default async function VerifyPage({ searchParams }: PropsType) {
       )}
     </AuthPageWrapper>
   );
-}
+};
+export default VerifyPage;

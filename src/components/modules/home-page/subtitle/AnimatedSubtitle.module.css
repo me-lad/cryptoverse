@@ -1,0 +1,15 @@
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-marquee {
+  min-width: 200%;
+  animation: marquee 60s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+}

@@ -5,4 +5,5 @@ export const AuthPatterns = {
   PasswordCharacter: /[^a-zA-Z0-9]/,
   UsernameLetter: /^[A-Za-z]+$/,
   ObjectId: /^[a-f\d]{24}$/i,
+  Email: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
 } as const;

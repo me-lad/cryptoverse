@@ -44,3 +44,13 @@ export const durationToSeconds = (duration: string): number => {
       throw new Error(`Unsupported time unit: "${unit}"`);
   }
 };
+
+export const formatDate = (ms: number): string => {
+  const date = new Date(ms);
+
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = date.toLocaleString("en-US", { month: "short" });
+  const year = date.getFullYear();
+
+  return `${day} ${month}, ${year}`;
+};

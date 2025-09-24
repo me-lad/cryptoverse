@@ -1,8 +1,8 @@
-// Packages imports
-import mongoose, { Model } from "mongoose";
+// 📦 Third-Party imports
+import mongoose, { Model } from 'mongoose';
 
-// Local imports
-import { BlockSourcesEnum, type BlockedNumberDocumentType } from "./types";
+// 📦 Internal imports
+import { BlockSourcesEnum, type BlockedNumberDocumentType } from './types';
 
 class BlockedNumberModel {
   private schema;
@@ -17,7 +17,7 @@ class BlockedNumberModel {
     this.schema ||= this.createSchema();
     return (
       (mongoose.models.BlockedNumber as Model<BlockedNumberDocumentType>) ||
-      mongoose.model<BlockedNumberDocumentType>("BlockedNumber", this.schema)
+      mongoose.model<BlockedNumberDocumentType>('BlockedNumber', this.schema)
     );
   }
 
@@ -37,7 +37,7 @@ class BlockedNumberModel {
         },
         blockedBy: {
           type: Schema.Types.ObjectId,
-          ref: "User",
+          ref: 'User',
         },
         blockedAt: {
           type: Date,
@@ -50,13 +50,17 @@ class BlockedNumberModel {
         source: {
           type: String,
           enum: BlockSourcesEnum,
-          default: "Otp",
+          default: 'Otp',
         },
         note: {
           type: String,
         },
       },
-      { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } },
+      {
+        timestamps: true,
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true },
+      },
     );
   }
 }

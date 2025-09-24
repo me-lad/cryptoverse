@@ -1,12 +1,12 @@
-// Local imports
-import AuthAccessControl from "@/components/modules/global/AccessControl.Auth";
+// 📦 Internal imports
+import { AuthAccessControl } from '~core/global/access-controls';
 
-// Local types
-interface PropsType {
+// 🧾 Local types
+interface PropsT {
   children: React.ReactNode;
 }
 
-// Functional component
-export default function AuthLayout({ children }: PropsType) {
+// ⚙️ Functional component
+export default function AuthLayout({ children }: PropsT) {
   return <AuthAccessControl>{children}</AuthAccessControl>;
 }

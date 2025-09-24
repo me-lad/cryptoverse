@@ -1,20 +1,20 @@
-// Directives
-import "server-only";
+// 📌 Directives
+import 'server-only';
 
-// Local imports
-import type { UserModelType } from "@/lib/models/User/types";
-import type { FormStateType } from "~types/form";
-import { AuthMessages } from "~constants/messages";
-import { connectToDB } from "@/lib/configs/mongoose";
-import { catchErrorFormState, FormStatusTypes } from "~constants/forms";
-import { UserService } from "~services/user.service";
-import { doHash } from "~helpers/hash";
+// 📦 Internal imports
+import type { UserModelType } from '~models/User/types';
+import type { FormStateT } from '~types/form';
+import { AuthMessages } from '~constants/messages';
+import { connectToDB } from '~configs/mongoose';
+import { catchErrorFormState, FormStatusKinds } from '~constants/form';
+import { UserServices } from '~services/user';
+import { doHash } from '~helpers/hash';
 
 const signupUser = async (
   username: string,
   phoneNumber: string,
   password: string,
-): Promise<FormStateType> => {
+): Promise<FormStateT> => {
   try {
     await connectToDB();
 
@@ -22,7 +22,7 @@ const signupUser = async (
     const hashedPassword = await doHash(password);
 
     // 2. Determine user role based on collection length
-    const usersCollectionLength = await UserService.countUsers();
+    const usersCollectionLength = await UserServices.countUsers();
     const isFirstUser = usersCollectionLength === 0;
 
     // 3. Prepare user data
@@ -32,24 +32,24 @@ const signupUser = async (
       password: hashedPassword,
       isVerified: isFirstUser,
       isRestricted: false,
-      role: isFirstUser ? "Admin" : "User",
+      role: isFirstUser ? 'Admin' : 'User',
     };
 
     // 4. Create user in DB
-    const createdUser = await UserService.createUser(userData);
+    const createdUser = await UserServices.createUser(userData);
 
     // 5. Return appropriate result
     return {
-      status: FormStatusTypes.Success,
+      status: FormStatusKinds.Success,
       toastNeed: true,
       toastMessage: AuthMessages.Success.CompleteSignup,
       redirectNeed: true,
       redirectPath: createdUser.isVerified
-        ? "/auth/signin"
+        ? '/auth/signin'
         : `/auth/verify?username=${createdUser.username}`,
     };
   } catch (err) {
-    console.log("Error in Signup handler", err);
+    console.log('Error in Signup handler', err);
     return catchErrorFormState;
   }
 };

@@ -1,22 +1,29 @@
-// Directives
+// 📦 Internal imports
+import Pattern from './background-pattern/Pattern';
+import AnimatedSubtitleFn from './subtitle/AnimatedSubtitle.fn';
+import ExchangeDataFn from './exchange-data/ExchangeData.fn';
+import Intro from './intro/Intro';
+import WhyUs from './why-us/WhyUs';
+import UserReviews from './user-reviews/UserReviews';
+import LatestNews from './latest-news/LatestNews';
 
-// Packages imports
-
-// Local imports
-import HomePagePatternUnit from "./HomePagePattern.unit";
-import IntroUnit from "./sections/Intro.unit";
-
-// Local types
-
-// Functional component
-export default function HomePageWrapper() {
+// ⚙️ Functional component
+const HomePageWrapper = () => {
   return (
     <>
       {/* Page top pattern */}
-      <HomePagePatternUnit />
+      <Pattern />
 
       {/* Page sections */}
-      <IntroUnit />
+      <Intro />
+      <ExchangeDataFn />
+      <WhyUs />
+      <UserReviews />
+      <LatestNews />
+
+      {/* Sticky animated subtitle */}
+      <AnimatedSubtitleFn />
     </>
   );
-}
+};
+export default HomePageWrapper;

@@ -1,34 +1,37 @@
-// Directives
-"use server";
-import "server-only";
+// 📌 Directives
+'use server';
+import 'server-only';
 
-// Packages imports
-import { treeifyError } from "zod";
+// 📦 Third-Party imports
+import { treeifyError } from 'zod';
 
-// Local imports
-import type { FormStateType, SignupFormDataType } from "~types/form";
-import { SignupFormSchema } from "./signup.validator";
-import { connectToDB } from "@/lib/configs/mongoose";
-import { AuthMessages } from "~constants/messages";
-import { catchErrorFormState, FormStatusTypes } from "~constants/forms";
-import { UserService } from "~services/user.service";
-import { BlockedNumberService } from "~services/blockedNumber.service";
-import { sanitizeFormData } from "~helpers/sanitize";
-import { SignupService } from "./signup.service";
+// 📦 Internal imports
+import type { FormStateT, SignupFormDataT } from '~types/form';
+import { SignupFormSchema } from './signup.validator';
+import { connectToDB } from '~configs/mongoose';
+import { AuthMessages } from '~constants/messages';
+import { catchErrorFormState, FormStatusKinds } from '~constants/form';
+import { UserServices } from '~services/user';
+import { BlockedNumberServices } from '~services/blockedNumber';
+import { sanitizeFormData } from '~helpers/sanitize';
+import { SignupService } from './signup.service';
 
-export async function signup(state: FormStateType, formData: FormData): Promise<FormStateType> {
+export async function signup(
+  state: FormStateT,
+  formData: FormData,
+): Promise<FormStateT> {
   // 1. Get form fields
   // @ts-expect-error
-  const data: SignupFormDataType = Object.fromEntries(formData);
+  const data: SignupFormDataT = Object.fromEntries(formData);
 
   // 2. Sanitize form
-  const sanitizedData = sanitizeFormData<SignupFormDataType>(data);
+  const sanitizedData = sanitizeFormData<SignupFormDataT>(data);
 
   // 3. Form validation
   const validatedFields = SignupFormSchema.safeParse(sanitizedData);
   if (!validatedFields.success) {
     return {
-      status: FormStatusTypes.Error,
+      status: FormStatusKinds.Error,
       redirectNeed: false,
       toastNeed: false,
       properties: treeifyError(validatedFields.error).properties,
@@ -40,12 +43,12 @@ export async function signup(state: FormStateType, formData: FormData): Promise<
     await connectToDB();
 
     // 4. Check phone number to be unblocked
-    const phoneNumberBlockStatus = await BlockedNumberService.checkBlockStatus(
+    const phoneNumberBlockStatus = await BlockedNumberServices.checkBlockStatus(
       validatedFields.data.phoneNumber,
     );
-    if (phoneNumberBlockStatus === "Blocked") {
+    if (phoneNumberBlockStatus === 'Blocked') {
       return {
-        status: FormStatusTypes.Error,
+        status: FormStatusKinds.Error,
         redirectNeed: false,
         toastNeed: true,
         toastMessage: AuthMessages.Error.VerificationPermanentLimit,
@@ -53,10 +56,12 @@ export async function signup(state: FormStateType, formData: FormData): Promise<
     }
 
     // 5. Check user existence in DB (phone number | username)
-    const userExistence = await UserService.getUserDataByIdentifier(validatedFields.data.username);
+    const userExistence = await UserServices.getUserDataByIdentifier(
+      validatedFields.data.username,
+    );
     if (userExistence) {
-      const returningObject: FormStateType = {
-        status: FormStatusTypes.Error,
+      const returningObject: FormStateT = {
+        status: FormStatusKinds.Error,
         redirectNeed: false,
         toastNeed: false,
         properties: {},
@@ -82,7 +87,7 @@ export async function signup(state: FormStateType, formData: FormData): Promise<
       validatedFields.data.password,
     );
   } catch (err) {
-    console.log("Error in signup controller ->", err);
+    console.log('Error in signup controller ->', err);
     return catchErrorFormState;
   }
 }

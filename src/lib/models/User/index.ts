@@ -1,11 +1,11 @@
-// Packages imports
-import mongoose, { Model } from "mongoose";
+// 📦 Third-Party imports
+import mongoose, { Model } from 'mongoose';
 
-// Local imports
-import type { UserDocumentType } from "./types";
-import { UserRolesEnum } from "../types";
-import { daysToMillisecond, hoursToMillisecond } from "~helpers/time";
-import { connectToDB } from "@/lib/configs/mongoose";
+// 📦 Internal imports
+import type { UserDocumentType } from './types';
+import { UserRolesEnum } from '../types';
+import { daysToMillisecond, hoursToMillisecond } from '~helpers/time';
+import { connectToDB } from '~configs/mongoose';
 
 class UserModel {
   private schema;
@@ -22,7 +22,7 @@ class UserModel {
     this.schema ||= this.createSchema();
     return (
       (mongoose.models.User as Model<UserDocumentType>) ||
-      mongoose.model<UserDocumentType>("User", this.schema)
+      mongoose.model<UserDocumentType>('User', this.schema)
     );
   }
 
@@ -52,7 +52,7 @@ class UserModel {
         role: {
           type: String,
           enum: UserRolesEnum,
-          default: "User",
+          default: 'User',
         },
         isVerified: {
           type: Boolean,
@@ -70,7 +70,7 @@ class UserModel {
         },
         sessionId: {
           type: Schema.Types.ObjectId,
-          ref: "Session",
+          ref: 'Session',
         },
         expiresAt: {
           type: Date,
@@ -79,13 +79,17 @@ class UserModel {
           type: Date,
         },
       },
-      { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } },
+      {
+        timestamps: true,
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true },
+      },
     );
   }
 
   private attachHooks() {
     this.schema ||= this.createSchema();
-    this.schema.pre("save", async function () {
+    this.schema.pre('save', async function () {
       if (!this.isVerified && !this.expiresAt) {
         this.expiresAt = new Date(Date.now() + hoursToMillisecond(24));
       }
@@ -105,9 +109,9 @@ class UserModel {
           partialFilterExpression: { isVerified: false },
         },
       );
-      console.log("TTL index for unverified users created.");
+      console.log('TTL index for unverified users created.');
     } catch (err) {
-      console.log("Failed to create TTL index:", err);
+      console.log('Failed to create TTL index:', err);
     }
   }
 }

@@ -1,10 +1,10 @@
-export type OtpCheckerResultType =
-  | { status: "Allowed" }
-  | { status: "Waiting"; referenceTime: Date; isTemporaryLimit?: true }
-  | { status: "Limited" }
-  | { status: "Error"; message: string };
+export type OtpCheckerResultT =
+  | { status: 'Allowed' }
+  | { status: 'Waiting'; referenceTime: Date; isTemporaryLimit?: true }
+  | { status: 'Limited' }
+  | { status: 'Error'; message: string };
 
-export type OtpResendResultType =
+export type OtpResendResultT =
   | { success: true; newReferenceTime: Date }
   | {
       success: false;

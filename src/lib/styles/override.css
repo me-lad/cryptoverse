@@ -1,0 +1,23 @@
+img {
+  user-select: none;
+}
+
+* {
+  scrollbar-width: thin; /* Options: auto, thin, none */
+  scrollbar-color: var(--neutral-200) #252525; /* thumb color, track color */
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #252525;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #252525;
+  border-radius: 4px;
+  border: 1px solid #f0f0f0;
+}

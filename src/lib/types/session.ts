@@ -32,8 +32,14 @@ interface UnSuccessfulSessionCreation {
   success: false;
 }
 
-export type AccessSessionVerificationResultType = AuthenticatedSession | UnAuthenticatedSession;
+export type AccessSessionVerificationResultT =
+  | AuthenticatedSession
+  | UnAuthenticatedSession;
 
-export type RefreshSessionVerificationResultType = AllowedRefreshSession | UnAllowedRefreshSession;
+export type RefreshSessionVerificationResultT =
+  | AllowedRefreshSession
+  | UnAllowedRefreshSession;
 
-export type SessionCreationResultType = SuccessfulSessionCreation | UnSuccessfulSessionCreation;
+export type SessionCreationResultT =
+  | SuccessfulSessionCreation
+  | UnSuccessfulSessionCreation;

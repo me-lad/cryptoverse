@@ -20,10 +20,17 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "~types/*": ["./src/lib/types/*"],
+      "~core/*": ["./src/components/core/*"],
+      "~modules/*": ["./src/components/modules/*"],
+      "~actions/*": ["./src/lib/actions/*"],
+      "~configs/*": ["./src/lib/configs/*"],
       "~constants/*": ["./src/lib/constants/*"],
       "~helpers/*": ["./src/lib/helpers/*"],
+      "~hooks/*": ["./src/lib/hooks/*"],
+      "~models/*": ["./src/lib/models/*"],
       "~services/*": ["./src/lib/services/*"],
+      "~styles/*": ["./src/lib/styles/*"],
+      "~types/*": ["./src/lib/types/*"],
       "~utils/*": ["./src/lib/utils/*"]
     }
   },

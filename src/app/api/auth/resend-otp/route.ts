@@ -1,9 +1,9 @@
-// Packages imports
-import { NextResponse } from "next/server";
+// 📦 Third-Party imports
+import { NextResponse } from 'next/server';
 
-// Local imports
-import { VerifyService } from "@/lib/actions/auth/verify.service";
-import { AuthMessages } from "~constants/messages";
+// 📦 Internal imports
+import { VerifyService } from '~actions/auth/verify.service';
+import { AuthMessages } from '~constants/messages';
 
 export async function POST(req: Request) {
   const { username } = await req.json();

@@ -1,17 +1,17 @@
-import type { FormStateType } from "./form";
-import type { FormTypesType } from "./form";
-import type { ResetPasswordFormStepType } from "./form";
+import type { FormStateT } from './form';
+import type { FormKindsT } from './form';
+import type { ResetPasswordFormStepT } from './form';
 
-export interface FormContextType {
-  state: FormStateType;
+export interface FormContextT {
+  state: FormStateT;
   pending: boolean;
-  activeForm?: FormTypesType;
+  activeForm?: FormKindsT;
   verifyForm: {
     otp: string;
     setOtp: (value: string) => void;
   };
   resetPasswordForm: {
-    formStep: ResetPasswordFormStepType;
-    setFormStep: (step: ResetPasswordFormStepType) => void;
+    formStep: ResetPasswordFormStepT;
+    setFormStep: (step: ResetPasswordFormStepT) => void;
   };
 }

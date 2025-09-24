@@ -1,31 +1,32 @@
-// Packages imports
-import Link from "next/link";
+// 📦 Third-Party imports
+import Link from 'next/link';
 
-// Local imports
-import { FormTypes, signupFormFields } from "~constants/forms";
-import { signup } from "@/lib/actions/auth/signup.controller";
-import AuthPageWrapper from "@/components/modules/auth-page/AuthPage.wrapper";
-import AuthFormContext from "@/components/modules/auth-page/AuthForm.context";
-import AuthFormUnit from "@/components/modules/auth-page/AuthForm.unit";
+// 📦 Internal imports
+import { FormKinds, signupFormFields } from '~constants/form';
+import { signup } from '~actions/auth/signup.controller';
+import AuthPageWrapper from '~modules/auth-page/AuthPage.wrapper';
+import AuthFormContext from '~modules/auth-page/AuthForm.context';
+import Form from '~modules/auth-page/form-containers/Form';
 
-// Functional component
-export default function SignupPage() {
+// ⚙️ Functional component
+const SignupPage = () => {
   return (
     <AuthPageWrapper
       iconPath="/svgs/logo/logo.svg"
       subtitleText="Please enter required data to create your account"
     >
-      <AuthFormContext formType={FormTypes.Signup} formAction={signup}>
-        <AuthFormUnit formFields={signupFormFields} submitButtonText="Sign up" />
+      <AuthFormContext formType={FormKinds.Signup} formAction={signup}>
+        <Form formFields={signupFormFields} submitButtonText="Sign up" />
 
         {/* Signin page link */}
         <p className="mt-4 text-center">
           Already have an account ?
-          <Link className="text-primary ml-2 font-medium" href={"/auth/signin"}>
+          <Link className="text-primary ml-2 font-medium" href={'/auth/signin'}>
             Sign in
           </Link>
         </p>
       </AuthFormContext>
     </AuthPageWrapper>
   );
-}
+};
+export default SignupPage;

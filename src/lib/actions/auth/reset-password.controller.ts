@@ -1,36 +1,36 @@
-// Directives
-"use server";
-import "server-only";
+// 📌 Directives
+'use server';
+import 'server-only';
 
-// Packages imports
-import { treeifyError } from "zod";
+// 📦 Third-Party imports
+import { treeifyError } from 'zod';
 
-// Local imports
-import type { ResetPasswordFormDataType, FormStateType } from "~types/form";
-import { AuthMessages } from "~constants/messages";
-import { ResetPasswordFormSchema } from "./reset-password.validator";
-import { FormStatusTypes, catchErrorFormState } from "~constants/forms";
-import { sanitizeFormData } from "~helpers/sanitize";
-import { ResetPasswordService } from "./reset-password.service";
+// 📦 Internal imports
+import type { ResetPasswordFormDataT, FormStateT } from '~types/form';
+import { AuthMessages } from '~constants/messages';
+import { ResetPasswordFormSchema } from './reset-password.validator';
+import { FormStatusKinds, catchErrorFormState } from '~constants/form';
+import { sanitizeFormData } from '~helpers/sanitize';
+import { ResetPasswordService } from './reset-password.service';
 
 export async function resetPassword(
-  state: FormStateType,
+  state: FormStateT,
   formData: FormData,
-): Promise<FormStateType> {
+): Promise<FormStateT> {
   // 1. Get form fields
   // @ts-expect-error
-  const data: ResetPasswordFormDataType = Object.fromEntries(formData);
+  const data: ResetPasswordFormDataT = Object.fromEntries(formData);
 
   // 2. Sanitize form
-  const sanitizedData = sanitizeFormData<ResetPasswordFormDataType>(data);
+  const sanitizedData = sanitizeFormData<ResetPasswordFormDataT>(data);
 
   // 3. Check the reset process step
   if (!sanitizedData.formStep) catchErrorFormState;
 
-  if (sanitizedData.formStep === "1") {
+  if (sanitizedData.formStep === '1') {
     if (!sanitizedData.identifier) {
       return {
-        status: FormStatusTypes.Error,
+        status: FormStatusKinds.Error,
         redirectNeed: false,
         toastNeed: false,
         properties: {
@@ -41,15 +41,17 @@ export async function resetPassword(
       };
     }
 
-    return await ResetPasswordService.sendVerificationCode(sanitizedData.identifier);
+    return await ResetPasswordService.sendVerificationCode(
+      sanitizedData.identifier,
+    );
   }
 
-  if (sanitizedData.formStep === "2") {
+  if (sanitizedData.formStep === '2') {
     // 4. Form validation
     const validatedFields = ResetPasswordFormSchema.safeParse(sanitizedData);
     if (!validatedFields.success) {
       return {
-        status: FormStatusTypes.Error,
+        status: FormStatusKinds.Error,
         redirectNeed: false,
         toastNeed: false,
         properties: treeifyError(validatedFields.error).properties,

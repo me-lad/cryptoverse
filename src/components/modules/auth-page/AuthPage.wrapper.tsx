@@ -1,17 +1,17 @@
-// Packages imports
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import clsx from "clsx";
-import { ChevronLeft } from "lucide-react";
+// 📦 Third-Party imports
+import { ChevronLeft } from 'lucide-react';
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import clsx from 'clsx';
 
-// Local imports
-import { flexCenter } from "@/lib/shared/tw-custom";
-import { Button } from "@/components/ui/shadcn/button";
-import AuthPagePatternUnit from "./AuthPagePattern.unit";
+// 📦 Internal imports
+import { flexCenter } from '~styles/tw-custom';
+import { Button } from '~core/ui/shadcn/button';
+import Pattern from './background-pattern/Pattern';
 
-// Local types
-type PropsType = {
+// 🧾 Local types
+type PropsT = {
   iconPath: string;
   subtitleText: string;
   backButtonVisibility?: boolean;
@@ -19,29 +19,29 @@ type PropsType = {
   children: React.ReactNode;
 };
 
-// Functional component
-export default function AuthPageView({
+// ⚙️ Functional component
+const AuthPageWrapper: React.FC<PropsT> = ({
   iconPath,
   subtitleText,
   backButtonVisibility,
   backButtonPath,
   children,
-}: PropsType) {
+}) => {
   return (
     <>
       {/* Page pattern */}
-      <AuthPagePatternUnit />
+      <Pattern />
 
       {/* Page content */}
-      <div className={clsx("relative z-[2] h-screen w-full", flexCenter)}>
-        <div className="border-t-primary h-fit w-fit max-w-4/6 overflow-x-hidden rounded-md border border-t-2 border-neutral-800 bg-[rgba(0,0,0,0.15)] px-36 py-12 backdrop-brightness-105">
+      <div className={clsx('relative z-[2] h-screen w-full', flexCenter)}>
+        <div className="border-t-primary h-fit w-fit max-w-3/6 overflow-x-hidden rounded-md border border-t-2 border-neutral-800 bg-[rgba(0,0,0,0.15)] px-36 py-12 backdrop-brightness-105">
           {/* Form heading */}
           <div>
             {/* Icon */}
-            <div className={clsx("gap-4 select-none", flexCenter)}>
+            <div className={clsx('gap-4 select-none', flexCenter)}>
               <Image
                 src="/svgs/auth-page/auth-pattern-form-left.svg"
-                alt={"Auth page"}
+                alt={'Auth page'}
                 width={98}
                 height={36}
               />
@@ -55,9 +55,14 @@ export default function AuthPageView({
             </div>
 
             {/* Title */}
-            <h2 className={clsx("mt-8 flex gap-2 text-3xl font-bold text-white", flexCenter)}>
+            <h2
+              className={clsx(
+                'mt-8 flex gap-2 text-3xl font-bold text-white',
+                flexCenter,
+              )}
+            >
               Welcome to
-              <Link href={"/"} className="text-primary">
+              <Link href={'/'} className="text-primary">
                 CryptoVerse
               </Link>
             </h2>
@@ -75,7 +80,7 @@ export default function AuthPageView({
           {backButtonVisibility && (
             <div className="absolute top-4 left-4">
               <Button variant="outline" size="default">
-                <Link className="flex" href={backButtonPath || "/"}>
+                <Link className="flex" href={backButtonPath || '/'}>
                   <ChevronLeft />
                   <span>Back</span>
                 </Link>
@@ -89,4 +94,5 @@ export default function AuthPageView({
       </div>
     </>
   );
-}
+};
+export default AuthPageWrapper;

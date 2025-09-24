@@ -1,23 +1,23 @@
-// Local imports
-import type { FormStateType } from "~types/form";
-import { AuthMessages } from "~constants/messages";
-import { catchErrorFormState, FormStatusTypes } from "~constants/forms";
-import { OtpService } from "~services/otp.service";
-import { verifyHash } from "~helpers/hash";
-import { AuthService } from "~services/auth.service";
+// 📦 Internal imports
+import type { FormStateT } from '~types/form';
+import { AuthMessages } from '~constants/messages';
+import { catchErrorFormState, FormStatusKinds } from '~constants/form';
+import { OtpServices } from '~services/otp';
+import { verifyHash } from '~helpers/hash';
+import { AuthServices } from '~services/auth';
 
 const signinUser = async (
   username: string,
   phoneNumber: string,
   enteredPassword: string,
   hashedPassword: string,
-  remember?: "on",
-): Promise<FormStateType> => {
+  remember?: 'on',
+): Promise<FormStateT> => {
   // 1. Password correctness checking
   const isPasswordTrue = await verifyHash(enteredPassword, hashedPassword);
   if (!isPasswordTrue) {
     return {
-      status: FormStatusTypes.Error,
+      status: FormStatusKinds.Error,
       redirectNeed: false,
       toastNeed: false,
       properties: {
@@ -27,17 +27,20 @@ const signinUser = async (
   }
 
   // 2. Create user sessions and redirect to dashboard
-  const sessionCreationResult = await AuthService.createUserSessions(username, remember);
+  const sessionCreationResult = await AuthServices.createUserSessions(
+    username,
+    remember,
+  );
   if (!sessionCreationResult) return catchErrorFormState;
 
-  await OtpService.deleteOTPs(phoneNumber);
+  await OtpServices.deleteOTPs(phoneNumber);
 
   return {
-    status: FormStatusTypes.Success,
+    status: FormStatusKinds.Success,
     toastNeed: true,
     toastMessage: AuthMessages.Success.CompleteSignin,
     redirectNeed: true,
-    redirectPath: "/dashboard",
+    redirectPath: '/dashboard',
   };
 };
 

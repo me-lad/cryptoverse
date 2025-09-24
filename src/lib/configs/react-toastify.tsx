@@ -1,16 +1,12 @@
-// Directives
+// 📦 Third-Party imports
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/ReactToastify.css';
 
-// Packages imports
-import { ToastContainer } from "react-toastify";
-import "react-toastify/ReactToastify.css";
+// 🧾 Local types
+export const toastsCustomID = 'verse-toast-2024';
 
-// Local imports
-
-// Local types
-export const toastsCustomID = "verse-toast-2024";
-
-// Functional component
-export default function ReactToastify() {
+// ⚙️ Functional component
+const ReactToastify = () => {
   return (
     <ToastContainer
       limit={5}
@@ -26,4 +22,5 @@ export default function ReactToastify() {
       closeOnClick
     />
   );
-}
+};
+export default ReactToastify;

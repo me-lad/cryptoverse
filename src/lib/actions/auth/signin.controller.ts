@@ -1,28 +1,31 @@
-// Directives
-"use server";
-import "server-only";
+// 📌 Directives
+'use server';
+import 'server-only';
 
-// Local imports
-import type { SigninFormDataType, FormStateType } from "~types/form";
-import { AuthMessages } from "~constants/messages";
-import { connectToDB } from "@/lib/configs/mongoose";
-import { catchErrorFormState, FormStatusTypes } from "~constants/forms";
-import { sanitizeFormData } from "~helpers/sanitize";
-import { UserService } from "~services/user.service";
-import { SigninService } from "./signin.service";
+// 📦 Internal imports
+import type { SigninFormDataT, FormStateT } from '~types/form';
+import { AuthMessages } from '~constants/messages';
+import { connectToDB } from '~configs/mongoose';
+import { catchErrorFormState, FormStatusKinds } from '~constants/form';
+import { sanitizeFormData } from '~helpers/sanitize';
+import { UserServices } from '~services/user';
+import { SigninService } from './signin.service';
 
-export async function signin(state: FormStateType, formData: FormData): Promise<FormStateType> {
+export async function signin(
+  state: FormStateT,
+  formData: FormData,
+): Promise<FormStateT> {
   // 1. Get form fields
   // @ts-expect-error
-  const data: SigninFormDataType = Object.fromEntries(formData);
+  const data: SigninFormDataT = Object.fromEntries(formData);
 
   // 2. Sanitize form
-  const sanitizedData = sanitizeFormData<SigninFormDataType>(data);
+  const sanitizedData = sanitizeFormData<SigninFormDataT>(data);
 
   // 3. Form validation
   if (!sanitizedData.identifier && !sanitizedData.password) {
     return {
-      status: FormStatusTypes.Error,
+      status: FormStatusKinds.Error,
       redirectNeed: false,
       toastNeed: false,
       properties: {
@@ -37,7 +40,7 @@ export async function signin(state: FormStateType, formData: FormData): Promise<
   }
   if (!sanitizedData.identifier) {
     return {
-      status: FormStatusTypes.Error,
+      status: FormStatusKinds.Error,
       redirectNeed: false,
       toastNeed: false,
       properties: {
@@ -49,7 +52,7 @@ export async function signin(state: FormStateType, formData: FormData): Promise<
   }
   if (!sanitizedData.password) {
     return {
-      status: FormStatusTypes.Error,
+      status: FormStatusKinds.Error,
       redirectNeed: false,
       toastNeed: false,
       properties: {
@@ -64,11 +67,13 @@ export async function signin(state: FormStateType, formData: FormData): Promise<
     // 4. Get user DB document
     await connectToDB();
 
-    const userData = await UserService.getUserDataByIdentifier(sanitizedData.identifier);
+    const userData = await UserServices.getUserDataByIdentifier(
+      sanitizedData.identifier,
+    );
 
     if (!userData) {
       return {
-        status: FormStatusTypes.Error,
+        status: FormStatusKinds.Error,
         redirectNeed: false,
         toastNeed: false,
         properties: {
@@ -81,7 +86,7 @@ export async function signin(state: FormStateType, formData: FormData): Promise<
 
     if (!userData?.isVerified) {
       return {
-        status: FormStatusTypes.Error,
+        status: FormStatusKinds.Error,
         redirectNeed: true,
         redirectPath: `/auth/verify?username=${userData?.username}`,
         toastNeed: true,
@@ -91,7 +96,7 @@ export async function signin(state: FormStateType, formData: FormData): Promise<
 
     if (userData.isRestricted) {
       return {
-        status: FormStatusTypes.Error,
+        status: FormStatusKinds.Error,
         redirectNeed: false,
         toastNeed: true,
         toastMessage: AuthMessages.Error.SigninWithRestrictedAccount,
@@ -106,7 +111,7 @@ export async function signin(state: FormStateType, formData: FormData): Promise<
       sanitizedData?.remember,
     );
   } catch (err) {
-    console.log("Error in signin controller ->", err);
+    console.log('Error in signin controller ->', err);
     return catchErrorFormState;
   }
 }

@@ -1,14 +1,16 @@
-import { FormFieldNames, FormFieldTypes, FormTypes } from "~constants/forms";
+import { FormFieldNames, FormFieldKinds, FormKinds } from '~constants/form';
 
-export type FormTypesType = (typeof FormTypes)[keyof typeof FormTypes];
+export type FormKindsT = (typeof FormKinds)[keyof typeof FormKinds];
 
-export type FormFieldTypesType = (typeof FormFieldTypes)[keyof typeof FormFieldTypes];
+export type FormFieldKindsT =
+  (typeof FormFieldKinds)[keyof typeof FormFieldKinds];
 
-export type FormFieldNamesType = (typeof FormFieldNames)[keyof typeof FormFieldNames];
+export type FormFieldNamesT =
+  (typeof FormFieldNames)[keyof typeof FormFieldNames];
 
-export interface FormFieldType {
+export interface FormFieldT {
   id: number;
-  name: FormFieldNamesType;
-  type: FormFieldTypesType;
+  name: FormFieldNamesT;
+  type: FormFieldKindsT;
   placeholder: string;
 }

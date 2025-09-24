@@ -1,22 +1,20 @@
 import { useState, useEffect } from "react";
 
 export function useScreenWidth() {
-  if (typeof window !== "undefined") {
-    const [screenWidth, setScreenWidth] = useState(window && window.innerWidth);
+  const [screenWidth, setScreenWidth] = useState(0);
+  const [hasMounted, setHasMounted] = useState(false);
 
-    useEffect(() => {
-      const handleResize = () => {
-        setScreenWidth(window.innerWidth);
-      };
+  useEffect(() => {
+    setHasMounted(true);
+    setScreenWidth(window.innerWidth);
 
-      window.addEventListener("resize", handleResize);
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
 
-      // Clean up the event listener when the component unmounts
-      return () => {
-        window.removeEventListener("resize", handleResize);
-      };
-    }, []); // Empty dependency array ensures the effect runs only once on mount
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-    return screenWidth;
-  }
+  return { screenWidth, hasMounted };
 }

@@ -1,12 +1,12 @@
-// Packages imports
-import mongoose, { Model } from "mongoose";
+// 📦 Third-Party imports
+import mongoose, { Model } from 'mongoose';
 
-// Local imports
-import type { OtpDocumentType } from "./types";
-import { OtpUsagesEnum } from "../types";
-import { AuthPatterns } from "~constants/patterns";
-import { AuthMessages } from "~constants/messages";
-import { minutesToMillisecond } from "~helpers/time";
+// 📦 Internal imports
+import type { OtpDocumentType } from './types';
+import { OtpUsagesEnum } from '../types';
+import { AuthPatterns } from '~constants/patterns';
+import { AuthMessages } from '~constants/messages';
+import { minutesToMillisecond } from '~helpers/time';
 
 class OtpModel {
   private schema;
@@ -21,7 +21,7 @@ class OtpModel {
     this.schema ||= this.createSchema();
     return (
       (mongoose.models.Otp as Model<OtpDocumentType>) ||
-      mongoose.model<OtpDocumentType>("Otp", this.schema)
+      mongoose.model<OtpDocumentType>('Otp', this.schema)
     );
   }
 
@@ -50,7 +50,7 @@ class OtpModel {
         usage: {
           type: String,
           enum: OtpUsagesEnum,
-          default: "Verify",
+          default: 'Verify',
         },
         isVerified: {
           type: Boolean,
@@ -61,14 +61,18 @@ class OtpModel {
           default: 0,
         },
       },
-      { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } },
+      {
+        timestamps: true,
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true },
+      },
     );
   }
 
   private attachHooks() {
     this.schema ||= this.createSchema();
-    this.schema.pre("save", function (next) {
-      if (this.usage && this.usage === "ResetPassword") {
+    this.schema.pre('save', function (next) {
+      if (this.usage && this.usage === 'ResetPassword') {
         this.expiresAt = new Date(Date.now() + minutesToMillisecond(6));
       }
       next();

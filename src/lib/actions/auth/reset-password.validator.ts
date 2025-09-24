@@ -1,9 +1,9 @@
-// Packages imports
-import { z } from "zod";
+// 📦 Third-Party imports
+import { z } from 'zod';
 
-// Local imports
-import { AuthMessages } from "~constants/messages";
-import { AuthPatterns } from "~constants/patterns";
+// 📦 Internal imports
+import { AuthMessages } from '~constants/messages';
+import { AuthPatterns } from '~constants/patterns';
 
 export const ResetPasswordFormSchema = z
   .object({
@@ -19,9 +19,10 @@ export const ResetPasswordFormSchema = z
       })
       .trim(),
 
-    code: z
-      .string()
-      .length(6, { error: `${AuthMessages.Error.FieldEmpty} (length: 6)`, abort: true }),
+    code: z.string().length(6, {
+      error: `${AuthMessages.Error.FieldEmpty} (length: 6)`,
+      abort: true,
+    }),
 
     password: z
       .string()
@@ -49,5 +50,5 @@ export const ResetPasswordFormSchema = z
   })
   .refine((data) => data.password === data.passwordRepeat, {
     error: AuthMessages.Error.PasswordConfirmMismatch,
-    path: ["passwordRepeat"],
+    path: ['passwordRepeat'],
   });

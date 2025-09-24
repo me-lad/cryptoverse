@@ -1,5 +1,5 @@
-import HomePageWrapper from "@/components/modules/home-page/HomePage.wrapper";
+import HomePageWrapper from '~modules/home-page/HomePage.wrapper';
 
-export default function Home() {
+export default function HomePage() {
   return <HomePageWrapper />;
 }

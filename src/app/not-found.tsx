@@ -1,13 +1,7 @@
-// Directives
+// 📦 Internal imports
+import The_404 from '~core/ui/shared/404/404';
 
-// Packages imports
-
-// Local imports
-import The_404 from "@/components/ui/shared/404/404";
-
-// Local types
-
-// Functional component
+// ⚙️ Functional component
 export default function NotFound() {
   return (
     <div className="h-screen w-full">

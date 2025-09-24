@@ -1,49 +1,54 @@
-// Directives
-"use client";
+// 📌 Directives
+'use client';
 
-// Packages imports
-import React from "react";
-import { useActionState, createContext, useState } from "react";
+// 📦 Third-Party imports
+import React from 'react';
+import { useActionState, createContext, useState } from 'react';
 
-// Local imports
-import type { FormContextType } from "~types/form";
-import type { FormTypesType } from "~types/form";
-import type { ResetPasswordFormStepType } from "~types/form";
-import type { FormStateType } from "~types/form";
-import { initialFormState } from "~constants/forms";
-import AuthFormResultUnit from "./AuthFormResult.unit";
+// 📦 Internal imports
+import type { FormContextT } from '~types/form';
+import type { FormKindsT } from '~types/form';
+import type { ResetPasswordFormStepT } from '~types/form';
+import type { FormStateT } from '~types/form';
+import { initialFormState } from '~constants/form';
+import FormResultHandler from './FormResult.handler';
 
-// Local types
-type PropsType = {
+// 🧾 Local types
+type PropsT = {
   formAction: any;
-  formType: FormTypesType;
+  formType: FormKindsT;
   children: React.ReactNode;
-  resetPasswordFormStep?: ResetPasswordFormStepType;
+  resetPasswordFormStep?: ResetPasswordFormStepT;
 };
 
-export const FormContext = createContext<FormContextType>({
+export const FormContext = createContext<FormContextT>({
   state: initialFormState,
   pending: false,
   verifyForm: {
-    otp: "",
+    otp: '',
     setOtp: () => {},
   },
   resetPasswordForm: {
-    formStep: "1",
+    formStep: '1',
     setFormStep: () => {},
   },
 });
 
-// Functional component
-export default function AuthFormContext({
+// ⚙️ Functional component
+const AuthFormContext: React.FC<PropsT> = ({
   formAction,
-  formType,
   children,
-  resetPasswordFormStep = "1",
-}: PropsType) {
-  const [state, action, pending] = useActionState<FormStateType>(formAction, initialFormState);
-  const [verificationOtp, setVerificationOtp] = useState("");
-  const [rpFormStep, setRPFormStep] = useState<ResetPasswordFormStepType>(resetPasswordFormStep);
+  formType,
+  resetPasswordFormStep = '1',
+}) => {
+  const [state, action, pending] = useActionState<FormStateT>(
+    formAction,
+    initialFormState,
+  );
+  const [verificationOtp, setVerificationOtp] = useState('');
+  const [rpFormStep, setRPFormStep] = useState<ResetPasswordFormStepT>(
+    resetPasswordFormStep,
+  );
 
   return (
     <FormContext
@@ -58,10 +63,11 @@ export default function AuthFormContext({
         },
       }}
     >
-      <AuthFormResultUnit />
+      <FormResultHandler />
       <form action={action} className="mt-8 w-full">
         {children}
       </form>
     </FormContext>
   );
-}
+};
+export default AuthFormContext;

@@ -1,23 +1,29 @@
-// Directives
-import "server-only";
+// 📌 Directives
+import 'server-only';
 
-// Local imports
-import type { OtpResendResultType, OtpCheckerResultType, FormStateType } from "~types/form";
-import type { OtpDocumentType } from "@/lib/models/Otp/types";
-import { connectToDB } from "@/lib/configs/mongoose";
-import { AuthMessages } from "~constants/messages";
-import { isDatePassedTime } from "~helpers/time";
-import { makeRandomCode } from "~helpers/generators";
-import { restrictionThresholds } from "~constants/others";
-import { UserService } from "~services/user.service";
-import { BlockedNumberService } from "~services/blockedNumber.service";
-import { OtpService } from "~services/otp.service";
-import { FormStatusTypes, catchErrorFormState } from "~constants/forms";
-import { AuthService } from "~services/auth.service";
+// 📦 Internal imports
+import type {
+  OtpResendResultT,
+  OtpCheckerResultT,
+  FormStateT,
+} from '~types/form';
+import type { OtpDocumentType } from '~models/Otp/types';
+import { connectToDB } from '~configs/mongoose';
+import { AuthMessages } from '~constants/messages';
+import { isDatePassedTime } from '~helpers/time';
+import { buildRandomCode } from '~helpers/generators';
+import { UserServices } from '~services/user';
+import { BlockedNumberServices } from '~services/blockedNumber';
+import { OtpServices } from '~services/otp';
+import { FormStatusKinds, catchErrorFormState } from '~constants/form';
+import { AuthServices } from '~services/auth';
+
+// 🧾 Local types
+const restrictionThresholds: number[] = [3, 6, 9, 10] as const;
 
 // 🧠 Cache system
 interface CachedOtpStatusType {
-  value: OtpCheckerResultType;
+  value: OtpCheckerResultT;
   expiresAt: number;
 }
 const otpStatusCache = new Map<string, CachedOtpStatusType>();
@@ -32,7 +38,9 @@ function cleanExpiredCache() {
 }
 
 // 🔍 Check OTP Status
-const checkUserOtpStatus = async (username: string): Promise<OtpCheckerResultType> => {
+const checkUserOtpStatus = async (
+  username: string,
+): Promise<OtpCheckerResultT> => {
   cleanExpiredCache();
 
   const now = Date.now();
@@ -41,45 +49,49 @@ const checkUserOtpStatus = async (username: string): Promise<OtpCheckerResultTyp
     return cached.value;
   }
 
-  let result: OtpCheckerResultType;
+  let result: OtpCheckerResultT;
 
   try {
     await connectToDB();
-    const userData = await UserService.getUserDataByIdentifier(username);
+    const userData = await UserServices.getUserDataByIdentifier(username);
     if (!userData) {
-      return { status: "Error", message: AuthMessages.Error.CatchHandler };
+      return { status: 'Error', message: AuthMessages.Error.CatchHandler };
     }
 
     const { phoneNumber } = userData;
-    const validExistOtpData = await OtpService.getValidOtp(phoneNumber);
+    const validExistOtpData = await OtpServices.getValidOtp(phoneNumber);
 
     if (validExistOtpData) {
       result = {
-        status: "Waiting",
+        status: 'Waiting',
         referenceTime: validExistOtpData.createdAt!,
       };
     } else {
-      const recentOTPs = await OtpService.countExpiredOTPs(phoneNumber);
+      const recentOTPs = await OtpServices.countExpiredOTPs(phoneNumber);
 
       if (restrictionThresholds.includes(recentOTPs)) {
         if (recentOTPs === 10) {
-          await BlockedNumberService.blockNumber(phoneNumber);
+          await BlockedNumberServices.blockNumber(phoneNumber);
           await userData.updateOne({ $set: { isRestricted: true } });
-          result = { status: "Limited" };
+          result = { status: 'Limited' };
         } else {
-          const lastExpiredCode = await OtpService.getLastExpiredOtp(phoneNumber);
+          const lastExpiredCode =
+            await OtpServices.getLastExpiredOtp(phoneNumber);
 
-          const isRestrictionPassed = isDatePassedTime(lastExpiredCode?.expiresAt!, 5);
+          const isRestrictionPassed = isDatePassedTime(
+            lastExpiredCode?.expiresAt!,
+            5,
+          );
           result = isRestrictionPassed
-            ? { status: "Allowed" }
+            ? { status: 'Allowed' }
             : {
-                status: "Waiting",
+                status: 'Waiting',
                 referenceTime: lastExpiredCode?.expiresAt!,
                 isTemporaryLimit: true,
               };
         }
       } else {
-        result = { status: "Allowed" };
+        result = { status: 'Allowed' };
       }
     }
 
@@ -90,36 +102,39 @@ const checkUserOtpStatus = async (username: string): Promise<OtpCheckerResultTyp
 
     return result;
   } catch (err) {
-    console.log("Error in verify service ->", err);
-    return { status: "Error", message: AuthMessages.Error.CatchHandler };
+    console.log('Error in verify service ->', err);
+    return { status: 'Error', message: AuthMessages.Error.CatchHandler };
   }
 };
 
 // 📲 SMS sender
 const sms = (phoneNumber: string, code: string) => {
-  return fetch("http://ippanel.com/api/select", {
-    method: "POST",
+  return fetch('http://ippanel.com/api/select', {
+    method: 'POST',
     body: JSON.stringify({
-      op: "pattern",
+      op: 'pattern',
       user: process.env.OTP_USERNAME,
       pass: process.env.OTP_PASSWORD,
-      fromNum: "3000505",
+      fromNum: '3000505',
       toNum: phoneNumber,
-      patternCode: "7am85rbvye0bqqz",
-      inputData: [{ "verification-code": code }],
+      patternCode: '7am85rbvye0bqqz',
+      inputData: [{ 'verification-code': code }],
     }),
   });
 };
 
 // ✅ OTP Verification
-const doVerify = async (username: string, code: string): Promise<FormStateType> => {
+const doVerify = async (
+  username: string,
+  code: string,
+): Promise<FormStateT> => {
   try {
     await connectToDB();
 
-    const userData = await UserService.getUserDataByIdentifier(username);
+    const userData = await UserServices.getUserDataByIdentifier(username);
     if (!userData || userData.isVerified || userData.isRestricted) {
       return {
-        status: FormStatusTypes.Error,
+        status: FormStatusKinds.Error,
         redirectNeed: false,
         toastNeed: true,
         toastMessage: AuthMessages.Error.InvalidUsername,
@@ -127,10 +142,10 @@ const doVerify = async (username: string, code: string): Promise<FormStateType> 
     }
 
     const { phoneNumber } = userData;
-    const otpData = await OtpService.getValidOtp(phoneNumber);
+    const otpData = await OtpServices.getValidOtp(phoneNumber);
     if (!otpData) {
       return {
-        status: FormStatusTypes.Error,
+        status: FormStatusKinds.Error,
         redirectNeed: false,
         toastNeed: true,
         toastMessage: AuthMessages.Error.VerifyCodeExpire,
@@ -141,7 +156,7 @@ const doVerify = async (username: string, code: string): Promise<FormStateType> 
     const isCodeUsageCountPassed = otpData.usageCount >= 3;
     if (isCodeUseTimePassed || isCodeUsageCountPassed) {
       return {
-        status: FormStatusTypes.Error,
+        status: FormStatusKinds.Error,
         redirectNeed: false,
         toastNeed: true,
         toastMessage: AuthMessages.Error.VerifyCodeOverUse,
@@ -152,29 +167,32 @@ const doVerify = async (username: string, code: string): Promise<FormStateType> 
       otpData.usageCount += 1;
       await otpData.save();
       return {
-        status: FormStatusTypes.Error,
+        status: FormStatusKinds.Error,
         redirectNeed: false,
         toastNeed: true,
         toastMessage: AuthMessages.Error.VerificationIncorrectCode,
       };
     }
 
-    const sessionsCreationResult = await AuthService.createUserSessions(username, "on");
+    const sessionsCreationResult = await AuthServices.createUserSessions(
+      username,
+      'on',
+    );
     if (!sessionsCreationResult) return catchErrorFormState;
 
     userData.isVerified = true;
     await userData.save();
-    await OtpService.deleteOTPs(phoneNumber);
+    await OtpServices.deleteOTPs(phoneNumber);
 
     return {
-      status: FormStatusTypes.Success,
+      status: FormStatusKinds.Success,
       toastNeed: true,
       toastMessage: AuthMessages.Success.CompleteVerify,
       redirectNeed: true,
-      redirectPath: "/dashboard",
+      redirectPath: '/dashboard',
     };
   } catch (err) {
-    console.log("Error in verify controller ->", err);
+    console.log('Error in verify controller ->', err);
     return catchErrorFormState;
   }
 };
@@ -187,29 +205,29 @@ const sendOtp = async (
   try {
     const data = {
       phoneNumber,
-      code: makeRandomCode(),
-      usage: isResetPassword ? "ResetPassword" : "Verify",
+      code: buildRandomCode(),
+      usage: isResetPassword ? 'ResetPassword' : 'Verify',
     };
 
     await sms(data.phoneNumber, data.code);
-    return await OtpService.createOtp(data);
+    return await OtpServices.createOtp(data);
   } catch (err) {
-    console.log("Error in create otp document ->", err);
+    console.log('Error in create otp document ->', err);
     return null;
   }
 };
 
 // 🔁 Resend OTP
-const resendOtp = async (username: string): Promise<OtpResendResultType> => {
+const resendOtp = async (username: string): Promise<OtpResendResultT> => {
   const userOtpStatus = await checkUserOtpStatus(username);
   const { status } = userOtpStatus;
 
-  const userData = await UserService.getUserDataByIdentifier(username);
-  if (!userData || status === "Error") {
+  const userData = await UserServices.getUserDataByIdentifier(username);
+  if (!userData || status === 'Error') {
     return { success: false, message: AuthMessages.Error.CatchHandler };
   }
 
-  if (status === "Limited") {
+  if (status === 'Limited') {
     return {
       success: false,
       message: AuthMessages.Error.VerificationPermanentLimit,
@@ -217,20 +235,22 @@ const resendOtp = async (username: string): Promise<OtpResendResultType> => {
     };
   }
 
-  if (status === "Waiting") {
+  if (status === 'Waiting') {
     const { isTemporaryLimit, referenceTime } = userOtpStatus;
     if (isTemporaryLimit) {
       return {
         success: false,
         isTemporaryLimit: true,
         referenceTime,
-        message: "You've been temporarily limited due to high code request. Please wait.",
+        message:
+          "You've been temporarily limited due to high code request. Please wait.",
       };
     }
 
     return {
       success: false,
-      message: "Code has already been sent. Please wait before requesting a new one.",
+      message:
+        'Code has already been sent. Please wait before requesting a new one.',
     };
   }
 

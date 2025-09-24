@@ -1,9 +1,9 @@
-// Packages imports
-import { z } from "zod";
+// 📦 Third-Party imports
+import { z } from 'zod';
 
-// Local imports
-import { AuthMessages } from "~constants/messages";
-import { AuthPatterns } from "~constants/patterns";
+// 📦 Internal imports
+import { AuthMessages } from '~constants/messages';
+import { AuthPatterns } from '~constants/patterns';
 
 export const SignupFormSchema = z
   .object({
@@ -54,5 +54,5 @@ export const SignupFormSchema = z
   })
   .refine((data) => data.password === data.passwordRepeat, {
     error: AuthMessages.Error.PasswordConfirmMismatch,
-    path: ["passwordRepeat"],
+    path: ['passwordRepeat'],
   });

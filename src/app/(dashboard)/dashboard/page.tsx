@@ -1,12 +1,12 @@
-// Directives
+// 📌 Directives
 
-// Packages imports
+// 📦 Third-Party imports
 
-// Local imports
+// 📦 Internal imports
 
-// Local types
+// 🧾 Local types
 
-// Functional component
+// ⚙️ Functional component
 export default function DashboardPage() {
   return <h1>DashboardPage</h1>;
 }

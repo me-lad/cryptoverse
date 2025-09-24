@@ -1,28 +1,28 @@
-export interface SignupFormDataType {
+export interface SignupFormDataT {
   username: string;
   phoneNumber: string;
   password: string;
   passwordRepeat: string;
 }
 
-export interface SigninFormDataType {
+export interface SigninFormDataT {
   identifier: string;
   password: string;
-  remember?: "on";
+  remember?: 'on';
 }
 
-export interface VerifyFormDataType {
+export interface VerifyFormDataT {
   code: string;
   username: string;
 }
 
-export type ResetPasswordFormStepType = "1" | "2";
+export type ResetPasswordFormStepT = '1' | '2';
 
-export interface ResetPasswordFormDataType {
+export interface ResetPasswordFormDataT {
   identifier: string;
   code: string;
   password: string;
   passwordRepeat: string;
-  formStep: ResetPasswordFormStepType;
+  formStep: ResetPasswordFormStepT;
   username: string;
 }
