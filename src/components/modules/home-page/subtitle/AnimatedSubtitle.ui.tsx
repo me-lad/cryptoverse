@@ -9,6 +9,7 @@ import type { LISTEntity } from '~types/api-generated/getTopCoins';
 import { flexCenter } from '~styles/tw-custom';
 import { formatPercentage, formatPrice } from '~helpers/formatters';
 import styles from './AnimatedSubtitle.module.css';
+import SubtitleItem from './SubtitleItem';
 
 // 🧾 Local types
 interface PropsT {
@@ -25,85 +26,11 @@ const AnimatedSubtitleUi: React.FC<PropsT> = ({ coins }) => {
         >
           {/* Original content */}
           {coins.map((coin) => (
-            <Link
-              href={`/coin/${coin.SYMBOL}`}
-              key={coin.ID}
-              className={`${flexCenter} min-w-[13%] gap-4`}
-            >
-              <div>
-                <Image
-                  src={coin.LOGO_URL || '/svgs/logo/logo.svg'}
-                  width={24}
-                  height={24}
-                  alt={coin.NAME}
-                />
-              </div>
-              <div>
-                <span className="text-lg font-semibold">{coin.NAME}</span>
-              </div>
-              <div>
-                <span className="font-semibold">
-                  {formatPrice(coin.PRICE_USD)}
-                </span>
-              </div>
-              <div
-                className={clsx(
-                  'font-semibold',
-                  formatPercentage(
-                    coin.SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD,
-                  ).startsWith('-')
-                    ? 'text-status-error-200'
-                    : 'text-status-success-200',
-                )}
-              >
-                (
-                {formatPercentage(
-                  coin.SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD,
-                )}
-                )
-              </div>
-            </Link>
+            <SubtitleItem key={coin.ID} {...coin} />
           ))}
           {/* Duplicate content for seamless loop */}
           {coins.map((coin) => (
-            <Link
-              href={`/coin/${coin.SYMBOL}`}
-              key={`duplicate-${coin.ID}`}
-              className={`${flexCenter} min-w-[10%] gap-4`}
-            >
-              <div>
-                <Image
-                  src={coin.LOGO_URL || '/svgs/logo/logo.svg'}
-                  width={24}
-                  height={24}
-                  alt={coin.NAME}
-                />
-              </div>
-              <div>
-                <span className="text-lg font-semibold">{coin.NAME}</span>
-              </div>
-              <div>
-                <span className="font-semibold">
-                  {formatPrice(coin.PRICE_USD)}
-                </span>
-              </div>
-              <div
-                className={clsx(
-                  'font-semibold',
-                  formatPercentage(
-                    coin.SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD,
-                  ).startsWith('-')
-                    ? 'text-status-error-200'
-                    : 'text-status-success-200',
-                )}
-              >
-                (
-                {formatPercentage(
-                  coin.SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD,
-                )}
-                )
-              </div>
-            </Link>
+            <SubtitleItem key={`duplicate-${coin.ID}`} {...coin} />
           ))}
         </div>
       </div>

@@ -8,7 +8,6 @@ import HeaderFn from '~core/layout/header/Header.fn';
 import FooterFn from '~core/layout/footer/Footer.fn';
 import '../lib/styles/global.css';
 import '../lib/styles/override.css';
-import '../lib/styles/utilities.css';
 import '../lib/styles/react-toastify.css';
 
 // Metadata

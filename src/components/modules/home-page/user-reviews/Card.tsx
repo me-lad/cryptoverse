@@ -12,7 +12,7 @@ interface PropsT {
 // ⚙️ Functional component
 const Card: React.FC<PropsT> = ({ description, userProfileImg, username }) => {
   return (
-    <div className="glass-bg shadow-primary-300/10 mx-auto h-auto w-full rounded-lg border border-white/25 bg-clip-padding p-10 shadow-md backdrop-blur-xs">
+    <div className="glass-bg shadow-primary-300/10 mx-auto h-auto w-full rounded-lg border border-white/25 bg-clip-padding p-10 shadow-md">
       <div className={`mb-5 flex items-center gap-4`}>
         <div className="rounded-full border border-neutral-400 p-1">
           <Image

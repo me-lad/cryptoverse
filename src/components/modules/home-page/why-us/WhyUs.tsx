@@ -14,7 +14,7 @@ const WhyUs = () => {
           text={
             <>
               Key Features of
-              <span className="text-primary font-bold">CryptoVerse</span>
+              <span className="text-primary mx-3 font-bold">CryptoVerse</span>
             </>
           }
         />

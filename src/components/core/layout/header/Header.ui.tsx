@@ -30,7 +30,7 @@ export default function HeaderUi() {
           <div>
             <nav>
               <ul className="flex items-center gap-8 pt-1">
-                {['markets', 'support', 'news'].map((item, index) => (
+                {['coins', 'support', 'news'].map((item, index) => (
                   <li className="text-lg text-neutral-300" key={index}>
                     <NavLink
                       activeClassName="text-primary-400 font-semibold"
