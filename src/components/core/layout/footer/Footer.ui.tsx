@@ -1,11 +1,18 @@
 // 📦 Third-Party imports
-import { Copyright } from 'lucide-react';
+import { Copyright, Mail, Phone } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import clsx from 'clsx';
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from '~core/ui/shadcn/accordion';
 
 // 📦 Internal imports
 import { containerDefault, flexBetween, flexCenter } from '~styles/tw-custom';
+import { footerLinks, socialsData } from './local';
 
 // 🧾 Local types
 interface PropsT {
@@ -18,130 +25,109 @@ export default function FooterUi({ isHomePage }: PropsT) {
     <footer className={clsx('mt-32 w-screen', isHomePage && 'mb-12')}>
       <div className="w-full bg-gradient-to-r from-neutral-950 from-15% via-neutral-800 to-neutral-950 to-85% pt-8 pb-4">
         {/* Footer content */}
-        <div className={`${flexBetween} ${containerDefault} w-1/4 pb-8`}>
-          <div className={`${flexCenter} flex-col`}>
-            <Link className={`${flexCenter} flex-col`} href={'/'}>
+        <div className={containerDefault}>
+          {/* Logo */}
+          <div className="flex justify-center sm:justify-start">
+            <Link href={'/'}>
               <Image
-                src={'/images/logo/logo-56h.png'}
+                src={'/svgs/logo/logo-text.svg'}
+                width={280}
+                height={56}
                 alt="Crypto Verse"
-                width={84}
-                height={40}
               />
-              <h6 className="text-primary mt-2 text-center text-2xl font-semibold">
-                CryptoVerse
-              </h6>
             </Link>
-            <span className="mt-1 block text-sm font-normal tracking-wide text-neutral-300">
-              Trade smarter, Grow faster
-            </span>
-            <div className="mt-4 flex items-center gap-3 *:cursor-pointer *:transition-all *:hover:-translate-y-0.5">
-              <Image
-                src={'/svgs/logo/facebook.svg'}
-                width={20}
-                height={20}
-                alt="Socials"
-              />
-              <Image
-                src={'/svgs/logo/twitter.svg'}
-                width={20}
-                height={20}
-                alt="Socials"
-              />
-              <Image
-                src={'/svgs/logo/instagram.svg'}
-                width={20}
-                height={20}
-                alt="Socials"
-              />
-              <Image
-                src={'/svgs/logo/linkedin.svg'}
-                width={20}
-                height={20}
-                alt="Socials"
-              />
+          </div>
+
+          {/* Socials */}
+          <div className={`${flexBetween} mt-4 flex-col gap-y-5 sm:flex-row`}>
+            <div className="flex flex-col items-center gap-4 sm:items-start lg:flex-row lg:items-center">
+              <div className="flex flex-col items-center gap-4 min-[27em]:flex-row">
+                <div className="flex items-center gap-2.5 border-neutral-600 text-neutral-400 min-[27em]:border-r min-[27em]:pr-4">
+                  <Mail size={16} className="mt-0.5" />
+                  <p>Support@CryptoVerse.com</p>
+                </div>
+                <div className="flex items-center gap-2.5 border-neutral-600 text-neutral-400 lg:border-r lg:pr-4">
+                  <Phone size={16} className="mt-0.5" />
+                  <p>021-01020316 </p>
+                </div>
+              </div>
+              <p className="text-neutral-400">
+                Trade smarter & Grow faster with
+              </p>
+            </div>
+
+            <div className={`${flexCenter} w-fit gap-3`}>
+              {socialsData.map((social) => (
+                <Link
+                  key={social.iconPath}
+                  href={social.url}
+                  className="group hover:bg-primary hover:border-primary cursor-pointer rounded-full border bg-transparent p-2 transition-all hover:scale-110"
+                >
+                  <Image
+                    width={20}
+                    height={20}
+                    alt="Crypto Verse"
+                    src={social.iconPath}
+                    className="opacity-50 transition-all group-hover:opacity-100"
+                  />
+                </Link>
+              ))}
             </div>
           </div>
 
-          <div className="grid w-3/4 grid-cols-5 items-start *:min-w-1/5">
-            <div className={`${flexCenter} flex-col items-start`}>
-              <h6 className="text-base font-medium">Explore</h6>
-              <ul className="mt-4 *:text-neutral-400 *:not-first:mt-1">
-                <li>
-                  <Link href={'/markets'}>Markets</Link>
-                </li>
-                <li>
-                  <Link href={''}>Spot</Link>
-                </li>
-              </ul>
+          {/* Useful links */}
+          <div className="mt-10 border-y border-neutral-700 py-10">
+            {/* Default view */}
+            <div className="hidden items-start justify-between md:flex">
+              {footerLinks.map((link) => (
+                <div
+                  key={`${link.title}-default`}
+                  className="flex w-fit flex-col items-start justify-center"
+                >
+                  <h6 className="font-semibold">{link.title}</h6>
+                  <ul className="mt-4">
+                    {link.items.map((item) => (
+                      <li className="hover:text-primary text-neutral-400 transition-all not-first:mt-1">
+                        <Link href={item.url}>{item.name}</Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </div>
-            <div className={`${flexCenter} flex-col items-start`}>
-              <h6 className="text-base font-medium">News</h6>
-              <ul className="mt-4 *:text-neutral-400 *:not-first:mt-1">
-                <li>
-                  <a href={'/news'}>Latest news</a>
-                </li>
-                <li>
-                  <a href={'/news?language=ES'}>Spanish news</a>
-                </li>
-                <li>
-                  <a href={'/news?language=FR'}>French news</a>
-                </li>
-                <li>
-                  <a href={'/news?language=TR'}>Turkish news</a>
-                </li>
-              </ul>
-            </div>
-            <div className={`${flexCenter} flex-col items-start`}>
-              <h6 className="text-base font-medium">About us</h6>
-              <ul className="mt-4 *:text-neutral-400 *:not-first:mt-1">
-                <li>
-                  <Link href={'/contact-us'}>About Us</Link>
-                </li>
-                <li>
-                  <Link href={'/about-us'}>Contact Us</Link>
-                </li>
-              </ul>
-            </div>
-            <div className={`${flexCenter} flex-col items-start`}>
-              <h6 className="text-base font-medium">Support</h6>
-              <ul className="mt-4 *:text-neutral-400 *:not-first:mt-1">
-                <li>
-                  <Link href={'/support'}>Customer support</Link>
-                </li>
-                <li>
-                  <Link href={'/faq'}>FAQs</Link>
-                </li>
-              </ul>
-            </div>
-            <div className={`${flexCenter} flex-col items-start`}>
-              <h6 className="text-base font-medium">Currencies price </h6>
-              <ul className="mt-4 *:text-neutral-400 *:not-first:mt-1">
-                <li>
-                  <Link href={'/coin/BTC'}>Bitcoin price</Link>
-                </li>
-                <li>
-                  <Link href={'/coin/ETH'}>Ethereum price</Link>
-                </li>
-                <li>
-                  <Link href={'/coin/USDT'}>Tether price</Link>
-                </li>
-                <li>
-                  <Link href={'/coin/TRX'}>TRON price</Link>
-                </li>
-                <li>
-                  <Link href={'/coin/BNB'}>Binance Coin price</Link>
-                </li>
-              </ul>
-            </div>
+
+            {/* Accordion view */}
+            <Accordion className="md:hidden" type="single" collapsible>
+              {footerLinks.map((link, index) => (
+                <AccordionItem
+                  key={`${link.title}-acc`}
+                  value={`item-${index}`}
+                  className="!border-b-0"
+                >
+                  <AccordionTrigger className="cursor-pointer *:stroke-3">
+                    {link.title}
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <ul>
+                      {link.items.map((item) => (
+                        <li className="text-neutral-400 not-first:mt-2">
+                          <Link href={item.url}>{item.name}</Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
 
         {/* Foot note */}
         <div
-          className={`${containerDefault} ${flexCenter} gap-2 border-t border-neutral-700 pt-4 text-neutral-500`}
+          className={`${containerDefault} ${flexCenter} mt-4 gap-2 text-neutral-500`}
         >
           <Copyright size={19} className="mt-0.5" />
-          <p className="text-sm">2025 CryptoVerse. All Rights Reserved.</p>
+          <p className="text-sm">2025 CryptoVerse. All Rights Reserved</p>
         </div>
       </div>
     </footer>

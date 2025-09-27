@@ -1,5 +1,4 @@
 // 📌 Directives
-import 'client-only';
 
 // 📦 Third-Party imports
 import { useRef, useState, useEffect, use } from 'react';

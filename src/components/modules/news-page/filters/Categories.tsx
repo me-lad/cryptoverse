@@ -2,9 +2,9 @@
 'use client';
 
 // 📦 Third-Party imports
-import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Skeleton } from '@/components/core/ui/shadcn/skeleton';
+import React from 'react';
 
 // 📦 Internal imports
 import type { SelectIDsT } from './local.ts';
@@ -41,24 +41,46 @@ const Categories: React.FC<PropsT> = (props) => {
     <>
       {isError && <ToastError />}
 
-      <Select selectId={'categories'}>
+      <Select
+        closeHandler={() => closeHandler('categories')}
+        selectId={'categories'}
+      >
         <SelectButton
           label="Include"
           isOpen={isOpenCategories}
-          onClick={isOpenCategories ? () => closeHandler('categories') : () => openHandler('categories')}
+          onClick={
+            isOpenCategories
+              ? () => closeHandler('categories')
+              : () => openHandler('categories')
+          }
         />
 
-        <SelectMenu options={data?.Data || []} isOpen={isOpenCategories} selectId={'categories'} />
+        <SelectMenu
+          options={data?.Data || []}
+          isOpen={isOpenCategories}
+          selectId={'categories'}
+        />
       </Select>
 
-      <Select selectId={'excludeCategories'}>
+      <Select
+        closeHandler={() => closeHandler('excludeCategories')}
+        selectId={'excludeCategories'}
+      >
         <SelectButton
           label="Exclude"
           isOpen={isOpenExcludeCat}
-          onClick={isOpenExcludeCat ? () => closeHandler('excludeCategories') : () => openHandler('excludeCategories')}
+          onClick={
+            isOpenExcludeCat
+              ? () => closeHandler('excludeCategories')
+              : () => openHandler('excludeCategories')
+          }
         />
 
-        <SelectMenu options={data?.Data || []} isOpen={isOpenExcludeCat} selectId={'excludeCategories'} />
+        <SelectMenu
+          options={data?.Data || []}
+          isOpen={isOpenExcludeCat}
+          selectId={'excludeCategories'}
+        />
       </Select>
     </>
   );

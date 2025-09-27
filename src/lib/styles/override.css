@@ -7,6 +7,10 @@ img {
   scrollbar-color: var(--neutral-200) #252525; /* thumb color, track color */
 }
 
+button {
+  text-decoration: none !important;
+}
+
 *::-webkit-scrollbar {
   width: 6px;
   height: 6px;

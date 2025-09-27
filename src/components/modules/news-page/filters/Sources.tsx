@@ -42,14 +42,22 @@ const Sources: React.FC<PropsT> = (props) => {
     <>
       {isError && <ToastError />}
 
-      <Select selectId={'sources'}>
+      <Select closeHandler={() => closeHandler('sources')} selectId={'sources'}>
         <SelectButton
           isOpen={isOpen}
           label="News Feeds"
-          onClick={isOpen ? () => closeHandler('sources') : () => openHandler('sources')}
+          onClick={
+            isOpen
+              ? () => closeHandler('sources')
+              : () => openHandler('sources')
+          }
         />
 
-        <SelectMenu options={data?.Data || []} isOpen={isOpen} selectId={'sources'} />
+        <SelectMenu
+          options={data?.Data || []}
+          isOpen={isOpen}
+          selectId={'sources'}
+        />
       </Select>
     </>
   );

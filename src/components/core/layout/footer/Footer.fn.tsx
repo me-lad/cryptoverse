@@ -1,6 +1,5 @@
 // 📌 Directives
 'use client';
-import 'client-only';
 
 // 📦 Third-Party imports
 import React from 'react';
