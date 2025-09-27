@@ -34,6 +34,14 @@ export default function FooterUi({ isHomePage }: PropsT) {
                 width={280}
                 height={56}
                 alt="Crypto Verse"
+                className="hidden sm:block"
+              />
+              <Image
+                src={'/svgs/logo/logo-text.svg'}
+                width={236}
+                height={52}
+                alt="Crypto Verse"
+                className="sm:hidden"
               />
             </Link>
           </div>
@@ -102,15 +110,15 @@ export default function FooterUi({ isHomePage }: PropsT) {
                 <AccordionItem
                   key={`${link.title}-acc`}
                   value={`item-${index}`}
-                  className="!border-b-0"
+                  className="group !border-b-0"
                 >
-                  <AccordionTrigger className="cursor-pointer *:stroke-3">
+                  <AccordionTrigger className="cursor-pointer rounded-b-none *:stroke-3 group-data-[state=open]:border-b">
                     {link.title}
                   </AccordionTrigger>
                   <AccordionContent>
                     <ul>
                       {link.items.map((item) => (
-                        <li className="text-neutral-400 not-first:mt-2">
+                        <li className="mt-2 text-neutral-400">
                           <Link href={item.url}>{item.name}</Link>
                         </li>
                       ))}
