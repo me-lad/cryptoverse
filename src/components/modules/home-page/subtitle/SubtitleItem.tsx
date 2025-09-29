@@ -14,7 +14,7 @@ const SubtitleItem: React.FC<LISTEntity> = ({
   LOGO_URL,
   NAME,
   PRICE_USD,
-  SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD,
+  SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD: CHANGE_24,
   SYMBOL,
 }) => {
   return (
@@ -34,19 +34,20 @@ const SubtitleItem: React.FC<LISTEntity> = ({
         <span className="text-lg font-semibold">{NAME}</span>
       </div>
       <div>
-        <span className="font-semibold">{formatPrice(PRICE_USD)}</span>
+        <span className="font-semibold" title={`$ ${PRICE_USD}`}>
+          $ {formatPrice(PRICE_USD)}
+        </span>
       </div>
       <div
+        title={`${CHANGE_24}`}
         className={clsx(
           'font-semibold',
-          formatPercentage(
-            SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD,
-          ).startsWith('-')
+          formatPercentage(CHANGE_24).startsWith('-')
             ? 'text-status-error-200'
             : 'text-status-success-200',
         )}
       >
-        ({formatPercentage(SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD)})
+        ({formatPercentage(CHANGE_24)})
       </div>
     </Link>
   );

@@ -62,13 +62,20 @@ export const getNews = async ({
 };
 
 // Search news
-export const searchNews = async (searchString: string, source: string, timestamp?: number) => {
-  const url = buildUrl(`${process.env.NEXT_PUBLIC_BASE_URL_REQUEST}/news/v1/search`, {
-    search_string: searchString,
-    to_ts: timestamp,
-    source_key: source,
-    sortOrder: 'latest',
-  });
+export const searchNews = async (
+  searchString: string,
+  source: string,
+  timestamp?: number,
+) => {
+  const url = buildUrl(
+    `${process.env.NEXT_PUBLIC_BASE_URL_REQUEST}/news/v1/search`,
+    {
+      search_string: searchString,
+      to_ts: timestamp,
+      source_key: source,
+      sortOrder: 'latest',
+    },
+  );
 
   return await useServerFetch<GetLatestNews>(url, {
     method: 'GET',

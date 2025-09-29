@@ -94,8 +94,11 @@ export default function FooterUi({ isHomePage }: PropsT) {
                 >
                   <h6 className="font-semibold">{link.title}</h6>
                   <ul className="mt-4">
-                    {link.items.map((item) => (
-                      <li className="hover:text-primary text-neutral-400 transition-all not-first:mt-1">
+                    {link.items.map((item, index) => (
+                      <li
+                        key={index}
+                        className="hover:text-primary text-neutral-400 transition-all not-first:mt-1"
+                      >
                         <Link href={item.url}>{item.name}</Link>
                       </li>
                     ))}

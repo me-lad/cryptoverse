@@ -51,10 +51,12 @@ const Card: React.FC<DataEntity> = (props) => {
         {/* Source/Publish */}
         <div className={`${flexBetween}`}>
           <div
-            className={`${flexCenter} gap-2 rounded-sm bg-neutral-800 px-4 py-2 text-xs font-medium text-white`}
+            className={`${flexCenter} max-w-1/2 gap-2 rounded-sm bg-neutral-800 px-4 py-2 text-xs font-medium text-white`}
           >
             <Rss size={13} />
-            {SOURCE_NAME}
+            <span title={SOURCE_NAME} className="line-clamp-1">
+              {SOURCE_NAME}
+            </span>
           </div>
           <div className={`${flexCenter} gap-2 text-sm`}>
             <CalendarDays size={13} />
@@ -77,7 +79,7 @@ const Card: React.FC<DataEntity> = (props) => {
 
         {/* Categories/Link */}
         <div className={`${flexBetween} mt-6`}>
-          <div className={`${flexCenter} max-w-3/4 !justify-start *:text-xs`}>
+          <div className={`${flexCenter} !justify-start *:text-xs`}>
             <span>CATEGORIES :</span>
             <div>
               {CATEGORY_DATA?.slice(0, 2)?.map((category) => (

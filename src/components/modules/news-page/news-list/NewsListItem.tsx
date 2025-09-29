@@ -7,7 +7,7 @@ import Link from 'next/link';
 // 📦 Internal imports
 import type { DataEntity } from '~types/api-generated/getLatestNews';
 import { flexBetween, flexCenter } from '~styles/tw-custom';
-import { TimeAgo } from '~core/global/TimeAgo';
+import { TimeAgo } from '~core/global/formatters';
 import { Skeleton } from '~core/ui/shadcn/skeleton';
 
 export const NewsLoadingItem = () => {

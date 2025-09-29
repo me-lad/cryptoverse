@@ -8,6 +8,7 @@ import { use } from 'react';
 import type { NewsLanguagesT } from '~types/news';
 import { NewsContext } from '../NewsPage.context';
 import { containerDefault, flexCenter } from '~styles/tw-custom';
+import Image from 'next/image';
 
 // ⚙️ Functional component
 const Language = () => {
@@ -32,9 +33,9 @@ const Language = () => {
             onClick={() => changeLanguage(lang.toUpperCase() as NewsLanguagesT)}
           >
             <div
-              className={`${flexCenter} group h-48 cursor-pointer overflow-hidden rounded-md border-2 bg-clip-padding backdrop-blur-xs`}
+              className={`${flexCenter} group aspect-[4/3] cursor-pointer overflow-hidden rounded-md border-2 bg-clip-padding`}
               style={{
-                backgroundImage: `url(/images/news-page/${lang}.png)`,
+                backgroundImage: `url(/svgs/news-page/${lang}.svg)`,
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'cover',
               }}
