@@ -4,9 +4,9 @@ import { getTopCoins } from '~services/coins';
 
 // ⚙️ Functional component
 const AnimatedSubtitleFn = async () => {
-  const { Data, Err } = await getTopCoins();
+  const list = await getTopCoins();
 
-  if (!Err && !Data.LIST?.length) return;
-  return <AnimatedSubtitleUi coins={Data.LIST || []} />;
+  if (!list) return;
+  return <AnimatedSubtitleUi coins={list || []} />;
 };
 export default AnimatedSubtitleFn;

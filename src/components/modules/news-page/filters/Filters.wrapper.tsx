@@ -14,7 +14,7 @@ import Categories from './Categories';
 
 // ⚙️ Functional component
 const FiltersWrapper = () => {
-  const { actions } = use(NewsContext);
+  const { actions, params } = use(NewsContext);
   const [openSelect, setOpenSelect] = useState<SelectIDsT>(null);
 
   const closeHandler = (id: SelectIDsT) => {
@@ -57,6 +57,9 @@ const FiltersWrapper = () => {
           variant={'outline'}
           className="hover:!bg-status-error-200 w-full rounded-sm transition-all hover:cursor-pointer"
           onClick={resetFiltersHandler}
+          disabled={
+            !params.categories && !params.sources && !params.excludeCategories
+          }
         >
           <span>Reset Filters</span>
           <X size={20} strokeWidth={2.5} color="#fff" className="mt-0.5" />

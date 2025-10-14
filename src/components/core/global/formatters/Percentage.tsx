@@ -1,5 +1,5 @@
 // 📦 Third-Party imports
-import { ChevronUp } from 'lucide-react';
+import { ChevronUp, Minus } from 'lucide-react';
 import React from 'react';
 import clsx from 'clsx';
 
@@ -23,24 +23,36 @@ export const Percentage: React.FC<PropsT> = (props) => {
   return (
     <div
       className={clsx(
-        'flex items-center gap-0.5',
-        isNegative ? 'text-status-error-200' : 'text-status-success-200',
+        'flex items-center gap-1.5',
+        percentage === 0
+          ? 'text-neutral-300'
+          : isNegative
+            ? 'text-status-error-200'
+            : 'text-status-success-200',
       )}
     >
-      <ChevronUp
-        strokeWidth={3}
-        size={iconSize}
-        className={clsx(
-          iconSize < 18 ? 'mt-0.5' : 'mt-1',
-          isNegative && 'rotate-180',
-        )}
-      />
+      {percentage === 0 ? (
+        <Minus
+          strokeWidth={3}
+          size={iconSize}
+          className={clsx(iconSize < 18 ? 'mt-0.5' : 'mt-1')}
+        />
+      ) : (
+        <ChevronUp
+          strokeWidth={3}
+          size={iconSize}
+          className={clsx(
+            iconSize < 18 ? 'mt-0.5' : 'mt-1',
+            isNegative && 'rotate-180',
+          )}
+        />
+      )}
 
       <p
-        title={`${formattedPercentage.slice(0, 1)}${percentage}`}
+        title={`${formattedPercentage.slice(0, 1) === '+' ? formattedPercentage.slice(0, 1) : ''}${percentage}`}
         style={{ fontSize }}
       >
-        {formattedPercentage.slice(1)}
+        {formattedPercentage.slice(1).padStart(6, '0')}
       </p>
     </div>
   );

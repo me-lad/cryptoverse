@@ -4,6 +4,7 @@ import clsx from 'clsx';
 
 import ReactQueryProvider from '~configs/react-query';
 import ReactToastify from '~configs/react-toastify';
+import CurrencyContextProvider from '~modules/Currency.context';
 import HeaderFn from '~core/layout/header/Header.fn';
 import FooterFn from '~core/layout/footer/Footer.fn';
 import '../lib/styles/global.css';
@@ -45,17 +46,16 @@ export default function RootLayout({
         className={clsx(ibmPlexSans.variable, roboto.variable, 'antialiased')}
       >
         <ReactQueryProvider>
-          {/* Header */}
-          <HeaderFn />
-
-          {/* Route interface */}
-          <main className="w-full">{children}</main>
-
-          {/* Footer */}
-          <FooterFn />
-
-          {/* Packages initialize */}
-          <ReactToastify />
+          <CurrencyContextProvider>
+            {/* Header */}
+            <HeaderFn />
+            {/* Route interface */}
+            <main className="w-full">{children}</main>
+            {/* Footer */}
+            <FooterFn />
+            {/* Packages initialize */}
+            <ReactToastify />
+          </CurrencyContextProvider>
         </ReactQueryProvider>
       </body>
     </html>

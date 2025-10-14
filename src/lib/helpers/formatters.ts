@@ -30,10 +30,18 @@ export const startCountdownTimer = (
   return () => clearInterval(timer);
 };
 
-export const formatPrice = (value: number): string => {
-  const [intPart, decimalPart] = value.toFixed(3).split('.');
+export const formatPrice = (
+  priceUSD: number,
+  rateUSD: number = 1,
+  rateTarget: number = 1,
+): string => {
+  const convertedPrice = (priceUSD * rateTarget) / rateUSD;
+
+  const [intPart, decimalPart] = convertedPrice.toFixed(3).split('.');
   const formattedInt = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  return `${formattedInt}.${decimalPart}`;
+
+  if (decimalPart !== '000') return `${formattedInt}.${decimalPart}`;
+  return formattedInt;
 };
 
 export const formatPercentage = (value: number): string => {

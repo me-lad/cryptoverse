@@ -1,9 +1,11 @@
 // 📦 Third-Party imports
+import { ChevronRight } from 'lucide-react';
 import clsx from 'clsx';
+import Link from 'next/link';
 
 // 📦 Internal imports
 import { highlightsList } from './local';
-import Heading from './Heading';
+import { flexCenter, flexBetween } from '~styles/tw-custom';
 
 // ⚙️ Functional component
 const Highlights = () => {
@@ -17,7 +19,21 @@ const Highlights = () => {
           )}
         >
           {/* Highlight heading */}
-          <Heading {...highlight} />
+          <div
+            className={`${flexBetween} border-b border-neutral-600 pb-2 pl-1`}
+          >
+            <h3 className="font-semibold">{highlight.title}</h3>
+
+            {!!highlight.moreUrl && (
+              <Link
+                href={highlight.moreUrl}
+                className={`${flexCenter} gap-1 text-xs text-neutral-300`}
+              >
+                More
+                <ChevronRight size={15} className="mt-0.5" />
+              </Link>
+            )}
+          </div>
 
           {/* Highlights Content  (Conditional) */}
           <div className="h-[92%] py-5">

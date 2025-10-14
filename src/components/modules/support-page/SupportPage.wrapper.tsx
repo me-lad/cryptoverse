@@ -18,10 +18,10 @@ const SupportPageWrapper = () => {
         }}
       >
         <div
-          className={`${containerDefault} ${flexCenter} glass-bg w-full rounded-sm border border-white/25 bg-white/5 px-10 py-20 backdrop-brightness-[35%]`}
+          className={`${containerDefault} ${flexCenter} glass-bg rounded-sm border border-white/25 bg-white/5 px-10 py-20 backdrop-brightness-[35%]`}
         >
           {/* Form */}
-          <div className="w-1/2 pr-10">
+          <div className="w-1/2 px-10">
             <div className="ml-1 w-fit">
               <CustomTag text="Leave a message for us" />
             </div>
@@ -29,7 +29,7 @@ const SupportPageWrapper = () => {
           </div>
 
           {/* Details */}
-          <div className="w-1/2 pl-10">
+          <div className="w-1/2 px-10">
             <Image
               className="mx-auto drop-shadow-[0_0_0.3rem_var(--color-primary)]"
               src={'/images/support-page/headset.png'}

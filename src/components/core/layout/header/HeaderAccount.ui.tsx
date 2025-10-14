@@ -39,7 +39,7 @@ export default function HeaderAccountUi({ isAuthenticated }: PropsT) {
         <Button
           variant="default"
           size="default"
-          className="px-8 text-white *:transition-all *:hover:underline"
+          className="px-8 text-white *:transition-all *:hover:-translate-y-0.5"
         >
           <Link href={'/auth/signup'}>Signup</Link>/
           <Link href={'/auth/signin'}>Signin</Link>

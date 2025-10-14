@@ -1,23 +1,32 @@
 // 📦 Third-Party imports
 import Image from 'next/image';
-import clsx from 'clsx';
 
 // 📦 Internal imports
-import {
-  generateColorByClassification,
-  getFearClipPath,
-  getGreedClipPath,
-} from './local';
+import { buildColorByClassification, buildSentimentClipPath } from './local';
 import { flexBetween, flexCenter } from '~styles/tw-custom';
 import { getMarketSentiment } from '~services/coins';
 import { AuthMessages } from '~constants/messages';
+import { CatchError } from '~core/ui/shared/typography';
+import ErrorNotifier from '~core/global/ErrorNotifier';
 
 // ⚙️ Functional component
 const Sentiment = async () => {
-  const { data, metadata } = await getMarketSentiment();
+  const result = await getMarketSentiment();
 
+  if (!result) {
+    return (
+      <>
+        <ErrorNotifier error={'Error in fetching market sentiment data. :(('} />
+        <CatchError className={`${flexCenter} h-full`} />
+      </>
+    );
+  }
+
+  const { data, metadata } = result;
   const value = +data[0].value;
   const classification = data[0].value_classification;
+
+  const { fearPath, greedPath } = buildSentimentClipPath(100 - value);
 
   if (metadata.err) {
     return (
@@ -50,17 +59,17 @@ const Sentiment = async () => {
         {/* Degree line */}
         <div className="absolute right-1/2 bottom-0 z-10 w-[40%]">
           <div
-            className="absolute top-0 left-1/2 z-10 h-[3px] w-full origin-right rounded-l-[50%] rounded-r-[0%]"
+            className="absolute top-0 left-1/2 z-10 h-[3px] w-[95%] origin-right rounded-l-[50%] rounded-r-[0%]"
             style={{
               transform: `translate(-50%, -50%) rotate(${(value * 180) / 100}deg)`,
-              backgroundColor: generateColorByClassification(classification),
+              backgroundColor: buildColorByClassification(classification),
             }}
           ></div>
         </div>
 
         {/* Number */}
         <div
-          style={{ color: generateColorByClassification(classification) }}
+          style={{ color: buildColorByClassification(classification) }}
           className="bg-background/80 absolute right-0 -bottom-1.5 left-0 z-20 m-auto h-fit w-fit rounded-md border px-10 backdrop-blur-[1px]"
         >
           <p className="text-center text-xl font-bold">{value}</p>
@@ -74,11 +83,13 @@ const Sentiment = async () => {
       <div className="relative mx-auto mt-6 h-3 w-[85%] bg-transparent">
         <div
           className="bg-status-success-200 absolute left-0 h-full w-[98%] rounded-l-xs"
-          style={{ clipPath: getGreedClipPath(value) }}
+          // style={{ clipPath: getGreedClipPath(50) }}
+          style={{ clipPath: greedPath }}
         ></div>
         <div
           className="bg-status-error-200 absolute right-0 h-full w-[98%] rounded-r-xs"
-          style={{ clipPath: getFearClipPath(100 - value) }}
+          // style={{ clipPath: getFearClipPath(50) }}
+          style={{ clipPath: fearPath }}
         ></div>
       </div>
 

@@ -1,14 +1,30 @@
 // 📦 Third-Party imports
 import Image from 'next/image';
+import clsx from 'clsx';
 
 // 📦 Internal imports
-import { flexBetween } from '~styles/tw-custom';
+import { flexBetween, flexCenter } from '~styles/tw-custom';
 import { getMarketGlobalData } from '~services/coins';
 import { Price, Percentage } from '~core/global/formatters';
+import { CatchError } from '~core/ui/shared/typography';
+import ErrorNotifier from '~core/global/ErrorNotifier';
 
 // ⚙️ Functional component
 const GlobalData = async () => {
-  const { data } = await getMarketGlobalData();
+  const result = await getMarketGlobalData();
+  if (!result) {
+    return (
+      <>
+        <ErrorNotifier
+          error={'Error in fetching market global data. :(('}
+          closeTime={6000}
+        />
+        <CatchError className={`${flexCenter} h-full`} />
+      </>
+    );
+  }
+
+  const { data } = result;
   const {
     total_market_cap,
     total_volume,
@@ -27,8 +43,21 @@ const GlobalData = async () => {
               fontSize={'0.8rem'}
               iconSize={14}
             />
+            <small
+              className={clsx(
+                'text-[0.8rem]',
+                change_percentage.toString().startsWith('-')
+                  ? 'text-status-error-200'
+                  : 'text-status-success-200',
+              )}
+            >
+              ( 24h )
+            </small>
           </div>
-          <p title={total_market_cap.usd.toLocaleString('en')} className="mt-1">
+          <p
+            title={`$ ${total_market_cap.usd.toLocaleString('en')}`}
+            className="mt-1"
+          >
             <Price price={total_market_cap.usd} />
           </p>
         </div>
@@ -46,7 +75,10 @@ const GlobalData = async () => {
       <div className={`${flexBetween} h-1/2 border-b`}>
         <div>
           <p>Total Volume</p>
-          <p title={total_volume.usd.toLocaleString('en')} className="mt-1">
+          <p
+            title={`$ ${total_volume.usd.toLocaleString('en')}`}
+            className="mt-1"
+          >
             <Price price={total_volume.usd} />
           </p>
         </div>

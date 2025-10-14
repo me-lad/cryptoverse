@@ -5,49 +5,53 @@ import clsx from 'clsx';
 import Link from 'next/link';
 
 // 📦 Internal imports
-import { LISTEntity } from '~types/api-generated/getTopCoins';
-import { formatPercentage, formatPrice } from '~helpers/formatters';
+import { CoinEntity_Gecko } from '~types/api-generated/shared';
+import { formatPercentage } from '~helpers/formatters';
 import { flexCenter } from '~styles/tw-custom';
+import { Price } from '~core/global/formatters';
 
 // ⚙️ Functional component
-const SubtitleItem: React.FC<LISTEntity> = ({
-  LOGO_URL,
-  NAME,
-  PRICE_USD,
-  SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD: CHANGE_24,
-  SYMBOL,
+const SubtitleItem: React.FC<CoinEntity_Gecko> = ({
+  image,
+  name,
+  high_24h,
+  price_change_percentage_24h,
+  symbol,
 }) => {
   return (
     <Link
-      href={`/coin/${SYMBOL}`}
+      href={`/coin/${symbol}`}
       className={`${flexCenter} hover:bg-primary-800 h-full min-w-[10%] gap-4 rounded-xs transition-colors`}
     >
       <div>
         <Image
-          src={LOGO_URL || '/svgs/logo/logo.svg'}
+          src={image || '/svgs/logo/logo.svg'}
           width={24}
           height={24}
-          alt={NAME}
+          alt={name}
         />
       </div>
       <div>
-        <span className="text-lg font-semibold">{NAME}</span>
+        <span className="text-lg font-semibold">{name}</span>
       </div>
       <div>
-        <span className="font-semibold" title={`$ ${PRICE_USD}`}>
-          $ {formatPrice(PRICE_USD)}
+        <span
+          className="font-semibold"
+          title={`$ ${high_24h.toLocaleString('en')}`}
+        >
+          <Price price={high_24h} />
         </span>
       </div>
       <div
-        title={`${CHANGE_24}`}
+        title={`${price_change_percentage_24h}`}
         className={clsx(
           'font-semibold',
-          formatPercentage(CHANGE_24).startsWith('-')
+          formatPercentage(price_change_percentage_24h).startsWith('-')
             ? 'text-status-error-200'
             : 'text-status-success-200',
         )}
       >
-        ({formatPercentage(CHANGE_24)})
+        ({formatPercentage(price_change_percentage_24h)})
       </div>
     </Link>
   );

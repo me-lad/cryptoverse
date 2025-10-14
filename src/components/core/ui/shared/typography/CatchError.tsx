@@ -11,7 +11,7 @@ export const CatchError = ({ message, className, ...props }: PropsT) => {
   return (
     <p
       className={cn(
-        'text-status-error-200 text-center text-3xl font-bold',
+        'text-status-error-200 text-center text-xl font-semibold',
         className,
       )}
       {...props}

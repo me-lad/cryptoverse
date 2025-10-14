@@ -4,9 +4,10 @@ import Link from 'next/link';
 
 // 📦 Internal imports
 import { flexBetween, containerDefault } from '~styles/tw-custom';
+import { NavLink } from '~core/global/NavLink';
 import HeaderSearchFn from './HeaderSearch.fn';
 import HeaderAccountFn from './HeaderAccount.fn';
-import { NavLink } from '@/components/core/global/NavLink';
+import Currency from './Currency';
 
 // ⚙️ Functional component
 export default function HeaderUi() {
@@ -47,6 +48,9 @@ export default function HeaderUi() {
         <div className="flex items-center gap-6">
           {/* Search button & Search modal */}
           <HeaderSearchFn />
+
+          {/* Currency handler */}
+          <Currency />
 
           {/* Account center */}
           <HeaderAccountFn />

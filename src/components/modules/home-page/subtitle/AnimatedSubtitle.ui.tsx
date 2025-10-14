@@ -5,15 +5,13 @@ import Link from 'next/link';
 import clsx from 'clsx';
 
 // 📦 Internal imports
-import type { LISTEntity } from '~types/api-generated/getTopCoins';
-import { flexCenter } from '~styles/tw-custom';
-import { formatPercentage, formatPrice } from '~helpers/formatters';
+import type { CoinEntity_Gecko } from '~types/api-generated/shared';
 import styles from './AnimatedSubtitle.module.css';
 import SubtitleItem from './SubtitleItem';
 
 // 🧾 Local types
 interface PropsT {
-  coins: LISTEntity[];
+  coins: CoinEntity_Gecko[];
 }
 
 // ⚙️ Functional component
@@ -26,11 +24,11 @@ const AnimatedSubtitleUi: React.FC<PropsT> = ({ coins }) => {
         >
           {/* Original content */}
           {coins.map((coin) => (
-            <SubtitleItem key={coin.ID} {...coin} />
+            <SubtitleItem key={coin.id} {...coin} />
           ))}
           {/* Duplicate content for seamless loop */}
           {coins.map((coin) => (
-            <SubtitleItem key={`duplicate-${coin.ID}`} {...coin} />
+            <SubtitleItem key={`duplicate-${coin.id}`} {...coin} />
           ))}
         </div>
       </div>

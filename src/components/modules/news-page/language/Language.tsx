@@ -8,7 +8,14 @@ import { use } from 'react';
 import type { NewsLanguagesT } from '~types/news';
 import { NewsContext } from '../NewsPage.context';
 import { containerDefault, flexCenter } from '~styles/tw-custom';
-import Image from 'next/image';
+
+// 🧾 Local variables
+const languagesMap: Record<string, string> = {
+  en: 'English',
+  es: 'Español',
+  fr: 'Français',
+  tr: 'Türkiye',
+};
 
 // ⚙️ Functional component
 const Language = () => {
@@ -43,7 +50,7 @@ const Language = () => {
               <div
                 className={`${flexCenter} min-h-full min-w-full text-3xl font-medium backdrop-blur-xs backdrop-brightness-[25%] group-hover:backdrop-blur-none`}
               >
-                {lang.toUpperCase()}
+                {languagesMap[lang]}
               </div>
             </div>
           </div>

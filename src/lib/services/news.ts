@@ -9,7 +9,7 @@ import { useServerFetch } from '~hooks/useServerFetch';
 
 // Fetch news sources
 export const getNewsSources = async (language: NewsLanguagesT) => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_CRYPTOCOMPARE;
   const fetchUrl = buildUrl(`${baseUrl}/news/v1/source/list`, {
     language,
     status: 'ACTIVE',
@@ -24,7 +24,7 @@ export const getNewsSources = async (language: NewsLanguagesT) => {
 
 // Fetch news categories
 export const getNewsCategories = async () => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_CRYPTOCOMPARE;
   const fetchUrl = buildUrl(`${baseUrl}/news/v1/category/list`, {
     status: 'ACTIVE',
   });
@@ -45,7 +45,7 @@ export const getNews = async ({
   excludeCategories,
   timestamp,
 }: NewsContextParamsT & { limit?: number; timestamp?: number }) => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_CRYPTOCOMPARE;
   const fetchUrl = buildUrl(`${baseUrl}/news/v1/article/list`, {
     lang: language,
     source_ids: sources,
@@ -68,7 +68,7 @@ export const searchNews = async (
   timestamp?: number,
 ) => {
   const url = buildUrl(
-    `${process.env.NEXT_PUBLIC_BASE_URL_REQUEST}/news/v1/search`,
+    `${process.env.NEXT_PUBLIC_BASE_URL_REQUEST_CRYPTOCOMPARE}/news/v1/search`,
     {
       search_string: searchString,
       to_ts: timestamp,

@@ -1,45 +1,140 @@
 import type { GetMarketGlobalData } from '~types/api-generated/getMarketGlobalData';
 import type { GetMarketSentiment } from '~types/api-generated/getMarketSentiment';
 import type { GetTopCoins } from '~types/api-generated/getTopCoins';
+import type { CurrencyConversionFactorsT, CurrencyT } from '~types/coins';
+import type { GetCurrencyConversionFactors } from '~types/api-generated/getCurrencyConversionFactors';
+import type { GetTrendingCoins } from '~types/api-generated/getTrendingCoins';
 import { useServerFetch } from '~hooks/useServerFetch';
-import { hoursToMillisecond, minutesToMillisecond } from '~helpers/time';
+import { minutesToMillisecond } from '~helpers/time';
+import { GetWidgetCoins } from '../types/api-generated/getWidgetCoins';
 
-export const getMarketGlobalData = () => {
-  const fetchUrl = 'https://api.coingecko.com/api/v3/global';
+// 🧾 Local variables
+const showFallbackCatcher = (err: any) =>
+  console.log('Development handler', 'Filename: services/coins.ts', err);
 
-  return useServerFetch<GetMarketGlobalData>(fetchUrl, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Accept-Encoding': 'deflate, gzip',
-      'x-cg-demo-api-key': 'CG-qBScPUs1KNvpLrU22czN23BP	',
-      Accept: 'application/json',
-    },
-    cache: 'force-cache',
-    next: {
-      revalidate: minutesToMillisecond(1),
-    },
-  });
+export const getMarketGlobalData = async () => {
+  try {
+    const fetchUrl = 'https://api.coingecko.com/api/v3/global';
+    return await useServerFetch<GetMarketGlobalData>(fetchUrl, {
+      method: 'GET',
+      cache: 'force-cache',
+      next: {
+        revalidate: minutesToMillisecond(1),
+      },
+    });
+  } catch (err) {
+    showFallbackCatcher(err);
+    return;
+  }
 };
 
-export const getMarketSentiment = () => {
-  const fetchUrl = 'https://api.alternative.me/fng/';
-  return useServerFetch<GetMarketSentiment>(fetchUrl, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Accept-Encoding': 'deflate, gzip',
-      Accept: 'application/json',
-    },
-    cache: 'force-cache',
-    next: {
-      revalidate: hoursToMillisecond(24),
-    },
-  });
+export const getMarketSentiment = async () => {
+  try {
+    const fetchUrl = 'https://api.alternative.me/fng/';
+    return await useServerFetch<GetMarketSentiment>(fetchUrl, {
+      method: 'GET',
+      cache: 'default',
+    });
+  } catch (err) {
+    showFallbackCatcher(err);
+    return;
+  }
 };
 
-export const getTopCoins = () => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST;
-  const fetchUrl = `${baseUrl}/asset/v1/top/list?page=1&page_size=10&sort_by=TOTAL_MKT_CAP_USD&sort_direction=DESC&toplist_quote_asset=USD`;
-  return useServerFetch<GetTopCoins>(fetchUrl);
+export const getTopCoins = async () => {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_COINGECKO;
+    const fetchUrl = `${baseUrl}/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false`;
+    return await useServerFetch<GetTopCoins>(fetchUrl, {
+      cache: 'force-cache',
+      next: {
+        revalidate: minutesToMillisecond(1),
+      },
+    });
+  } catch (err) {
+    showFallbackCatcher(err);
+    return;
+  }
+};
+
+export const getCurrencyConversionFactors = async (
+  baseCurrency: CurrencyT,
+): Promise<CurrencyConversionFactorsT | undefined> => {
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  const fetchUrl = `${baseUrl}/api/currency`;
+  const resp = await fetch(fetchUrl, {
+    method: 'POST',
+    body: JSON.stringify({ baseCurrency }),
+  });
+  const result: GetCurrencyConversionFactors = await resp.json();
+  if (result.result === 'error') return;
+
+  const rates: CurrencyConversionFactorsT = {
+    USD: result.rates.USD,
+    EUR: result.rates.EUR,
+    GBP: result.rates.GBP,
+    JPY: result.rates.JPY,
+    IRR: result.rates.IRR,
+  };
+
+  if (baseCurrency === 'IRR') {
+    try {
+      const respIRR = await fetch(`${fetchUrl}/irr`, { method: 'GET' });
+      const resultIRR = await respIRR.json();
+      rates.USD = 1 / resultIRR / 10;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  return rates;
+};
+
+export const getTrendingCoins = async () => {
+  try {
+    const fetchUrl = 'https://api.coingecko.com/api/v3/search/trending';
+    return await useServerFetch<GetTrendingCoins>(fetchUrl, {
+      method: 'GET',
+      cache: 'force-cache',
+      next: {
+        revalidate: minutesToMillisecond(1),
+      },
+    });
+  } catch (err) {
+    showFallbackCatcher(err);
+    return;
+  }
+};
+
+export const getTopGainerCoins = async () => {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_CRYPTOCOMPARE;
+    const fetchUrl = `${baseUrl}/asset/v1/top/list?page=1&page_size=10&sort_by=SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD&sort_direction=DESC&groups=ID,BASIC,SUPPLY,PRICE,MKT_CAP,VOLUME,CHANGE,TOPLIST_RANK`;
+    return await useServerFetch<GetWidgetCoins>(fetchUrl);
+  } catch (err) {
+    showFallbackCatcher(err);
+    return;
+  }
+};
+
+export const getTopLoserCoins = async () => {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_CRYPTOCOMPARE;
+    const fetchUrl = `${baseUrl}/asset/v1/top/list?page=1&page_size=10&sort_by=SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD&sort_direction=ASC&groups=ID,BASIC,SUPPLY,PRICE,MKT_CAP,VOLUME,CHANGE,TOPLIST_RANK`;
+    return await useServerFetch<GetWidgetCoins>(fetchUrl);
+  } catch (err) {
+    showFallbackCatcher(err);
+    return;
+  }
+};
+
+export const getLastUpdatedCoins = async () => {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_CRYPTOCOMPARE;
+    const fetchUrl = `${baseUrl}/asset/v1/top/list?page=1&page_size=10&sort_by=UPDATED_ON&sort_direction=DESC&groups=ID,BASIC,SUPPLY,PRICE,MKT_CAP,VOLUME,CHANGE,TOPLIST_RANK`;
+    return await useServerFetch<GetWidgetCoins>(fetchUrl);
+  } catch (err) {
+    showFallbackCatcher(err);
+    return;
+  }
 };

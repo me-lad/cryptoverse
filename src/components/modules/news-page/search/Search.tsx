@@ -50,6 +50,7 @@ const Search = () => {
       )}
       <input
         name="search"
+        autoComplete="off"
         className={clsx(
           'w-full !border-0 !bg-transparent !px-0 placeholder:text-base placeholder:text-white/80 focus-visible:!border-0 focus-visible:!outline-0',
           isLoading && 'animate-pulse',
