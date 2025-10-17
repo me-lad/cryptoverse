@@ -120,8 +120,8 @@ export default function FooterUi({ isHomePage }: PropsT) {
                   </AccordionTrigger>
                   <AccordionContent>
                     <ul>
-                      {link.items.map((item) => (
-                        <li className="mt-2 text-neutral-400">
+                      {link.items.map((item, index) => (
+                        <li key={index} className="mt-2 text-neutral-400">
                           <Link href={item.url}>{item.name}</Link>
                         </li>
                       ))}

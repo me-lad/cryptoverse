@@ -32,11 +32,11 @@ interface NewsContextActionsT {
   setSearchStringParam: (searchString: string) => void;
 }
 
-export type NewsContextT = {
+export interface NewsContextT {
   data: NewsContextDataT;
   params: NewsContextParamsT;
   actions?: NewsContextActionsT;
-};
+}
 
 export interface NewsReducerActionT {
   type: (typeof NewsReducerActions)[keyof typeof NewsReducerActions];

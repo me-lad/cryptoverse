@@ -9,7 +9,7 @@ export const buildRandomCode = (length: number = 6): string => {
 };
 
 export const buildCoinChart = (symbol: string) => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_CRYPTOCOMPARE;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_CHART;
   return `${baseUrl}/${symbol.toUpperCase()}/USD/latest.png`;
 };
 

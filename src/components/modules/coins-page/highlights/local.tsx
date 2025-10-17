@@ -12,7 +12,6 @@ import GlobalData from './GlobalData';
 export interface HighlightT {
   id: string;
   title: string;
-  moreUrl?: string;
   component: React.FC;
 }
 
@@ -36,7 +35,6 @@ export const highlightsList: HighlightT[] = [
   {
     id: buildRandomID().toString(),
     title: 'Trending',
-    moreUrl: '/coins/trending',
     component: () => <Trending />,
   },
   {

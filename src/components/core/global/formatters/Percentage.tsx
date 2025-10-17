@@ -5,6 +5,7 @@ import clsx from 'clsx';
 
 // 📦 Internal imports
 import { formatPercentage } from '~helpers/formatters';
+import Image from 'next/image';
 
 // 🧾 Local types
 interface PropsT {
@@ -38,13 +39,15 @@ export const Percentage: React.FC<PropsT> = (props) => {
           className={clsx(iconSize < 18 ? 'mt-0.5' : 'mt-1')}
         />
       ) : (
-        <ChevronUp
-          strokeWidth={3}
-          size={iconSize}
-          className={clsx(
-            iconSize < 18 ? 'mt-0.5' : 'mt-1',
-            isNegative && 'rotate-180',
-          )}
+        <Image
+          src={
+            !isNegative
+              ? '/svgs/percentage/up.svg'
+              : '/svgs/percentage/down.svg'
+          }
+          width={17}
+          height={17}
+          alt="percentage"
         />
       )}
 

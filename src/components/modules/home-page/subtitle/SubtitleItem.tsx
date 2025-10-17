@@ -11,13 +11,10 @@ import { flexCenter } from '~styles/tw-custom';
 import { Price } from '~core/global/formatters';
 
 // ⚙️ Functional component
-const SubtitleItem: React.FC<CoinEntity_Gecko> = ({
-  image,
-  name,
-  high_24h,
-  price_change_percentage_24h,
-  symbol,
-}) => {
+const SubtitleItem: React.FC<CoinEntity_Gecko> = (props) => {
+  const { image, name, current_price, price_change_percentage_24h, symbol } =
+    props;
+
   return (
     <Link
       href={`/coin/${symbol}`}
@@ -37,9 +34,9 @@ const SubtitleItem: React.FC<CoinEntity_Gecko> = ({
       <div>
         <span
           className="font-semibold"
-          title={`$ ${high_24h.toLocaleString('en')}`}
+          title={`$ ${current_price.toLocaleString('en')}`}
         >
-          <Price price={high_24h} />
+          <Price price={current_price} />
         </span>
       </div>
       <div

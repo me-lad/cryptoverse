@@ -23,16 +23,6 @@ const Highlights = () => {
             className={`${flexBetween} border-b border-neutral-600 pb-2 pl-1`}
           >
             <h3 className="font-semibold">{highlight.title}</h3>
-
-            {!!highlight.moreUrl && (
-              <Link
-                href={highlight.moreUrl}
-                className={`${flexCenter} gap-1 text-xs text-neutral-300`}
-              >
-                More
-                <ChevronRight size={15} className="mt-0.5" />
-              </Link>
-            )}
           </div>
 
           {/* Highlights Content  (Conditional) */}

@@ -4,13 +4,16 @@ import type { GetTopCoins } from '~types/api-generated/getTopCoins';
 import type { CurrencyConversionFactorsT, CurrencyT } from '~types/coins';
 import type { GetCurrencyConversionFactors } from '~types/api-generated/getCurrencyConversionFactors';
 import type { GetTrendingCoins } from '~types/api-generated/getTrendingCoins';
+import type { CoinsOrderT } from '~types/coins';
 import { useServerFetch } from '~hooks/useServerFetch';
 import { minutesToMillisecond } from '~helpers/time';
-import { GetWidgetCoins } from '../types/api-generated/getWidgetCoins';
+import { GetWidgetCoins } from '~types/api-generated/getWidgetCoins';
+import { Base_Headers } from '~constants/api';
+import { showErrorToast } from '~helpers/toast';
 
 // 🧾 Local variables
 const showFallbackCatcher = (err: any) =>
-  console.log('Development handler', 'Filename: services/coins.ts', err);
+  console.log('Development handler,', 'Filename: services/coins.ts', err);
 
 export const getMarketGlobalData = async () => {
   try {
@@ -136,5 +139,32 @@ export const getLastUpdatedCoins = async () => {
   } catch (err) {
     showFallbackCatcher(err);
     return;
+  }
+};
+
+export const getCoins = async (
+  order: CoinsOrderT,
+  page: number,
+  perPage: number,
+) => {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_COINGECKO;
+    const fetchUrl = `${baseUrl}/api/v3/coins/markets?vs_currency=usd&order=${order}&per_page=${perPage}&page=${page}&price_change_percentage=1h%2C24h%2C7d%2C30d`;
+
+    const resp = await fetch(fetchUrl, {
+      method: 'GET',
+      headers: {
+        ...Base_Headers,
+        'x-cg-demo-api-key': process.env.API_KEY_COINGECKO || '',
+      },
+    });
+    return await resp.json();
+  } catch (err) {
+    showFallbackCatcher(err);
+    showErrorToast(
+      'Your request limit has expired. Please try again in a few moments.',
+      7500,
+    );
+    return [];
   }
 };

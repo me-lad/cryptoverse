@@ -3,6 +3,7 @@
 // 📦 Internal imports
 import { containerDefault } from '~styles/tw-custom';
 import Highlights from './highlights/Highlights';
+import Coins from './coins/Coins';
 
 // ⚙️ Functional component
 const CoinsPageWrapper = () => {
@@ -12,6 +13,7 @@ const CoinsPageWrapper = () => {
       <Highlights />
 
       {/* Coins list */}
+      <Coins />
     </div>
   );
 };

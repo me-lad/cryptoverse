@@ -3,6 +3,7 @@ import React from 'react';
 
 // 📦 Internal imports
 import CoinsPageWrapper from '~modules/coins-page/CoinsPage.wrapper';
+import CoinsPageContext from '~modules/coins-page/CoinsPage.context';
 
 interface PropsT {
   searchParams: {
@@ -11,7 +12,7 @@ interface PropsT {
 }
 
 // ⚙️ Functional component
-const Page: React.FC<PropsT> = async ({ searchParams }) => {
+const CoinsPage: React.FC<PropsT> = async ({ searchParams }) => {
   const params = await searchParams;
 
   for (const key in params) {
@@ -20,6 +21,10 @@ const Page: React.FC<PropsT> = async ({ searchParams }) => {
     }
   }
 
-  return <CoinsPageWrapper />;
+  return (
+    <CoinsPageContext>
+      <CoinsPageWrapper />
+    </CoinsPageContext>
+  );
 };
-export default Page;
+export default CoinsPage;
