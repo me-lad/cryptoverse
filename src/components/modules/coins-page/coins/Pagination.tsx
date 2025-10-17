@@ -17,8 +17,7 @@ const Pagination = () => {
   const { params, actions, coins, isFetching } = use(CoinsContext);
 
   const changePageHandler = (newPage: number) => {
-    console.log(newPage);
-    if (actions && !isFetching && coins.length) actions.setPage(newPage);
+    if (actions && !isFetching) actions.setPage(newPage);
   };
 
   return (

@@ -10,6 +10,7 @@ import { minutesToMillisecond } from '~helpers/time';
 import { GetWidgetCoins } from '~types/api-generated/getWidgetCoins';
 import { Base_Headers } from '~constants/api';
 import { showErrorToast } from '~helpers/toast';
+import { AuthMessages } from '~constants/messages';
 
 // 🧾 Local variables
 const showFallbackCatcher = (err: any) =>
@@ -158,13 +159,27 @@ export const getCoins = async (
         'x-cg-demo-api-key': process.env.API_KEY_COINGECKO || '',
       },
     });
+
+    if (!resp.ok) {
+      if (resp.status === 429) {
+        throw new Error('RateLimitExceeded');
+      } else {
+        throw new Error(`APIError: ${resp.status}`);
+      }
+    }
+
     return await resp.json();
-  } catch (err) {
-    showFallbackCatcher(err);
-    showErrorToast(
-      'Your request limit has expired. Please try again in a few moments.',
-      7500,
-    );
+  } catch (err: any) {
+    if (err instanceof TypeError) {
+      showFallbackCatcher(err.message);
+      showErrorToast(AuthMessages.Error.CatchHandler, 5000);
+    } else if (err.message === 'RateLimitExceeded') {
+      showFallbackCatcher('CoinGecko rate limit hit');
+      showErrorToast('Too many requests. Please wait and try again.', 7000);
+    } else {
+      showFallbackCatcher(err);
+      showErrorToast(AuthMessages.Error.CatchHandler, 5000);
+    }
     return [];
   }
 };

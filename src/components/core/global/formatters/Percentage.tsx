@@ -25,38 +25,44 @@ export const Percentage: React.FC<PropsT> = (props) => {
     <div
       className={clsx(
         'flex items-center gap-1.5',
-        percentage === 0
+        percentage === 0 || !percentage
           ? 'text-neutral-300'
           : isNegative
             ? 'text-status-error-200'
             : 'text-status-success-200',
       )}
     >
-      {percentage === 0 ? (
-        <Minus
-          strokeWidth={3}
-          size={iconSize}
-          className={clsx(iconSize < 18 ? 'mt-0.5' : 'mt-1')}
-        />
+      {!percentage ? (
+        <p className="w-full text-center">__</p>
       ) : (
-        <Image
-          src={
-            !isNegative
-              ? '/svgs/percentage/up.svg'
-              : '/svgs/percentage/down.svg'
-          }
-          width={17}
-          height={17}
-          alt="percentage"
-        />
-      )}
+        <>
+          {percentage === 0 ? (
+            <Minus
+              strokeWidth={3}
+              size={iconSize}
+              className={clsx(iconSize < 18 ? 'mt-0.5' : 'mt-1')}
+            />
+          ) : (
+            <Image
+              src={
+                !isNegative
+                  ? '/svgs/percentage/up.svg'
+                  : '/svgs/percentage/down.svg'
+              }
+              width={17}
+              height={17}
+              alt="percentage"
+            />
+          )}
 
-      <p
-        title={`${formattedPercentage.slice(0, 1) === '+' ? formattedPercentage.slice(0, 1) : ''}${percentage}`}
-        style={{ fontSize }}
-      >
-        {formattedPercentage.slice(1).padStart(6, '0')}
-      </p>
+          <p
+            title={`${formattedPercentage.slice(0, 1) === '+' ? formattedPercentage.slice(0, 1) : ''}${percentage}`}
+            style={{ fontSize }}
+          >
+            {formattedPercentage.slice(1).padStart(6, '0')}
+          </p>
+        </>
+      )}
     </div>
   );
 };

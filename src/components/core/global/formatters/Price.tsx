@@ -21,17 +21,23 @@ export const Price: React.FC<PropsT> = ({ price, className, ...rest }) => {
 
   return (
     <span className={cn('flex items-center gap-1', className)} {...rest}>
-      <Image
-        className="mt-0.5"
-        src={`/svgs/logo/currencies/${currency?.toLocaleLowerCase()}.svg`}
-        width={25}
-        height={25}
-        alt={currency || ''}
-      />
-      {formatPrice(
-        price,
-        conversionFactors?.USD,
-        conversionFactors && currency && conversionFactors[currency],
+      {!price ? (
+        <span className="w-full text-center">__</span>
+      ) : (
+        <>
+          <Image
+            className="mt-0.5"
+            src={`/svgs/logo/currencies/${currency?.toLocaleLowerCase()}.svg`}
+            width={25}
+            height={25}
+            alt={currency || ''}
+          />
+          {formatPrice(
+            price,
+            conversionFactors?.USD,
+            conversionFactors && currency && conversionFactors[currency],
+          )}
+        </>
       )}
     </span>
   );

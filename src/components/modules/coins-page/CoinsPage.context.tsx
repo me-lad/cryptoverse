@@ -2,7 +2,7 @@
 'use client';
 
 // 📦 Third-Party imports
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 // 📦 Internal imports

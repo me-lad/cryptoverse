@@ -2,8 +2,8 @@
 'use client';
 
 // 📦 Third-Party imports
-import { ColumnDef } from '@tanstack/react-table';
-import { Star } from 'lucide-react';
+import { ColumnDef, Row } from '@tanstack/react-table';
+import { ArrowDownUp, Star } from 'lucide-react';
 import { Button } from '~core/ui/shadcn/button';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -28,6 +28,21 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
   {
     accessorKey: 'pair',
     header: 'Pair',
+    filterFn: <TData,>(
+      row: Row<TData>,
+      columnId: string,
+      filterValue: string,
+      addMeta: (meta: any) => void,
+    ) => {
+      const coinName = (row.original as CoinEntity_Gecko).id || '';
+      const coinSymbol = (row.original as CoinEntity_Gecko).symbol || '';
+      const match =
+        coinName.toLowerCase().includes(filterValue.toLowerCase()) ||
+        coinSymbol.toLowerCase().includes(filterValue.toLowerCase());
+
+      addMeta({ match });
+      return match;
+    },
     cell: ({ row }) => (
       <Link
         href={`/coin/${row.original.symbol}`}
@@ -61,6 +76,7 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         Price
+        <ArrowDownUp size={16} />
       </Button>
     ),
     cell: ({ row }) => (
@@ -78,11 +94,14 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         24h
+        <ArrowDownUp size={16} />
       </Button>
     ),
     cell: ({ row }) => (
       <div
-        title={row.original.price_change_percentage_24h_in_currency.toString()}
+        title={
+          String(row.original.price_change_percentage_24h_in_currency) || ''
+        }
       >
         <Percentage
           percentage={row.original.price_change_percentage_24h_in_currency}
@@ -100,11 +119,14 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         7d
+        <ArrowDownUp size={16} />
       </Button>
     ),
     cell: ({ row }) => (
       <div
-        title={row.original.price_change_percentage_7d_in_currency.toString()}
+        title={
+          String(row.original.price_change_percentage_7d_in_currency) || ''
+        }
       >
         <Percentage
           percentage={row.original.price_change_percentage_7d_in_currency}
@@ -122,11 +144,14 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         30d
+        <ArrowDownUp size={16} />
       </Button>
     ),
     cell: ({ row }) => (
       <div
-        title={row.original.price_change_percentage_30d_in_currency.toString()}
+        title={
+          String(row.original.price_change_percentage_30d_in_currency) || ''
+        }
       >
         <Percentage
           percentage={row.original.price_change_percentage_30d_in_currency}
@@ -144,6 +169,7 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         Market Cap
+        <ArrowDownUp size={16} />
       </Button>
     ),
     cell: ({ row }) => (
@@ -161,6 +187,7 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         Total Volume
+        <ArrowDownUp size={16} />
       </Button>
     ),
     cell: ({ row }) => (

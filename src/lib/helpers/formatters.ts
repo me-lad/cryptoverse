@@ -35,6 +35,7 @@ export const formatPrice = (
   rateUSD: number = 1,
   rateTarget: number = 1,
 ): string => {
+  if (!priceUSD) return '';
   const convertedPrice = (priceUSD * rateTarget) / rateUSD;
 
   const [intPart, decimalPart] = convertedPrice.toFixed(3).split('.');
@@ -45,6 +46,7 @@ export const formatPrice = (
 };
 
 export const formatPercentage = (value: number): string => {
+  if (!value) return '';
   const sign = value >= 0 ? '+' : '';
   return `${sign}${value.toFixed(2)}%`;
 };
