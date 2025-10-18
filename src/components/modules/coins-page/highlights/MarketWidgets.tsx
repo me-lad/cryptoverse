@@ -1,11 +1,11 @@
 // 📦 Internal imports
+import { default as Table } from './Table';
 import { getLastUpdatedCoins } from '~services/coins';
 import { getTopGainerCoins } from '~services/coins';
 import { getTopLoserCoins } from '~services/coins';
 import { getTrendingCoins } from '~services/coins';
 import { CatchError } from '~core/ui/shared/typography';
 import { flexCenter } from '~styles/tw-custom';
-import { default as Table } from './Table';
 import ErrorNotifier from '~core/global/ErrorNotifier';
 
 // ⚙️ Functional components

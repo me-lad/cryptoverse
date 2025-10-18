@@ -38,7 +38,7 @@ const Sentiment = async () => {
 
   return (
     <>
-      {/* Circular gradient */}
+      {/* Diagram */}
       <div className={`${flexCenter} relative h-36 w-full`}>
         {/* Circle & Dots */}
         <div className="absolute h-full w-full">
@@ -57,7 +57,7 @@ const Sentiment = async () => {
         </div>
 
         {/* Degree line */}
-        <div className="absolute right-1/2 bottom-0 z-10 w-[40%]">
+        <div className="absolute right-1/2 bottom-0 z-10 w-[35%]">
           <div
             className="absolute top-0 left-1/2 z-10 h-[3px] w-[95%] origin-right rounded-l-[50%] rounded-r-[0%]"
             style={{

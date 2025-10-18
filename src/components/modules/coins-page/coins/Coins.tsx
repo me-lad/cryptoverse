@@ -5,7 +5,7 @@
 import { use } from 'react';
 
 // 📦 Internal imports
-import { columns } from './Columns';
+import { columns } from './ColumnsDefinition';
 import { CoinsContext } from '../CoinsPage.context';
 import DataTable from './DataTable';
 import Pagination from './Pagination';

@@ -3,8 +3,6 @@ import { Search } from 'lucide-react';
 import { Input } from '~core/ui/shadcn/input';
 import React from 'react';
 
-// 📦 Internal imports
-
 // 🧾 Local types
 interface PropsT {
   value: string;

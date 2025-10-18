@@ -8,7 +8,7 @@ import Coins from './coins/Coins';
 // ⚙️ Functional component
 const CoinsPageWrapper = () => {
   return (
-    <div className={`${containerDefault} mt-16`}>
+    <div className={`${containerDefault} mt-32`}>
       {/* Highlights */}
       <Highlights />
 

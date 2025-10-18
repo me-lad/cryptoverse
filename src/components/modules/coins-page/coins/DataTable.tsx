@@ -164,7 +164,7 @@ function DataTable<TData, TValue>({ columns, data }: PropsT<TData, TValue>) {
             ) : (
               <TableRow>
                 <TableCell
-                  colSpan={columns.length}
+                  colSpan={columns.length + 2}
                   className="h-24 text-center"
                 >
                   No results.

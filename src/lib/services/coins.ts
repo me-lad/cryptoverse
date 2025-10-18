@@ -149,6 +149,8 @@ export const getCoins = async (
   perPage: number,
 ) => {
   try {
+    if (!order || !page || !perPage) return [];
+
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_COINGECKO;
     const fetchUrl = `${baseUrl}/api/v3/coins/markets?vs_currency=usd&order=${order}&per_page=${perPage}&page=${page}&price_change_percentage=1h%2C24h%2C7d%2C30d`;
 

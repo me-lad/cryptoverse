@@ -51,7 +51,7 @@ const Filters = () => {
       <div className="relative flex items-center gap-5 font-semibold">
         <span className="cursor-pointer">All</span>
         <span className="cursor-pointer">Favorites</span>
-        <span className="bg-primary absolute top-full mt-1 h-[1.5px] w-5"></span>
+        <span className="bg-primary absolute top-full mt-1 h-[2px] w-5"></span>
       </div>
 
       {/* Separator */}
@@ -73,7 +73,7 @@ const Filters = () => {
         </span>
         <span
           className={clsx(
-            'bg-primary absolute top-full mt-1 h-[1.5px] transition-all duration-300',
+            'bg-primary absolute top-full mt-1 h-[2px] transition-all duration-300',
             params.order === 'market_cap_desc'
               ? 'w-20'
               : 'w-[5.7rem] translate-x-[6.5rem]',
@@ -85,7 +85,7 @@ const Filters = () => {
       <div className="h-8 w-[1px] bg-neutral-500"></div>
 
       {/* Page size */}
-      <span>Coins count on each page</span>
+      <p>Coins count on each page</p>
       <form
         className="flex gap-2"
         onSubmit={(e) => {
@@ -127,6 +127,7 @@ const Filters = () => {
               width={27}
               height={27}
               alt={curr}
+              className={clsx(curr === 'JPY' && '-translate-x-[1.5px]')}
             />
 
             <span
@@ -134,15 +135,22 @@ const Filters = () => {
                 'bg-primary invisible absolute top-full mt-1 h-[1.5px] w-full transition-transform ease-in',
                 curr === currency && 'visible translate-x-0',
 
-                currencies.findIndex((item) => item === currency) > index
-                  ? 'translate-x-16'
-                  : '-translate-x-16',
-
-                Math.abs(
-                  currencies.findIndex((item) => item === currency) - index,
-                ) > 2
-                  ? 'duration-300'
-                  : 'duration-100',
+                currencies.findIndex((item) => item === currency) - index > 2
+                  ? 'translate-x-20'
+                  : currencies.findIndex((item) => item === currency) - index <=
+                        2 &&
+                      currencies.findIndex((item) => item === currency) -
+                        index >
+                        0
+                    ? 'translate-x-10'
+                    : currencies.findIndex((item) => item === currency) -
+                          index <=
+                          0 &&
+                        currencies.findIndex((item) => item === currency) -
+                          index >
+                          -2
+                      ? '-translate-x-10'
+                      : '-translate-x-20',
               )}
             ></span>
           </div>

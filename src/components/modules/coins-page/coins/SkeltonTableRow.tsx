@@ -1,10 +1,6 @@
-// 📌 Directives
-
 // 📦 Third-Party imports
 import { Skeleton } from '~core/ui/shadcn/skeleton';
 import { TableCell } from '~core/ui/shadcn/table';
-
-// 📦 Internal imports
 
 // ⚙️ Functional component
 const SkeltonTableRow = () => {
