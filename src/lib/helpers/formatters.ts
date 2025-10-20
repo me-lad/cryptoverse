@@ -41,8 +41,8 @@ export const formatPrice = (
   const [intPart, decimalPart] = convertedPrice.toFixed(3).split('.');
   const formattedInt = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
-  if (decimalPart !== '000') return `${formattedInt}.${decimalPart}`;
-  return formattedInt;
+  if (decimalPart === '000' && intPart.length > 1) return formattedInt;
+  return `${formattedInt}.${decimalPart}`;
 };
 
 export const formatPercentage = (value: number): string => {

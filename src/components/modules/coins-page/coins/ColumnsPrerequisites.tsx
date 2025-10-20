@@ -30,7 +30,9 @@ interface PriceCellPropsT {
 }
 export const PriceCell = ({ value }: PriceCellPropsT) => {
   return (
-    <div>
+    <div
+      title={`$ ${value.toString().startsWith('0') ? value : value.toLocaleString()}`}
+    >
       <Price price={value} />
     </div>
   );

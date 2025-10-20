@@ -31,6 +31,7 @@ import { flexBetween, flexCenter } from '~styles/tw-custom';
 import SkeltonTableRow from './SkeltonTableRow';
 import TableSearch from './TableSearch';
 import Filters from './Filters';
+import { Button } from '@/components/core/ui/shadcn/button';
 
 // 🧾 Local types
 interface PropsT<TData, TValue> {
@@ -95,33 +96,38 @@ function DataTable<TData, TValue>({ columns, data }: PropsT<TData, TValue>) {
         <Table className="border-separate border-spacing-0">
           <TableHeader className="sticky top-0 z-40">
             {table.getHeaderGroups().map((headerGroup) => (
-              <TableRow className="!bg-primary-700" key={headerGroup.id}>
-                <>
-                  <TableCell className="!rounded-l-sm">
-                    <span className={`${flexCenter} cursor-pointer text-lg`}>
-                      #
-                    </span>
-                  </TableCell>
-                  {headerGroup.headers.map((header) => {
-                    return (
-                      <TableHead key={header.id}>
-                        {header.isPlaceholder
-                          ? null
-                          : flexRender(
-                              header.column.columnDef.header,
-                              header.getContext(),
-                            )}
-                      </TableHead>
-                    );
-                  })}
-                  <TableCell
-                    className="cursor-pointer !rounded-r-sm"
-                    title="Reset Sort"
-                    onClick={() => table.resetSorting()}
+              <TableRow className="*:!bg-primary-700" key={headerGroup.id}>
+                <TableCell className="!rounded-l-sm">
+                  <span className={`${flexCenter} cursor-pointer text-lg`}>
+                    #
+                  </span>
+                </TableCell>
+                {headerGroup.headers.map((header) => {
+                  return (
+                    <TableHead key={header.id}>
+                      {header.isPlaceholder
+                        ? null
+                        : flexRender(
+                            header.column.columnDef.header,
+                            header.getContext(),
+                          )}
+                    </TableHead>
+                  );
+                })}
+                <TableCell
+                  className="cursor-pointer !rounded-r-sm"
+                  title="Reset Sort"
+                  onClick={() => table.resetSorting()}
+                >
+                  <Button
+                    variant={'ghost'}
+                    size={'icon'}
+                    className="cursor-pointer"
+                    disabled={!sorting.length}
                   >
                     <RefreshCcw size={16} />
-                  </TableCell>
-                </>
+                  </Button>
+                </TableCell>
               </TableRow>
             ))}
           </TableHeader>
@@ -130,29 +136,22 @@ function DataTable<TData, TValue>({ columns, data }: PropsT<TData, TValue>) {
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row, index) => (
                 <TableRow
-                  className={clsx(
-                    'group h-20',
-                    index % 2 !== 0
-                      ? 'bg-background-lighter/60 hover:bg-background-lighter'
-                      : 'hover:bg-black/25',
-                  )}
+                  className={clsx('hover:*:border-primary/50 h-20 *:border-b')}
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
                 >
-                  <>
-                    <TableCell className="border-primary/50 rounded-l-sm font-semibold group-hover:border-b-1 group-hover:border-l-1">
-                      <span className={flexCenter}>{firstIndex + index}</span>
+                  <TableCell className="rounded-l-sm font-semibold">
+                    <span className={flexCenter}>{firstIndex + index}</span>
+                  </TableCell>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext(),
+                      )}
                     </TableCell>
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext(),
-                        )}
-                      </TableCell>
-                    ))}
-                    <TableCell className="border-primary/50 rounded-r-sm group-hover:border-t-1 group-hover:border-r-1"></TableCell>
-                  </>
+                  ))}
+                  <TableCell className="rounded-r-sm"></TableCell>
                 </TableRow>
               ))
             ) : isFetching ? (

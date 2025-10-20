@@ -56,7 +56,7 @@ const Currency = () => {
           onClick={() => handlerMenu()}
           title="Change currency"
         >
-          <Globe size={22} />
+          <Globe size={22} color={menuStatus === 'open' ? '#1a80e6' : '#fff'} />
         </div>
 
         {/* Menu */}

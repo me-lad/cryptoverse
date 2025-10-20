@@ -2,7 +2,7 @@
 'use client';
 
 // 📦 Third-Party imports
-import { useState, use, useEffect } from 'react';
+import { useState, use } from 'react';
 import { X } from 'lucide-react';
 import { Button } from '~core/ui/shadcn/button';
 

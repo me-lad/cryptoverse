@@ -4,6 +4,7 @@ import type { GetTopCoins } from '~types/api-generated/getTopCoins';
 import type { CurrencyConversionFactorsT, CurrencyT } from '~types/coins';
 import type { GetCurrencyConversionFactors } from '~types/api-generated/getCurrencyConversionFactors';
 import type { GetTrendingCoins } from '~types/api-generated/getTrendingCoins';
+import type { CoinEntity_Gecko } from '~types/api-generated/shared';
 import type { CoinsOrderT } from '~types/coins';
 import { useServerFetch } from '~hooks/useServerFetch';
 import { minutesToMillisecond } from '~helpers/time';
@@ -171,6 +172,88 @@ export const getCoins = async (
     }
 
     return await resp.json();
+  } catch (err: any) {
+    if (err instanceof TypeError) {
+      showFallbackCatcher(err.message);
+      showErrorToast(AuthMessages.Error.CatchHandler, 5000);
+    } else if (err.message === 'RateLimitExceeded') {
+      showFallbackCatcher('CoinGecko rate limit hit');
+      showErrorToast('Too many requests. Please wait and try again.', 7000);
+    } else {
+      showFallbackCatcher(err);
+      showErrorToast(AuthMessages.Error.CatchHandler, 5000);
+    }
+    return [];
+  }
+};
+
+export const getCoinsByIDs = async (ids: string[]) => {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_COINGECKO;
+    const fetchUrl = `${baseUrl}/api/v3/coins/markets?vs_currency=usd&price_change_percentage=24h&ids=${ids.join('%2C')}`;
+
+    const resp = await fetch(fetchUrl, {
+      method: 'GET',
+      headers: {
+        ...Base_Headers,
+        'x-cg-demo-api-key': process.env.API_KEY_COINGECKO || '',
+      },
+    });
+
+    if (!resp.ok) {
+      if (resp.status === 429) {
+        throw new Error('RateLimitExceeded');
+      } else {
+        throw new Error(`APIError: ${resp.status}`);
+      }
+    }
+
+    return await resp.json();
+  } catch (err: any) {
+    if (err instanceof TypeError) {
+      showFallbackCatcher(err.message);
+      showErrorToast(AuthMessages.Error.CatchHandler, 5000);
+    } else if (err.message === 'RateLimitExceeded') {
+      showFallbackCatcher('CoinGecko rate limit hit');
+      showErrorToast('Too many requests. Please wait and try again.', 7000);
+    } else {
+      showFallbackCatcher(err);
+      showErrorToast(AuthMessages.Error.CatchHandler, 5000);
+    }
+    return [];
+  }
+};
+
+export const searchCoins = async (
+  query: string,
+): Promise<CoinEntity_Gecko[]> => {
+  try {
+    if (!query || query.length < 2) return [];
+
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_COINGECKO;
+    const fetchUrl = `${baseUrl}/api/v3/search?query=${query}`;
+
+    const resp = await fetch(fetchUrl, {
+      method: 'GET',
+      headers: {
+        ...Base_Headers,
+        'x-cg-demo-api-key': process.env.API_KEY_COINGECKO || '',
+      },
+    });
+
+    if (!resp.ok) {
+      if (resp.status === 429) {
+        throw new Error('RateLimitExceeded');
+      } else {
+        throw new Error(`APIError: ${resp.status}`);
+      }
+    }
+
+    const json = await resp.json();
+    const coinIDs = json.coins.map((coin: CoinEntity_Gecko) => coin.id);
+    const coinsFullData = await getCoinsByIDs(coinIDs);
+
+    return coinsFullData;
   } catch (err: any) {
     if (err instanceof TypeError) {
       showFallbackCatcher(err.message);

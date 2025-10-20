@@ -16,8 +16,13 @@ import NewsListUi, { NewsLoading } from './NewsList.ui';
 const NewsListFn = () => {
   const { data: contextData, params, actions } = use(NewsContext);
   const { data, isLoading, isError, error } = useNewsQuery();
-  const { scrollFetchTimes, isFetchingOnScroll, fetchOlderNews, setScrollFetchTimes, hasScrollFinished } =
-    useInfiniteScroll();
+  const {
+    scrollFetchTimes,
+    isFetchingOnScroll,
+    fetchOlderNews,
+    setScrollFetchTimes,
+    hasScrollFinished,
+  } = useInfiniteScroll();
 
   useEffect(() => {
     if (actions?.setNewsList && actions.setSearchedNewsList) {
@@ -36,14 +41,24 @@ const NewsListFn = () => {
     return (
       <CatchError
         className="mt-20"
-        message={(error.message.includes('"type":1,') && 'No article found with given filters or search string.') || ''}
+        message={
+          (error.message.includes('"type":1,') &&
+            'No article found with given filters or search string.') ||
+          ''
+        }
       />
     );
   }
 
   return (
     <>
-      <NewsListUi news={contextData.searchedNews.length ? contextData.searchedNews : contextData.news} />
+      <NewsListUi
+        news={
+          contextData.searchedNews.length
+            ? contextData.searchedNews
+            : contextData.news
+        }
+      />
       {!!scrollFetchTimes && !hasScrollFinished.current ? (
         <Button
           onClick={() => {
@@ -58,7 +73,11 @@ const NewsListFn = () => {
         </Button>
       ) : (
         isFetchingOnScroll && (
-          <Spinner className="mt-20 flex w-full justify-center text-center" size={40} variant="ellipsis" />
+          <Spinner
+            className="mt-20 flex w-full justify-center text-center"
+            size={40}
+            variant="ellipsis"
+          />
         )
       )}
     </>

@@ -30,6 +30,8 @@ export interface CoinEntity_Gecko {
   atl_date: Date;
   roi: null;
   last_updated: Date;
+  large: string;
+  thumb: string;
 }
 
 export interface CoinEntity_Compare {

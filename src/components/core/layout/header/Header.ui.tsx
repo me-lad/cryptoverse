@@ -5,7 +5,7 @@ import Link from 'next/link';
 // 📦 Internal imports
 import { flexBetween, containerDefault } from '~styles/tw-custom';
 import { NavLink } from '~core/global/NavLink';
-import HeaderSearchFn from './HeaderSearch.fn';
+import GlobalSearch from './GlobalSearch';
 import HeaderAccountFn from './HeaderAccount.fn';
 import Currency from './Currency';
 
@@ -47,7 +47,7 @@ export default function HeaderUi() {
         {/* Search & Account center */}
         <div className="flex items-center gap-6">
           {/* Search button & Search modal */}
-          <HeaderSearchFn />
+          <GlobalSearch />
 
           {/* Currency handler */}
           <Currency />

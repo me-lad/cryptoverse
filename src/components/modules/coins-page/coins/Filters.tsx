@@ -34,7 +34,21 @@ const Filters = () => {
       showErrorToast(z.treeifyError(result.error).errors[0]);
     }
 
-    if (actions && result.data) actions.setPerPage(result.data);
+    if (actions && result.data) {
+      // const newPageNumber = Math.round(currentFirstCoinIndex / result.data);
+      const totalCoinsCount = 17_000;
+      const currentPageFirstIndex = (params.page - 1) * params.perPage + 1;
+      const newPageNumber =
+        currentPageFirstIndex <= result.data
+          ? 1
+          : Math.floor(currentPageFirstIndex / result.data + 1);
+      const lastAvailablePage = Math.floor(totalCoinsCount / result.data);
+
+      actions.setPerPage(result.data);
+      actions.setPage(
+        lastAvailablePage < newPageNumber ? lastAvailablePage : newPageNumber,
+      );
+    }
   };
 
   const handlerCurrencyChange = (value: CurrencyT) => {
@@ -85,7 +99,12 @@ const Filters = () => {
       <div className="h-8 w-[1px] bg-neutral-500"></div>
 
       {/* Page size */}
-      <p>Coins count on each page</p>
+      <p>
+        Coins count on each page{' '}
+        <small title="Current count" className="align-middle text-xs">
+          ( {params.perPage} )
+        </small>
+      </p>
       <form
         className="flex gap-2"
         onSubmit={(e) => {

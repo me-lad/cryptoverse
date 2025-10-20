@@ -16,6 +16,7 @@ import {
   PriceCell,
   SortableHeaders,
 } from './ColumnsPrerequisites';
+import { useState } from 'react';
 
 // 🧾 Table columns
 export const columns: ColumnDef<CoinEntity_Gecko>[] = [
@@ -46,29 +47,39 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
       addMeta({ match });
       return match;
     },
-    cell: ({ row }) => (
-      <Link
-        href={`/coin/${row.original.symbol}`}
-        className="flex w-fit items-center gap-4"
-      >
-        <Image
-          src={row.original.image}
-          width={30}
-          height={30}
-          alt={row.original.name}
-          className="mix-blend-screen"
-        />
-        <div>
-          <h4 className="text-lg font-semibold">
-            {row.original.symbol.toUpperCase()}
-          </h4>
-          <p className="mt-0.5 text-sm text-neutral-400">
-            {row.original.id.slice(0, 1).toUpperCase() +
-              row.original.id.slice(1)}
-          </p>
-        </div>
-      </Link>
-    ),
+    cell: ({ row }) => {
+      const [src, setSrc] = useState(row.original.image);
+      const fallbackLogo = '/svgs/logo/logo.svg';
+
+      return (
+        <Link
+          href={`/coin/${row.original.symbol}`}
+          className="flex w-fit items-center gap-4"
+        >
+          <Image
+            src={
+              !src.startsWith('http') && !src.startsWith('/')
+                ? fallbackLogo
+                : src
+            }
+            width={30}
+            height={30}
+            alt={row.original.name}
+            className="mix-blend-screen"
+            onError={() => setSrc(fallbackLogo)}
+          />
+          <div>
+            <h4 className="text-lg font-semibold">
+              {row.original.symbol.toUpperCase()}
+            </h4>
+            <p className="mt-0.5 text-sm text-neutral-400">
+              {row.original.id.slice(0, 1).toUpperCase() +
+                row.original.id.slice(1)}
+            </p>
+          </div>
+        </Link>
+      );
+    },
   },
   {
     accessorKey: 'current_price',
@@ -122,15 +133,28 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
   {
     accessorKey: 'chart',
     header: '7d SparkLine',
-    cell: ({ row }) => (
-      <div>
-        <Image
-          src={buildCoinChart(row.original.symbol)}
-          width={175}
-          height={30}
-          alt={row.original.symbol}
-        />
-      </div>
-    ),
+    cell: ({ row }) => {
+      const [src, setSrc] = useState(buildCoinChart(row.original.symbol));
+      const fallbackChart =
+        row.original.price_change_percentage_7d_in_currency > 0
+          ? '/images/coins-page/fallback-chart-positive.webp'
+          : '/images/coins-page/fallback-chart-negative.webp';
+
+      return (
+        <div>
+          <Image
+            src={
+              !src.startsWith('http') && !src.startsWith('/')
+                ? fallbackChart
+                : src
+            }
+            width={175}
+            height={30}
+            alt={row.original.symbol.toUpperCase()}
+            onError={() => setSrc(fallbackChart)}
+          />
+        </div>
+      );
+    },
   },
 ];

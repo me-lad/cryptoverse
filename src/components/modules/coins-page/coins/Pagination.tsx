@@ -143,9 +143,7 @@ const Pagination = () => {
       <Button
         variant={'ghost'}
         className="cursor-pointer"
-        disabled={
-          isFetching || !coins.length || params.page === totalPagesCount
-        }
+        disabled={isFetching || params.page === totalPagesCount}
         onClick={() => changePageHandler(params.page + 1)}
       >
         <ChevronLeft
