@@ -14,6 +14,7 @@ import { CoinsContext } from '../CoinsPage.context';
 import { showErrorToast } from '~helpers/toast';
 import { CurrencyT } from '~types/coins';
 import { CurrencyContext } from '~modules/Currency.context';
+import { currencies } from '~constants/coins';
 
 // ⚙️ Functional components
 const CoinsSourceToggle = () => {
@@ -133,40 +134,41 @@ const CoinsCurrencyChange = () => {
     }
   };
 
-  const currencies: CurrencyT[] = ['USD', 'EUR', 'GBP', 'JPY', 'IRR'];
-
   return (
     <div className="flex items-center gap-3 font-semibold">
-      {currencies.map((curr, index) => (
+      {currencies.map(({ id, label }, index) => (
         <div
-          key={curr}
+          key={id}
           className="relative cursor-pointer"
-          onClick={() => changeHandler(curr)}
-          title={curr}
+          onClick={() => changeHandler(id)}
+          title={label}
         >
           <Image
-            src={`/svgs/logo/currencies/${curr.toLowerCase()}.svg`}
+            src={`/svgs/logo/currencies/${id.toLowerCase()}.svg`}
             width={27}
             height={27}
-            alt={curr}
-            className={clsx(curr === 'JPY' && '-translate-x-[1.5px]')}
+            alt={id}
+            className={clsx(id === 'JPY' && '-translate-x-[1.5px]')}
           />
 
           <span
             className={clsx(
               'bg-primary invisible absolute top-full mt-1 h-[1.5px] w-full transition-transform ease-in',
-              curr === currency && 'visible translate-x-0',
+              id === currency && 'visible translate-x-0',
 
-              currencies.findIndex((item) => item === currency) - index > 2
+              currencies.findIndex((item) => item.id === currency) - index > 2
                 ? 'translate-x-20'
-                : currencies.findIndex((item) => item === currency) - index <=
+                : currencies.findIndex((item) => item.id === currency) -
+                      index <=
                       2 &&
-                    currencies.findIndex((item) => item === currency) - index >
+                    currencies.findIndex((item) => item.id === currency) -
+                      index >
                       0
                   ? 'translate-x-10'
-                  : currencies.findIndex((item) => item === currency) - index <=
+                  : currencies.findIndex((item) => item.id === currency) -
+                        index <=
                         0 &&
-                      currencies.findIndex((item) => item === currency) -
+                      currencies.findIndex((item) => item.id === currency) -
                         index >
                         -2
                     ? '-translate-x-10'

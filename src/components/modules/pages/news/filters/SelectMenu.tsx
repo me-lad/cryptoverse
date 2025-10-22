@@ -4,7 +4,7 @@
 // 📦 Third-Party imports
 import { Loader2, Search } from 'lucide-react';
 import { Input } from '~core/ui/shadcn/input';
-import React, { useEffect, useState, use, useCallback, useMemo } from 'react';
+import React, { useEffect, useState, use, useCallback } from 'react';
 import clsx from 'clsx';
 
 // 📦 Internal imports
@@ -12,18 +12,18 @@ import type { SelectIDsT } from './local';
 import { flexCenter } from '~styles/tw-custom';
 import { useDebounce } from '~hooks/useDebounce';
 import { NewsContext } from '../NewsPage.context';
+import { DropDownMenu } from '~core/global/dropdown/DropDown';
 import SelectOption from './SelectOption';
 
 // 🧾 Local types
 interface PropsT {
-  isOpen: boolean;
   selectId: SelectIDsT;
   options: any[] | null;
 }
 
 // ⚙️ Functional component
 const SelectMenu: React.FC<PropsT> = (props) => {
-  const { isOpen, selectId } = props;
+  const { selectId } = props;
   const { params } = use(NewsContext);
 
   const [options, setOptions] = useState<any[]>(props.options || []);
@@ -75,10 +75,9 @@ const SelectMenu: React.FC<PropsT> = (props) => {
   );
 
   return (
-    <div
+    <DropDownMenu
       className={clsx(
-        'bg-background-lighter absolute top-full left-0 z-10 mt-2 max-h-100 w-max overflow-y-auto rounded-sm border border-neutral-600',
-        !isOpen && 'hidden',
+        'left-0 mt-2 max-h-96 w-max translate-x-0 overflow-y-auto',
         selectId === 'sources' ? 'min-w-[200%]' : 'min-w-[140%]',
       )}
     >
@@ -125,7 +124,7 @@ const SelectMenu: React.FC<PropsT> = (props) => {
           }
         />
       ))}
-    </div>
+    </DropDownMenu>
   );
 };
 export default SelectMenu;

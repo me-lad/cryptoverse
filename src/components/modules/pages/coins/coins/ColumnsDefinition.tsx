@@ -53,7 +53,7 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
 
       return (
         <Link
-          href={`/coin/${row.original.symbol}`}
+          href={`/coin/${row.original.id}`}
           className="flex w-fit items-center gap-4"
         >
           <Image

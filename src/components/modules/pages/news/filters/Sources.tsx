@@ -5,27 +5,22 @@
 import React, { use } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Skeleton } from '~core/ui/shadcn/skeleton';
+import { ChevronDown } from 'lucide-react';
+import { Button } from '~core/ui/shadcn/button';
 
 // 📦 Internal imports
-import type { SelectIDsT } from './local.js';
 import { NewsContext } from '../NewsPage.context';
 import { getNewsSources } from '~services/news';
-import { ToastError } from '~core/ui/shared/typography';
 import { daysToMillisecond } from '~helpers/time';
-import Select from './Select';
-import SelectButton from './SelectButton';
+import { ToastError } from '~core/ui/shared/typography';
+import {
+  DropDownAggregator,
+  DropDownTrigger,
+} from '~core/global/dropdown/DropDown';
 import SelectMenu from './SelectMenu';
 
-// 🧾 Local types
-interface PropsT {
-  openSelect: SelectIDsT;
-  openHandler: (id: SelectIDsT) => void;
-  closeHandler: (id: SelectIDsT) => void;
-}
-
 // ⚙️ Functional component
-const Sources: React.FC<PropsT> = (props) => {
-  const { openSelect, openHandler, closeHandler } = props;
+const Sources = () => {
   const { params } = use(NewsContext);
   const { data, isLoading, isError } = useQuery({
     queryKey: ['newsSources'],
@@ -36,29 +31,23 @@ const Sources: React.FC<PropsT> = (props) => {
 
   if (isLoading) return <Skeleton className="col-span-3 rounded-sm" />;
 
-  const isOpen = openSelect === 'sources';
-
   return (
     <>
       {isError && <ToastError />}
 
-      <Select closeHandler={() => closeHandler('sources')} selectId={'sources'}>
-        <SelectButton
-          isOpen={isOpen}
-          label="News Feeds"
-          onClick={
-            isOpen
-              ? () => closeHandler('sources')
-              : () => openHandler('sources')
-          }
-        />
+      <DropDownAggregator className="col-span-3 min-h-full">
+        <DropDownTrigger activeClassName="*:!bg-primary *:*:last:rotate-180">
+          <Button className="w-full rounded-sm" size={'lg'} variant={'outline'}>
+            News Feeds
+            <ChevronDown
+              strokeWidth={2.5}
+              className="mt-1 transition-all duration-300"
+            />
+          </Button>
+        </DropDownTrigger>
 
-        <SelectMenu
-          options={data?.Data || []}
-          isOpen={isOpen}
-          selectId={'sources'}
-        />
-      </Select>
+        <SelectMenu selectId={'sources'} options={data?.Data || []} />
+      </DropDownAggregator>
     </>
   );
 };

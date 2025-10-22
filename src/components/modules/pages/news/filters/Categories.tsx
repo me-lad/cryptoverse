@@ -3,28 +3,23 @@
 
 // 📦 Third-Party imports
 import { useQuery } from '@tanstack/react-query';
-import { Skeleton } from '@/components/core/ui/shadcn/skeleton';
+import { Skeleton } from '~core/ui/shadcn/skeleton';
+import { ChevronDown } from 'lucide-react';
+import { Button } from '~core/ui/shadcn/button';
 import React from 'react';
 
 // 📦 Internal imports
-import type { SelectIDsT } from './local.js';
+import {
+  DropDownAggregator,
+  DropDownTrigger,
+} from '~core/global/dropdown/DropDown';
 import { getNewsCategories } from '~services/news';
 import { ToastError } from '~core/ui/shared/typography';
 import { daysToMillisecond } from '~helpers/time';
-import Select from './Select';
-import SelectButton from './SelectButton';
 import SelectMenu from './SelectMenu';
 
-// 🧾 Local types
-interface PropsT {
-  openSelect: SelectIDsT;
-  openHandler: (id: SelectIDsT) => void;
-  closeHandler: (id: SelectIDsT) => void;
-}
-
 // ⚙️ Functional component
-const Categories: React.FC<PropsT> = (props) => {
-  const { openSelect, openHandler, closeHandler } = props;
+const Categories = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['newsCategories'],
     queryFn: () => getNewsCategories(),
@@ -34,54 +29,37 @@ const Categories: React.FC<PropsT> = (props) => {
 
   if (isLoading) return <Skeleton className="col-span-6 rounded-sm" />;
 
-  const isOpenCategories = openSelect === 'categories';
-  const isOpenExcludeCat = openSelect === 'excludeCategories';
-
   return (
     <>
       {isError && <ToastError />}
 
-      <Select
-        closeHandler={() => closeHandler('categories')}
-        selectId={'categories'}
-      >
-        <SelectButton
-          label="Include"
-          isOpen={isOpenCategories}
-          onClick={
-            isOpenCategories
-              ? () => closeHandler('categories')
-              : () => openHandler('categories')
-          }
-        />
+      <DropDownAggregator className="col-span-3 min-h-full">
+        <DropDownTrigger activeClassName="*:!bg-primary *:*:last:rotate-180">
+          <Button className="w-full rounded-sm" size={'lg'} variant={'outline'}>
+            Include
+            <ChevronDown
+              strokeWidth={2.5}
+              className="mt-1 transition-all duration-300"
+            />
+          </Button>
+        </DropDownTrigger>
 
-        <SelectMenu
-          options={data?.Data || []}
-          isOpen={isOpenCategories}
-          selectId={'categories'}
-        />
-      </Select>
+        <SelectMenu selectId={'categories'} options={data?.Data || []} />
+      </DropDownAggregator>
 
-      <Select
-        closeHandler={() => closeHandler('excludeCategories')}
-        selectId={'excludeCategories'}
-      >
-        <SelectButton
-          label="Exclude"
-          isOpen={isOpenExcludeCat}
-          onClick={
-            isOpenExcludeCat
-              ? () => closeHandler('excludeCategories')
-              : () => openHandler('excludeCategories')
-          }
-        />
+      <DropDownAggregator className="col-span-3 min-h-full">
+        <DropDownTrigger activeClassName="*:!bg-primary *:*:last:rotate-180">
+          <Button className="w-full rounded-sm" size={'lg'} variant={'outline'}>
+            Exclude
+            <ChevronDown
+              strokeWidth={2.5}
+              className="mt-1 transition-all duration-300"
+            />
+          </Button>
+        </DropDownTrigger>
 
-        <SelectMenu
-          options={data?.Data || []}
-          isOpen={isOpenExcludeCat}
-          selectId={'excludeCategories'}
-        />
-      </Select>
+        <SelectMenu selectId={'excludeCategories'} options={data?.Data || []} />
+      </DropDownAggregator>
     </>
   );
 };
