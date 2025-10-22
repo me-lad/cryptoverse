@@ -44,11 +44,11 @@ export const footerLinks: FooterLinkT[] = [
   {
     title: 'Currencies price',
     items: [
-      { name: 'Bitcoin price', url: '/coin/BTC' },
-      { name: 'Ethereum price', url: '/coin/ETH' },
-      { name: 'Tether price', url: '/coin/USDT' },
-      { name: 'TRON price', url: '/coin/TRX' },
-      { name: 'Aster price', url: '/coin/ASTER' },
+      { name: 'Bitcoin price', url: '/coin/bitcoin' },
+      { name: 'Ethereum price', url: '/coin/ethereum' },
+      { name: 'Tether price', url: '/coin/tether' },
+      { name: 'TRON price', url: '/coin/tron' },
+      { name: 'Ripple price', url: '/coin/ripple' },
     ],
   },
 ];

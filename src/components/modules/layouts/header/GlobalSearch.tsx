@@ -39,7 +39,7 @@ export default function GlobalSearch() {
 
   return (
     <DropDownAggregator overlay="dark">
-      <DropDownTrigger activeClassName="*:!bg-primary/70">
+      <DropDownTrigger activeClassName="*:!bg-primary/85">
         <Button variant={'secondary'}>
           <Search size={16} />
         </Button>

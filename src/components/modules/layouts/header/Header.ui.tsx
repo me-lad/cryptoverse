@@ -45,7 +45,7 @@ export default function HeaderUi() {
         </div>
 
         {/* Search & Account center */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-4">
           {/* Search button & Search modal */}
           <GlobalSearch />
 

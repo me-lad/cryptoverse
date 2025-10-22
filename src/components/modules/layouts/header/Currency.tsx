@@ -3,7 +3,7 @@
 
 // 📦 Third-Party imports
 import { use } from 'react';
-import { Globe } from 'lucide-react';
+import { ChevronDown, Globe } from 'lucide-react';
 import { Button } from '~core/ui/shadcn/button';
 import Image from 'next/image';
 import clsx from 'clsx';
@@ -30,9 +30,8 @@ const Currency = () => {
 
   return (
     <DropDownAggregator overlay="dark">
-      <DropDownTrigger activeClassName="*:!bg-primary/70">
-        <Button variant={'secondary'}>
-          {currency}
+      <DropDownTrigger activeClassName="*:!bg-primary/85">
+        <Button title={currency} variant={'secondary'}>
           <Globe />
         </Button>
       </DropDownTrigger>
@@ -58,7 +57,7 @@ const Currency = () => {
                 height={32}
                 alt={curr.id}
               />
-              <span>{curr.label}</span>
+              <span title={curr.titleAttr + '  ' + curr.id}>{curr.label}</span>
             </li>
           ))}
         </ul>

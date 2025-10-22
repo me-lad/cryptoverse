@@ -10,25 +10,34 @@ export const coinsContextInitialState: CoinsContextT = {
   },
 } as const;
 
-export const currencies: { id: CurrencyT; label: string }[] = [
+export const currencies: {
+  id: CurrencyT;
+  label: string;
+  titleAttr: string;
+}[] = [
   {
     id: 'USD',
     label: 'US Dollar',
+    titleAttr: '🇺🇸',
   },
   {
     id: 'EUR',
     label: 'Euro',
+    titleAttr: '🇪🇺',
   },
   {
     id: 'GBP',
     label: 'British Pound',
+    titleAttr: '🇬🇧',
   },
   {
     id: 'JPY',
     label: 'Japanese Yen',
+    titleAttr: '🇯🇵',
   },
   {
     id: 'IRR',
     label: 'Iranian Rial',
+    titleAttr: '🇮🇷',
   },
 ];

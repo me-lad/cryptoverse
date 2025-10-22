@@ -12,12 +12,11 @@ import { Price } from '~core/global/formatters';
 
 // ⚙️ Functional component
 const SubtitleItem: React.FC<CoinEntity_Gecko> = (props) => {
-  const { image, name, current_price, price_change_percentage_24h, symbol } =
-    props;
+  const { image, name, current_price, price_change_percentage_24h, id } = props;
 
   return (
     <Link
-      href={`/coin/${symbol}`}
+      href={`/coin/${id}`}
       className={`${flexCenter} hover:bg-primary-800 h-full min-w-[10%] gap-4 rounded-xs transition-colors`}
     >
       <div>
