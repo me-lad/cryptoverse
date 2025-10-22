@@ -2,6 +2,7 @@
 'use client';
 
 // 📦 Third-Party imports
+import { useState } from 'react';
 import { ColumnDef, Row } from '@tanstack/react-table';
 import { Star } from 'lucide-react';
 import Image from 'next/image';
@@ -16,7 +17,6 @@ import {
   PriceCell,
   SortableHeaders,
 } from './ColumnsPrerequisites';
-import { useState } from 'react';
 
 // 🧾 Table columns
 export const columns: ColumnDef<CoinEntity_Gecko>[] = [

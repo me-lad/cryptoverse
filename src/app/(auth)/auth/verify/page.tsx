@@ -7,10 +7,10 @@ import { connectToDB } from '~configs/mongoose';
 import { verify } from '~actions/auth/verify.controller';
 import { FormKinds } from '~constants/form';
 import { UserServices } from '~services/user';
-import AuthFormContext from '~modules/auth-page/AuthForm.context';
-import AuthPageWrapper from '~modules/auth-page/AuthPage.wrapper';
-import VerifyFormFn from '~modules/auth-page/form-containers/VerifyForm.fn';
-import AuthVerifyFormErrorUnit from '~modules/auth-page/form-parts/VerifyFormError';
+import AuthFormContext from '@/components/modules/pages/auth/AuthForm.context';
+import AuthPageWrapper from '@/components/modules/pages/auth/AuthPage.wrapper';
+import VerifyFormFn from '@/components/modules/pages/auth/form-containers/VerifyForm.fn';
+import AuthVerifyFormErrorUnit from '@/components/modules/pages/auth/form-parts/VerifyFormError';
 
 // 🧾 Local types
 type PropsT = {

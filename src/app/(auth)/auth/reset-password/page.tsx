@@ -8,10 +8,10 @@ import { FormKinds } from '~constants/form';
 import { connectToDB } from '~configs/mongoose';
 import { OtpServices } from '~services/otp';
 import { UserServices } from '~services/user';
-import AuthPageWrapper from '~modules/auth-page/AuthPage.wrapper';
-import AuthFormContext from '~modules/auth-page/AuthForm.context';
-import ResetPasswordForm from '~modules/auth-page/form-containers/ResetPasswordForm';
-import AuthVerifyFormErrorUnit from '~modules/auth-page/form-parts/VerifyFormError';
+import AuthPageWrapper from '@/components/modules/pages/auth/AuthPage.wrapper';
+import AuthFormContext from '@/components/modules/pages/auth/AuthForm.context';
+import ResetPasswordForm from '@/components/modules/pages/auth/form-containers/ResetPasswordForm';
+import AuthVerifyFormErrorUnit from '@/components/modules/pages/auth/form-parts/VerifyFormError';
 
 // 🧾 Local types
 type PropsT = {

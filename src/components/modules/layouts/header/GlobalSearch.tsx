@@ -13,7 +13,7 @@ import Link from 'next/link';
 import clsx from 'clsx';
 
 // 📦 Internal imports
-import { DarkOverlay } from '~core/global/overlays';
+import { DarkOverlay } from '@/components/core/ui/shared/overlays';
 import { useDebounce } from '~hooks/useDebounce';
 import { flexBetween, flexCenter } from '~styles/tw-custom';
 import { searchCoins } from '~services/coins';
@@ -91,10 +91,10 @@ export default function GlobalSearch() {
               e.target.value.length >= 2 && setIsSearching(true);
               setSearch(e.target.value);
             }}
-            className="focus-visible:border-b-primary rounded-sm !shadow-none !ring-0 !outline-0"
+            className="focus-visible:border-primary rounded-sm !shadow-none !ring-0 !outline-0"
           />
 
-          {!data || !data.length || debouncedSearch.length < 2 ? (
+          {!data || !data.length || debouncedSearch.length < 2 || error ? (
             <div
               className={`${flexCenter} mt-20 mb-[3.75rem] flex-col gap-y-2.5`}
             >

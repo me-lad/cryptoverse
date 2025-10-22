@@ -10,7 +10,7 @@ import clsx from 'clsx';
 // 📦 Internal imports
 import type { CurrencyT } from '~types/coins';
 import { CurrencyContext } from '~modules/Currency.context';
-import { DarkOverlay } from '~core/global/overlays';
+import { DarkOverlay } from '@/components/core/ui/shared/overlays';
 
 // ⚙️ Functional component
 const Currency = () => {

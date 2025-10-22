@@ -7,7 +7,7 @@ import { Skeleton } from '@/components/core/ui/shadcn/skeleton';
 import React from 'react';
 
 // 📦 Internal imports
-import type { SelectIDsT } from './local.ts';
+import type { SelectIDsT } from './local.js';
 import { getNewsCategories } from '~services/news';
 import { ToastError } from '~core/ui/shared/typography';
 import { daysToMillisecond } from '~helpers/time';

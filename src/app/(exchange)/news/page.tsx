@@ -2,8 +2,8 @@
 import React from 'react';
 
 // 📦 Internal imports
-import NewsPageWrapper from '~modules/news-page/NewsPage.wrapper';
-import NewsPageContext from '~modules/news-page/NewsPage.context';
+import NewsPageWrapper from '~modules/pages/news/NewsPage.wrapper';
+import NewsPageContext from '~modules/pages/news/NewsPage.context';
 
 interface PropsT {
   searchParams: {

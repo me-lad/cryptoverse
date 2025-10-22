@@ -1,4 +1,4 @@
-import { GlobalLoader } from '~core/global/loaders';
+import { GlobalLoader } from '~core/ui/shared/loaders';
 
 // ⚙️ Functional component
 export default function Loading() {

@@ -7,7 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Skeleton } from '~core/ui/shadcn/skeleton';
 
 // 📦 Internal imports
-import type { SelectIDsT } from './local.ts';
+import type { SelectIDsT } from './local.js';
 import { NewsContext } from '../NewsPage.context';
 import { getNewsSources } from '~services/news';
 import { ToastError } from '~core/ui/shared/typography';

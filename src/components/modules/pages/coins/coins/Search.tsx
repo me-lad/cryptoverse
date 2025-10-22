@@ -8,7 +8,6 @@ import { useDebounce } from '~hooks/useDebounce';
 
 // 🧾 Local types
 interface PropsT {
-  value: string;
   setValue: (newValue: string) => void;
 }
 
