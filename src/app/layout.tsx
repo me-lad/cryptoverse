@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import ReactQueryProvider from '~configs/react-query';
 import ReactToastify from '~configs/react-toastify';
 import CurrencyContextProvider from '~modules/Currency.context';
+import FavoriteCoinsContextProvider from '~modules/FavoriteCoins.context';
 import HeaderFn from '@/components/modules/layouts/header/Header.fn';
 import FooterFn from '@/components/modules/layouts/footer/Footer.fn';
 import '../lib/styles/global.css';
@@ -47,14 +48,16 @@ export default function RootLayout({
       >
         <ReactQueryProvider>
           <CurrencyContextProvider>
-            {/* Header */}
-            <HeaderFn />
-            {/* Route interface */}
-            <main className="w-full">{children}</main>
-            {/* Footer */}
-            <FooterFn />
-            {/* Packages initialize */}
-            <ReactToastify />
+            <FavoriteCoinsContextProvider>
+              {/* Header */}
+              <HeaderFn />
+              {/* Route interface */}
+              <main className="w-full">{children}</main>
+              {/* Footer */}
+              <FooterFn />
+              {/* Packages initialize */}
+              <ReactToastify />
+            </FavoriteCoinsContextProvider>
           </CurrencyContextProvider>
         </ReactQueryProvider>
       </body>

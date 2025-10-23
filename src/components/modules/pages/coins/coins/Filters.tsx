@@ -10,6 +10,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 
 // 📦 Internal imports
+import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
 import { CoinsContext } from '../CoinsPage.context';
 import { showErrorToast } from '~helpers/toast';
 import { CurrencyT } from '~types/coins';
@@ -18,49 +19,80 @@ import { currencies } from '~constants/coins';
 
 // ⚙️ Functional components
 const CoinsSourceToggle = () => {
-  return (
-    <div className="relative flex items-center gap-5 font-semibold">
-      <span className="cursor-pointer">All</span>
-      <span className="cursor-pointer">Favorites</span>
-      <span className="bg-primary absolute top-full mt-1 h-[2px] w-5"></span>
-    </div>
-  );
-};
-
-const CoinsOrderToggle = () => {
-  const { actions, params } = use(CoinsContext);
+  const { actions } = use(CoinsContext);
+  const { showFavorites, setShowFavorites } = use(FavoriteCoinsContext);
 
   return (
     <div className="relative flex items-center gap-5 font-semibold">
       <span
+        onClick={() => actions && setShowFavorites(false)}
         className="cursor-pointer"
-        onClick={() => actions && actions.setOrder('market_cap_desc')}
       >
-        Market Cap
+        All
       </span>
       <span
+        onClick={() => actions && setShowFavorites(true)}
         className="cursor-pointer"
-        onClick={() => actions && actions.setOrder('volume_desc')}
       >
-        Total Volume
+        Favorites
       </span>
       <span
         className={clsx(
-          'bg-primary absolute top-full mt-1 h-[2px] transition-all duration-300',
-          params.order === 'market_cap_desc'
-            ? 'w-20'
-            : 'w-[5.7rem] translate-x-[6.5rem]',
+          'bg-primary absolute top-full mt-1 h-[2px] transition-transform',
+          showFavorites
+            ? 'w-16 translate-x-10 duration-300'
+            : 'w-5 duration-500',
         )}
       ></span>
     </div>
   );
 };
 
+const CoinsOrderToggle = () => {
+  const { actions, params } = use(CoinsContext);
+  const { showFavorites } = use(FavoriteCoinsContext);
+
+  if (showFavorites) return;
+
+  return (
+    <>
+      <div className="relative flex items-center gap-5 font-semibold">
+        <span
+          className="cursor-pointer"
+          onClick={() => actions && actions.setOrder('market_cap_desc')}
+        >
+          Market Cap
+        </span>
+        <span
+          className="cursor-pointer"
+          onClick={() => actions && actions.setOrder('volume_desc')}
+        >
+          Total Volume
+        </span>
+        <span
+          className={clsx(
+            'bg-primary absolute top-full mt-1 h-[2px] transition-all duration-300',
+            params.order === 'market_cap_desc'
+              ? 'w-20'
+              : 'w-[5.7rem] translate-x-[6.5rem]',
+          )}
+        ></span>
+      </div>
+
+      {/* Separator */}
+      <div className="h-8 w-[1px] bg-neutral-500"></div>
+    </>
+  );
+};
+
 const CoinsPageSizeChange = () => {
-  const { actions, params, isFetching } = use(CoinsContext);
+  const { actions, params, flags } = use(CoinsContext);
+  const { showFavorites } = use(FavoriteCoinsContext);
+
+  if (showFavorites) return;
 
   const changeHandler = (value: number) => {
-    if (isFetching || value === params.perPage) return;
+    if (flags?.isFetching || value === params.perPage) return;
 
     const pageSizeInputSchema = z
       .number('Please enter a valid number')
@@ -93,7 +125,7 @@ const CoinsPageSizeChange = () => {
   return (
     <>
       <p>
-        Coins count on each page{' '}
+        Coins count on each page
         <small title="Current count" className="align-middle text-xs">
           ( {params.perPage} )
         </small>
@@ -121,6 +153,9 @@ const CoinsPageSizeChange = () => {
           <Check />
         </Button>
       </form>
+
+      {/* Separator */}
+      <div className="h-8 w-[1px] bg-neutral-500"></div>
     </>
   );
 };
@@ -193,14 +228,8 @@ const FiltersAggregator = () => {
       {/* Order  */}
       <CoinsOrderToggle />
 
-      {/* Separator */}
-      <div className="h-8 w-[1px] bg-neutral-500"></div>
-
       {/* Page size */}
       <CoinsPageSizeChange />
-
-      {/* Separator */}
-      <div className="h-8 w-[1px] bg-neutral-500"></div>
 
       {/* Currency */}
       <CoinsCurrencyChange />

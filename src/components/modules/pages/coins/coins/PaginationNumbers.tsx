@@ -18,7 +18,7 @@ const PaginationNumbers: React.FC<PropsT> = ({
   changePageHandler,
   totalPagesCount,
 }) => {
-  const { params, isFetching } = use(CoinsContext);
+  const { params, flags } = use(CoinsContext);
 
   if (params.page < 4) {
     return (
@@ -29,7 +29,7 @@ const PaginationNumbers: React.FC<PropsT> = ({
             key={index}
             onClick={() => changePageHandler(index + 1)}
             variant={params.page === index + 1 ? 'secondary' : 'ghost'}
-            disabled={params.page === index + 1 || isFetching}
+            disabled={params.page === index + 1 || flags?.isFetching}
           >
             {index + 1}
           </Button>
@@ -70,7 +70,9 @@ const PaginationNumbers: React.FC<PropsT> = ({
               variant={
                 params.page === totalPagesCount - index ? 'secondary' : 'ghost'
               }
-              disabled={params.page === totalPagesCount - index || isFetching}
+              disabled={
+                params.page === totalPagesCount - index || flags?.isFetching
+              }
             >
               {totalPagesCount - index}
             </Button>

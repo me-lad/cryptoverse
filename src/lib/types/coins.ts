@@ -30,5 +30,14 @@ export interface CoinsContextT {
   coins: CoinEntity_Gecko[];
   params: CoinsContextParamsT;
   actions?: CoinsContextActionsT;
-  isFetching?: boolean;
+  flags: { isFetching?: boolean };
+}
+
+export interface FavoriteCoinsContextT {
+  favoriteIDs: string[]; // Coins IDs;
+  favoriteCoins: CoinEntity_Gecko[];
+  showFavorites: boolean;
+  isFetchingFavorites: boolean;
+  changeHandler: (id: string) => void;
+  setShowFavorites: (order: boolean) => void;
 }

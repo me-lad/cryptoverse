@@ -8,6 +8,7 @@ import { Button } from '~core/ui/shadcn/button';
 import clsx from 'clsx';
 
 // 📦 Internal imports
+import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
 import { CoinsContext } from '../CoinsPage.context';
 import { flexCenter } from '~styles/tw-custom';
 import PaginationNumbers from './PaginationNumbers';
@@ -20,7 +21,8 @@ const calculateTotalPages = (perPage: number) => {
 
 // ⚙️ Functional components
 const Pagination = () => {
-  const { params, actions, isFetching } = use(CoinsContext);
+  const { params, actions, flags } = use(CoinsContext);
+  const { showFavorites } = use(FavoriteCoinsContext);
   const [totalPagesCount, setTotalPagesCount] = useState(() =>
     calculateTotalPages(params.perPage),
   );
@@ -31,16 +33,18 @@ const Pagination = () => {
 
   const changePageHandler = (newPage: number) => {
     if (newPage === params.page) return;
-    if (actions && !isFetching) actions.setPage(newPage);
+    if (actions && !flags?.isFetching) actions.setPage(newPage);
   };
+
+  if (showFavorites) return;
 
   return (
     <div className={`${flexCenter} mt-10 gap-2`}>
       {/* Previous page */}
       <Button
         variant={'ghost'}
-        className={clsx('cursor-pointer', params.page === 1 && 'hidden')}
-        disabled={params.page === 1 || isFetching}
+        className={clsx('cursor-pointer', params.page === 1 && 'invisible')}
+        disabled={params.page === 1 || flags?.isFetching}
         onClick={() => changePageHandler(params.page - 1)}
       >
         <ChevronLeft strokeWidth={3} size={20} className="text-white" />
@@ -57,9 +61,9 @@ const Pagination = () => {
         variant={'ghost'}
         className={clsx(
           'cursor-pointer',
-          params.page === totalPagesCount && 'hidden',
+          params.page === totalPagesCount && 'invisible',
         )}
-        disabled={isFetching || params.page === totalPagesCount}
+        disabled={flags?.isFetching || params.page === totalPagesCount}
         onClick={() => changePageHandler(params.page + 1)}
       >
         <ChevronLeft

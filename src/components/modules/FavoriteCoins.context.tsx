@@ -1,0 +1,84 @@
+// 📌 Directives
+'use client';
+
+// 📦 Third-Party imports
+import React, { createContext, useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+
+// 📦 Internal imports
+import type { FavoriteCoinsContextT } from '~types/coins';
+import { useLocalStorage } from '~hooks/useLocalStorage';
+import { showErrorToast } from '~helpers/toast';
+import { ToastError } from '~core/ui/shared/typography';
+import { getCoinsByIDs } from '~services/coins';
+
+// 🧾 Context declaration and local types
+interface PropsT {
+  children: React.ReactNode;
+}
+
+export const FavoriteCoinsContext = createContext<FavoriteCoinsContextT>({
+  favoriteIDs: [],
+  favoriteCoins: [],
+  showFavorites: false,
+  isFetchingFavorites: false,
+  changeHandler: () => {},
+  setShowFavorites: () => {},
+});
+
+// ⚙️ Functional component
+const FavoriteCoinsContextProvider: React.FC<PropsT> = ({ children }) => {
+  const [favoriteIDs, setFavoriteIDs] = useLocalStorage<string[]>(
+    'favoriteCoins',
+    [],
+  );
+  const [showFavorites, setShowFavorites] = useState(false);
+
+  const queryKey = [
+    'favoriteCoins',
+    showFavorites,
+    !!favoriteIDs && favoriteIDs.sort().join(','),
+  ];
+  const { data, error, isLoading } = useQuery({
+    queryKey,
+    queryFn: () => getCoinsByIDs(favoriteIDs || []),
+    staleTime: 2500,
+    gcTime: 5000,
+    enabled: !!favoriteIDs?.length && showFavorites,
+  });
+
+  const changeHandler = (id: string) => {
+    let newList: string[] = [];
+    if (favoriteIDs.includes(id)) {
+      newList = favoriteIDs.filter((item) => item !== id);
+    } else {
+      newList = Array.from(new Set([...favoriteIDs, id]));
+    }
+
+    if (newList.length > 50) {
+      showErrorToast(
+        'The maximum count for favorite coins is 50. to add some more please remove some of existence coins first.',
+        10_000,
+      );
+    } else {
+      setFavoriteIDs(newList);
+    }
+  };
+
+  const value = {
+    favoriteIDs,
+    favoriteCoins: data || [],
+    changeHandler,
+    showFavorites,
+    isFetchingFavorites: isLoading,
+    setShowFavorites,
+  };
+
+  return (
+    <FavoriteCoinsContext value={value}>
+      {error && <ToastError />}
+      {children}
+    </FavoriteCoinsContext>
+  );
+};
+export default FavoriteCoinsContextProvider;

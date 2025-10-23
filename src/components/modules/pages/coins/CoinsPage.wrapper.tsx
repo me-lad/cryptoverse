@@ -1,5 +1,3 @@
-// 📦 Third-Party imports
-
 // 📦 Internal imports
 import { containerDefault } from '~styles/tw-custom';
 import Highlights from './highlights/Highlights';

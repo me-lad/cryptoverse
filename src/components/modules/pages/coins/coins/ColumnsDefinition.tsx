@@ -2,20 +2,19 @@
 'use client';
 
 // 📦 Third-Party imports
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ColumnDef, Row } from '@tanstack/react-table';
-import { Star } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 // 📦 Internal imports
 import type { CoinEntity_Gecko } from '~types/api-generated/shared';
-import { flexCenter } from '~styles/tw-custom';
 import { buildCoinChart } from '~helpers/generators';
 import {
   PercentageCell,
   PriceCell,
   SortableHeaders,
+  FavoriteToggler,
 } from './ColumnsPrerequisites';
 
 // 🧾 Table columns
@@ -23,11 +22,7 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
   {
     accessorKey: 'id',
     header: '',
-    cell: () => (
-      <div className={`${flexCenter} cursor-pointer`}>
-        <Star size={16} />
-      </div>
-    ),
+    cell: ({ row }) => <FavoriteToggler id={row.original.id} />,
   },
   {
     accessorKey: 'pair',
@@ -51,10 +46,14 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
       const [src, setSrc] = useState(row.original.image);
       const fallbackLogo = '/svgs/logo/logo.svg';
 
+      useEffect(() => {
+        setSrc(row.original.image);
+      }, [row.original.image]);
+
       return (
         <Link
           href={`/coin/${row.original.id}`}
-          className="flex w-fit items-center gap-4"
+          className="flex w-full items-center gap-4"
         >
           <Image
             src={
@@ -134,11 +133,17 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
     accessorKey: 'chart',
     header: '7d SparkLine',
     cell: ({ row }) => {
-      const [src, setSrc] = useState(buildCoinChart(row.original.symbol));
+      const [src, setSrc] = useState(
+        buildCoinChart(buildCoinChart(row.original.symbol)),
+      );
       const fallbackChart =
         row.original.price_change_percentage_7d_in_currency > 0
           ? '/images/coins-page/fallback-chart-positive.webp'
           : '/images/coins-page/fallback-chart-negative.webp';
+
+      useEffect(() => {
+        setSrc(buildCoinChart(row.original.symbol));
+      }, [row.original.symbol]);
 
       return (
         <div>

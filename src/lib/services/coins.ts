@@ -187,8 +187,12 @@ export const getCoins = async (
   }
 };
 
-export const getCoinsByIDs = async (ids: string[]) => {
+export const getCoinsByIDs = async (
+  ids: string[],
+): Promise<CoinEntity_Gecko[]> => {
   try {
+    if (ids.length === 0) return [];
+
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_COINGECKO;
     const fetchUrl = `${baseUrl}/api/v3/coins/markets?vs_currency=usd&price_change_percentage=24h&ids=${ids.join('%2C')}`;
 

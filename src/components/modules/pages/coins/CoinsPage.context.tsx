@@ -2,7 +2,7 @@
 'use client';
 
 // 📦 Third-Party imports
-import React, { createContext } from 'react';
+import React, { createContext, use, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 // 📦 Internal imports
@@ -13,6 +13,7 @@ import { getCoins } from '~services/coins';
 import { minutesToMillisecond } from '~helpers/time';
 import { showErrorToast } from '~helpers/toast';
 import { AuthMessages } from '~constants/messages';
+import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
 
 // 🧾 Local types and variables
 export const CoinsContext = createContext<CoinsContextT>(
@@ -25,10 +26,10 @@ interface PropsT {
 
 // ⚙️ Functional component
 const CoinsPageContext: React.FC<PropsT> = ({ children }) => {
-  const [page, setPage] = useLocalStorage('coins_page', 1);
-  const [perPage, setPerPage] = useLocalStorage('coins_perPage', 20);
+  const [page, setPage] = useLocalStorage('coinsPage', 1);
+  const [perPage, setPerPage] = useLocalStorage('coinsPerPage', 20);
   const [order, setOrder] = useLocalStorage<CoinsOrderT>(
-    'coins_order',
+    'coinsOrder',
     'market_cap_desc',
   );
 
@@ -38,8 +39,10 @@ const CoinsPageContext: React.FC<PropsT> = ({ children }) => {
     staleTime: minutesToMillisecond(1.5),
   });
 
+  const { favoriteCoins, showFavorites } = use(FavoriteCoinsContext);
+
   const value: CoinsContextT = {
-    coins: data || [],
+    coins: showFavorites ? favoriteCoins : data || [],
     params: {
       page,
       order,
@@ -50,7 +53,9 @@ const CoinsPageContext: React.FC<PropsT> = ({ children }) => {
       setOrder,
       setPerPage,
     },
-    isFetching: isLoading,
+    flags: {
+      isFetching: isLoading,
+    },
   };
 
   if (error) showErrorToast(AuthMessages.Error.CatchHandler);

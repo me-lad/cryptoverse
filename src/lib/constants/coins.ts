@@ -8,6 +8,7 @@ export const coinsContextInitialState: CoinsContextT = {
     perPage: 20,
     order: 'market_cap_desc',
   },
+  flags: {},
 } as const;
 
 export const currencies: {

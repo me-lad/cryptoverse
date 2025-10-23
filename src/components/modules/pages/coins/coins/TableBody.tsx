@@ -15,6 +15,7 @@ import {
 import { CoinsContext } from '../CoinsPage.context';
 import { flexCenter } from '~styles/tw-custom';
 import SkeltonTableRow from './SkeltonTableRow';
+import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
 
 // 🧾 Local types
 interface PropsT<TData> {
@@ -23,7 +24,8 @@ interface PropsT<TData> {
 
 // ⚙️ Functional component
 function TableBody<TData>({ table }: PropsT<TData>) {
-  const { params, isFetching } = use(CoinsContext);
+  const { params, flags } = use(CoinsContext);
+  const { showFavorites, isFetchingFavorites } = use(FavoriteCoinsContext);
   const firstIndex = (params.page - 1) * params.perPage + 1;
 
   //   General ui
@@ -52,7 +54,7 @@ function TableBody<TData>({ table }: PropsT<TData>) {
   }
 
   //   Skelton ui
-  if (isFetching) {
+  if (flags?.isFetching || isFetchingFavorites) {
     return (
       <TableBodyShadcn>
         {Array.from({ length: params.perPage }).map((_, index) => (
@@ -70,9 +72,11 @@ function TableBody<TData>({ table }: PropsT<TData>) {
       <TableRow>
         <TableCell
           colSpan={table.getAllColumns().length + 2}
-          className="h-24 text-center"
+          className="h-24 text-center text-lg"
         >
-          No results.
+          {showFavorites
+            ? 'You have not added anything to your favorites list yet.'
+            : 'No results.'}
         </TableCell>
       </TableRow>
     </TableBodyShadcn>
