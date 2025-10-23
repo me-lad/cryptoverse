@@ -194,7 +194,7 @@ export const getCoinsByIDs = async (
     if (ids.length === 0) return [];
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_COINGECKO;
-    const fetchUrl = `${baseUrl}/api/v3/coins/markets?vs_currency=usd&price_change_percentage=24h&ids=${ids.join('%2C')}`;
+    const fetchUrl = `${baseUrl}/api/v3/coins/markets?vs_currency=usd&price_change_percentage=1h%2C24h%2C7d%2C30d&ids=${ids.join('%2C')}`;
 
     const resp = await fetch(fetchUrl, {
       method: 'GET',

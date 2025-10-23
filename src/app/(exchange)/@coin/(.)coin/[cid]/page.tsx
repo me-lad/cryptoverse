@@ -3,6 +3,7 @@
 // 📦 Third-Party imports
 
 // 📦 Internal imports
+import { DarkOverlay } from '~core/ui/shared/overlays';
 
 // ⚙️ Functional component
 const CoinPage = async ({ params }: { params: Promise<{ cid: string }> }) => {

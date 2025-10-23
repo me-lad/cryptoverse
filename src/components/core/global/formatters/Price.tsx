@@ -13,10 +13,12 @@ import { CurrencyContext } from '~modules/Currency.context';
 // 🧾 Local types
 interface PropsT extends React.ComponentProps<'span'> {
   price: number;
+  shortenUnits?: boolean;
 }
 
 // ⚙️ Functional component
-export const Price: React.FC<PropsT> = ({ price, className, ...rest }) => {
+export const Price: React.FC<PropsT> = (props) => {
+  const { price, shortenUnits, className, ...rest } = props;
   const { currency, conversionFactors } = use(CurrencyContext);
 
   return (
@@ -36,6 +38,7 @@ export const Price: React.FC<PropsT> = ({ price, className, ...rest }) => {
             price,
             conversionFactors?.USD,
             conversionFactors && currency && conversionFactors[currency],
+            shortenUnits,
           )}
         </>
       )}

@@ -34,9 +34,27 @@ export const formatPrice = (
   priceUSD: number,
   rateUSD: number = 1,
   rateTarget: number = 1,
+  shortenUnits?: boolean,
 ): string => {
   if (!priceUSD) return '';
+
   const convertedPrice = (priceUSD * rateTarget) / rateUSD;
+
+  if (shortenUnits && rateUSD === 1) {
+    const absValue = Math.abs(convertedPrice);
+    const units = [
+      { value: 1e12, suffix: 'T' },
+      { value: 1e9, suffix: 'B' },
+      { value: 1e6, suffix: 'M' },
+    ];
+
+    for (const unit of units) {
+      if (absValue >= unit.value) {
+        const compact = (convertedPrice / unit.value).toFixed(2);
+        return `${compact}${unit.suffix}`;
+      }
+    }
+  }
 
   const [intPart, decimalPart] = convertedPrice.toFixed(3).split('.');
   const formattedInt = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
