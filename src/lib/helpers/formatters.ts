@@ -40,9 +40,10 @@ export const formatPrice = (
 
   const convertedPrice = (priceUSD * rateTarget) / rateUSD;
 
-  if (shortenUnits && rateUSD === 1) {
+  if (shortenUnits) {
     const absValue = Math.abs(convertedPrice);
     const units = [
+      { value: 1e15, suffix: 'Q' },
       { value: 1e12, suffix: 'T' },
       { value: 1e9, suffix: 'B' },
       { value: 1e6, suffix: 'M' },
@@ -51,7 +52,7 @@ export const formatPrice = (
     for (const unit of units) {
       if (absValue >= unit.value) {
         const compact = (convertedPrice / unit.value).toFixed(2);
-        return `${compact}${unit.suffix}`;
+        return `${compact} ${unit.suffix}`;
       }
     }
   }

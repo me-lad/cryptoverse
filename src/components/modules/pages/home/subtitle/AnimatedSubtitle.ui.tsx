@@ -17,7 +17,7 @@ interface PropsT {
 // ⚙️ Functional component
 const AnimatedSubtitleUi: React.FC<PropsT> = ({ coins }) => {
   return (
-    <div className="group bg-background-lighter fixed right-0 bottom-0 left-0 z-[1000] h-12 w-screen overflow-hidden">
+    <div className="group bg-background-lighter fixed right-0 bottom-0 left-0 z-[49] h-12 w-screen overflow-hidden">
       <div className="relative h-full w-full">
         <div
           className={`${styles['animate-marquee']} group-hover:pause-animation absolute flex h-full items-center whitespace-nowrap [will-change:transform]`}

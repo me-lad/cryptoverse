@@ -9,16 +9,28 @@ import { cn } from '~utils/shadcn';
 // 📦 Internal imports
 import { formatPrice } from '~helpers/formatters';
 import { CurrencyContext } from '~modules/Currency.context';
+import clsx from 'clsx';
 
 // 🧾 Local types
 interface PropsT extends React.ComponentProps<'span'> {
   price: number;
   shortenUnits?: boolean;
+  darkTheme?: true;
+  imageWidth?: number;
+  imageHeight?: number;
 }
 
 // ⚙️ Functional component
 export const Price: React.FC<PropsT> = (props) => {
-  const { price, shortenUnits, className, ...rest } = props;
+  const {
+    price,
+    shortenUnits,
+    darkTheme,
+    imageWidth,
+    imageHeight,
+    className,
+    ...rest
+  } = props;
   const { currency, conversionFactors } = use(CurrencyContext);
 
   return (
@@ -28,10 +40,10 @@ export const Price: React.FC<PropsT> = (props) => {
       ) : (
         <>
           <Image
-            className="mt-0.5"
+            className={clsx('mt-0.5', darkTheme && 'invert-100')}
             src={`/svgs/logo/currencies/${currency?.toLocaleLowerCase()}.svg`}
-            width={25}
-            height={25}
+            width={imageWidth || 25}
+            height={imageHeight || 25}
             alt={currency || ''}
           />
           {formatPrice(

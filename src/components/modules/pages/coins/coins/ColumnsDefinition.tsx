@@ -54,6 +54,7 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
         <Link
           href={`/coin/${row.original.id}`}
           className="flex w-full items-center gap-4"
+          scroll={false}
         >
           <Image
             src={

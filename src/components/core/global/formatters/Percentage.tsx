@@ -55,10 +55,7 @@ export const Percentage: React.FC<PropsT> = (props) => {
             />
           )}
 
-          <p
-            title={`${formattedPercentage.slice(0, 1) === '+' ? formattedPercentage.slice(0, 1) : ''}${percentage}`}
-            style={{ fontSize }}
-          >
+          <p style={{ fontSize }}>
             {formattedPercentage.slice(1).padStart(6, '0')}
           </p>
         </>

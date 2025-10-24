@@ -3,12 +3,26 @@
 // 📦 Third-Party imports
 
 // 📦 Internal imports
-import { DarkOverlay } from '~core/ui/shared/overlays';
+import ParallelCoinPageWrapper from '~modules/pages/coin/parallel-route/CoinPage.parallel.wrapper';
+
+// 🧾 Local types
+interface PropsT {
+  params: Promise<{ cid: string }>;
+  searchParams: {
+    [key: string]: string | undefined;
+  };
+}
 
 // ⚙️ Functional component
-const CoinPage = async ({ params }: { params: Promise<{ cid: string }> }) => {
+const ParallelCoinPage = async ({ params, searchParams }: PropsT) => {
+  const { chartCycle } = await searchParams;
   const { cid } = await params;
 
-  return <div>Coin page ( Parallel intercepting route ) {cid}</div>;
+  return (
+    <ParallelCoinPageWrapper
+      id={cid}
+      chartCycle={typeof chartCycle === 'string' ? chartCycle : '24h'}
+    />
+  );
 };
-export default CoinPage;
+export default ParallelCoinPage;

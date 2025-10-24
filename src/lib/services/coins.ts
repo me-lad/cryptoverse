@@ -3,6 +3,7 @@ import type { GetMarketSentiment } from '~types/api-generated/getMarketSentiment
 import type { GetTopCoins } from '~types/api-generated/getTopCoins';
 import type { CurrencyConversionFactorsT, CurrencyT } from '~types/coins';
 import type { GetCurrencyConversionFactors } from '~types/api-generated/getCurrencyConversionFactors';
+import type { GetCoinData } from '~types/api-generated/getCoinData';
 import type { GetTrendingCoins } from '~types/api-generated/getTrendingCoins';
 import type { CoinEntity_Gecko } from '~types/api-generated/shared';
 import type { CoinsOrderT } from '~types/coins';
@@ -270,5 +271,21 @@ export const searchCoins = async (
       showErrorToast(AuthMessages.Error.CatchHandler, 5000);
     }
     return [];
+  }
+};
+
+export const getCoinData = async (coinId: string) => {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_COINGECKO;
+    const fetchUrl = `${baseUrl}/api/v3/coins/${coinId}?developer_data=false&tickers=false&localization=false&community_data=false`;
+    return await useServerFetch<GetCoinData>(fetchUrl, {
+      cache: 'force-cache',
+      next: {
+        revalidate: minutesToMillisecond(1.5),
+      },
+    });
+  } catch (err) {
+    showFallbackCatcher(err);
+    return;
   }
 };
