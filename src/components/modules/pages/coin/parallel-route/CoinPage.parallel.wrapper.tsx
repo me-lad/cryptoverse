@@ -3,18 +3,20 @@ import React from 'react';
 
 // 📦 Internal imports
 import { BlurWrapper } from '~core/ui/shared/overlays';
-import { getCoinData } from '~services/coins';
+import { getCoinChartData, getCoinData } from '~services/coins';
 import { CatchError } from '~core/ui/shared/typography/CatchError';
+import { cycleMap, type CycleT } from './local';
 import AnimatedModal from './AnimatedModal';
 import NameLogo from './coin-data/NameLogo';
 import MarketInfo from './coin-data/MarketInfo';
 import Price from './coin-data/Price';
 import CycleController from './coin-chart/CycleController';
+import Chart from './coin-chart/Chart';
 
 // 🧾 Local types
 interface PropsT {
   id: string;
-  chartCycle: string;
+  chartCycle: CycleT;
 }
 
 // ⚙️ Functional component
@@ -23,11 +25,12 @@ const ParallelCoinPageWrapper: React.FC<PropsT> = async ({
   chartCycle,
 }) => {
   const coinData = await getCoinData(id);
+  const chartData = await getCoinChartData(id, cycleMap[chartCycle]);
 
   return (
     <BlurWrapper>
       <AnimatedModal>
-        {!coinData ? (
+        {!coinData || !chartData ? (
           <CatchError />
         ) : (
           <>
@@ -40,6 +43,7 @@ const ParallelCoinPageWrapper: React.FC<PropsT> = async ({
 
             {/* Coin chart */}
             <div>
+              <Chart chartData={chartData} />
               <CycleController {...coinData} activeCycle={chartCycle} />
             </div>
           </>

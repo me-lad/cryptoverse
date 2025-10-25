@@ -6,6 +6,7 @@ import type { GetCurrencyConversionFactors } from '~types/api-generated/getCurre
 import type { GetCoinData } from '~types/api-generated/getCoinData';
 import type { GetTrendingCoins } from '~types/api-generated/getTrendingCoins';
 import type { CoinEntity_Gecko } from '~types/api-generated/shared';
+import type { GetCoinChartData } from '~types/api-generated/getCoinChartData';
 import type { CoinsOrderT } from '~types/coins';
 import { useServerFetch } from '~hooks/useServerFetch';
 import { minutesToMillisecond } from '~helpers/time';
@@ -282,6 +283,22 @@ export const getCoinData = async (coinId: string) => {
       cache: 'force-cache',
       next: {
         revalidate: minutesToMillisecond(1.5),
+      },
+    });
+  } catch (err) {
+    showFallbackCatcher(err);
+    return;
+  }
+};
+
+export const getCoinChartData = async (coinId: string, cycle: number) => {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_COINGECKO;
+    const fetchUrl = `${baseUrl}/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${cycle}`;
+    return await useServerFetch<GetCoinChartData>(fetchUrl, {
+      cache: 'force-cache',
+      next: {
+        revalidate: minutesToMillisecond(2),
       },
     });
   } catch (err) {

@@ -21,6 +21,7 @@ const ParallelCoinPage = async ({ params, searchParams }: PropsT) => {
   return (
     <ParallelCoinPageWrapper
       id={cid}
+      // @ts-expect-error
       chartCycle={typeof chartCycle === 'string' ? chartCycle : '24h'}
     />
   );

@@ -16,7 +16,7 @@ import Image from 'next/image';
 // 📦 Internal imports
 import type { GetCoinData } from '~types/api-generated/getCoinData';
 import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
-import { flexBetween } from '~styles/tw-custom';
+import { flexBetween, flexCenter } from '~styles/tw-custom';
 
 // ⚙️ Functional component
 const NameLogo: React.FC<GetCoinData> = ({
@@ -55,13 +55,12 @@ const NameLogo: React.FC<GetCoinData> = ({
         <Tooltip>
           <div className="group relative h-8 w-8">
             <TooltipTrigger>
-              <Button
+              <div
                 className={clsx(
-                  'invisible absolute top-0 left-0 z-10 cursor-pointer opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100',
+                  'hover:bg-background-lighter invisible absolute top-0 left-0 z-10 h-full w-full cursor-pointer rounded-sm opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100',
                   tick && '!visible !opacity-100',
+                  flexCenter,
                 )}
-                size={'icon'}
-                variant={'secondary'}
                 onClick={() => changeHandler(id)}
               >
                 <Star
@@ -69,8 +68,9 @@ const NameLogo: React.FC<GetCoinData> = ({
                   size={16}
                   fill={favoriteIDs.includes(id) ? '#DBA400' : 'transparent'}
                 />
-              </Button>
+              </div>
             </TooltipTrigger>
+
             <TooltipContent className="absolute bottom-full -left-14 mb-5 w-max text-center">
               <p className={clsx(!favoriteIDs.includes(id) && 'invisible h-0')}>
                 Remove from favorites

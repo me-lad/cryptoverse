@@ -5,33 +5,12 @@ import React from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { Button } from '~core/ui/shadcn/button';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~core/ui/shadcn/tooltip';
 
 // 📦 Internal imports
 import type { GetCoinData } from '~types/api-generated/getCoinData';
 import { flexBetween, flexCenter } from '~styles/tw-custom';
 import { Percentage } from '~core/global/formatters';
-
-// 🧾 Local types and variables
-type CycleT = '24h' | '7d' | '30d' | '1y';
-type CycleLabelT = 'Day' | 'Week' | 'Month' | 'Year';
-
-interface CycleEntityT {
-  label: CycleLabelT;
-  pairDB: `price_change_percentage_${CycleT}`;
-  cycle: CycleT;
-}
-
-const cycleEntities: CycleEntityT[] = [
-  { label: 'Day', pairDB: 'price_change_percentage_24h', cycle: '24h' },
-  { label: 'Week', pairDB: 'price_change_percentage_7d', cycle: '7d' },
-  { label: 'Month', pairDB: 'price_change_percentage_30d', cycle: '30d' },
-  { label: 'Year', pairDB: 'price_change_percentage_1y', cycle: '1y' },
-];
+import { cycleEntities } from '../local';
 
 // ⚙️ Functional component
 const CycleController: React.FC<GetCoinData & { activeCycle?: string }> = (
@@ -43,6 +22,7 @@ const CycleController: React.FC<GetCoinData & { activeCycle?: string }> = (
     <div className={`${flexBetween} mt-8`}>
       {cycleEntities.map((entity) => (
         <Link
+          key={entity.label}
           className={clsx(
             'w-[24.5%] rounded-sm',
             activeCycle === entity.cycle && 'bg-background-lighter',
@@ -67,14 +47,7 @@ const CycleController: React.FC<GetCoinData & { activeCycle?: string }> = (
             >
               {entity.label}
             </div>
-            <Tooltip>
-              <TooltipTrigger>
-                <Percentage percentage={market_data[entity.pairDB]} />
-              </TooltipTrigger>
-              <TooltipContent side="bottom">
-                <Percentage percentage={market_data[entity.pairDB]} />
-              </TooltipContent>
-            </Tooltip>
+            <Percentage percentage={market_data[entity.pairDB]} />
           </Button>
         </Link>
       ))}
