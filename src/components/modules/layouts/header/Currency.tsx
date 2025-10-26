@@ -16,7 +16,7 @@ import {
   DropDownAggregator,
   DropDownMenu,
   DropDownTrigger,
-} from '~core/global/dropdown/DropDown';
+} from '~core/global/dropdown';
 
 // ⚙️ Functional component
 const Currency = () => {

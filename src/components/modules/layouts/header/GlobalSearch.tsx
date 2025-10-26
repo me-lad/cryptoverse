@@ -19,7 +19,7 @@ import {
   DropDownAggregator,
   DropDownMenu,
   DropDownTrigger,
-} from '~core/global/dropdown/DropDown';
+} from '~core/global/dropdown';
 
 // ⚙️ Functional component
 export default function GlobalSearch() {

@@ -9,10 +9,7 @@ import { Button } from '~core/ui/shadcn/button';
 import React from 'react';
 
 // 📦 Internal imports
-import {
-  DropDownAggregator,
-  DropDownTrigger,
-} from '~core/global/dropdown/DropDown';
+import { DropDownAggregator, DropDownTrigger } from '~core/global/dropdown';
 import { getNewsCategories } from '~services/news';
 import { ToastError } from '~core/ui/shared/typography';
 import { daysToMillisecond } from '~helpers/time';

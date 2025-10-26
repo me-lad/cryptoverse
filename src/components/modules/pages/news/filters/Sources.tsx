@@ -13,10 +13,7 @@ import { NewsContext } from '../NewsPage.context';
 import { getNewsSources } from '~services/news';
 import { daysToMillisecond } from '~helpers/time';
 import { ToastError } from '~core/ui/shared/typography';
-import {
-  DropDownAggregator,
-  DropDownTrigger,
-} from '~core/global/dropdown/DropDown';
+import { DropDownAggregator, DropDownTrigger } from '~core/global/dropdown';
 import SelectMenu from './SelectMenu';
 
 // ⚙️ Functional component

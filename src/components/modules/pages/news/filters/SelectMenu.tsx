@@ -12,7 +12,7 @@ import type { SelectIDsT } from './local';
 import { flexCenter } from '~styles/tw-custom';
 import { useDebounce } from '~hooks/useDebounce';
 import { NewsContext } from '../NewsPage.context';
-import { DropDownMenu } from '~core/global/dropdown/DropDown';
+import { DropDownMenu } from '~core/global/dropdown';
 import SelectOption from './SelectOption';
 
 // 🧾 Local types

@@ -62,6 +62,7 @@ const DropDownAggregator: React.FC<AggregatorPropsT> = ({
   children,
   overlay,
   className,
+  hideScroll = true,
 }) => {
   const [menuStatus, setMenuStatus] = useState<'open' | 'closed'>('closed');
   const menuRef = useRef<HTMLDivElement | null>(null);
@@ -77,7 +78,7 @@ const DropDownAggregator: React.FC<AggregatorPropsT> = ({
   }, []);
 
   useEffect(() => {
-    if (typeof document !== 'undefined') {
+    if (typeof document !== 'undefined' && hideScroll) {
       if (menuStatus === 'open') {
         document.documentElement.style.marginRight = '6px';
         document.documentElement.style.overflowY = 'hidden';

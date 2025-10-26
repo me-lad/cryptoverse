@@ -1,9 +1,11 @@
 // 📌 Directives
 'use client';
 
-import { useLockBodyScroll } from '@/lib/hooks/useLockBodyScroll';
 // 📦 Third-Party imports
 import React from 'react';
+
+// 📦 Internal imports
+import { useLockBodyScroll } from '~hooks/useLockBodyScroll';
 
 // 🧾 Local types
 interface BlurWrapperPropsT extends React.ComponentProps<'div'> {

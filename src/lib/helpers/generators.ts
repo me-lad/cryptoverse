@@ -1,4 +1,5 @@
 import type { NewsContextParamsT } from '~types/news';
+import type { GetCoinChartData } from '~types/api-generated/getCoinChartData';
 
 export const buildRandomID = () => {
   return Math.floor(Date.now() * (Math.random() * 100));
@@ -49,4 +50,38 @@ export const updateSearchParams = (params: NewsContextParamsT) => {
   });
 
   window.history.replaceState({}, '', url.toString());
+};
+
+export const buildCoinChartData = (
+  data: GetCoinChartData,
+  chartRef: keyof GetCoinChartData,
+  cycle: 1 | 7 | 30 | 365,
+) => {
+  let timeFormatOption: Intl.DateTimeFormatOptions = {};
+
+  if (cycle === 365) {
+    timeFormatOption = {
+      year: 'numeric',
+      month: 'numeric',
+      day: 'numeric',
+    };
+  } else {
+    timeFormatOption = {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    };
+  }
+
+  const convertedData = data[chartRef].map((item) => {
+    return {
+      date: new Intl.DateTimeFormat('en-US', timeFormatOption).format(
+        new Date(item[0]),
+      ),
+      value: item[1],
+    };
+  });
+  return convertedData;
 };

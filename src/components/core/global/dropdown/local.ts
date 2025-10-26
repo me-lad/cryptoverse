@@ -10,6 +10,7 @@ export interface MenuPropsT extends React.ComponentProps<'div'> {
 export interface AggregatorPropsT extends React.ComponentProps<'div'> {
   children: React.ReactNode;
   overlay?: 'dark' | 'blur';
+  hideScroll?: boolean;
 }
 
 export interface DropDownContextT {

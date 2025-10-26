@@ -7,7 +7,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~core/ui/shadcn/tooltip';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pencil } from 'lucide-react';
 import { Input } from '~core/ui/shadcn/input';
 
@@ -15,11 +15,17 @@ import { Input } from '~core/ui/shadcn/input';
 import type { GetCoinData } from '~types/api-generated/getCoinData';
 import { flexCenter } from '~styles/tw-custom';
 import { Price as PriceFormatter } from '~core/global/formatters';
+import { Button } from '@/components/core/ui/shadcn/button';
 
 // ⚙️ Functional component
 const Price: React.FC<GetCoinData> = ({ market_data, symbol }) => {
   const [price, setPrice] = useState(market_data.current_price.usd);
   const [priceBg, setPriceBg] = useState('#fff');
+  const [factor, setFactor] = useState<number>(1);
+
+  useEffect(() => {
+    calculatePrice(factor.toString());
+  }, [factor]);
 
   const calculatePrice = (factor: string) => {
     if (factor === '') factor = '1';
@@ -66,7 +72,7 @@ const Price: React.FC<GetCoinData> = ({ market_data, symbol }) => {
   };
 
   return (
-    <div className={`${flexCenter} mx-auto mt-8 w-12/12 gap-5 *:text-xl`}>
+    <div className={`${flexCenter} mx-auto mt-8 w-11/12 gap-5 *:text-xl`}>
       <h3>Current Price :</h3>
       <div className="flex items-center gap-2">
         <label
@@ -77,15 +83,42 @@ const Price: React.FC<GetCoinData> = ({ market_data, symbol }) => {
           <Input
             id="calculate-price"
             className="!border-0 !bg-transparent !ring-0 !outline-0"
-            placeholder="Coin count"
+            placeholder="Coin count (1)"
             autoComplete="off"
-            onChange={(e) => calculatePrice(e.target.value.trim())}
+            inputMode="decimal"
+            pattern="[0-9]*"
+            value={factor !== 1 ? factor : ''}
+            onChange={(e) => {
+              const raw = e.target.value.trim();
+              const parsed = parseFloat(raw);
+              if (!isNaN(parsed)) {
+                setFactor(parsed);
+              } else if (raw === '') {
+                setFactor(1);
+              }
+            }}
           />
+          <Button
+            variant={'secondary'}
+            size={'icon'}
+            className="max-h-6 max-w-6 cursor-pointer"
+            onClick={() => factor > 1 && setFactor((prev) => prev - 1)}
+          >
+            -
+          </Button>
+          <Button
+            variant={'secondary'}
+            size={'icon'}
+            className="ml-1 max-h-6 max-w-6 cursor-pointer"
+            onClick={() => setFactor((prev) => prev + 1)}
+          >
+            +
+          </Button>
         </label>
         <span className="ml-2">{symbol.toUpperCase()}</span>
         <span> = </span>
         <Tooltip>
-          <TooltipTrigger>
+          <TooltipTrigger className="min-w-36">
             <PriceFormatter
               price={price}
               className="scale-100 opacity-100 transition-all duration-300 ease-in-out"

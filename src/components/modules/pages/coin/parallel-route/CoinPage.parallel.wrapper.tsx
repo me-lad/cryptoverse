@@ -11,7 +11,7 @@ import NameLogo from './coin-data/NameLogo';
 import MarketInfo from './coin-data/MarketInfo';
 import Price from './coin-data/Price';
 import CycleController from './coin-chart/CycleController';
-import Chart from './coin-chart/Chart';
+import ChartDataProvider from './coin-chart/ChartData.provider';
 
 // 🧾 Local types
 interface PropsT {
@@ -35,17 +35,21 @@ const ParallelCoinPageWrapper: React.FC<PropsT> = async ({
         ) : (
           <>
             {/* Coin data */}
-            <div>
+            <>
               <NameLogo {...coinData} />
               <MarketInfo {...coinData} />
               <Price {...coinData} />
-            </div>
+            </>
 
             {/* Coin chart */}
-            <div>
-              <Chart chartData={chartData} />
+            <>
+              <ChartDataProvider
+                coinData={coinData}
+                chartData={chartData}
+                chartCycle={chartCycle}
+              />
               <CycleController {...coinData} activeCycle={chartCycle} />
-            </div>
+            </>
           </>
         )}
       </AnimatedModal>
