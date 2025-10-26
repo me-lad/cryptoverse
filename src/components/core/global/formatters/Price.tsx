@@ -18,6 +18,7 @@ interface PropsT extends React.ComponentProps<'span'> {
   darkTheme?: true;
   imageWidth?: number;
   imageHeight?: number;
+  fullPrecision?: boolean;
 }
 
 // ⚙️ Functional component
@@ -28,6 +29,7 @@ export const Price: React.FC<PropsT> = (props) => {
     darkTheme,
     imageWidth,
     imageHeight,
+    fullPrecision = false,
     className,
     ...rest
   } = props;
@@ -51,6 +53,7 @@ export const Price: React.FC<PropsT> = (props) => {
             conversionFactors?.USD,
             conversionFactors && currency && conversionFactors[currency],
             shortenUnits,
+            fullPrecision,
           )}
         </>
       )}

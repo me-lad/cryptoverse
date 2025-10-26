@@ -3,4 +3,4 @@ export const flexCenter = 'flex justify-center items-center';
 export const flexBetween = 'flex justify-between items-center';
 
 export const containerDefault =
-  'px-5 lg:px-0 w-full lg:w-[90%] xl:w-[86%] 2xl:w-[80%] mx-auto';
+  'px-5 lg:px-0 w-full lg:w-[90%] xl:w-[86%] 2xl:w-[70%] mx-auto';

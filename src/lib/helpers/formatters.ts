@@ -35,12 +35,13 @@ export const formatPrice = (
   rateUSD: number = 1,
   rateTarget: number = 1,
   shortenUnits?: boolean,
+  fullPrecision?: boolean,
 ): string => {
   if (!priceUSD) return '';
 
   const convertedPrice = (priceUSD * rateTarget) / rateUSD;
 
-  if (shortenUnits) {
+  if (shortenUnits && !fullPrecision) {
     const absValue = Math.abs(convertedPrice);
     const units = [
       { value: 1e15, suffix: 'Q' },
@@ -55,6 +56,12 @@ export const formatPrice = (
         return `${compact} ${unit.suffix}`;
       }
     }
+  }
+
+  if (fullPrecision) {
+    const [intPart, decimalPart] = convertedPrice.toString().split('.');
+    const formattedInt = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return `${formattedInt}.${decimalPart}`;
   }
 
   const [intPart, decimalPart] = convertedPrice.toFixed(3).split('.');

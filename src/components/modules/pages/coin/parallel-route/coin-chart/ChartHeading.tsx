@@ -61,7 +61,7 @@ const ChartHeading: React.FC<PropsT> = (props) => {
   const [customKey, setCustomKey] = useState(0);
 
   return (
-    <div className={`${flexBetween} border-b border-neutral-600 py-3`}>
+    <div className={`${flexBetween} `}>
       <div>
         <h2 className="text-xl font-semibold">Historical Data</h2>
         <p className="mt-1.5">
@@ -71,7 +71,7 @@ const ChartHeading: React.FC<PropsT> = (props) => {
       </div>
       <DropDownAggregator key={customKey} hideScroll={false}>
         <DropDownTrigger activeClassName="*:*:last:rotate-180">
-          <Button className="w-44" variant={'outline'}>
+          <Button className="!bg-background-lighter w-44" variant={'outline'}>
             {refLabels[chartRef].upperCased}
             <ChevronDown
               className="mt-0.5 transition-all duration-300"
@@ -82,6 +82,7 @@ const ChartHeading: React.FC<PropsT> = (props) => {
         <DropDownMenu className="mt-2 flex w-full flex-col gap-2 p-2.5">
           {references.map((ref) => (
             <Button
+              key={ref}
               variant={'ghost'}
               className={clsx(
                 '!justify-start font-medium',

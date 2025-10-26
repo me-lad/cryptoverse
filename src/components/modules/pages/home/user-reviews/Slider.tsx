@@ -41,8 +41,6 @@ const swiperClass = clsx(
 
 // ⚙️ Functional component
 const Slider = () => {
-  const swiperRef = useRef<SwiperType | null>(null);
-
   return (
     <div className="my-10">
       {/* Slider */}
@@ -56,7 +54,6 @@ const Slider = () => {
         navigation
         centeredSlides={true}
         loop={true}
-        onSwiper={(swiper) => (swiperRef.current = swiper)}
         onInit={(swiper) => swiper.update()}
       >
         {Array.from({ length: 5 }).map((_, index) => (
@@ -69,29 +66,6 @@ const Slider = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-
-      {/* Navigation */}
-      {false && (
-        <div
-          className={`${flexBetween} ${posCenter} !-right-16 !-left-16 *:relative *:z-10`}
-        >
-          {/* Previous navigator */}
-          <div
-            onClick={() => swiperRef.current?.slidePrev()}
-            className="hover:bg-primary-700 hover:border-primary-700 cursor-pointer rounded-full border border-gray-500 p-1 transition-all"
-          >
-            <ChevronLeft size={28} />
-          </div>
-
-          {/* Next navigator */}
-          <div
-            onClick={() => swiperRef.current?.slideNext()}
-            className="hover:bg-primary-700 hover:border-primary-700 cursor-pointer rounded-full border border-gray-500 p-1 transition-all"
-          >
-            <ChevronRight size={28} />
-          </div>
-        </div>
-      )}
     </div>
   );
 };

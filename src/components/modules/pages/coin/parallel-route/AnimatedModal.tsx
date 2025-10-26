@@ -34,7 +34,7 @@ const AnimatedModal: React.FC<PropsT> = ({ children }) => {
           setHasClosed(true);
         }}
       >
-        <Navigator delay={1000} className="h-full w-full" order="back" />
+        <Navigator delay={900} className="h-full w-full" order="back" />
       </div>
 
       <div
@@ -57,7 +57,7 @@ const AnimatedModal: React.FC<PropsT> = ({ children }) => {
           <Navigator
             order="back"
             className="absolute top-3 right-3 *:cursor-pointer"
-            delay={1000}
+            delay={900}
           >
             <Button variant={'ghost'} size={'icon'}>
               <X className="text-neutral-300" size={18} strokeWidth={3} />

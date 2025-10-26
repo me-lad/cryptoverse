@@ -7,7 +7,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~core/ui/shadcn/tooltip';
-import { Button } from '~core/ui/shadcn/button';
 import { Star } from 'lucide-react';
 import React, { use, useEffect, useState } from 'react';
 import clsx from 'clsx';
@@ -20,7 +19,6 @@ import { flexBetween, flexCenter } from '~styles/tw-custom';
 
 // ⚙️ Functional component
 const NameLogo: React.FC<GetCoinData> = ({
-  name,
   image,
   symbol,
   id,
@@ -82,7 +80,7 @@ const NameLogo: React.FC<GetCoinData> = ({
 
             <Image
               className={clsx(
-                'group-hover:invalid: absolute top-0 left-0 cursor-pointer transition-all duration-200 group-hover:opacity-0',
+                'absolute top-0 left-0 cursor-pointer rounded-sm transition-all duration-200 group-hover:opacity-0',
                 tick && '!invisible !opacity-0',
               )}
               src={image.large}
@@ -93,7 +91,8 @@ const NameLogo: React.FC<GetCoinData> = ({
           </div>
         </Tooltip>
         <h1 className="text-2xl">
-          {name} <small className="text-xs">( {symbol.toUpperCase()} )</small>
+          {id.slice(0, 1).toUpperCase() + id.slice(1)}{' '}
+          <small className="text-xs">( {symbol.toUpperCase()} )</small>
         </h1>
       </div>
 

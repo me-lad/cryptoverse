@@ -45,7 +45,7 @@ const DropDownMenu: React.FC<MenuPropsT> = (props) => {
   return (
     <div
       className={cn(
-        'bg-background-lighter absolute top-full left-1/2 -translate-x-1/2 rounded-sm border border-neutral-700 shadow-2xs shadow-neutral-800 transition-all',
+        'bg-background-lighter glass-bg absolute top-full left-1/2 -translate-x-1/2 rounded-sm border border-neutral-700 shadow-2xs shadow-neutral-800 transition-all',
         className,
         menuStatus === 'closed'
           ? 'invisible z-10 -translate-y-3 opacity-0'

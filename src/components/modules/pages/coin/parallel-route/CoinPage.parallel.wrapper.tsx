@@ -24,8 +24,11 @@ const ParallelCoinPageWrapper: React.FC<PropsT> = async ({
   id,
   chartCycle,
 }) => {
+  let isLoading = true;
+
   const coinData = await getCoinData(id);
   const chartData = await getCoinChartData(id, cycleMap[chartCycle]);
+  isLoading = false;
 
   return (
     <BlurWrapper>
@@ -43,6 +46,7 @@ const ParallelCoinPageWrapper: React.FC<PropsT> = async ({
 
             {/* Coin chart */}
             <>
+              {isLoading && <h1 className="text-5xl">Loading</h1>}
               <ChartDataProvider
                 coinData={coinData}
                 chartData={chartData}

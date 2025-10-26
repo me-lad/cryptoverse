@@ -16,7 +16,7 @@ export const cycleEntities: CycleEntityT[] = [
   { label: 'Year', pairDB: 'price_change_percentage_1y', cycle: '1y' },
 ];
 
-export const cycleMap: { [key in CycleT]: number } = {
+export const cycleMap: { [key in CycleT]: 1 | 7 | 30 | 365 } = {
   '24h': 1,
   '7d': 7,
   '30d': 30,
@@ -26,8 +26,11 @@ export const cycleMap: { [key in CycleT]: number } = {
 export const chartConfig = {
   desktop: {
     label: 'Desktop',
-  },
-  mobile: {
-    label: 'Mobile',
+    color: 'var(--chart-1)',
   },
 } satisfies ChartConfig;
+
+export interface FormattedChartDataT {
+  date: string;
+  value: number;
+}
