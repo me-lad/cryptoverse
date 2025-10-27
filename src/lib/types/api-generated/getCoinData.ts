@@ -24,16 +24,6 @@ export interface GetCoinData {
   tickers: Ticker[];
 }
 
-interface Empty {
-  decimal_place: null;
-  contract_address: string;
-}
-
-interface CodeAdditionsDeletions4_Weeks {
-  additions: number;
-  deletions: number;
-}
-
 interface Image {
   thumb: string;
   small: string;

@@ -11,6 +11,8 @@ import {
   Dot,
   Label,
   Legend,
+  Line,
+  Rectangle,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -58,11 +60,25 @@ const CustomDot = ({ payload, ...props }: any) => {
   if (!isMax && !isMin) return;
 
   let posX = props.cx + 10;
-  let posY = props.cy + 6;
+  let posY = props.cy + 5.5;
 
   if (props.cx > props.containerWidth * 0.6) {
-    posX =
-      formatPrice(payload.value).length > 9 ? props.cx - 172 : props.cx - 94;
+    let newPosX = props.cx - 64;
+
+    if (formatPrice(payload.value).length > 6) {
+      newPosX = props.cx - 75;
+    }
+    if (formatPrice(payload.value).length > 8) {
+      newPosX = props.cx - 95;
+    }
+    if (formatPrice(payload.value).length > 10) {
+      newPosX = props.cx - 115;
+    }
+    if (formatPrice(payload.value).length > 12) {
+      newPosX = props.cx - 120;
+    }
+
+    posX = newPosX;
   }
 
   if (isMax) {
@@ -84,7 +100,11 @@ const CustomDot = ({ payload, ...props }: any) => {
           fontWeight={600}
           fill="var(--chart-green-normal)"
         >
-          {formatPrice(payload.value)}
+          $
+          {formatPrice(payload.value).toString().slice(0, 12).endsWith(',') ||
+          formatPrice(payload.value).toString().slice(0, 12).endsWith('.')
+            ? formatPrice(payload.value).toString().slice(0, 11)
+            : formatPrice(payload.value).toString().slice(0, 12)}
         </text>
       </g>
     );
@@ -109,7 +129,11 @@ const CustomDot = ({ payload, ...props }: any) => {
           fontWeight={600}
           fill="var(--chart-red-normal)"
         >
-          {formatPrice(payload.value)}
+          $
+          {formatPrice(payload.value).toString().slice(0, 12).endsWith(',') ||
+          formatPrice(payload.value).toString().slice(0, 12).endsWith('.')
+            ? formatPrice(payload.value).toString().slice(0, 11)
+            : formatPrice(payload.value).toString().slice(0, 12)}
         </text>
       </g>
     );
@@ -194,9 +218,18 @@ const Chart: React.FC<PropsT> = (props) => {
 
               {/* Tooltip and Legend */}
               <ChartTooltip
-                cursor
-                content={<ChartTooltipContent indicator="dashed" />}
+                cursor={{
+                  strokeWidth: 2,
+                  strokeDasharray: '5 3',
+                }}
+                content={
+                  <ChartTooltipContent
+                    indicator="dashed"
+                    color="var(--color-primary)"
+                  />
+                }
               />
+
               <Legend content={<CustomLegend title={chartRef} />} />
 
               {/* Area (rendered first so others appear above it) */}

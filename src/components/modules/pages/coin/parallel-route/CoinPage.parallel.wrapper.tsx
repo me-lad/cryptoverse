@@ -10,8 +10,7 @@ import AnimatedModal from './AnimatedModal';
 import NameLogo from './coin-data/NameLogo';
 import MarketInfo from './coin-data/MarketInfo';
 import Price from './coin-data/Price';
-import CycleController from './coin-chart/CycleController';
-import ChartDataProvider from './coin-chart/ChartData.provider';
+import CoinChartWrapper from './coin-chart/CoinChart.wrapper';
 
 // 🧾 Local types
 interface PropsT {
@@ -24,11 +23,8 @@ const ParallelCoinPageWrapper: React.FC<PropsT> = async ({
   id,
   chartCycle,
 }) => {
-  let isLoading = true;
-
   const coinData = await getCoinData(id);
   const chartData = await getCoinChartData(id, cycleMap[chartCycle]);
-  isLoading = false;
 
   return (
     <BlurWrapper>
@@ -45,15 +41,11 @@ const ParallelCoinPageWrapper: React.FC<PropsT> = async ({
             </>
 
             {/* Coin chart */}
-            <>
-              {isLoading && <h1 className="text-5xl">Loading</h1>}
-              <ChartDataProvider
-                coinData={coinData}
-                chartData={chartData}
-                chartCycle={chartCycle}
-              />
-              <CycleController {...coinData} activeCycle={chartCycle} />
-            </>
+            <CoinChartWrapper
+              coinData={coinData}
+              chartData={chartData}
+              chartCycle={chartCycle}
+            />
           </>
         )}
       </AnimatedModal>
