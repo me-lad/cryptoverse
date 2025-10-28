@@ -280,9 +280,8 @@ export const getCoinData = async (coinId: string) => {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_COINGECKO;
     const fetchUrl = `${baseUrl}/api/v3/coins/${coinId}?developer_data=false&tickers=false&localization=false&community_data=false`;
     return await useServerFetch<GetCoinData>(fetchUrl, {
-      cache: 'force-cache',
       next: {
-        revalidate: minutesToMillisecond(1.5),
+        revalidate: minutesToMillisecond(2.5),
       },
     });
   } catch (err) {
@@ -296,9 +295,8 @@ export const getCoinChartData = async (coinId: string, cycle: number) => {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_COINGECKO;
     const fetchUrl = `${baseUrl}/api/v3/coins/${coinId}/market_chart?vs_currency=usd&days=${cycle}`;
     return await useServerFetch<GetCoinChartData>(fetchUrl, {
-      cache: 'force-cache',
       next: {
-        revalidate: minutesToMillisecond(2),
+        revalidate: minutesToMillisecond(2.5),
       },
     });
   } catch (err) {

@@ -12,7 +12,7 @@ import { buildCoinChartData } from '~helpers/generators';
 import ChartHeading from './ChartHeading';
 import ChartDataRefSelect from './ChartDataRefSelect';
 import ChartCycleController from './ChartCycleController';
-import Image from 'next/image';
+import ChartFallback from './widgets/ChartFallback';
 const Chart = lazy(() => import('./Chart'));
 
 // 🧾 Local types
@@ -54,19 +54,7 @@ const CoinChartWrapper: React.FC<PropsT> = (props) => {
       </ChartHeading>
 
       {/* Chart View */}
-      <Suspense
-        fallback={
-          <div className="mt-4 h-92 w-full items-center justify-center">
-            <Image
-              className="animate-spin"
-              src={coinData.image.large}
-              width={100}
-              height={100}
-              alt={coinData.id}
-            />
-          </div>
-        }
-      >
+      <Suspense fallback={<ChartFallback image={coinData.image.large} />}>
         <Chart
           chartData={formattedChartData}
           chartRef={chartRef}

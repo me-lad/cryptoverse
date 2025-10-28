@@ -85,7 +85,7 @@ const Card: React.FC<DataEntity> = (props) => {
               {CATEGORY_DATA?.slice(0, 2)?.map((category) => (
                 <span
                   key={category.ID}
-                  className="px-2 not-first:border-l-2 not-first:border-white"
+                  className="px-2 not-first:border-l not-first:border-white"
                 >
                   {category.NAME}
                 </span>

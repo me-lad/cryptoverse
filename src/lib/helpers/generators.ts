@@ -62,7 +62,7 @@ export const buildCoinChartData = (
   if (cycle === 365) {
     timeFormatOption = {
       year: 'numeric',
-      month: 'numeric',
+      month: 'short',
       day: 'numeric',
     };
   } else {
