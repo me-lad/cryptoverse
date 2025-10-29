@@ -62,7 +62,7 @@ export default function GlobalSearch() {
             className={`${flexCenter} mt-20 mb-[3.75rem] flex-col gap-y-2.5`}
           >
             {isSearching || isLoading ? (
-              <Spinner variant="circle" size={40} />
+              <Spinner variant="circle-filled" size={40} />
             ) : (
               <>
                 <Image
@@ -92,7 +92,10 @@ export default function GlobalSearch() {
                       <h4 className="text-lg font-semibold">
                         {coin.symbol.toUpperCase()}
                       </h4>
-                      <p className="mt-0.5 line-clamp-1 text-sm text-neutral-400">
+                      <p
+                        title={coin.id}
+                        className="mt-0.5 line-clamp-1 text-sm text-neutral-400"
+                      >
                         {coin.id.slice(0, 1).toUpperCase() + coin.id.slice(1)}
                       </p>
                     </div>
@@ -102,7 +105,11 @@ export default function GlobalSearch() {
                   >
                     <div className={`${flexCenter} w-full flex-col`}>
                       <Price
-                        title={coin.current_price.toLocaleString()}
+                        title={
+                          coin.current_price
+                            ? coin.current_price.toLocaleString()
+                            : ''
+                        }
                         className="w-full"
                         price={coin.current_price}
                       />

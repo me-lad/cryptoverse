@@ -18,7 +18,7 @@ export default function HeaderAccountUi({ isAuthenticated }: PropsT) {
     <>
       {isAuthenticated ? (
         // Dashboard button
-        <div className={`${flexCenter} gap-6`}>
+        <div className={`${flexCenter} gap-4`}>
           {/* Notifications */}
           <div className="hover:cursor-pointer">
             <BellDot size={22} />
@@ -39,7 +39,7 @@ export default function HeaderAccountUi({ isAuthenticated }: PropsT) {
         <Button
           variant="default"
           size="default"
-          className="px-8 text-white *:transition-all *:hover:-translate-y-0.5"
+          className="px-8 text-white *:transition-all"
         >
           <Link href={'/auth/signup'}>Signup</Link>/
           <Link href={'/auth/signin'}>Signin</Link>

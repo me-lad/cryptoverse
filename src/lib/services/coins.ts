@@ -8,6 +8,7 @@ import type { GetTrendingCoins } from '~types/api-generated/getTrendingCoins';
 import type { CoinEntity_Gecko } from '~types/api-generated/shared';
 import type { GetCoinChartData } from '~types/api-generated/getCoinChartData';
 import type { CoinsOrderT } from '~types/coins';
+import type { HeaderNavbarCoinsFetchOrderT } from '~types/header';
 import { useServerFetch } from '~hooks/useServerFetch';
 import { minutesToMillisecond } from '~helpers/time';
 import { GetWidgetCoins } from '~types/api-generated/getWidgetCoins';
@@ -302,5 +303,35 @@ export const getCoinChartData = async (coinId: string, cycle: number) => {
   } catch (err) {
     showFallbackCatcher(err);
     return;
+  }
+};
+
+export const getCoinsCryptoCompare = async (
+  order: HeaderNavbarCoinsFetchOrderT,
+  page: number,
+) => {
+  try {
+    if (!order || !page) return [];
+
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_CRYPTOCOMPARE;
+    const fetchUrl = `${baseUrl}/asset/v1/top/list?page=${page}&page_size=100&sort_by=${order}&sort_direction=DESC&groups=ID,BASIC,SUPPLY,PRICE,MKT_CAP,VOLUME,CHANGE,TOPLIST_RANK&toplist_quote_asset=USD`;
+    ('');
+    const resp = await fetch(fetchUrl, {
+      method: 'GET',
+      headers: Base_Headers,
+    });
+
+    if (!resp.ok) throw new Error(`APIError: ${resp.status}`);
+
+    return await resp.json();
+  } catch (err: any) {
+    if (err instanceof TypeError) {
+      showFallbackCatcher(err.message);
+      showErrorToast(AuthMessages.Error.CatchHandler, 5000);
+    } else {
+      showFallbackCatcher(err);
+      showErrorToast(AuthMessages.Error.CatchHandler, 5000);
+    }
+    return [];
   }
 };

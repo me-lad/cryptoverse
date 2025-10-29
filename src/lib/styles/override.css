@@ -4,7 +4,7 @@ img {
 
 * {
   scrollbar-width: thin; /* Options: auto, thin, none */
-  scrollbar-color: var(--neutral-200) #252525; /* thumb color, track color */
+  scrollbar-color: var(--neutral-500) #252525; /* thumb color, track color */
 }
 
 button {
@@ -23,5 +23,5 @@ button {
 *::-webkit-scrollbar-thumb {
   background-color: #252525;
   border-radius: 4px;
-  border: 1px solid #f0f0f0;
+  border: 1px solid var(--neutral-500);
 }

@@ -15,9 +15,9 @@ export const footerLinks: FooterLinkT[] = [
     title: 'News',
     items: [
       { name: 'Latest news', url: '/news' },
-      { name: 'Spanish news', url: '/news?language=ES' },
-      { name: 'French news', url: '/news?language=FR' },
-      { name: 'Turkish news', url: '/news?language=TR' },
+      { name: 'Español news', url: '/news?language=ES' },
+      { name: 'Français news', url: '/news?language=FR' },
+      { name: 'Türkiye news', url: '/news?language=TR' },
     ],
   },
 

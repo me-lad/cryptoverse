@@ -21,9 +21,11 @@ export const FavoriteCoinsContext = createContext<FavoriteCoinsContextT>({
   favoriteIDs: [],
   favoriteCoins: [],
   showFavorites: false,
+  fetchFavorites: false,
   isFetchingFavorites: false,
   changeHandler: () => {},
   setShowFavorites: () => {},
+  setFetchFavorites: () => {},
 });
 
 // ⚙️ Functional component
@@ -33,6 +35,7 @@ const FavoriteCoinsContextProvider: React.FC<PropsT> = ({ children }) => {
     [],
   );
   const [showFavorites, setShowFavorites] = useState(false);
+  const [fetchFavorites, setFetchFavorites] = useState(false);
 
   const queryKey = [
     'favoriteCoins',
@@ -44,7 +47,7 @@ const FavoriteCoinsContextProvider: React.FC<PropsT> = ({ children }) => {
     queryFn: () => getCoinsByIDs(favoriteIDs || []),
     staleTime: 2500,
     gcTime: 5000,
-    enabled: !!favoriteIDs?.length && showFavorites,
+    enabled: !!favoriteIDs?.length && (showFavorites || fetchFavorites),
   });
 
   const changeHandler = (id: string) => {
@@ -70,8 +73,10 @@ const FavoriteCoinsContextProvider: React.FC<PropsT> = ({ children }) => {
     favoriteCoins: data || [],
     changeHandler,
     showFavorites,
+    fetchFavorites,
     isFetchingFavorites: isLoading,
     setShowFavorites,
+    setFetchFavorites,
   };
 
   return (

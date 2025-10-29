@@ -37,7 +37,9 @@ export interface FavoriteCoinsContextT {
   favoriteIDs: string[]; // Coins IDs;
   favoriteCoins: CoinEntity_Gecko[];
   showFavorites: boolean;
+  fetchFavorites: boolean;
   isFetchingFavorites: boolean;
   changeHandler: (id: string) => void;
   setShowFavorites: (order: boolean) => void;
+  setFetchFavorites: (order: boolean) => void;
 }

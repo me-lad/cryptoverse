@@ -61,9 +61,9 @@ const SupportForm = () => {
           {/* Field */}
           {field.name === 'message' ? (
             <Textarea
-              className="mt-2 !rounded-sm !ring-0"
+              className="mt-2 min-h-32 !rounded-sm !ring-0"
               placeholder={field.placeholder}
-              rows={6}
+              rows={10}
               name={field.name}
             ></Textarea>
           ) : (

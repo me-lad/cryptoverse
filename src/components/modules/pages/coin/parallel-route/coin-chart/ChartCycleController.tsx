@@ -35,7 +35,7 @@ const ChartCycleController: React.FC<PropsT> = (props) => {
   );
 
   return (
-    <div className={`${flexBetween} mt-8`}>
+    <div className={flexBetween}>
       {cycleEntities.map((entity, index) => (
         <Link
           key={entity.label}
