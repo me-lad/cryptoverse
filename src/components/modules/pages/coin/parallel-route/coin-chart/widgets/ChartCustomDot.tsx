@@ -1,8 +1,12 @@
+// 📌 Directives
+'use client';
+
 // 📦 Third-Party imports
 import { Dot } from 'recharts';
 
 // 📦 Internal imports
 import { formatPrice } from '~helpers/formatters';
+import { useCurrency } from '~hooks/useCurrency';
 
 // ⚙️ Functional component
 const CustomDot = ({ index, payload, ...props }: any) => {
@@ -19,19 +23,21 @@ const CustomDot = ({ index, payload, ...props }: any) => {
   const isLabelNeed =
     (isMax && props.maxIndex === index) || (isMin && props.minIndex === index);
 
+  const { convertedPrice } = useCurrency(payload.value);
+
   if (props.cx > props.containerWidth * 0.6) {
     let newPosX = props.cx - 64;
 
-    if (formatPrice(payload.value).length > 6) {
+    if (convertedPrice.length > 6) {
       newPosX = props.cx - 80;
     }
-    if (formatPrice(payload.value).length > 8) {
+    if (convertedPrice.length > 8) {
       newPosX = props.cx - 100;
     }
-    if (formatPrice(payload.value).length > 10) {
+    if (convertedPrice.length > 10) {
       newPosX = props.cx - 115;
     }
-    if (formatPrice(payload.value).length > 12) {
+    if (convertedPrice.length > 12) {
       newPosX = props.cx - 120;
     }
 
@@ -51,11 +57,10 @@ const CustomDot = ({ index, payload, ...props }: any) => {
       />
       {isLabelNeed && (
         <text x={posX} y={posY} fontSize={18} fontWeight={600} fill={color}>
-          $
-          {formatPrice(payload.value).toString().slice(0, 12).endsWith(',') ||
-          formatPrice(payload.value).toString().slice(0, 12).endsWith('.')
-            ? formatPrice(payload.value).toString().slice(0, 11)
-            : formatPrice(payload.value).toString().slice(0, 12)}
+          {convertedPrice.toString().slice(0, 12).endsWith(',') ||
+          convertedPrice.toString().slice(0, 12).endsWith('.')
+            ? convertedPrice.toString().slice(0, 11)
+            : convertedPrice.toString().slice(0, 12)}
         </text>
       )}
     </g>

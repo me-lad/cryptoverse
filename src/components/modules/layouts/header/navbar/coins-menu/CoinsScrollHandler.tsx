@@ -19,7 +19,7 @@ const CoinsScrollHandler: React.FC<PropsT> = ({ container }) => {
       const nearBottom =
         Math.abs(scrollHeight - clientHeight - scrollTop) < 200;
 
-      if (nearBottom && !params?.isLoading) {
+      if (nearBottom && !params?.isLoading && params?.page! < 30) {
         actions?.setSlicePoint((prev) => prev + 25);
       }
     },

@@ -5,6 +5,7 @@ import * as RechartsPrimitive from 'recharts';
 
 import { cn } from '~utils/shadcn';
 import { formatPrice } from '~helpers/formatters';
+import { CurrencyContext } from '~modules/Currency.context';
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: '', dark: '.dark' } as const;
@@ -171,6 +172,8 @@ function ChartTooltipContent({
 
   const nestLabel = payload.length === 1 && indicator !== 'dot';
 
+  const { conversionFactors, currency } = React.use(CurrencyContext);
+
   return (
     <div
       className={cn(
@@ -233,7 +236,16 @@ function ChartTooltipContent({
                       </div>
                       {item.value && (
                         <span className="text-foreground font-mono font-medium tabular-nums">
-                          Value: {formatPrice(+item.value, 1, 1, false, true)}
+                          Value:{' '}
+                          {formatPrice(
+                            +item.value,
+                            conversionFactors?.USD,
+                            conversionFactors &&
+                              currency &&
+                              conversionFactors[currency],
+                            false,
+                            true,
+                          )}
                         </span>
                       )}
                     </div>

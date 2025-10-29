@@ -25,6 +25,7 @@ import { chartConfig, type FormattedChartDataT } from '../local';
 import { formatPrice } from '~helpers/formatters';
 import { useChartExtremes } from './widgets/useChartExtremes';
 import { useChartContainerSize } from './widgets/useContainerSize';
+import { useCurrency } from '~hooks/useCurrency';
 import ChartFallback from './widgets/ChartFallback';
 import CustomDot from './widgets/ChartCustomDot';
 import CustomLegend from './widgets/ChartCustomLegend';
@@ -58,6 +59,8 @@ const Chart: React.FC<PropsT> = (props) => {
   }, [chartRef]);
 
   const currentValue = () => coinReferenceValues[chartRef];
+
+  const { convertedPrice } = useCurrency(currentValue());
 
   const modifyReferenceLineLabel = () => {
     const average = (maxValue + minValue) / 2;
@@ -159,7 +162,7 @@ const Chart: React.FC<PropsT> = (props) => {
                     position={modifyReferenceLineLabel()}
                     fontSize={18}
                   >
-                    {`Current : ${formatPrice(currentValue())}`}
+                    {`Current : ${convertedPrice}`}
                   </Label>
                 }
               />
