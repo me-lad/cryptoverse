@@ -6,10 +6,10 @@
 import React from 'react';
 
 // 📦 Internal imports
-import type { CycleT } from '../local';
+import type { CycleT } from '../../local';
 import type { GetCoinChartData } from '~types/api-generated/getCoinChartData';
 import { flexBetween } from '~styles/tw-custom';
-import { cycleLabelsHeading, chartReferencesLabels } from '../local';
+import { cycleLabelsHeading, chartReferencesLabels } from '../../local';
 
 // 🧾 Local types and variables
 interface PropsT {

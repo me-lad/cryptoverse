@@ -7,7 +7,7 @@ import React, { useEffect, useState, lazy, Suspense } from 'react';
 // 📦 Internal imports
 import type { GetCoinChartData } from '~types/api-generated/getCoinChartData';
 import type { GetCoinData } from '~types/api-generated/getCoinData';
-import { cycleMap, type CycleT, type FormattedChartDataT } from '../local';
+import { cycleMap, type CycleT, type FormattedChartDataT } from '../../local';
 import { buildCoinChartData } from '~helpers/generators';
 import ChartHeading from './ChartHeading';
 import ChartDataRefSelect from './ChartDataRefSelect';

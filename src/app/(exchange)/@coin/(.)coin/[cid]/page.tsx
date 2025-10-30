@@ -1,7 +1,3 @@
-// 📌 Directives
-
-// 📦 Third-Party imports
-
 // 📦 Internal imports
 import ParallelCoinPageWrapper from '~modules/pages/coin/parallel-route/CoinPage.parallel.wrapper';
 
@@ -14,16 +10,21 @@ interface PropsT {
 }
 
 // ⚙️ Functional component
-const ParallelCoinPage = async ({ params, searchParams }: PropsT) => {
+const CoinPage = async ({ params, searchParams }: PropsT) => {
   const { chartCycle } = await searchParams;
   const { cid } = await params;
+
+  const isCycleValid =
+    chartCycle === '24h' ||
+    chartCycle === '7d' ||
+    chartCycle === '30d' ||
+    chartCycle === '1y';
 
   return (
     <ParallelCoinPageWrapper
       id={cid}
-      // @ts-expect-error
-      chartCycle={typeof chartCycle === 'string' ? chartCycle : '24h'}
+      chartCycle={isCycleValid ? chartCycle : '24h'}
     />
   );
 };
-export default ParallelCoinPage;
+export default CoinPage;

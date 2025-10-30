@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 
 // 📦 Internal imports
-import type { FormattedChartDataT } from '../../local';
+import type { FormattedChartDataT } from '../../../local';
 
 // ⚙️ Custom hook
 export const useChartExtremes = (data: FormattedChartDataT[]) => {

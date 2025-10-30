@@ -9,10 +9,10 @@ import clsx from 'clsx';
 // 📦 Internal imports
 import type { GetCoinChartData } from '~types/api-generated/getCoinChartData';
 import type { GetCoinData } from '~types/api-generated/getCoinData';
-import type { CycleT } from '../local';
+import type { CycleT } from '../../local';
 import { flexBetween, flexCenter } from '~styles/tw-custom';
 import { Percentage } from '~core/global/formatters';
-import { cycleEntities } from '../local';
+import { cycleEntities } from '../../local';
 
 // 🧾 Local types
 interface PropsT {

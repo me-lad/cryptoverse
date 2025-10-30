@@ -9,6 +9,7 @@ import type { CoinEntity_Gecko } from '~types/api-generated/shared';
 import type { GetCoinChartData } from '~types/api-generated/getCoinChartData';
 import type { CoinsOrderT } from '~types/coins';
 import type { HeaderNavbarCoinsFetchOrderT } from '~types/header';
+import type { GetCoinOrders } from '~types/api-generated/getCoinOrders';
 import { useServerFetch } from '~hooks/useServerFetch';
 import { minutesToMillisecond } from '~helpers/time';
 import { GetWidgetCoins } from '~types/api-generated/getWidgetCoins';
@@ -333,5 +334,19 @@ export const getCoinsCryptoCompare = async (
       showErrorToast(AuthMessages.Error.CatchHandler, 5000);
     }
     return [];
+  }
+};
+
+export const getCoinOrders = async (coinSymbol: string) => {
+  try {
+    const fetchUrl = `https://api.binance.com/api/v3/depth?symbol=${coinSymbol.toUpperCase()}USDT&limit=14`;
+    return await useServerFetch<GetCoinOrders>(fetchUrl, {
+      next: {
+        revalidate: minutesToMillisecond(1),
+      },
+    });
+  } catch (err) {
+    showFallbackCatcher(err);
+    return;
   }
 };

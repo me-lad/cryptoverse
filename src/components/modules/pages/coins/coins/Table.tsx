@@ -1,3 +1,6 @@
+// 📌 Directives
+'use client';
+
 // 📦 Third-Party imports
 import { Table } from '~core/ui/shadcn/table';
 import { useRef, useEffect } from 'react';

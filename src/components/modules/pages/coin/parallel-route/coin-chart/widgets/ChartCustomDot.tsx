@@ -5,7 +5,6 @@
 import { Dot } from 'recharts';
 
 // 📦 Internal imports
-import { formatPrice } from '~helpers/formatters';
 import { useCurrency } from '~hooks/useCurrency';
 
 // ⚙️ Functional component
@@ -32,13 +31,13 @@ const CustomDot = ({ index, payload, ...props }: any) => {
       newPosX = props.cx - 80;
     }
     if (convertedPrice.length > 8) {
-      newPosX = props.cx - 100;
+      newPosX = props.cx - 85;
     }
     if (convertedPrice.length > 10) {
-      newPosX = props.cx - 115;
+      newPosX = props.cx - 95;
     }
     if (convertedPrice.length > 12) {
-      newPosX = props.cx - 120;
+      newPosX = props.cx - 105;
     }
 
     posX = newPosX;

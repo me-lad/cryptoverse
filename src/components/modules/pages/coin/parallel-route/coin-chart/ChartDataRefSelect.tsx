@@ -14,7 +14,7 @@ import React, { useState } from 'react';
 
 // 📦 Internal imports
 import { GetCoinChartData } from '~types/api-generated/getCoinChartData';
-import { chartReferences, chartReferencesLabels } from '../local';
+import { chartReferences, chartReferencesLabels } from '../../local';
 
 // 🧾 Local types and variables
 interface PropsT {
