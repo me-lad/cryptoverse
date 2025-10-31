@@ -6,7 +6,7 @@
 import React from 'react';
 
 // 📦 Internal imports
-import type { CycleT } from '../../local';
+import type { ChartRenderSourceT, CycleT } from '../../local';
 import type { GetCoinChartData } from '~types/api-generated/getCoinChartData';
 import { flexBetween } from '~styles/tw-custom';
 import { cycleLabelsHeading, chartReferencesLabels } from '../../local';
@@ -17,11 +17,12 @@ interface PropsT {
   coinName: string;
   chartCycle: CycleT;
   chartRef: keyof GetCoinChartData;
+  renderSource: ChartRenderSourceT;
 }
 
 // ⚙️ Functional component
 const ChartHeading: React.FC<PropsT> = (props) => {
-  const { chartCycle, chartRef, coinName, children } = props;
+  const { chartCycle, chartRef, coinName, renderSource, children } = props;
 
   return (
     <div className={flexBetween}>

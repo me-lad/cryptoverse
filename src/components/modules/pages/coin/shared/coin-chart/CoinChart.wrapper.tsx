@@ -5,14 +5,20 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
 
 // 📦 Internal imports
+import {
+  ChartRenderSourceT,
+  cycleMap,
+  type CycleT,
+  type FormattedChartDataT,
+} from '../../local';
 import type { GetCoinChartData } from '~types/api-generated/getCoinChartData';
 import type { GetCoinData } from '~types/api-generated/getCoinData';
-import { cycleMap, type CycleT, type FormattedChartDataT } from '../../local';
 import { buildCoinChartData } from '~helpers/generators';
 import ChartHeading from './ChartHeading';
 import ChartDataRefSelect from './ChartDataRefSelect';
 import ChartCycleController from './ChartCycleController';
 import ChartFallback from './widgets/ChartFallback';
+import clsx from 'clsx';
 const Chart = lazy(() => import('./Chart'));
 
 // 🧾 Local types
@@ -20,11 +26,12 @@ interface PropsT {
   coinData: GetCoinData;
   chartData: GetCoinChartData;
   chartCycle: CycleT;
+  renderSource: ChartRenderSourceT;
 }
 
 // ⚙️ Functional component
 const CoinChartWrapper: React.FC<PropsT> = (props) => {
-  const { chartData, coinData, chartCycle } = props;
+  const { chartData, coinData, chartCycle, renderSource } = props;
   const [chartRef, setChartRef] = useState<keyof GetCoinChartData>('prices');
   const [formattedChartData, setFormattedChartData] = useState<
     FormattedChartDataT[]
@@ -40,16 +47,18 @@ const CoinChartWrapper: React.FC<PropsT> = (props) => {
   }, [chartRef, chartCycle]);
 
   return (
-    <div className="pt-8">
+    <div className={clsx(renderSource === 'ParallelPage' && 'pt-8')}>
       {/* Heading */}
       <ChartHeading
         chartRef={chartRef}
         chartCycle={chartCycle}
         coinName={coinData.id}
+        renderSource={renderSource}
       >
         <ChartDataRefSelect
           chartRef={chartRef}
           changeRefHandler={setChartRef}
+          renderSource={renderSource}
         />
       </ChartHeading>
 
@@ -72,6 +81,7 @@ const CoinChartWrapper: React.FC<PropsT> = (props) => {
         coinData={coinData}
         chartCycle={chartCycle}
         chartRef={chartRef}
+        renderSource={renderSource}
       />
     </div>
   );

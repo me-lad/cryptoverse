@@ -2,6 +2,11 @@
 'use client';
 
 // 📦 Third-Party imports
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~core/ui/shadcn/tooltip';
 import { use } from 'react';
 import { Column } from '@tanstack/react-table';
 import { ArrowDownUp, Star } from 'lucide-react';
@@ -13,6 +18,7 @@ import type { CoinEntity_Gecko } from '~types/api-generated/shared';
 import { Percentage, Price } from '~core/global/formatters';
 import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
 import { flexCenter } from '~styles/tw-custom';
+import { useCurrency } from '~hooks/useCurrency';
 
 // 🧾 Prerequisites for columns definition
 interface FavoriteTogglerPropsT {
@@ -57,11 +63,16 @@ interface PriceCellPropsT {
   value: number;
 }
 export const PriceCell = ({ value }: PriceCellPropsT) => {
+  const { convertedPrice } = useCurrency(value);
+
   return (
-    <div
-      title={`$ ${value.toString().startsWith('0') ? value : value.toLocaleString()}`}
-    >
-      <Price price={value} />
+    <div>
+      <Tooltip>
+        <TooltipTrigger>
+          <Price imageWidth={22} imageHeight={22} price={value} />
+        </TooltipTrigger>
+        <TooltipContent>{convertedPrice}</TooltipContent>
+      </Tooltip>
     </div>
   );
 };
@@ -70,10 +81,15 @@ interface PercentageCellPropsT {
   value: number;
   title?: string;
 }
-export const PercentageCell = ({ value, title }: PercentageCellPropsT) => {
+export const PercentageCell = ({ value }: PercentageCellPropsT) => {
   return (
-    <div title={typeof title === 'string' ? title : ''}>
-      <Percentage percentage={value} iconSize={17} />
+    <div>
+      <Tooltip>
+        <TooltipTrigger>
+          <Percentage percentage={value} iconSize={17} />
+        </TooltipTrigger>
+        <TooltipContent>{value}</TooltipContent>
+      </Tooltip>
     </div>
   );
 };

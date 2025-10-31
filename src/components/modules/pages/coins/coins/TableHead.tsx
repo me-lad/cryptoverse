@@ -11,6 +11,11 @@ import {
   TableRow,
   TableHead as TableHeadShadcn,
 } from '~core/ui/shadcn/table';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~core/ui/shadcn/tooltip';
 
 // 📦 Internal imports
 import { flexCenter } from '~styles/tw-custom';
@@ -27,35 +32,41 @@ function TableHead<TData>({ table, sorting }: PropsT<TData>) {
     <TableHeader className="sticky top-0 z-40">
       {table.getHeaderGroups().map((headerGroup) => (
         <TableRow className="*:!bg-primary-700" key={headerGroup.id}>
-          <TableCell className="!rounded-l-sm">
+          <TableHeadShadcn className="h-[3.25rem] !rounded-l-sm">
             <span className={`${flexCenter} cursor-pointer text-lg`}>#</span>
-          </TableCell>
+          </TableHeadShadcn>
           {headerGroup.headers.map((header) => {
             return (
               <TableHeadShadcn key={header.id}>
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                      header.column.columnDef.header,
-                      header.getContext(),
-                    )}
+                {header.id.includes('reset-sort') ? (
+                  <div
+                    className="flex cursor-pointer justify-center"
+                    onClick={() => table.resetSorting()}
+                  >
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          variant={'ghost'}
+                          size={'icon'}
+                          className="cursor-pointer"
+                          disabled={!sorting.length}
+                        >
+                          <RefreshCcw size={16} />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>Reset Sort</TooltipContent>
+                    </Tooltip>
+                  </div>
+                ) : header.isPlaceholder ? null : (
+                  flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )
+                )}
               </TableHeadShadcn>
             );
           })}
-          <TableCell
-            className="cursor-pointer !rounded-r-sm"
-            title="Reset Sort"
-            onClick={() => table.resetSorting()}
-          >
-            <Button
-              variant={'ghost'}
-              size={'icon'}
-              className="cursor-pointer"
-              disabled={!sorting.length}
-            >
-              <RefreshCcw size={16} />
-            </Button>
-          </TableCell>
+          <TableHeadShadcn className="w-0 rounded-r-sm"></TableHeadShadcn>
         </TableRow>
       ))}
     </TableHeader>

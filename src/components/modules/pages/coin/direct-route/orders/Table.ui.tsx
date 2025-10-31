@@ -1,15 +1,8 @@
 // 📌 Directives
-'use client';
 
 // 📦 Third-Party imports
-import React, { useState } from 'react';
-import {
-  flexRender,
-  getCoreRowModel,
-  getSortedRowModel,
-  SortingState,
-  useReactTable,
-} from '@tanstack/react-table';
+import React from 'react';
+import { flexRender, Table as TableT } from '@tanstack/react-table';
 import {
   Table,
   TableBody,
@@ -18,36 +11,27 @@ import {
   TableHeader,
   TableRow,
 } from '~core/ui/shadcn/table';
-
-// 📦 Internal imports
-import { columns } from './ColumnsDefinition';
+import clsx from 'clsx';
 
 // 🧾 Local types
 interface PropsT {
-  data: [string, string][];
+  table: TableT<[string, string]>;
+  tableT: 'Asks' | 'Bids';
 }
 
 // ⚙️ Functional component
-const AsksTable: React.FC<PropsT> = ({ data }) => {
-  const [sorting, setSorting] = useState<SortingState>([]);
-
-  const asksTable = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    onSortingChange: setSorting,
-    getSortedRowModel: getSortedRowModel(),
-    state: {
-      sorting,
-    },
-  });
-
+const TableUi: React.FC<PropsT> = ({ table, tableT }) => {
   return (
-    <Table>
+    <Table className="border-separate border-spacing-y-2">
       <TableHeader>
-        {asksTable.getHeaderGroups().map((headerGroup) => (
+        {table.getHeaderGroups().map((headerGroup) => (
           <TableRow
-            className="!bg-status-error-200 !border-none"
+            className={clsx(
+              '!border-none',
+              tableT === 'Asks'
+                ? '!bg-status-error-200'
+                : '!bg-status-success-200',
+            )}
             key={headerGroup.depth}
           >
             {headerGroup.headers.map((header) => (
@@ -68,11 +52,21 @@ const AsksTable: React.FC<PropsT> = ({ data }) => {
       </TableHeader>
 
       <TableBody>
-        {asksTable.getRowModel().rows?.length &&
-          asksTable.getRowModel().rows.map((row) => (
-            <TableRow key={row.id}>
+        {table.getRowModel().rows?.length &&
+          table.getRowModel().rows.map((row) => (
+            <TableRow
+              key={row.id}
+              className={clsx(
+                tableT === 'Asks'
+                  ? 'hover:!bg-status-error-300'
+                  : 'hover:!bg-status-success-300',
+              )}
+            >
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id}>
+                <TableCell
+                  className="first:rounded-l-sm last:rounded-r-sm"
+                  key={cell.id}
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </TableCell>
               ))}
@@ -82,4 +76,4 @@ const AsksTable: React.FC<PropsT> = ({ data }) => {
     </Table>
   );
 };
-export default AsksTable;
+export default TableUi;

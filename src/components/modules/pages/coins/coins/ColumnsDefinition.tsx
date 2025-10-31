@@ -5,7 +5,6 @@
 import { useEffect, useState } from 'react';
 import { ColumnDef, Row } from '@tanstack/react-table';
 import Image from 'next/image';
-import Link from 'next/link';
 
 // 📦 Internal imports
 import type { CoinEntity_Gecko } from '~types/api-generated/shared';
@@ -15,7 +14,7 @@ import {
   PriceCell,
   SortableHeaders,
   FavoriteToggler,
-} from './ColumnsPrerequisites';
+} from '~core/global/TableColumnsPrerequisites';
 
 // 🧾 Table columns
 export const columns: ColumnDef<CoinEntity_Gecko>[] = [
@@ -51,11 +50,7 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
       }, [row.original.image]);
 
       return (
-        <Link
-          href={`/coin/${row.original.id}`}
-          className="flex w-full items-center gap-4"
-          scroll={false}
-        >
+        <div className="flex w-full items-center gap-4">
           <Image
             src={
               !src.startsWith('http') && !src.startsWith('/')
@@ -77,7 +72,7 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
                 row.original.id.slice(1)}
             </p>
           </div>
-        </Link>
+        </div>
       );
     },
   },
@@ -91,7 +86,6 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
     header: ({ column }) => <SortableHeaders column={column} tag="24h" />,
     cell: ({ row }) => (
       <PercentageCell
-        title={String(row.original.price_change_percentage_24h_in_currency)}
         value={row.original.price_change_percentage_24h_in_currency}
       />
     ),
@@ -101,7 +95,6 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
     header: ({ column }) => <SortableHeaders column={column} tag="7d" />,
     cell: ({ row }) => (
       <PercentageCell
-        title={String(row.original.price_change_percentage_7d_in_currency)}
         value={row.original.price_change_percentage_7d_in_currency}
       />
     ),
@@ -111,7 +104,6 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
     header: ({ column }) => <SortableHeaders column={column} tag="30d" />,
     cell: ({ row }) => (
       <PercentageCell
-        title={String(row.original.price_change_percentage_30d_in_currency)}
         value={row.original.price_change_percentage_30d_in_currency}
       />
     ),
@@ -162,5 +154,8 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
         </div>
       );
     },
+  },
+  {
+    accessorKey: 'reset-sort',
   },
 ];

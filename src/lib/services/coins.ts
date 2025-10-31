@@ -339,7 +339,7 @@ export const getCoinsCryptoCompare = async (
 
 export const getCoinOrders = async (coinSymbol: string) => {
   try {
-    const fetchUrl = `https://api.binance.com/api/v3/depth?symbol=${coinSymbol.toUpperCase()}USDT&limit=14`;
+    const fetchUrl = `https://api.binance.com/api/v3/depth?symbol=${coinSymbol.toUpperCase()}USDT&limit=12`;
     return await useServerFetch<GetCoinOrders>(fetchUrl, {
       next: {
         revalidate: minutesToMillisecond(1),

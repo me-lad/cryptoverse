@@ -2,20 +2,29 @@
 'use client';
 
 // 📦 Third-Party imports
-import React, { use } from 'react';
 import clsx from 'clsx';
+import Link from 'next/link';
+import React, { use } from 'react';
 import { flexRender, Table } from '@tanstack/react-table';
+import { Button } from '~core/ui/shadcn/button';
+import { Ellipsis, Link2 } from 'lucide-react';
 import {
   TableBody as TableBodyShadcn,
   TableCell,
   TableRow,
 } from '~core/ui/shadcn/table';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~core/ui/shadcn/tooltip';
 
 // 📦 Internal imports
+import type { CoinEntity_Gecko } from '~types/api-generated/shared';
 import { CoinsContext } from '../CoinsPage.context';
 import { flexCenter } from '~styles/tw-custom';
-import SkeltonTableRow from './SkeltonTableRow';
 import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
+import SkeltonTableRow from './SkeltonTableRow';
 
 // 🧾 Local types
 interface PropsT<TData> {
@@ -43,10 +52,53 @@ function TableBody<TData>({ table }: PropsT<TData>) {
             </TableCell>
             {row.getVisibleCells().map((cell) => (
               <TableCell key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                {cell.id.includes('reset-sort') ? (
+                  <div className="flex justify-center">
+                    {/* Parallel page link */}
+                    <Tooltip>
+                      <Link
+                        href={`/coin/${(cell.row.original as CoinEntity_Gecko).id}`}
+                        scroll={false}
+                      >
+                        <TooltipTrigger asChild>
+                          <Button
+                            className="hover:!bg-background cursor-pointer"
+                            variant={'ghost'}
+                            size={'icon'}
+                          >
+                            <Ellipsis />
+                          </Button>
+                        </TooltipTrigger>
+                      </Link>
+                      <TooltipContent>Modal</TooltipContent>
+                    </Tooltip>
+
+                    {/* Direct page link */}
+                    <Tooltip>
+                      <a
+                        href={`/coin/${(cell.row.original as CoinEntity_Gecko).id}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <TooltipTrigger asChild>
+                          <Button
+                            className="hover:!bg-background cursor-pointer"
+                            variant={'ghost'}
+                            size={'icon'}
+                          >
+                            <Link2 />
+                          </Button>
+                        </TooltipTrigger>
+                      </a>
+                      <TooltipContent>Page</TooltipContent>
+                    </Tooltip>
+                  </div>
+                ) : (
+                  flexRender(cell.column.columnDef.cell, cell.getContext())
+                )}
               </TableCell>
             ))}
-            <TableCell className="rounded-r-sm"></TableCell>
+            <TableCell className="w-0 rounded-r-sm"></TableCell>
           </TableRow>
         ))}
       </TableBodyShadcn>

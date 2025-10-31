@@ -89,3 +89,5 @@ export const cycleMap: { [key in CycleT]: 1 | 7 | 30 | 365 } = {
   '30d': 30,
   '1y': 365,
 } as const;
+
+export type ChartRenderSourceT = 'ParallelPage' | 'DirectPage';

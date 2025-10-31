@@ -14,8 +14,8 @@ import clsx from 'clsx';
 
 // 📦 Internal imports
 import { GetCoinOrders } from '~types/api-generated/getCoinOrders';
-import AsksTable from './AsksTable';
-import BidsTable from './BidsTable';
+import AsksTable from './TableAsks.fn';
+import BidsTable from './TableBids.fn';
 
 // 🧾 Local types
 type ShowSectionT = 'Bids' | 'Asks' | 'Both';
@@ -23,14 +23,14 @@ type ShowSectionT = 'Bids' | 'Asks' | 'Both';
 // ⚙️ Functional component
 const TablesWrapper: React.FC<GetCoinOrders> = (props) => {
   const { asks, bids } = props;
-  const [slicePoint, setSlicePoint] = useState(7);
+  const [slicePoint, setSlicePoint] = useState(6);
   const [whichToShow, setWhichToShow] = useState<ShowSectionT>('Both');
 
   useEffect(() => {
     if (whichToShow !== 'Both') {
-      setSlicePoint(14);
+      setSlicePoint(12);
     } else {
-      setSlicePoint(7);
+      setSlicePoint(6);
     }
   }, [whichToShow]);
 
@@ -44,6 +44,7 @@ const TablesWrapper: React.FC<GetCoinOrders> = (props) => {
               className="hover:!bg-background cursor-pointer"
               size={'icon'}
               variant={'ghost'}
+              disabled={whichToShow === 'Both'}
             >
               <Image
                 src={'/svgs/coin-page/orders/both.svg'}
@@ -62,6 +63,7 @@ const TablesWrapper: React.FC<GetCoinOrders> = (props) => {
               className="hover:!bg-background cursor-pointer"
               size={'icon'}
               variant={'ghost'}
+              disabled={whichToShow === 'Bids'}
             >
               <Image
                 src={'/svgs/coin-page/orders/bids.svg'}
@@ -80,6 +82,7 @@ const TablesWrapper: React.FC<GetCoinOrders> = (props) => {
               className="hover:!bg-background cursor-pointer"
               size={'icon'}
               variant={'ghost'}
+              disabled={whichToShow === 'Asks'}
             >
               <Image
                 src={'/svgs/coin-page/orders/asks.svg'}

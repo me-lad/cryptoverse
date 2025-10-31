@@ -34,10 +34,10 @@ const CustomDot = ({ index, payload, ...props }: any) => {
       newPosX = props.cx - 85;
     }
     if (convertedPrice.length > 10) {
-      newPosX = props.cx - 95;
+      newPosX = props.cx - 100;
     }
     if (convertedPrice.length > 12) {
-      newPosX = props.cx - 105;
+      newPosX = props.cx - 108;
     }
 
     posX = newPosX;

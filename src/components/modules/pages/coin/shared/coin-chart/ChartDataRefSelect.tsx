@@ -14,23 +14,36 @@ import React, { useState } from 'react';
 
 // 📦 Internal imports
 import { GetCoinChartData } from '~types/api-generated/getCoinChartData';
-import { chartReferences, chartReferencesLabels } from '../../local';
+import {
+  chartReferences,
+  chartReferencesLabels,
+  ChartRenderSourceT,
+} from '../../local';
 
 // 🧾 Local types and variables
 interface PropsT {
   chartRef: keyof GetCoinChartData;
+  renderSource: ChartRenderSourceT;
   changeRefHandler: (newRef: keyof GetCoinChartData) => void;
 }
 
 // ⚙️ Functional component
 const ChartDataRefSelect: React.FC<PropsT> = (props) => {
-  const { chartRef, changeRefHandler } = props;
+  const { chartRef, changeRefHandler, renderSource } = props;
   const [customKey, setCustomKey] = useState(0);
 
   return (
     <DropDownAggregator key={customKey} hideScroll={false}>
       <DropDownTrigger activeClassName="*:*:last:rotate-180">
-        <Button className="!bg-background-lighter w-44" variant={'outline'}>
+        <Button
+          className={clsx(
+            'w-44',
+            renderSource === 'ParallelPage'
+              ? '!bg-background-lighter'
+              : '!bg-background',
+          )}
+          variant={'outline'}
+        >
           {chartReferencesLabels[chartRef].upperCased}
           <ChevronDown
             className="mt-0.5 transition-all duration-300"
@@ -38,14 +51,23 @@ const ChartDataRefSelect: React.FC<PropsT> = (props) => {
           />
         </Button>
       </DropDownTrigger>
-      <DropDownMenu className="mt-2 flex w-full flex-col gap-2 p-2.5">
+      <DropDownMenu
+        className={clsx(
+          'mt-2 flex w-full flex-col gap-2 p-2.5',
+          renderSource === 'DirectPage' && '!bg-background',
+        )}
+      >
         {chartReferences.map((ref) => (
           <Button
             key={ref}
             variant={'ghost'}
             className={clsx(
               '!justify-start font-medium',
-              chartRef === ref ? '!bg-background' : 'cursor-pointer',
+              chartRef === ref && renderSource === 'ParallelPage'
+                ? '!bg-background'
+                : chartRef === ref && renderSource === 'DirectPage'
+                  ? '!bg-background-lighter'
+                  : 'cursor-pointer',
             )}
             onClick={() => {
               changeRefHandler(ref);

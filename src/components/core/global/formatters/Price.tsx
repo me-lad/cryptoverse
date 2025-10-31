@@ -42,7 +42,7 @@ export const Price: React.FC<PropsT> = (props) => {
       ) : (
         <>
           <Image
-            className={clsx('mt-0.5', darkTheme && 'invert-100')}
+            className={clsx(darkTheme && 'invert-100')}
             src={`/svgs/logo/currencies/${currency?.toLocaleLowerCase()}.svg`}
             width={imageWidth || 25}
             height={imageHeight || 25}

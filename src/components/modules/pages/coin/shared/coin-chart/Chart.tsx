@@ -22,7 +22,6 @@ import {
 // 📦 Internal imports
 import type { GetCoinChartData } from '~types/api-generated/getCoinChartData';
 import { chartConfig, type FormattedChartDataT } from '../../local';
-import { formatPrice } from '~helpers/formatters';
 import { useChartExtremes } from './widgets/useChartExtremes';
 import { useChartContainerSize } from './widgets/useContainerSize';
 import { useCurrency } from '~hooks/useCurrency';

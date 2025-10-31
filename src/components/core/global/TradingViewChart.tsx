@@ -4,8 +4,6 @@
 // 📦 Third-Party imports
 import React, { useEffect, useRef } from 'react';
 
-// 📦 Internal imports
-
 // 🧾 Local types
 interface PropsT {
   symbol: string;
@@ -31,7 +29,7 @@ const TradingViewChart: React.FC<PropsT> = (props) => {
         // @ts-expect-error
         new window.TradingView.widget({
           autosize: true,
-          symbol: `BINANCE:${symbol}`,
+          symbol: `${symbol.toUpperCase()}USDT`,
           interval: '1',
           timezone: 'Etc/UTC',
           theme,

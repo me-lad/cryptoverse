@@ -10,7 +10,7 @@ import AnimatedModal from './AnimatedModal';
 import NameLogo from './coin-data/NameLogo';
 import MarketInfo from './coin-data/MarketInfo';
 import Price from './coin-data/Price';
-import CoinChartWrapper from './coin-chart/CoinChart.wrapper';
+import CoinChartWrapper from '../shared/coin-chart/CoinChart.wrapper';
 
 // 🧾 Local types
 interface PropsT {
@@ -44,6 +44,7 @@ const ParallelCoinPageWrapper: React.FC<PropsT> = async (props) => {
               coinData={coinData}
               chartData={chartData}
               chartCycle={chartCycle}
+              renderSource="ParallelPage"
             />
           </>
         )}
