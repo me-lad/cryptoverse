@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 // 📦 Internal imports
 import { highlightsList } from './local';
-import { flexCenter, flexBetween } from '~styles/tw-custom';
+import { flexBetween } from '~styles/tw-custom';
 
 // ⚙️ Functional component
 const Highlights = () => {

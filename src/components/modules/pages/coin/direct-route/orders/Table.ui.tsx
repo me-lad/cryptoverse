@@ -36,7 +36,7 @@ const TableUi: React.FC<PropsT> = ({ table, tableT }) => {
           >
             {headerGroup.headers.map((header) => (
               <TableHead
-                className="first:rounded-l-sm last:rounded-r-sm"
+                className="first:!rounded-l-sm last:!rounded-r-sm"
                 key={header.id}
               >
                 {header.isPlaceholder

@@ -19,6 +19,7 @@ interface PropsT extends React.ComponentProps<'span'> {
   imageWidth?: number;
   imageHeight?: number;
   fullPrecision?: boolean;
+  hideImage?: boolean;
 }
 
 // ⚙️ Functional component
@@ -30,6 +31,7 @@ export const Price: React.FC<PropsT> = (props) => {
     imageWidth,
     imageHeight,
     fullPrecision = false,
+    hideImage,
     className,
     ...rest
   } = props;
@@ -42,7 +44,7 @@ export const Price: React.FC<PropsT> = (props) => {
       ) : (
         <>
           <Image
-            className={clsx(darkTheme && 'invert-100')}
+            className={clsx(darkTheme && 'invert-100', hideImage && 'hidden')}
             src={`/svgs/logo/currencies/${currency?.toLocaleLowerCase()}.svg`}
             width={imageWidth || 25}
             height={imageHeight || 25}

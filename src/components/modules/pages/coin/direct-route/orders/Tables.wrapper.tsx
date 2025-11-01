@@ -28,7 +28,7 @@ const TablesWrapper: React.FC<GetCoinOrders> = (props) => {
 
   useEffect(() => {
     if (whichToShow !== 'Both') {
-      setSlicePoint(12);
+      setSlicePoint(14);
     } else {
       setSlicePoint(6);
     }

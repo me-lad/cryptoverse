@@ -16,36 +16,91 @@ import {
   Star,
 } from 'lucide-react';
 import { Button } from '~core/ui/shadcn/button';
-import React, { use } from 'react';
+import React, { use, useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
 import Image from 'next/image';
+import Link from 'next/link';
 
 // 📦 Internal imports
 import type { GetCoinData } from '~types/api-generated/getCoinData';
 import { flexBetween, flexCenter } from '~styles/tw-custom';
 import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
 import { Percentage, Price } from '~core/global/formatters';
-import Link from 'next/link';
 
-// ⚙️ Functional component
-const CoinData: React.FC<GetCoinData> = (props) => {
-  const { id, symbol, market_data, image } = props;
-  const { favoriteIDs, changeHandler } = use(FavoriteCoinsContext);
+const CoinData: React.FC<GetCoinData> = ({
+  id,
+  symbol,
+  market_data,
+  image,
+}) => {
+  const { favoriteIDs, changeHandler } = React.use(FavoriteCoinsContext);
+  const [activeChangeIndex, setActiveChangeIndex] = useState(0);
 
-  const isFavoriteCoin = !!favoriteIDs ? favoriteIDs.includes(id) : false;
+  const isFavoriteCoin = favoriteIDs?.includes(id) ?? false;
+
+  const priceChanges = useMemo(
+    () => [
+      { label: '24h', value: market_data.price_change_percentage_24h },
+      { label: '7d', value: market_data.price_change_percentage_7d },
+      { label: '14d', value: market_data.price_change_percentage_14d },
+      { label: '30d', value: market_data.price_change_percentage_30d },
+      { label: '60d', value: market_data.price_change_percentage_60d },
+      { label: '200d', value: market_data.price_change_percentage_200d },
+      { label: '1y', value: market_data.price_change_percentage_1y },
+    ],
+    [market_data],
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveChangeIndex((prev) => (prev + 1) % priceChanges.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [priceChanges.length]);
+
+  const MetricBlock = ({
+    label,
+    icon,
+    value,
+  }: {
+    label: string;
+    icon?: React.ReactNode;
+    value: number;
+  }) => (
+    <div className={`${flexCenter} flex-col gap-3.5`}>
+      <p className="flex items-center gap-2">
+        {icon}
+        {label}
+      </p>
+      <Tooltip>
+        <TooltipTrigger>
+          <Price
+            className="mr-2"
+            imageHeight={26}
+            imageWidth={26}
+            price={value}
+            shortenUnits
+          />
+        </TooltipTrigger>
+        <TooltipContent side="bottom">
+          <Price price={value} darkTheme imageHeight={20} imageWidth={20} />
+        </TooltipContent>
+      </Tooltip>
+    </div>
+  );
 
   return (
     <div className={`${flexBetween} border-b border-neutral-700 pb-8`}>
       <div className="flex items-center">
-        {/* Name & Logo & Favorite handler */}
+        {/* 🔖 Coin Identity */}
         <div className="flex items-center gap-2 border-r border-neutral-500 pr-10">
           <Button
             className={clsx(
               'cursor-pointer transition-all',
               !favoriteIDs && 'invisible opacity-0',
             )}
-            variant={'ghost'}
-            size={'icon'}
+            variant="ghost"
+            size="icon"
             onClick={() => changeHandler(id)}
           >
             <Star
@@ -53,18 +108,16 @@ const CoinData: React.FC<GetCoinData> = (props) => {
               fill={isFavoriteCoin ? '#DBA400' : 'transparent'}
             />
           </Button>
-          <div>
-            <Image
-              src={image.large}
-              width={42}
-              height={42}
-              alt={id}
-              className="rounded-sm"
-            />
-          </div>
+          <Image
+            src={image.large}
+            width={42}
+            height={42}
+            alt={id}
+            className="rounded-sm"
+          />
           <div className="ml-2">
             <h1 className="text-xl font-semibold">
-              {id.slice(0, 1).toUpperCase() + id.slice(1)}
+              {id.charAt(0).toUpperCase() + id.slice(1)}
               <small className="block text-neutral-400">
                 {symbol.toUpperCase()}
               </small>
@@ -72,154 +125,69 @@ const CoinData: React.FC<GetCoinData> = (props) => {
           </div>
         </div>
 
-        {/* Market data */}
+        {/* 📊 Market Metrics */}
         <div className="ml-10 flex items-center gap-8 *:min-w-28">
-          <div className={`${flexCenter} flex-col gap-3.5`}>
-            <p>Current Price</p>
-            <Tooltip>
-              <TooltipTrigger>
-                <Price
-                  className="mr-2"
-                  imageHeight={26}
-                  imageWidth={26}
-                  price={market_data.current_price.usd}
-                  shortenUnits
-                />
-              </TooltipTrigger>
-              <TooltipContent side="bottom">
-                <Price
-                  price={market_data.current_price.usd}
-                  darkTheme
-                  imageHeight={20}
-                  imageWidth={20}
-                />
-              </TooltipContent>
-            </Tooltip>
-          </div>
-          <div className={`${flexCenter} flex-col gap-3.5`}>
-            <p className="flex items-center gap-2">
-              <Clock size={15} />
-              24h Change
-            </p>
-            <div className="mr-2 pt-1">
-              <Percentage
-                percentage={market_data.price_change_percentage_24h}
-              />
+          <MetricBlock
+            label="Current Price"
+            value={market_data.current_price.usd}
+          />
+          <div className="relative h-20 w-32 overflow-hidden">
+            <div
+              key={activeChangeIndex} // 👈 forces re-render for animation
+              className={clsx(
+                flexCenter,
+                'animate-fade-in-up absolute top-0 h-full w-full flex-col gap-3.5 opacity-0 transition-all duration-500 ease-in-out',
+              )}
+            >
+              <p
+                className={clsx(
+                  'flex items-center gap-2',
+                  priceChanges[activeChangeIndex].value > 0
+                    ? 'text-status-success-200'
+                    : 'text-status-error-200',
+                )}
+              >
+                <Clock size={15} />
+                {priceChanges[activeChangeIndex].label}
+              </p>
+              <Percentage percentage={priceChanges[activeChangeIndex].value} />
             </div>
           </div>
-          <div className={`${flexCenter} flex-col gap-3.5`}>
-            <p className="flex items-center gap-2">
-              <MoveUp size={15} />
-              24 High
-            </p>
-            <Tooltip>
-              <TooltipTrigger>
-                <Price
-                  className="mr-2"
-                  imageHeight={26}
-                  imageWidth={26}
-                  price={market_data.high_24h.usd}
-                  shortenUnits
-                />
-              </TooltipTrigger>
-              <TooltipContent side="bottom">
-                <Price
-                  price={market_data.high_24h.usd}
-                  darkTheme
-                  imageHeight={20}
-                  imageWidth={20}
-                />
-              </TooltipContent>
-            </Tooltip>
-          </div>
-          <div className={`${flexCenter} flex-col gap-3.5`}>
-            <p className="flex items-center gap-2">
-              <MoveDown size={15} />
-              24 Low
-            </p>
-            <Tooltip>
-              <TooltipTrigger>
-                <Price
-                  className="mr-2"
-                  imageHeight={26}
-                  imageWidth={26}
-                  price={market_data.low_24h.usd}
-                  shortenUnits
-                />
-              </TooltipTrigger>
-              <TooltipContent side="bottom">
-                <Price
-                  price={market_data.low_24h.usd}
-                  darkTheme
-                  imageHeight={20}
-                  imageWidth={20}
-                />
-              </TooltipContent>
-            </Tooltip>
-          </div>
-          <div className={`${flexCenter} flex-col gap-3.5`}>
-            <p>Total Volume</p>
-            <Tooltip>
-              <TooltipTrigger>
-                <Price
-                  className="mr-2"
-                  imageHeight={26}
-                  imageWidth={26}
-                  price={market_data.total_volume.usd}
-                  shortenUnits
-                />
-              </TooltipTrigger>
-              <TooltipContent side="bottom">
-                <Price
-                  price={market_data.total_volume.usd}
-                  darkTheme
-                  imageHeight={20}
-                  imageWidth={20}
-                />
-              </TooltipContent>
-            </Tooltip>
-          </div>
-          <div className={`${flexCenter} flex-col gap-3.5`}>
-            <p>Market Cap</p>
-            <Tooltip>
-              <TooltipTrigger>
-                <Price
-                  className="mr-2"
-                  imageHeight={26}
-                  imageWidth={26}
-                  price={market_data.market_cap.usd}
-                  shortenUnits
-                />
-              </TooltipTrigger>
-              <TooltipContent side="bottom">
-                <Price
-                  price={market_data.market_cap.usd}
-                  darkTheme
-                  imageHeight={20}
-                  imageWidth={20}
-                />
-              </TooltipContent>
-            </Tooltip>
-          </div>
+
+          <MetricBlock
+            label="24 High"
+            icon={<MoveUp size={15} />}
+            value={market_data.high_24h.usd}
+          />
+          <MetricBlock
+            label="24 Low"
+            icon={<MoveDown size={15} />}
+            value={market_data.low_24h.usd}
+          />
+          <MetricBlock
+            label="Total Volume"
+            value={market_data.total_volume.usd}
+          />
+          <MetricBlock label="Market Cap" value={market_data.market_cap.usd} />
         </div>
       </div>
 
-      <div>
+      {/* 📰 Actions */}
+      <div className="flex gap-4">
         <Link
           href={`/news?searchString=${id}`}
           className="flex items-center gap-2.5"
         >
-          <Button className="cursor-pointer" variant={'ghost'} size={'lg'}>
+          <Button className="cursor-pointer" variant="ghost" size="lg">
             <Newspaper />
             <p>News</p>
           </Button>
         </Link>
-
         <Link
           href={`/create-alert/${id}`}
-          className="cup flex items-center gap-2.5"
+          className="flex items-center gap-2.5"
         >
-          <Button className="cursor-pointer" variant={'ghost'} size={'lg'}>
+          <Button className="cursor-pointer" variant="ghost" size="lg">
             <BellPlus />
             <p>Alert</p>
           </Button>
@@ -228,4 +196,5 @@ const CoinData: React.FC<GetCoinData> = (props) => {
     </div>
   );
 };
+
 export default CoinData;

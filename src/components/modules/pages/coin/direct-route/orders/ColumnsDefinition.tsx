@@ -50,14 +50,20 @@ export const columns: ColumnDef<[string, string]>[] = [
   {
     accessorKey: '1',
     header: ({ column }) => <SortableHeaders column={column} tag="Quantity" />,
-    cell: ({ row }) => <PriceCell value={+row.original[1]} />,
+    cell: ({ row }) => (
+      <div>
+        <PriceCell value={+row.original[1]} />
+      </div>
+    ),
   },
   {
     id: 'total',
     accessorFn: (row) => +row[0] * +row[1],
     header: ({ column }) => <SortableHeaders column={column} tag="Total" />,
     cell: ({ row }) => (
-      <PriceCell value={+row.original[0] * +row.original[1]} />
+      <div>
+        <PriceCell value={+row.original[0] * +row.original[1]} />
+      </div>
     ),
   },
 ];

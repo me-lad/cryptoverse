@@ -1,5 +1,6 @@
 import type { NewsContextParamsT } from '~types/news';
 import type { GetCoinChartData } from '~types/api-generated/getCoinChartData';
+import type { GetCoinOrders } from '../types/api-generated/getCoinOrders';
 
 export const buildRandomID = () => {
   return Math.floor(Date.now() * (Math.random() * 100));
@@ -84,4 +85,34 @@ export const buildCoinChartData = (
     };
   });
   return convertedData;
+};
+
+// Fallback fake coin orders generator
+export const buildFakeOrderBookFromPrice = (
+  currentPrice: number,
+): GetCoinOrders => {
+  const generateOrders = (
+    basePrice: number,
+    direction: 'bid' | 'ask',
+  ): [string, string][] => {
+    const orders: [string, string][] = [];
+
+    for (let i = 0; i < 14; i++) {
+      // Use percentage-based offset to avoid negative prices
+      const percentOffset = Math.random() * 0.005 + i * 0.002; // 0.2% to 2.5%
+      const multiplier =
+        direction === 'bid' ? 1 - percentOffset : 1 + percentOffset;
+      const price = Math.max(basePrice * multiplier, 0.01).toFixed(2);
+      const quantity = (Math.random() * 2 + 0.1).toFixed(4);
+      orders.push([price, quantity]);
+    }
+
+    return orders;
+  };
+
+  return {
+    lastUpdateId: 0,
+    bids: generateOrders(currentPrice, 'bid'),
+    asks: generateOrders(currentPrice, 'ask'),
+  };
 };
