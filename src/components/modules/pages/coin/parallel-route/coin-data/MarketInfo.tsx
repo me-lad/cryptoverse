@@ -57,7 +57,6 @@ const MarketInfo: React.FC<GetCoinData> = ({
           <TooltipTrigger>
             <Price
               className="mr-2.5"
-              title={`$ ${market_data.market_cap.usd.toLocaleString()}`}
               price={market_data.total_volume.usd}
               shortenUnits
             />

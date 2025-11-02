@@ -12,6 +12,11 @@ import {
   TableHeader,
   TableRow,
 } from '~core/ui/shadcn/table';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~core/ui/shadcn/tooltip';
 
 // 📦 Internal imports
 import type { CoinEntity_Compare } from '~types/api-generated/shared';
@@ -64,17 +69,43 @@ const TableComp: React.FC<PropsT> = ({ list, source }) => {
                   />
                   <span title={item.NAME}>{item.SYMBOL}</span>
                 </TableCell>
-                <TableCell title={String(item.PRICE_USD) || ''}>
-                  <Price price={item.PRICE_USD || 0} />
+                <TableCell>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Price className="w-fit" price={item.PRICE_USD || 0} />
+                    </TooltipTrigger>
+
+                    {!!item.PRICE_USD && (
+                      <TooltipContent>
+                        <Price
+                          price={item.PRICE_USD}
+                          darkTheme
+                          imageHeight={19}
+                          imageWidth={19}
+                          fullPrecision
+                        />
+                      </TooltipContent>
+                    )}
+                  </Tooltip>
                 </TableCell>
                 <TableCell>
-                  <Percentage
-                    percentage={
-                      item.SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD || 0
-                    }
-                    iconSize={15}
-                    fontSize="0.9rem"
-                  />
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <Percentage
+                        percentage={
+                          item.SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD || 0
+                        }
+                        iconSize={15}
+                        fontSize="0.9rem"
+                      />
+                    </TooltipTrigger>
+
+                    {!!item.SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD && (
+                      <TooltipContent>
+                        {item.SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD}
+                      </TooltipContent>
+                    )}
+                  </Tooltip>
                 </TableCell>
               </TableRow>
             ))}
@@ -96,17 +127,39 @@ const TableComp: React.FC<PropsT> = ({ list, source }) => {
                     height={22}
                     alt={item.symbol}
                   />
-                  <span title={item.name}>{item.symbol}</span>
-                </TableCell>
-                <TableCell title={String(item.data.price) || ''}>
-                  <Price price={item.data.price || 0} />
+                  <span title={item.id}>{item.symbol}</span>
                 </TableCell>
                 <TableCell>
-                  <Percentage
-                    percentage={item.data.price_change_percentage_24h.usd}
-                    iconSize={15}
-                    fontSize="0.9rem"
-                  />
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Price price={item.data.price || 0} />
+                    </TooltipTrigger>
+
+                    <TooltipContent>
+                      <Price
+                        price={item.data.price || 0}
+                        fullPrecision
+                        darkTheme
+                        imageHeight={19}
+                        imageWidth={19}
+                      />
+                    </TooltipContent>
+                  </Tooltip>
+                </TableCell>
+                <TableCell>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Percentage
+                        percentage={item.data.price_change_percentage_24h.usd}
+                        iconSize={15}
+                        fontSize="0.9rem"
+                      />
+                    </TooltipTrigger>
+
+                    <TooltipContent>
+                      {item.data.price_change_percentage_24h.usd}
+                    </TooltipContent>
+                  </Tooltip>
                 </TableCell>
               </TableRow>
             ))}

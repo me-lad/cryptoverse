@@ -104,15 +104,7 @@ export default function GlobalSearch() {
                     className={`flex w-1/4 flex-col items-start justify-center`}
                   >
                     <div className={`${flexCenter} w-full flex-col`}>
-                      <Price
-                        title={
-                          coin.current_price
-                            ? coin.current_price.toLocaleString()
-                            : ''
-                        }
-                        className="w-full"
-                        price={coin.current_price}
-                      />
+                      <Price className="w-full" price={coin.current_price} />
                       <Percentage
                         fontSize="0.7rem"
                         percentage={

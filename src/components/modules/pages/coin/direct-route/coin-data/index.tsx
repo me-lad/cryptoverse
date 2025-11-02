@@ -3,11 +3,6 @@
 
 // 📦 Third-Party imports
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~core/ui/shadcn/tooltip';
-import {
   BellPlus,
   Clock,
   MoveDown,
@@ -25,7 +20,8 @@ import Link from 'next/link';
 import type { GetCoinData } from '~types/api-generated/getCoinData';
 import { flexBetween, flexCenter } from '~styles/tw-custom';
 import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
-import { Percentage, Price } from '~core/global/formatters';
+import { Percentage } from '~core/global/formatters';
+import MetricBlock from './MetricBlock';
 
 const CoinData: React.FC<GetCoinData> = ({
   id,
@@ -33,7 +29,7 @@ const CoinData: React.FC<GetCoinData> = ({
   market_data,
   image,
 }) => {
-  const { favoriteIDs, changeHandler } = React.use(FavoriteCoinsContext);
+  const { favoriteIDs, changeHandler } = use(FavoriteCoinsContext);
   const [activeChangeIndex, setActiveChangeIndex] = useState(0);
 
   const isFavoriteCoin = favoriteIDs?.includes(id) ?? false;
@@ -57,37 +53,6 @@ const CoinData: React.FC<GetCoinData> = ({
     }, 5000);
     return () => clearInterval(interval);
   }, [priceChanges.length]);
-
-  const MetricBlock = ({
-    label,
-    icon,
-    value,
-  }: {
-    label: string;
-    icon?: React.ReactNode;
-    value: number;
-  }) => (
-    <div className={`${flexCenter} flex-col gap-3.5`}>
-      <p className="flex items-center gap-2">
-        {icon}
-        {label}
-      </p>
-      <Tooltip>
-        <TooltipTrigger>
-          <Price
-            className="mr-2"
-            imageHeight={26}
-            imageWidth={26}
-            price={value}
-            shortenUnits
-          />
-        </TooltipTrigger>
-        <TooltipContent side="bottom">
-          <Price price={value} darkTheme imageHeight={20} imageWidth={20} />
-        </TooltipContent>
-      </Tooltip>
-    </div>
-  );
 
   return (
     <div className={`${flexBetween} border-b border-neutral-700 pb-8`}>
@@ -131,6 +96,7 @@ const CoinData: React.FC<GetCoinData> = ({
             label="Current Price"
             value={market_data.current_price.usd}
           />
+
           <div className="relative h-20 w-32 overflow-hidden">
             <div
               key={activeChangeIndex} // 👈 forces re-render for animation
@@ -159,39 +125,32 @@ const CoinData: React.FC<GetCoinData> = ({
             icon={<MoveUp size={15} />}
             value={market_data.high_24h.usd}
           />
+
           <MetricBlock
-            label="24 Low"
             icon={<MoveDown size={15} />}
             value={market_data.low_24h.usd}
+            label="24 Low"
           />
+
           <MetricBlock
             label="Total Volume"
             value={market_data.total_volume.usd}
           />
+
           <MetricBlock label="Market Cap" value={market_data.market_cap.usd} />
         </div>
       </div>
 
       {/* 📰 Actions */}
       <div className="flex gap-4">
-        <Link
-          href={`/news?searchString=${id}`}
-          className="flex items-center gap-2.5"
-        >
-          <Button className="cursor-pointer" variant="ghost" size="lg">
-            <Newspaper />
-            <p>News</p>
-          </Button>
-        </Link>
-        <Link
-          href={`/create-alert/${id}`}
-          className="flex items-center gap-2.5"
-        >
-          <Button className="cursor-pointer" variant="ghost" size="lg">
-            <BellPlus />
-            <p>Alert</p>
-          </Button>
-        </Link>
+        {[`/news?searchString=${id}`, `/create-alert/${id}`].map((e) => (
+          <Link key={e} href={e} className="flex items-center gap-2.5">
+            <Button className="cursor-pointer" variant="ghost" size="lg">
+              {e.includes('news') ? <Newspaper /> : <BellPlus />}
+              <p>{e.includes('news') ? 'News' : 'Alert'}</p>
+            </Button>
+          </Link>
+        ))}
       </div>
     </div>
   );

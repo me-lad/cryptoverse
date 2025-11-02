@@ -83,13 +83,17 @@ export const SentimentUi: React.FC<PropsT> = ({ value, classification }) => {
 
       <div className={`${flexBetween} mx-auto mt-2 w-[85%]`}>
         <div className={`${flexCenter} gap-2 text-sm font-semibold`}>
-          <span className="text-status-success-200">{value.toFixed(2)}</span>
+          <span className="text-status-success-200">
+            {value.toString().length > 2 ? value.toFixed(2) : value}
+          </span>
           <span>Long</span>
         </div>
         <div className={`${flexCenter} gap-2 text-sm font-semibold`}>
           <span>Short</span>
           <span className="text-status-error-200">
-            {(100 - value).toFixed(2)}
+            {value.toString().length > 2
+              ? (100 - value).toFixed(2)
+              : 100 - value}
           </span>
         </div>
       </div>

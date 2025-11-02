@@ -1,6 +1,11 @@
 // 📦 Third-Party imports
 import Image from 'next/image';
 import clsx from 'clsx';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~core/ui/shadcn/tooltip';
 
 // 📦 Internal imports
 import { flexBetween, flexCenter } from '~styles/tw-custom';
@@ -54,12 +59,22 @@ const GlobalData = async () => {
               ( 24h )
             </small>
           </div>
-          <p
-            title={`$ ${total_market_cap.usd.toLocaleString('en')}`}
-            className="mt-1"
-          >
-            <Price price={total_market_cap.usd} />
-          </p>
+          <Tooltip>
+            <TooltipTrigger>
+              <div className="mt-1">
+                <Price price={total_market_cap.usd} />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <Price
+                price={total_market_cap.usd}
+                fullPrecision
+                darkTheme
+                imageHeight={20}
+                imageWidth={20}
+              />
+            </TooltipContent>
+          </Tooltip>
         </div>
         <div>
           <Image
@@ -75,12 +90,22 @@ const GlobalData = async () => {
       <div className={`${flexBetween} h-1/2 border-b`}>
         <div>
           <p>Total Volume</p>
-          <p
-            title={`$ ${total_volume.usd.toLocaleString('en')}`}
-            className="mt-1"
-          >
-            <Price price={total_volume.usd} />
-          </p>
+          <Tooltip>
+            <TooltipTrigger>
+              <div className="mt-1">
+                <Price price={total_volume.usd} />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <Price
+                price={total_volume.usd}
+                fullPrecision
+                darkTheme
+                imageHeight={20}
+                imageWidth={20}
+              />
+            </TooltipContent>
+          </Tooltip>
         </div>
         <div>
           <Image

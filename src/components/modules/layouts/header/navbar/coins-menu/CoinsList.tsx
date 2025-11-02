@@ -83,7 +83,7 @@ const CoinsList = () => {
                       alt={item.symbol}
                     />
 
-                    <h4 className="text-base" title={item.name}>
+                    <h4 className="text-base">
                       {item.symbol.toUpperCase()}
                       <small className="mt-0.5 block text-xs text-neutral-400">
                         {item.id.slice(0, 1).toUpperCase() + item.id.slice(1)}
@@ -118,7 +118,7 @@ const CoinsList = () => {
                       alt={item.SYMBOL}
                     />
 
-                    <h4 className="text-base" title={item.NAME}>
+                    <h4 className="text-base">
                       {item.SYMBOL.toUpperCase()}
                       <small className="mt-0.5 block text-xs text-neutral-400">
                         {item.URI.slice(0, 1).toUpperCase() + item.URI.slice(1)}

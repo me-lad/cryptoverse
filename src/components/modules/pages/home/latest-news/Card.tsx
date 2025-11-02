@@ -4,6 +4,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import clsx from 'clsx';
 import { CalendarDays, LucideLink, Rss } from 'lucide-react';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~core/ui/shadcn/tooltip';
 
 // 📦 Internal imports
 import type { DataEntity } from '~types/api-generated/getLatestNews';
@@ -54,9 +59,7 @@ const Card: React.FC<DataEntity> = (props) => {
             className={`${flexCenter} max-w-1/2 gap-2 rounded-sm bg-neutral-800 px-4 py-2 text-xs font-medium text-white`}
           >
             <Rss size={13} />
-            <span title={SOURCE_NAME} className="line-clamp-1">
-              {SOURCE_NAME}
-            </span>
+            <span className="line-clamp-1">{SOURCE_NAME}</span>
           </div>
           <div className={`${flexCenter} gap-2 text-sm`}>
             <CalendarDays size={13} />
@@ -66,10 +69,14 @@ const Card: React.FC<DataEntity> = (props) => {
 
         {/* Title */}
         <div className="relative mt-6">
-          <h3 className="peer line-clamp-1 text-lg font-semibold">{TITLE}</h3>
-          <p className="invisible absolute bottom-full z-10 mt-2 w-11/12 rounded border bg-white p-2 font-medium text-neutral-950 opacity-0 shadow-lg transition duration-300 peer-hover:visible peer-hover:opacity-100">
-            {TITLE}
-          </p>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <h3 className="peer line-clamp-1 text-lg font-semibold">
+                {TITLE}
+              </h3>
+            </TooltipTrigger>
+            <TooltipContent className="text-sm">{TITLE}</TooltipContent>
+          </Tooltip>
         </div>
 
         {/* Body */}

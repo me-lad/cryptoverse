@@ -31,15 +31,11 @@ const SubtitleItem: React.FC<CoinEntity_Gecko> = (props) => {
         <span className="text-lg font-semibold">{name}</span>
       </div>
       <div>
-        <span
-          className="font-semibold"
-          title={`$ ${current_price.toLocaleString('en')}`}
-        >
+        <span className="font-semibold">
           <Price price={current_price} />
         </span>
       </div>
       <div
-        title={`${price_change_percentage_24h}`}
         className={clsx(
           'font-semibold',
           formatPercentage(price_change_percentage_24h).startsWith('-')

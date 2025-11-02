@@ -3,10 +3,16 @@
 
 // 📦 Third-Party imports
 import { use } from 'react';
-import { ChevronDown, Globe } from 'lucide-react';
+import { Globe } from 'lucide-react';
 import { Button } from '~core/ui/shadcn/button';
 import Image from 'next/image';
 import clsx from 'clsx';
+
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~core/ui/shadcn/tooltip';
 
 // 📦 Internal imports
 import type { CurrencyT } from '~types/coins';
@@ -31,9 +37,15 @@ const Currency = () => {
   return (
     <DropDownAggregator overlay="dark">
       <DropDownTrigger activeClassName="*:!bg-primary/85">
-        <Button title={currency} variant={'secondary'}>
-          <Globe />
-        </Button>
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button variant={'secondary'}>
+              <Globe />
+            </Button>
+          </TooltipTrigger>
+
+          <TooltipContent>Select Currency</TooltipContent>
+        </Tooltip>
       </DropDownTrigger>
 
       <DropDownMenu className="mt-7 w-68 p-5">

@@ -2,6 +2,11 @@
 'use client';
 
 // 📦 Third-Party imports
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~core/ui/shadcn/tooltip';
 import { use } from 'react';
 import { z } from 'zod';
 import { Button } from '~core/ui/shadcn/button';
@@ -125,7 +130,7 @@ const CoinsPageSizeChange = () => {
   return (
     <>
       <p>
-        Coins count on each page
+        Coins count on each page{' '}
         <small title="Current count" className="align-middle text-xs">
           ( {params.perPage} )
         </small>
@@ -172,45 +177,49 @@ const CoinsCurrencyChange = () => {
   return (
     <div className="flex items-center gap-3 font-semibold">
       {currencies.map(({ id, label }, index) => (
-        <div
-          key={id}
-          className="relative cursor-pointer"
-          onClick={() => changeHandler(id)}
-          title={label}
-        >
-          <Image
-            src={`/svgs/logo/currencies/${id.toLowerCase()}.svg`}
-            width={27}
-            height={27}
-            alt={id}
-            className={clsx(id === 'JPY' && '-translate-x-[1.5px]')}
-          />
+        <Tooltip key={id}>
+          <TooltipTrigger asChild>
+            <div
+              className="relative cursor-pointer"
+              onClick={() => changeHandler(id)}
+            >
+              <Image
+                src={`/svgs/logo/currencies/${id.toLowerCase()}.svg`}
+                width={27}
+                height={27}
+                alt={id}
+                className={clsx(id === 'JPY' && '-translate-x-[1.5px]')}
+              />
 
-          <span
-            className={clsx(
-              'bg-primary invisible absolute top-full mt-1 h-[1.5px] w-full transition-transform ease-in',
-              id === currency && 'visible translate-x-0',
+              <span
+                className={clsx(
+                  'bg-primary invisible absolute top-full mt-1 h-[1.5px] w-full transition-transform ease-in',
+                  id === currency && 'visible translate-x-0',
 
-              currencies.findIndex((item) => item.id === currency) - index > 2
-                ? 'translate-x-20'
-                : currencies.findIndex((item) => item.id === currency) -
-                      index <=
-                      2 &&
-                    currencies.findIndex((item) => item.id === currency) -
-                      index >
-                      0
-                  ? 'translate-x-10'
-                  : currencies.findIndex((item) => item.id === currency) -
-                        index <=
-                        0 &&
-                      currencies.findIndex((item) => item.id === currency) -
-                        index >
-                        -2
-                    ? '-translate-x-10'
-                    : '-translate-x-20',
-            )}
-          ></span>
-        </div>
+                  currencies.findIndex((item) => item.id === currency) - index >
+                    2
+                    ? 'translate-x-20'
+                    : currencies.findIndex((item) => item.id === currency) -
+                          index <=
+                          2 &&
+                        currencies.findIndex((item) => item.id === currency) -
+                          index >
+                          0
+                      ? 'translate-x-10'
+                      : currencies.findIndex((item) => item.id === currency) -
+                            index <=
+                            0 &&
+                          currencies.findIndex((item) => item.id === currency) -
+                            index >
+                            -2
+                        ? '-translate-x-10'
+                        : '-translate-x-20',
+                )}
+              ></span>
+            </div>
+          </TooltipTrigger>
+          <TooltipContent>{label}</TooltipContent>
+        </Tooltip>
       ))}
     </div>
   );

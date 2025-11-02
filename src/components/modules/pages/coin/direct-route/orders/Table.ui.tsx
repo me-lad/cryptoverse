@@ -25,18 +25,15 @@ const TableUi: React.FC<PropsT> = ({ table, tableT }) => {
     <Table className="border-separate border-spacing-y-2">
       <TableHeader>
         {table.getHeaderGroups().map((headerGroup) => (
-          <TableRow
-            className={clsx(
-              '!border-none',
-              tableT === 'Asks'
-                ? '!bg-status-error-200'
-                : '!bg-status-success-200',
-            )}
-            key={headerGroup.depth}
-          >
+          <TableRow key={headerGroup.depth}>
             {headerGroup.headers.map((header) => (
               <TableHead
-                className="first:!rounded-l-sm last:!rounded-r-sm"
+                className={clsx(
+                  '!border-none first:!rounded-l-xs last:!rounded-r-xs',
+                  tableT === 'Asks'
+                    ? '!bg-status-error-200'
+                    : '!bg-status-success-200',
+                )}
                 key={header.id}
               >
                 {header.isPlaceholder
@@ -54,17 +51,15 @@ const TableUi: React.FC<PropsT> = ({ table, tableT }) => {
       <TableBody>
         {table.getRowModel().rows?.length &&
           table.getRowModel().rows.map((row) => (
-            <TableRow
-              key={row.id}
-              className={clsx(
-                tableT === 'Asks'
-                  ? 'hover:!bg-status-error-300'
-                  : 'hover:!bg-status-success-300',
-              )}
-            >
+            <TableRow key={row.id} className="group">
               {row.getVisibleCells().map((cell) => (
                 <TableCell
-                  className="first:rounded-l-sm last:rounded-r-sm"
+                  className={clsx(
+                    'first:rounded-l-xs last:rounded-r-xs',
+                    tableT === 'Asks'
+                      ? 'group-hover:!bg-status-error-300'
+                      : 'group-hover:!bg-status-success-300',
+                  )}
                   key={cell.id}
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
