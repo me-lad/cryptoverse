@@ -6,8 +6,11 @@ import ReactQueryProvider from '~configs/react-query';
 import ReactToastify from '~configs/react-toastify';
 import CurrencyContextProvider from '~modules/Currency.context';
 import FavoriteCoinsContextProvider from '~modules/FavoriteCoins.context';
-import HeaderFn from '@/components/modules/layouts/header/Header.fn';
-import FooterFn from '@/components/modules/layouts/footer/Footer.fn';
+import HeaderFn from '~modules/layouts/header/Header.fn';
+import FooterFn from '~modules/layouts/footer/Footer.fn';
+import ThemeProvider from '~modules/Theme.provider';
+import ThemeController from '~modules/Theme.controller';
+
 import '../lib/styles/global.css';
 import '../lib/styles/override.css';
 import '../lib/styles/react-toastify.css';
@@ -42,6 +45,7 @@ export default function RootLayout({
       lang="en"
       dir="ltr"
       className="*:selection:bg-primary min-h-screen min-w-screen overflow-x-hidden *:selection:text-white"
+      suppressHydrationWarning
     >
       <body
         className={clsx(ibmPlexSans.variable, roboto.variable, 'antialiased')}
@@ -49,14 +53,24 @@ export default function RootLayout({
         <ReactQueryProvider>
           <CurrencyContextProvider>
             <FavoriteCoinsContextProvider>
-              {/* Header */}
-              <HeaderFn />
-              {/* Route interface */}
-              <main className="w-full">{children}</main>
-              {/* Footer */}
-              <FooterFn />
-              {/* Packages initialize */}
-              <ReactToastify />
+              <ThemeProvider
+                attribute="class"
+                defaultTheme="system"
+                enableSystem
+              >
+                {/* Header */}
+                <HeaderFn />
+                {/* Route interface */}
+                <main className="w-full">{children}</main>
+                {/* Footer */}
+                <FooterFn />
+
+                {/* Theme controller */}
+                <ThemeController />
+
+                {/* Packages initialize */}
+                <ReactToastify />
+              </ThemeProvider>
             </FavoriteCoinsContextProvider>
           </CurrencyContextProvider>
         </ReactQueryProvider>

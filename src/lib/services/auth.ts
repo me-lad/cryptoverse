@@ -125,7 +125,7 @@ const verifyAccessSession =
 
       if (!userData || userData.sessionId != sessionData.id) return falsyReturn;
 
-      return { isAuthenticated: true, userId: userData.id };
+      return { isAuthenticated: true, username: userData.username };
     } catch (err) {
       console.log('Error in verify session DAL ->', err);
       return falsyReturn;
@@ -159,7 +159,7 @@ const verifyRefreshSession =
       );
       if (!isRefreshSessionValid) return falsyReturn;
 
-      return { isAllowed: true, userId: userData.id };
+      return { isAllowed: true, username: userData.username };
     } catch (err) {
       console.log('Error in verify session DAL ->', err);
       return falsyReturn;

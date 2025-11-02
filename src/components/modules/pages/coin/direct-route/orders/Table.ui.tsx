@@ -29,7 +29,7 @@ const TableUi: React.FC<PropsT> = ({ table, tableT }) => {
             {headerGroup.headers.map((header) => (
               <TableHead
                 className={clsx(
-                  '!border-none first:!rounded-l-xs last:!rounded-r-xs',
+                  '!border-none first:!rounded-l-sm last:!rounded-r-sm',
                   tableT === 'Asks'
                     ? '!bg-status-error-200'
                     : '!bg-status-success-200',
@@ -55,7 +55,7 @@ const TableUi: React.FC<PropsT> = ({ table, tableT }) => {
               {row.getVisibleCells().map((cell) => (
                 <TableCell
                   className={clsx(
-                    'first:rounded-l-xs last:rounded-r-xs',
+                    'first:rounded-l-sm last:rounded-r-sm',
                     tableT === 'Asks'
                       ? 'group-hover:!bg-status-error-300'
                       : 'group-hover:!bg-status-success-300',

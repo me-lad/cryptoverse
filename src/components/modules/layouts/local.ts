@@ -3,6 +3,7 @@ export const headerLessRoutes = [
   '/auth/signup',
   '/auth/reset-password',
   '/auth/verify',
+  '/dashboard',
 ];
 
 export const footerLessRoutes = [...headerLessRoutes];

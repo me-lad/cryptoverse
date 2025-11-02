@@ -87,6 +87,19 @@ export const buildCoinChartData = (
   return convertedData;
 };
 
+export const extractUsername = (username: string): string => {
+  const delimiters = /[\s-_]+/;
+  const hasDelimiters = delimiters.test(username);
+
+  if (hasDelimiters) {
+    const parts = username.split(delimiters).filter(Boolean);
+    return parts.map((part) => part[0].toUpperCase()).join('');
+  }
+
+  const upperLetters = username.match(/[A-Z]/g) ?? [];
+  return upperLetters.slice(0, 2).join('');
+};
+
 // Fallback fake coin orders generator
 export const buildFakeOrderBookFromPrice = (
   currentPrice: number,

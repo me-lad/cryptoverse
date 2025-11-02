@@ -1,6 +1,7 @@
 // 📌 Directives
 
 // 📦 Third-Party imports
+import InsetHeading from '~modules/layouts/dashboard/inset-heading';
 
 // 📦 Internal imports
 
@@ -8,5 +9,9 @@
 
 // ⚙️ Functional component
 export default function DashboardPage() {
-  return <h1>DashboardPage</h1>;
+  return (
+    <>
+      <InsetHeading title="Dashboard" />
+    </>
+  );
 }
