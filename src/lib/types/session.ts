@@ -1,21 +1,25 @@
 interface AuthenticatedSession {
   isAuthenticated: true;
   username: string;
+  userId: string;
 }
 
 interface UnAuthenticatedSession {
   isAuthenticated: false;
   username?: never;
+  userId?: never;
 }
 
 interface AllowedRefreshSession {
   isAllowed: true;
   username: string;
+  userId: string;
 }
 
 interface UnAllowedRefreshSession {
   isAllowed: false;
   username?: never;
+  userId?: never;
 }
 
 interface SuccessfulSessionCreation {

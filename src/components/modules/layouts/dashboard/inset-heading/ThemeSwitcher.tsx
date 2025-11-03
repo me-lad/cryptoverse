@@ -10,6 +10,7 @@ import {
 import { Button } from '~core/ui/shadcn/button';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
+import { Sun, Moon, Monitor } from 'lucide-react';
 import Image from 'next/image';
 import clsx from 'clsx';
 
@@ -32,8 +33,8 @@ const ThemeSwitcher = () => {
   if (!mounted || !theme) return null;
 
   return (
-    <DropDownAggregator>
-      <DropDownTrigger activeClassName="*:!bg-primary/85">
+    <DropDownAggregator hideScroll={false}>
+      <DropDownTrigger>
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
@@ -46,6 +47,7 @@ const ThemeSwitcher = () => {
                 width={24}
                 height={24}
                 alt="Theme Toggler"
+                className={clsx(theme === 'light' && 'invert-[85]')}
               />
             </Button>
           </TooltipTrigger>
@@ -54,17 +56,18 @@ const ThemeSwitcher = () => {
       </DropDownTrigger>
 
       <DropDownMenu className="mt-2.5 overflow-hidden">
-        {['dark', 'light', 'system'].map((t) => (
+        {['dark', 'light', 'system'].map((t, index) => (
           <Button
             key={t}
             className={clsx(
-              'w-full cursor-pointer !rounded-none text-white',
+              'justify text-foreground w-full cursor-pointer !rounded-none',
               theme === t && '!bg-primary',
             )}
             size={'lg'}
             variant={'ghost'}
             onClick={() => setTheme(t)}
           >
+            {index === 0 ? <Moon /> : index === 1 ? <Sun /> : <Monitor />}
             {t.slice(0, 1).toUpperCase() + t.slice(1)}
           </Button>
         ))}

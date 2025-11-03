@@ -3,19 +3,24 @@
 
 // 📦 Third-Party imports
 import { usePathname } from 'next/navigation';
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
+import { useTheme } from 'next-themes';
 
 // ⚙️ Functional component
 const ThemeController = () => {
   const pathname = usePathname();
+  const { setTheme } = useTheme();
 
-  useEffect(() => {
-    if (!pathname.startsWith('/dashboard') && document?.documentElement) {
-      document.documentElement.classList.add('dark');
-      document.documentElement.style.colorScheme = 'dark';
+  useLayoutEffect(() => {
+    if (document?.documentElement) {
+      if (!pathname.startsWith('/dashboard')) {
+        setTheme('dark');
+      } else {
+        setTheme('system');
+      }
     }
   }, [pathname]);
 
-  return <div>ThemeController component</div>;
+  return null;
 };
 export default ThemeController;

@@ -1,10 +1,10 @@
 // 📦 Third-Party imports
 import React from 'react';
-import { SidebarInset, SidebarProvider } from '~core/ui/shadcn/sidebar';
 
 // 📦 Internal imports
 import { DashboardAccessControl } from '~core/global/access-controls';
-import Sidebar from '~modules/layouts/dashboard/Sidebar';
+import DashboardContext from '~modules/layouts/dashboard/Dashboard.context';
+import DashboardWrapper from '~modules/layouts/dashboard/Dashboard.wrapper';
 
 // 🧾 Local types
 interface PropsT {
@@ -15,11 +15,9 @@ interface PropsT {
 export default function DashboardLayout({ children }: PropsT) {
   return (
     <DashboardAccessControl>
-      <SidebarProvider className="mt-8 gap-x-2 px-24">
-        <Sidebar />
-
-        <SidebarInset>{children}</SidebarInset>
-      </SidebarProvider>
+      <DashboardContext>
+        <DashboardWrapper>{children}</DashboardWrapper>
+      </DashboardContext>
     </DashboardAccessControl>
   );
 }
