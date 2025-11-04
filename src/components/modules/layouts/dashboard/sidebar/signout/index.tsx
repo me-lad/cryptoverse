@@ -13,34 +13,33 @@ import { Button } from '~core/ui/shadcn/button';
 import { cn } from '~utils/shadcn';
 
 // 📦 Internal imports
-import { DashboardSidebarContext } from '../Dashboard.context';
+import { DashboardSidebarContext } from '../../Dashboard.context';
 
 // ⚙️ Functional component
 const Signout = () => {
-  const { isOpen } = use(DashboardSidebarContext);
+  const { action } = use(DashboardSidebarContext);
 
   return (
     <Tooltip disableHoverableContent delayDuration={100}>
       <TooltipTrigger asChild>
         <Button
-          onClick={() => {}}
-          variant="outline"
-          className="mt-5 h-10 w-full cursor-pointer justify-center"
+          variant="secondary"
+          className="mb-4 h-9 w-full cursor-pointer justify-center"
         >
-          <span className={cn(!isOpen ? '' : 'mr-4')}>
+          <span>
             <LogOut size={18} />
           </span>
           <p
             className={cn(
               'whitespace-nowrap',
-              !isOpen ? 'hidden opacity-0' : 'opacity-100',
+              !action?.getOpenState() ? 'hidden opacity-0' : 'opacity-100',
             )}
           >
             Sign out
           </p>
         </Button>
       </TooltipTrigger>
-      {isOpen === false && (
+      {action?.getOpenState() === false && (
         <TooltipContent side="right">Sign out</TooltipContent>
       )}
     </Tooltip>

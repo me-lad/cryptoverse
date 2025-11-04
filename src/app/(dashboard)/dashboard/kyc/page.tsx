@@ -1,5 +1,5 @@
 // 📦 Internal imports
-import InsetHeading from '~modules/layouts/dashboard/inset-heading';
+import InsetHeading from '@/components/modules/layouts/dashboard/header';
 import DevelopingPage from '~modules/layouts/dashboard/developing-page';
 
 // ⚙️ Functional component

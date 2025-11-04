@@ -15,8 +15,6 @@ const ThemeController = () => {
     if (document?.documentElement) {
       if (!pathname.startsWith('/dashboard')) {
         setTheme('dark');
-      } else {
-        setTheme('system');
       }
     }
   }, [pathname]);

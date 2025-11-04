@@ -39,16 +39,26 @@ const DropDownTrigger: React.FC<TriggerPropsT> = (props) => {
 };
 
 const DropDownMenu: React.FC<MenuPropsT> = (props) => {
-  const { children, className, ...rest } = props;
+  const { children, side = 'bottom', className, ...rest } = props;
   const { menuStatus } = use(DropDownContext);
+
+  const passiveTranslate =
+    side === 'right'
+      ? '-translate-x-16'
+      : side === 'bottom'
+        ? '-translate-y-3'
+        : 'translate-y-3';
 
   return (
     <div
       className={cn(
-        'bg-background-lighter glass-bg absolute top-full left-1/2 -translate-x-1/2 rounded-sm border border-neutral-700 shadow-2xs shadow-neutral-800 transition-all',
+        'bg-background-lighter glass-bg absolute left-1/2 -translate-x-1/2 rounded-sm border border-neutral-700 shadow-2xs shadow-neutral-800 transition-all',
         className,
+
+        side === 'bottom' ? 'top-full' : 'bottom-full',
+
         menuStatus === 'closed'
-          ? 'invisible z-10 -translate-y-3 opacity-0'
+          ? `invisible z-10 opacity-0 ${passiveTranslate}`
           : 'visible z-50 opacity-100',
       )}
       {...rest}

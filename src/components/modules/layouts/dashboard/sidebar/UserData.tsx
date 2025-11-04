@@ -10,14 +10,14 @@ import { DashboardSidebarContext } from '../Dashboard.context';
 
 // ⚙️ Functional component
 const UserData = () => {
-  const { isOpen } = use(DashboardSidebarContext);
+  const { action } = use(DashboardSidebarContext);
 
   return (
     <>
       <div
         className={clsx(
           'bg-primary-700 relative mt-10 overflow-hidden rounded-lg',
-          !isOpen && 'flex w-full justify-center',
+          !action?.getOpenState() && 'flex w-full justify-center',
         )}
       >
         <Image
@@ -27,7 +27,7 @@ const UserData = () => {
           alt="MiladEsm"
         />
       </div>
-      {isOpen && (
+      {action?.getOpenState() && (
         <div className="ml-2 grid flex-1 text-left text-sm leading-tight">
           <h2 className="truncate text-sm font-semibold">hey 👋</h2>
           <p className="mt-0.5 truncate text-lg font-medium">MiladEsm</p>

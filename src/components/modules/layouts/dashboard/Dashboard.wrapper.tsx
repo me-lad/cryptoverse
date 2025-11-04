@@ -2,12 +2,13 @@
 'use client';
 
 // 📦 Third-Party imports
-import Sidebar from './sidebar';
 import React, { use } from 'react';
 import { cn } from '~utils/shadcn';
 
 // 📦 Internal imports
 import { DashboardSidebarContext } from './Dashboard.context';
+import Sidebar from './sidebar';
+import DashboardFooter from './footer';
 
 // 🧾 Local types
 interface PropsT {
@@ -16,7 +17,7 @@ interface PropsT {
 
 // ⚙️ Functional component
 const DashboardWrapper: React.FC<PropsT> = ({ children }) => {
-  const { isOpen, settings } = use(DashboardSidebarContext);
+  const { settings, action } = use(DashboardSidebarContext);
 
   return (
     <>
@@ -24,18 +25,23 @@ const DashboardWrapper: React.FC<PropsT> = ({ children }) => {
 
       <div
         className={cn(
-          'min-h-[calc(100vh_-_56px)] bg-zinc-50 transition-[margin-left] duration-300 ease-in-out dark:bg-zinc-900',
-          !settings.disabled && (!isOpen ? 'lg:ml-[110px]' : 'lg:ml-72'),
+          'bg-background-lighter min-h-[calc(100vh_-_70px)] overflow-hidden transition-[margin-left] duration-300 ease-in-out',
+          !settings.disabled &&
+            (!action?.getOpenState() ? 'lg:ml-[110px]' : 'lg:ml-72'),
         )}
       >
+        {/* Each route content (e.g /dashboard | /dashboard/settings | etc...) */}
         {children}
       </div>
       <footer
         className={cn(
-          'transition-[margin-left] duration-300 ease-in-out',
-          !settings.disabled && (!isOpen ? 'lg:ml-[90px]' : 'lg:ml-72'),
+          'bg-background max-h-[70px] border-t border-neutral-400 transition-[margin-left] duration-300 ease-in-out dark:border-neutral-700',
+          !settings.disabled &&
+            (!action?.getOpenState() ? 'lg:ml-[110px]' : 'lg:ml-72'),
         )}
-      ></footer>
+      >
+        <DashboardFooter />
+      </footer>
     </>
   );
 };

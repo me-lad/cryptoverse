@@ -12,13 +12,13 @@ import SidebarMenu from './Menu';
 
 // ⚙️ Functional component
 const Sidebar = () => {
-  const { isOpen, settings, action } = use(DashboardSidebarContext);
+  const { settings, action } = use(DashboardSidebarContext);
 
   return (
     <aside
       className={cn(
         'fixed top-0 left-0 z-20 h-screen -translate-x-full transition-[width] duration-300 ease-in-out lg:translate-x-0',
-        !isOpen ? 'w-[110px]' : 'w-72',
+        !action?.getOpenState() ? 'w-[110px]' : 'w-72',
         settings.disabled && 'hidden',
       )}
     >
@@ -27,7 +27,7 @@ const Sidebar = () => {
       <div
         onMouseEnter={() => action?.setHoverState(true)}
         onMouseLeave={() => action?.setHoverState(false)}
-        className="relative flex h-full flex-col overflow-y-auto px-3 pt-4 shadow-md dark:shadow-zinc-800"
+        className="!no-scrollbar relative flex h-full flex-col overflow-y-auto border-r border-neutral-400 px-3 pt-4 dark:border-neutral-700"
       >
         <SidebarMenu />
       </div>

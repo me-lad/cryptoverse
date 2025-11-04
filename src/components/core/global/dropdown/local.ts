@@ -5,6 +5,7 @@ export interface TriggerPropsT {
 
 export interface MenuPropsT extends React.ComponentProps<'div'> {
   children: React.ReactNode;
+  side?: 'bottom' | 'top' | 'right';
 }
 
 export interface AggregatorPropsT extends React.ComponentProps<'div'> {

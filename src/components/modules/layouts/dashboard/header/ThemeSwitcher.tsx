@@ -39,7 +39,7 @@ const ThemeSwitcher = () => {
           <TooltipTrigger asChild>
             <Button
               className="cursor-pointer"
-              variant={'outline'}
+              variant={'secondary'}
               size={'icon'}
             >
               <Image
@@ -55,7 +55,7 @@ const ThemeSwitcher = () => {
         </Tooltip>
       </DropDownTrigger>
 
-      <DropDownMenu className="mt-2.5 overflow-hidden">
+      <DropDownMenu className="mt-2.5 overflow-hidden !shadow-none">
         {['dark', 'light', 'system'].map((t, index) => (
           <Button
             key={t}

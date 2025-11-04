@@ -9,10 +9,7 @@ import type {
   DashboardSidebarContextT,
   DashboardSidebarSettingsT,
 } from '~types/dashboard';
-import {
-  dashboardSidebarInitialSetting,
-  dashboardSidebarInitialValue,
-} from '~constants/dashboard';
+import { dashboardSidebarInitialValue } from '~constants/dashboard';
 
 // 🧾 Local types and context declare
 interface PropsT {
@@ -25,11 +22,21 @@ export const DashboardSidebarContext = createContext<DashboardSidebarContextT>(
 
 // ⚙️ Functional component
 const DashboardContext: React.FC<PropsT> = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isHover, setIsHover] = useState(false);
+  const [isOpen, setIsOpen] = useState(dashboardSidebarInitialValue.isOpen);
+  const [isHover, setIsHover] = useState(dashboardSidebarInitialValue.isHover);
   const [settings, setSettings] = useState<DashboardSidebarSettingsT>(
-    dashboardSidebarInitialSetting,
+    dashboardSidebarInitialValue.settings,
   );
+
+  const getOpenState = () => {
+    if (settings.disabled) return false;
+
+    if (settings.hoverable) {
+      return isHover;
+    } else {
+      return isOpen;
+    }
+  };
 
   const value: DashboardSidebarContextT = {
     isOpen,
@@ -39,6 +46,7 @@ const DashboardContext: React.FC<PropsT> = ({ children }) => {
       setOpenState: setIsOpen,
       setHoverState: setIsHover,
       setSettings,
+      getOpenState,
     },
   };
 

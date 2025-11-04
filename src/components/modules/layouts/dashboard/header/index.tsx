@@ -12,9 +12,9 @@ interface PropsT {
 }
 
 // ⚙️ Functional component
-const InsetHeading: React.FC<PropsT> = async ({ title }) => {
+const DashboardHeader: React.FC<PropsT> = async ({ title }) => {
   return (
-    <header className="bg-background-lighter w-full rounded-sm px-7 py-4">
+    <header className="bg-background w-full border-b border-neutral-400 px-7 py-4 dark:border-neutral-700">
       <div className={flexBetween}>
         <h1 className="text-2xl font-semibold">{title}</h1>
 
@@ -26,4 +26,4 @@ const InsetHeading: React.FC<PropsT> = async ({ title }) => {
     </header>
   );
 };
-export default InsetHeading;
+export default DashboardHeader;

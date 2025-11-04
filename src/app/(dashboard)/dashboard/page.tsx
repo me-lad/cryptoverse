@@ -1,7 +1,7 @@
 // 📌 Directives
 
 // 📦 Third-Party imports
-import InsetHeading from '~modules/layouts/dashboard/inset-heading';
+import DashboardHeader from '~modules/layouts/dashboard/header';
 
 // 📦 Internal imports
 
@@ -11,7 +11,7 @@ import InsetHeading from '~modules/layouts/dashboard/inset-heading';
 export default function DashboardPage() {
   return (
     <>
-      <InsetHeading title="Dashboard" />
+      <DashboardHeader title="Dashboard" />
     </>
   );
 }
