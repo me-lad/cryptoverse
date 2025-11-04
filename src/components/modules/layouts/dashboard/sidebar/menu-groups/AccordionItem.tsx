@@ -61,7 +61,11 @@ const AccordionItem: React.FC<DashboardSidebarMenuItemT> = (props) => {
 
         <AccordionContent className="px-4 py-1.5">
           {subItems?.map((item) => (
-            <NavLink href={item.url!} key={item.title}>
+            <NavLink
+              href={item.url!}
+              key={item.title}
+              activeClassName="*:!text-primary-400 *:font-bold"
+            >
               <Button
                 className="mt-1.5 w-full cursor-pointer justify-start"
                 variant={'ghost'}

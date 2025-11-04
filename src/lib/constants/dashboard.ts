@@ -18,8 +18,6 @@ export const dashboardSidebarInitialValue: DashboardSidebarContextT = {
 } as const;
 
 // Sidebar items
-const fallbackUrl = '/dashboard/developing';
-
 const coreMenuGroupItems: DashboardSidebarMenuItemT[] = [
   {
     title: 'Dashboard',
@@ -33,30 +31,30 @@ const coreMenuGroupItems: DashboardSidebarMenuItemT[] = [
     subItems: [
       {
         title: 'Assets',
-        url: fallbackUrl,
+        url: '/dashboard/assets',
       },
 
       {
         title: 'Deposit',
-        url: fallbackUrl,
+        url: '/dashboard/deposit',
       },
 
       {
         title: 'Withdraw',
-        url: fallbackUrl,
+        url: '/dashboard/withdraw',
       },
     ],
   },
 
   {
     title: 'Transactions',
-    url: fallbackUrl,
     icon: '/svgs/dashboard/icons/transactions.svg',
+    url: '/dashboard/transactions',
   },
 
   {
     title: 'Market Overview',
-    url: fallbackUrl,
+    url: '/dashboard/market-overview',
     icon: '/svgs/dashboard/icons/market-overview.svg',
   },
 ];
@@ -71,7 +69,7 @@ const securityMenuGroupItems: DashboardSidebarMenuItemT[] = [
   {
     title: '2FA Setup',
     icon: '/svgs/dashboard/icons/2fa.svg',
-    url: fallbackUrl,
+    url: '/dashboard/two-factor-auth',
   },
 
   {
@@ -85,13 +83,13 @@ const analyticsMenuGroupItems: DashboardSidebarMenuItemT[] = [
   {
     title: 'Performance Analytics',
     icon: '/svgs/dashboard/icons/performance.svg',
-    url: fallbackUrl,
+    url: '/dashboard/performance',
   },
 
   {
     title: 'Tax Reports',
     icon: '/svgs/dashboard/icons/tax.svg',
-    url: fallbackUrl,
+    url: '/dashboard/tax-reports',
   },
 ];
 
@@ -99,19 +97,19 @@ const settingsMenuGroupItems: DashboardSidebarMenuItemT[] = [
   {
     title: 'Account Management',
     icon: '/svgs/dashboard/icons/account-management.svg',
-    url: fallbackUrl,
+    url: '/dashboard/account-management',
   },
 
   {
     title: 'Support & Help Center',
     icon: '/svgs/dashboard/icons/support.svg',
-    url: fallbackUrl,
+    url: '/dashboard/support',
   },
 
   {
     title: 'Notification Center',
     icon: '/svgs/dashboard/icons/notification.svg',
-    url: fallbackUrl,
+    url: '/dashboard/notifications',
   },
 ];
 
