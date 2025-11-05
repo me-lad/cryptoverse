@@ -14,7 +14,8 @@ import FooterUi from './Footer.ui';
 // ⚙️ Functional component
 export default function FooterFn() {
   const pathname = usePathname();
-  if (footerLessRoutes.includes(pathname)) return null;
+  if (footerLessRoutes.includes(pathname) || pathname.startsWith('/dashboard'))
+    return null;
 
   return <FooterUi isHomePage={pathname === '/'} />;
 }

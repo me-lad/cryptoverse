@@ -1,8 +1,8 @@
 // 📦 Third-Party imports
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
 // 📦 Internal imports
-import InsetHeading from '@/components/modules/layouts/dashboard/header';
+import DashboardHeader from '@/components/modules/layouts/dashboard/header';
 import DevelopingPage from '~modules/layouts/dashboard/developing-page';
 
 // 🧾 Local types and variables
@@ -30,13 +30,13 @@ const developingPages: { [key: string]: string } = {
 const Page = async ({ params }: PropsT) => {
   const { dp } = await params;
 
-  if (!developingPages?.[dp]) return notFound();
+  if (!developingPages?.[dp]) return redirect('/not-found');
 
   const title = developingPages[dp];
 
   return (
     <>
-      <InsetHeading title={title} />
+      <DashboardHeader title={title} />
       <div className="mt-10">
         <DevelopingPage />
       </div>

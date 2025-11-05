@@ -3,19 +3,11 @@
 
 // 📦 Third-Party imports
 import clsx from 'clsx';
-import Image from 'next/image';
 import { use } from 'react';
-import { Button } from '~core/ui/shadcn/button';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~core/ui/shadcn/tooltip';
 
 // 📦 Internal imports
 import { dashboardSidebarMenuGroups } from '~constants/dashboard';
 import { DashboardSidebarContext } from '../../Dashboard.context';
-import { NavLink } from '~core/global/NavLink';
 import Title from './Title';
 import SimpleItem from './SimpleItem';
 import AccordionItem from './AccordionItem';

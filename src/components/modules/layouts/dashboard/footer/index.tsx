@@ -1,7 +1,3 @@
-// 📌 Directives
-
-// 📦 Third-Party imports
-
 // 📦 Internal imports
 import { flexBetween } from '~styles/tw-custom';
 import SidebarSettings from './SidebarSettings';

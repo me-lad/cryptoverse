@@ -9,6 +9,7 @@ import { Button } from '~core/ui/shadcn/button';
 import { Dot } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { Skeleton } from '~core/ui/shadcn/skeleton';
+import { usePathname } from 'next/navigation';
 import {
   Accordion,
   AccordionTrigger,
@@ -25,20 +26,34 @@ import {
 import type { DashboardSidebarMenuItemT } from '~types/dashboard';
 import { DashboardSidebarContext } from '../../Dashboard.context';
 import { NavLink } from '~core/global/NavLink';
+import { useIsMounted } from '~hooks/useIsMounted';
 
 // ⚙️ Functional component
 const AccordionItem: React.FC<DashboardSidebarMenuItemT> = (props) => {
   const { title, icon, subItems } = props;
   const { action } = use(DashboardSidebarContext);
   const { theme } = useTheme();
+  const mounted = useIsMounted();
+
+  const pathname = usePathname();
+  const isContentActive = subItems?.find((item) => item.url === pathname);
 
   return (
     <Accordion type="multiple" className="w-full">
-      <ShadAccordionItem value="1">
-        <AccordionTrigger className="hover:bg-secondary mt-1.5 flex w-full cursor-pointer justify-start gap-2.5 px-4 py-2 *:last:mt-0.5 *:last:fill-white *:last:stroke-1">
+      <ShadAccordionItem value={title}>
+        <AccordionTrigger
+          className={clsx(
+            'hover:bg-secondary relative mt-1.5 flex w-full cursor-pointer justify-start gap-2.5 px-4 py-2 *:last:absolute *:last:right-2 *:last:mt-0.5 *:last:fill-white *:last:stroke-1',
+
+            !!isContentActive && '!bg-transparent',
+
+            !!isContentActive &&
+              'before:from-primary before:via-primary/10 before:to-secondary before:absolute before:top-0 before:-left-0 before:-z-[2] before:h-full before:w-full before:rounded-sm before:bg-gradient-to-r before:from-4% before:via-4% before:to-150% before:py-[1.1rem] before:opacity-100',
+          )}
+        >
           <Tooltip>
             <TooltipTrigger asChild>
-              {!!theme ? (
+              {mounted && !!theme ? (
                 <Image
                   className={clsx(theme === 'light' && 'invert-100')}
                   src={icon}

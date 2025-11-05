@@ -12,7 +12,8 @@ import HeaderUi from './Header.ui';
 // ⚙️ Functional component
 export default function HeaderFn() {
   const pathname = usePathname();
-  if (headerLessRoutes.includes(pathname)) return null;
+  if (headerLessRoutes.includes(pathname) || pathname.startsWith('/dashboard'))
+    return null;
 
   return <HeaderUi />;
 }

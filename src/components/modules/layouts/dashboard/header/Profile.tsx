@@ -19,7 +19,11 @@ const Profile = async () => {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
-        <Button className="cursor-pointer" variant={'secondary'} size={'icon'}>
+        <Button
+          className="border-b-foreground/35 cursor-pointer border-y-2 border-t-transparent"
+          variant={'ghost'}
+          size={'icon'}
+        >
           {extractUsername(username)}
         </Button>
       </TooltipTrigger>

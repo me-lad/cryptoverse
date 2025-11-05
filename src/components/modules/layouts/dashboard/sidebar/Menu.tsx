@@ -6,7 +6,6 @@ import { ScrollArea } from '~core/ui/shadcn/scroll-area';
 
 // 📦 Internal imports
 import Signout from './signout';
-import UserData from './UserData';
 import HeadingLogo from './heading-logo';
 import MenuGroups from './menu-groups';
 
