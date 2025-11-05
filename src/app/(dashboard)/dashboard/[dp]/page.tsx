@@ -4,6 +4,7 @@ import { notFound, redirect } from 'next/navigation';
 // 📦 Internal imports
 import DashboardHeader from '@/components/modules/layouts/dashboard/header';
 import DevelopingPage from '~modules/layouts/dashboard/developing-page';
+import ContentLayout from '~modules/layouts/dashboard/content-layout';
 
 // 🧾 Local types and variables
 interface PropsT {
@@ -37,9 +38,9 @@ const Page = async ({ params }: PropsT) => {
   return (
     <>
       <DashboardHeader title={title} />
-      <div className="mt-10">
+      <ContentLayout>
         <DevelopingPage />
-      </div>
+      </ContentLayout>
     </>
   );
 };

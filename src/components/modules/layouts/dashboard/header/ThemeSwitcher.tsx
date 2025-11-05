@@ -30,8 +30,6 @@ const ThemeSwitcher = () => {
     setMounted(true);
   }, []);
 
-  if (!mounted || !theme) return null;
-
   return (
     <DropDownAggregator hideScroll={false}>
       <DropDownTrigger>
@@ -42,13 +40,15 @@ const ThemeSwitcher = () => {
               variant={'ghost'}
               size={'icon'}
             >
-              <Image
-                src={'/svgs/theme/theme-toggle.svg'}
-                width={24}
-                height={24}
-                alt="Theme Toggler"
-                className={clsx(theme === 'light' && 'invert-[85]')}
-              />
+              {mounted && theme && (
+                <Image
+                  src={'/svgs/theme/theme-toggle.svg'}
+                  width={24}
+                  height={24}
+                  alt="Theme Toggler"
+                  className={clsx(theme === 'light' && 'invert-[85]')}
+                />
+              )}
             </Button>
           </TooltipTrigger>
           <TooltipContent>Switch Theme</TooltipContent>
@@ -61,7 +61,7 @@ const ThemeSwitcher = () => {
             key={t}
             className={clsx(
               'justify text-foreground w-full cursor-pointer !rounded-none',
-              theme === t && '!bg-primary',
+              mounted && theme === t && '!bg-primary',
             )}
             size={'lg'}
             variant={'ghost'}
