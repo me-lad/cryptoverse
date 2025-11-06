@@ -14,7 +14,9 @@ import {
 // 📦 Internal imports
 import { flexCenter } from '~styles/tw-custom';
 import { Spinner } from '@/components/core/ui/shadcn/spinner';
-const TradingViewChart = lazy(() => import('~core/global/TradingViewChart'));
+const TradingViewChart = lazy(
+  () => import('~core/global/trading-view/AdvanceChart'),
+);
 
 // 🧾 Local types
 interface PropsT {
@@ -116,7 +118,7 @@ const ChartsWrapper: React.FC<PropsT> = ({
               {coinName.slice(0, 1).toUpperCase() + coinName.slice(1)}{' '}
               Historical Data
             </h2>
-            <div className="mt-8">
+            <div className="mt-8 overflow-hidden rounded-sm outline-1">
               <TradingViewChart symbol={coinSymbol} theme="dark" height={500} />
             </div>
           </Suspense>
