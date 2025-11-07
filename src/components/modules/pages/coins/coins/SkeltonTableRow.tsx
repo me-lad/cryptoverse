@@ -34,15 +34,15 @@ const SkeltonTableRow = () => {
       {/* Price */}
       <TableCell>
         <div className="flex h-full items-center">
-          <Skeleton className="h-3 w-24" />
+          <Skeleton className="h-3 w-20" />
         </div>
       </TableCell>
 
       {/* Changes */}
       {Array.from({ length: 5 }).map((_, index) => (
         <TableCell key={index}>
-          <div className="flex h-full items-center">
-            <Skeleton className="h-3 w-28" />
+          <div className="flex h-full items-center justify-center">
+            <Skeleton className="h-3 w-[4.5rem]" />
           </div>
         </TableCell>
       ))}

@@ -2,7 +2,6 @@
 import { MoreHorizontal } from 'lucide-react';
 import { Button } from '~core/ui/shadcn/button';
 import React, { use } from 'react';
-import clsx from 'clsx';
 
 // 📦 Internal imports
 import { CoinsContext } from '../CoinsPage.context';
@@ -20,7 +19,11 @@ const PaginationNumbers: React.FC<PropsT> = ({
 }) => {
   const { params, flags } = use(CoinsContext);
 
-  if (params.page < 4) {
+  // Safety checks
+  const currentPage = Number(params.page) || 1;
+  const totalPages = Math.max(1, Number(totalPagesCount));
+
+  if (currentPage < 4) {
     return (
       <>
         {Array.from({ length: 4 }).map((_, index) => (
@@ -28,8 +31,8 @@ const PaginationNumbers: React.FC<PropsT> = ({
             className="cursor-pointer"
             key={index}
             onClick={() => changePageHandler(index + 1)}
-            variant={params.page === index + 1 ? 'secondary' : 'ghost'}
-            disabled={params.page === index + 1 || flags?.isFetching}
+            variant={currentPage === index + 1 ? 'secondary' : 'ghost'}
+            disabled={currentPage === index + 1 || flags?.isFetching}
           >
             {index + 1}
           </Button>
@@ -40,15 +43,15 @@ const PaginationNumbers: React.FC<PropsT> = ({
         <Button
           className="cursor-pointer"
           variant={'ghost'}
-          onClick={() => changePageHandler(totalPagesCount)}
+          onClick={() => changePageHandler(totalPages)}
         >
-          {totalPagesCount}
+          {totalPages}
         </Button>
       </>
     );
   }
 
-  if (params.page > totalPagesCount - 3 && params.page <= totalPagesCount) {
+  if (currentPage > totalPages - 3 && currentPage <= totalPages) {
     return (
       <>
         <Button
@@ -65,16 +68,14 @@ const PaginationNumbers: React.FC<PropsT> = ({
           {Array.from({ length: 4 }).map((_, index) => (
             <Button
               key={index}
-              onClick={() => changePageHandler(totalPagesCount - index)}
+              onClick={() => changePageHandler(totalPages - index)}
               className="cursor-pointer"
               variant={
-                params.page === totalPagesCount - index ? 'secondary' : 'ghost'
+                currentPage === totalPages - index ? 'secondary' : 'ghost'
               }
-              disabled={
-                params.page === totalPagesCount - index || flags?.isFetching
-              }
+              disabled={currentPage === totalPages - index || flags?.isFetching}
             >
-              {totalPagesCount - index}
+              {totalPages - index}
             </Button>
           ))}
         </div>
@@ -95,21 +96,21 @@ const PaginationNumbers: React.FC<PropsT> = ({
       <MoreHorizontal size={16} className="mx-4 mt-2.5" />
 
       <Button
-        onClick={() => changePageHandler(params.page - 1)}
+        onClick={() => changePageHandler(currentPage - 1)}
         className="cursor-pointer"
         variant={'ghost'}
       >
-        {params.page - 1}
+        {currentPage - 1}
       </Button>
       <Button className="cursor-pointer" variant={'secondary'} disabled>
-        {params.page}
+        {currentPage}
       </Button>
       <Button
-        onClick={() => changePageHandler(params.page + 1)}
+        onClick={() => changePageHandler(currentPage + 1)}
         className="cursor-pointer"
         variant={'ghost'}
       >
-        {params.page + 1}
+        {currentPage + 1}
       </Button>
 
       <MoreHorizontal size={16} className="mx-4 mt-2.5" />
@@ -117,9 +118,9 @@ const PaginationNumbers: React.FC<PropsT> = ({
       <Button
         className="cursor-pointer"
         variant={'ghost'}
-        onClick={() => changePageHandler(totalPagesCount)}
+        onClick={() => changePageHandler(totalPages)}
       >
-        {totalPagesCount}
+        {totalPages}
       </Button>
     </>
   );

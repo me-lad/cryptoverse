@@ -45,7 +45,7 @@ const CoinsList: React.FC<PropsT> = ({ targetOrder }) => {
   const { favoriteCoins } = use(FavoriteCoinsContext);
 
   return (
-    <div className="mt-8 grid grid-cols-4 gap-x-2.5">
+    <div className="mt-8 grid min-h-[9.3rem] grid-cols-4 gap-x-2.5">
       {targetOrder !== 'favorite'
         ? coinsSymbolList[targetOrder]!.map((item) => (
             <ListRenderingItem key={item} symbol={item} />

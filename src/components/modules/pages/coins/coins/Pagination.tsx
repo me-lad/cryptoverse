@@ -16,6 +16,7 @@ import PaginationNumbers from './PaginationNumbers';
 // 🧾 Local types and helpers
 const totalCoinsCount = 17_000;
 const calculateTotalPages = (perPage: number) => {
+  if (!perPage || perPage <= 0) return 1; // Safety check
   return Math.ceil(totalCoinsCount / perPage);
 };
 
@@ -24,7 +25,7 @@ const Pagination = () => {
   const { params, actions, flags } = use(CoinsContext);
   const { showFavorites } = use(FavoriteCoinsContext);
   const [totalPagesCount, setTotalPagesCount] = useState(() =>
-    calculateTotalPages(params.perPage),
+    calculateTotalPages(params.perPage || 10),
   );
 
   useEffect(() => {

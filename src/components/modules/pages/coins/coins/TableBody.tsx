@@ -25,6 +25,7 @@ import { CoinsContext } from '../CoinsPage.context';
 import { flexCenter } from '~styles/tw-custom';
 import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
 import SkeltonTableRow from './SkeltonTableRow';
+import { useIsMounted } from '~hooks/useIsMounted';
 
 // 🧾 Local types
 interface PropsT<TData> {
@@ -36,6 +37,20 @@ function TableBody<TData>({ table }: PropsT<TData>) {
   const { params, flags } = use(CoinsContext);
   const { showFavorites, isFetchingFavorites } = use(FavoriteCoinsContext);
   const firstIndex = (params.page - 1) * params.perPage + 1;
+  const isMounted = useIsMounted();
+
+  //   Loading ui
+  if (!isMounted || flags?.isFetching || isFetchingFavorites) {
+    return (
+      <TableBodyShadcn>
+        {Array.from({ length: 10 }).map((_, index) => (
+          <TableRow className="mb-6 h-20" key={index}>
+            <SkeltonTableRow />
+          </TableRow>
+        ))}
+      </TableBodyShadcn>
+    );
+  }
 
   //   General ui
   if (table.getRowModel().rows?.length) {
@@ -99,19 +114,6 @@ function TableBody<TData>({ table }: PropsT<TData>) {
               </TableCell>
             ))}
             <TableCell className="w-0 rounded-r-sm"></TableCell>
-          </TableRow>
-        ))}
-      </TableBodyShadcn>
-    );
-  }
-
-  //   Skelton ui
-  if (flags?.isFetching || isFetchingFavorites) {
-    return (
-      <TableBodyShadcn>
-        {Array.from({ length: params.perPage }).map((_, index) => (
-          <TableRow className="mb-6 h-20" key={index}>
-            <SkeltonTableRow />
           </TableRow>
         ))}
       </TableBodyShadcn>
