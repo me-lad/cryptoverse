@@ -3,7 +3,6 @@
 
 // 📦 Third-Party imports
 import React, { useEffect, useRef } from 'react';
-import { useQuery } from '@tanstack/react-query';
 
 // 🧾 Local types
 interface PropsT {
@@ -16,19 +15,6 @@ const MiniChart: React.FC<PropsT> = (props) => {
   const { symbol, theme = 'dark' } = props;
   const container = useRef<HTMLDivElement | null>(null);
 
-  const queryFn = async () => {
-    const response = await fetch(
-      `/api/widgets/mini-chart?symbol=${encodeURIComponent(symbol)}`,
-    );
-    if (!response.ok) throw new Error('Network response was not ok');
-    return response.json();
-  };
-
-  const { data: chartData } = useQuery({
-    queryKey: ['mini-chart', symbol],
-    queryFn,
-  });
-
   useEffect(() => {
     if (!container.current) return;
 
@@ -39,7 +25,7 @@ const MiniChart: React.FC<PropsT> = (props) => {
     script.async = true;
 
     const chartConfig = {
-      symbol: chartData?.data?.[0]?.symbol || `${symbol.toUpperCase()}USD`,
+      symbol: `${symbol.toUpperCase()}USD`,
       chartOnly: false,
       dateRange: '12M',
       noTimeScale: false,
@@ -88,7 +74,7 @@ const MiniChart: React.FC<PropsT> = (props) => {
 
       return () => observer.disconnect();
     }
-  }, [symbol, theme, chartData]);
+  }, [symbol, theme]);
 
   return <div ref={container} style={{ overflow: 'hidden' }} />;
 };

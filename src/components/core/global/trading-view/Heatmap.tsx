@@ -3,7 +3,6 @@
 
 // 📦 Third-Party imports
 import React, { useEffect, useRef } from 'react';
-import { useQuery } from '@tanstack/react-query';
 
 // 🧾 Local types
 interface PropsT {
@@ -17,17 +16,6 @@ const Heatmap: React.FC<PropsT> = (props) => {
   const { height, width, theme = 'dark' } = props;
   const container = useRef<HTMLDivElement>(null);
 
-  const queryFn = async () => {
-    const response = await fetch('/api/widgets/heatmap-widget');
-    if (!response.ok) throw new Error('Network response was not ok');
-    return response.json();
-  };
-
-  const { data: marketData } = useQuery({
-    queryKey: ['heatmap-widget'],
-    queryFn,
-  });
-
   useEffect(() => {
     if (!container.current) return;
 
@@ -40,7 +28,7 @@ const Heatmap: React.FC<PropsT> = (props) => {
     // Configure widget with server data if available
     const widgetConfig = {
       dataSource: 'Crypto',
-      blockSize: marketData?.data?.sort?.sortBy || 'market_cap_calc',
+      blockSize: 'market_cap_calc',
       blockColor: '24h_close_change|5',
       locale: 'en',
       symbolUrl: '',
@@ -91,7 +79,7 @@ const Heatmap: React.FC<PropsT> = (props) => {
 
       return () => observer.disconnect();
     }
-  }, [theme, height, width, marketData]);
+  }, [theme, height, width]);
 
   return (
     <div className="tradingview-widget-container" ref={container}>

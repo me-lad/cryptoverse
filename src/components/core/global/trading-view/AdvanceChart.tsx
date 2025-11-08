@@ -3,7 +3,6 @@
 
 // 📦 Third-Party imports
 import React, { useEffect, useRef } from 'react';
-import { useQuery } from '@tanstack/react-query';
 
 // 🧾 Local types
 interface PropsT {
@@ -19,19 +18,6 @@ const AdvanceChart: React.FC<PropsT> = (props) => {
 
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const queryFn = async () => {
-    const response = await fetch(
-      `/api/widgets/advanced-chart?symbol=${encodeURIComponent(symbol)}`,
-    );
-    if (!response.ok) throw new Error('Network response was not ok');
-    return response.json();
-  };
-
-  const { data: chartData } = useQuery({
-    queryKey: ['advanced-chart', symbol],
-    queryFn,
-  });
-
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://s3.tradingview.com/tv.js';
@@ -40,8 +26,7 @@ const AdvanceChart: React.FC<PropsT> = (props) => {
     script.onload = () => {
       // @ts-expect-error
       if (window.TradingView) {
-        const chartSymbol =
-          chartData?.data?.[0]?.symbol || `${symbol.toUpperCase()}USDT`;
+        const chartSymbol = `${symbol.toUpperCase()}USDT`;
         // @ts-expect-error
         new window.TradingView.widget({
           autosize: true,
@@ -91,7 +76,7 @@ const AdvanceChart: React.FC<PropsT> = (props) => {
     };
 
     containerRef.current?.appendChild(script);
-  }, [symbol, theme, chartData]);
+  }, [symbol, theme]);
 
   return (
     <div
