@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 's3-symbol-logo.tradingview.com',
+      },
+      {
+        protocol: 'https',
         hostname: 'images.cryptocompare.com',
       },
       {

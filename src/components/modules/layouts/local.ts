@@ -3,6 +3,7 @@ export const headerLessRoutes = [
   '/auth/signup',
   '/auth/reset-password',
   '/auth/verify',
+  '/tw-chart',
 ];
 
 export const footerLessRoutes = [...headerLessRoutes];

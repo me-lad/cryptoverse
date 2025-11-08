@@ -7,14 +7,16 @@ import React, { useEffect, useRef } from 'react';
 // 🧾 Local types
 interface PropsT {
   symbol: string;
+  fullSymbol?: string;
   theme?: 'light' | 'dark';
   height?: number;
   width?: number;
+  allowChangeSymbol?: boolean;
 }
 
 // ⚙️ Functional component
 const AdvanceChart: React.FC<PropsT> = (props) => {
-  const { symbol, height, theme, width } = props;
+  const { symbol, theme, fullSymbol, allowChangeSymbol = true } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -26,7 +28,7 @@ const AdvanceChart: React.FC<PropsT> = (props) => {
     script.onload = () => {
       // @ts-expect-error
       if (window.TradingView) {
-        const chartSymbol = `${symbol.toUpperCase()}USDT`;
+        const chartSymbol = fullSymbol || `${symbol.toUpperCase()}USDT`;
         // @ts-expect-error
         new window.TradingView.widget({
           autosize: true,
@@ -38,7 +40,7 @@ const AdvanceChart: React.FC<PropsT> = (props) => {
           locale: 'en',
           toolbar_bg: '#f1f3f6',
           enable_publishing: false,
-          allow_symbol_change: true,
+          allow_symbol_change: allowChangeSymbol,
           container_id: 'tradingview_chart',
         });
 
@@ -79,11 +81,7 @@ const AdvanceChart: React.FC<PropsT> = (props) => {
   }, [symbol, theme]);
 
   return (
-    <div
-      id="tradingview_chart"
-      ref={containerRef}
-      style={{ width, height, overflow: 'hidden' }}
-    />
+    <div id="tradingview_chart" ref={containerRef} className="h-full w-full" />
   );
 };
 

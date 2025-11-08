@@ -75,10 +75,21 @@ export const coinsNavItems: CoinNavItemT[] = [
     url: '/coins',
   },
   {
+    label: 'Trading View Chart',
+    icon: '/svgs/logo/trading-view.svg',
+    url: '/tw-chart',
+  },
+  {
     label: 'Bitcoin',
     icon: '/images/coins-page/btc.png',
     url: '/coin/bitcoin',
     shortName: 'BTC',
+  },
+  {
+    label: 'Solana',
+    icon: '/images/coins-page/sol.png',
+    url: '/coin/solana',
+    shortName: 'SOL',
   },
   {
     label: 'Ethereum',
@@ -105,13 +116,13 @@ export const coinsNavItems: CoinNavItemT[] = [
     shortName: 'TRX',
   },
   {
-    label: 'Cryptocurrency Calculator',
-    icon: '/svgs/header/calculator.svg',
-    url: '/coins-calculator',
-  },
-  {
     label: 'Cryptocurrency Chart Comparator',
     icon: '/svgs/header/comparison.svg',
     url: '/coins-chart-comparator',
+  },
+  {
+    label: 'Cryptocurrency Calculator',
+    icon: '/svgs/header/calculator.svg',
+    url: '/coins-calculator',
   },
 ];

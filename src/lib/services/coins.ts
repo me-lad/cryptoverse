@@ -10,6 +10,7 @@ import type { GetCoinChartData } from '~types/api-generated/getCoinChartData';
 import type { CoinsOrderT } from '~types/coins';
 import type { HeaderNavbarCoinsFetchOrderT } from '~types/header';
 import type { GetCoinOrders } from '~types/api-generated/getCoinOrders';
+import type { GetTradingViewAvailableSymbols } from '~types/api-generated/getTradingViewAvailableSymbols';
 import { useServerFetch } from '~hooks/useServerFetch';
 import { minutesToMillisecond } from '~helpers/time';
 import { GetWidgetCoins } from '~types/api-generated/getWidgetCoins';
@@ -348,5 +349,36 @@ export const getCoinOrders = async (coinSymbol: string) => {
   } catch (err) {
     showFallbackCatcher(err);
     return { lastUpdateId: 0, bids: [], asks: [] };
+  }
+};
+
+export const getTradingViewAvailableSymbols = async (
+  startPoint: number,
+  searchQuery: string,
+): Promise<GetTradingViewAvailableSymbols | null> => {
+  // allow startPoint = 0; only reject null/undefined
+  if (startPoint == null) return null;
+
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const fetchUrl = `${baseUrl}/api/trading-view/symbols?q=${encodeURIComponent(
+      searchQuery || '',
+    )}&start=${encodeURIComponent(String(startPoint))}`;
+
+    const resp = await fetch(fetchUrl, {
+      method: 'GET',
+      headers: Base_Headers,
+    });
+
+    if (!resp.ok) throw new Error(`APIError: ${resp.status}`);
+    const json = await resp.json();
+
+    // proxy returns { ok: true, data: [...] }
+    if (!json?.ok) throw new Error(json?.error || 'TradingView proxy error');
+    return json.data as GetTradingViewAvailableSymbols;
+  } catch (err: any) {
+    showFallbackCatcher(err?.message || err);
+    showErrorToast(AuthMessages.Error.CatchHandler, 5000);
+    return null;
   }
 };
