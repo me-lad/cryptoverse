@@ -1,4 +1,4 @@
-import { fetchMiniChartData } from '~services/chart';
+import { fetchMiniChartData } from '@/lib/services/widgets';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {

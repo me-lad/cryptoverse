@@ -18,7 +18,7 @@ const MiniChart: React.FC<PropsT> = (props) => {
 
   const queryFn = async () => {
     const response = await fetch(
-      `/api/mini-chart?symbol=${encodeURIComponent(symbol)}`,
+      `/api/widgets/mini-chart?symbol=${encodeURIComponent(symbol)}`,
     );
     if (!response.ok) throw new Error('Network response was not ok');
     return response.json();

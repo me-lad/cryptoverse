@@ -1,3 +1,5 @@
+import { useServerFetch } from '~hooks/useServerFetch';
+
 interface ChartDataResponse {
   ok: boolean;
   status: number;
@@ -5,10 +7,6 @@ interface ChartDataResponse {
   error?: string;
 }
 
-/**
- * Fetch mini chart data from TradingView
- * Use in route handlers or server components
- */
 export async function fetchMiniChartData(
   symbol: string,
   interval: string = '1D',
@@ -70,6 +68,74 @@ export async function fetchAdvancedChartData(
         'close',
         'open',
       ],
+    };
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'User-Agent':
+          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      return {
+        ok: false,
+        status: response.status,
+        error: `Failed to fetch: ${response.statusText}`,
+      };
+    }
+
+    const data = await response.json();
+    return {
+      ok: true,
+      status: 200,
+      data,
+    };
+  } catch (error) {
+    return {
+      ok: false,
+      status: 500,
+      error: error instanceof Error ? error.message : 'Unknown error',
+    };
+  }
+}
+
+export async function fetchHeatmapData(): Promise<ChartDataResponse> {
+  try {
+    const url = 'https://scanner.tradingview.com/crypto/scan';
+
+    const payload = {
+      filter: [
+        { left: 'type', operation: 'equal', right: 'crypto' },
+        { left: 'exchange', operation: 'equal', right: 'BINANCE' },
+        { left: 'name', operation: 'match', right: 'USDT$' },
+      ],
+      options: {
+        lang: 'en',
+      },
+      markets: ['crypto'],
+      symbols: {
+        query: {
+          types: [],
+        },
+      },
+      columns: [
+        'name',
+        'close',
+        'change|1D',
+        'market_cap_calc',
+        'volume',
+        'Recommend.All',
+        'description',
+      ],
+      sort: {
+        sortBy: 'market_cap_calc',
+        sortOrder: 'desc',
+      },
+      range: [0, 200], // Top 200 by market cap
     };
 
     const response = await fetch(url, {

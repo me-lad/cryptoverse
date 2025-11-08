@@ -1,4 +1,4 @@
-import { fetchAdvancedChartData } from '~services/chart';
+import { fetchAdvancedChartData } from '@/lib/services/widgets';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {

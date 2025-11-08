@@ -17,7 +17,6 @@ const developingPages: { [key: string]: string } = {
   deposit: 'Wallet / Deposit',
   withdraw: 'Wallet / Withdraw',
   transactions: 'Transactions',
-  'market-overview': 'Market Overview',
   'two-factor-auth': 'Two Factor Authentication',
   'device-management': 'Device Management',
   performance: 'Performance',
