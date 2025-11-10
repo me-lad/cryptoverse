@@ -44,7 +44,7 @@ export default function RootLayout({
     <html
       lang="en"
       dir="ltr"
-      className="*:selection:bg-primary min-h-screen min-w-screen overflow-x-hidden *:selection:text-white"
+      className="*:selection:bg-primary-700 min-h-screen min-w-screen overflow-x-hidden *:selection:text-white"
       suppressHydrationWarning
     >
       <body
@@ -60,8 +60,10 @@ export default function RootLayout({
               >
                 {/* Header */}
                 <HeaderFn />
+
                 {/* Route interface */}
                 <main className="w-full">{children}</main>
+
                 {/* Footer */}
                 <FooterFn />
 

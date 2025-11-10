@@ -1,9 +1,5 @@
-// 📌 Directives
-
 // 📦 Third-Party imports
 import React from 'react';
-
-// 📦 Internal imports
 
 // 🧾 Local types
 interface PropsT {
