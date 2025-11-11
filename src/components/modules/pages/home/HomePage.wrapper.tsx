@@ -1,8 +1,8 @@
 // 📦 Internal imports
 import Pattern from './background-pattern/Pattern';
 import AnimatedSubtitleFn from './subtitle/AnimatedSubtitle.fn';
+import Hero from './hero';
 import ExchangeDataFn from './exchange-data/ExchangeData.fn';
-import Intro from './intro/Intro';
 import WhyUs from './why-us/WhyUs';
 import UserReviews from './user-reviews/UserReviews';
 import LatestNews from './latest-news/LatestNews';
@@ -15,7 +15,7 @@ const HomePageWrapper = () => {
       <Pattern />
 
       {/* Page sections */}
-      <Intro />
+      <Hero />
       <ExchangeDataFn />
       <WhyUs />
       <UserReviews />

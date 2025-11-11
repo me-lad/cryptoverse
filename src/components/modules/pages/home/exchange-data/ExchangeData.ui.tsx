@@ -2,7 +2,7 @@
 'use client';
 
 // 📦 Third-Party imports
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import {
   BanknoteArrowDown,
@@ -16,7 +16,12 @@ import {
 
 // 📦 Internal imports
 import { containerDefault, flexCenter } from '~styles/tw-custom';
-import { useRotatingIndex } from './local';
+import {
+  useRotatingIndex,
+  lastChildClassName,
+  otherChildrenClassNameGenerator,
+  propertiesParentClassName,
+} from './local';
 
 // 🧾 Local types
 interface PropsT {
@@ -26,21 +31,7 @@ interface PropsT {
 // ⚙️ Functional component
 const ExchangeDataUi: React.FC<PropsT> = ({ visibleIndex }) => {
   const firstActiveChild = useRotatingIndex<1 | 2 | 3>(1, 3);
-  const secondActiveChild = useRotatingIndex<4 | 5 | 6>(4, 6);
-
-  const propertiesParentClassName =
-    'absolute inset-0 flex items-center justify-between px-5 text-2xl font-semibold transition-transform duration-700 min-[33.75em]:text-base md:text-lg lg:px-0 lg:text-xl xl:text-2xl';
-
-  const lastChildClassName = `w-1/3 min-[52em]:w-1/4 ${flexCenter} hidden gap-2 min-[52em]:flex`;
-
-  const otherChildrenClassNameGenerator = (
-    order: number,
-    targetState: number,
-  ) =>
-    clsx(
-      'min-[33.75em]:flex min-[33.75em]:w-1/3 min-[52em]:w-1/4 gap-2 justify-center items-center',
-      order !== targetState ? 'max-[33.7495em]:hidden ' : 'flex w-full',
-    );
+  const secondActiveChild = useRotatingIndex<4 | 5 | 6>(4, 6, 10_000, 5_000);
 
   return (
     <section className="bg-background relative mt-32 w-full md:py-4">
