@@ -10,7 +10,10 @@ interface PropsT extends React.HTMLAttributes<HTMLHeadingElement> {
 export const CustomTitle = ({ text, className, ...props }: PropsT) => {
   return (
     <h3
-      className={cn('mt-1 text-center text-4xl font-semibold', className)}
+      className={cn(
+        'mt-1 text-center text-3xl font-semibold sm:text-4xl',
+        className,
+      )}
       {...props}
     >
       {text}

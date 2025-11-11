@@ -42,7 +42,7 @@ const swiperClass = clsx(
 // ⚙️ Functional component
 const Slider = () => {
   return (
-    <div className="my-10">
+    <div className="mb-10">
       {/* Slider */}
       <Swiper
         className={swiperClass}
@@ -57,7 +57,10 @@ const Slider = () => {
         onInit={(swiper) => swiper.update()}
       >
         {Array.from({ length: 5 }).map((_, index) => (
-          <SwiperSlide key={index} className="max-w-1/2 bg-transparent py-10">
+          <SwiperSlide
+            key={index}
+            className="max-w-[85%] bg-transparent py-10 sm:max-w-3/4 lg:max-w-3/5 xl:max-w-1/2"
+          >
             <Card
               description="The platform is incredibly user-friendly, and since I became a holder, I've seen a significant increase in my assets. It's great to be part of a project where everything just works smoothly! I’ve been impressed by the continuous innovation and dedication of the team. As a holder, I feel like I'm part of something truly groundbreaking, and I can’t wait to see where this project goes next."
               username="John Doe"

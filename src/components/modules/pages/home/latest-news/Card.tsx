@@ -54,14 +54,14 @@ const Card: React.FC<DataEntity> = (props) => {
       {/* Content */}
       <div className="p-6">
         {/* Source/Publish */}
-        <div className={`${flexBetween}`}>
+        <div className={`${flexBetween} `}>
           <div
-            className={`${flexCenter} max-w-1/2 gap-2 rounded-sm bg-neutral-800 px-4 py-2 text-xs font-medium text-white`}
+            className={`${flexCenter} max-w-2/3 gap-2 rounded-sm bg-neutral-800 px-4 py-2 text-xs font-medium text-white sm:max-w-1/2`}
           >
             <Rss size={13} />
             <span className="line-clamp-1">{SOURCE_NAME}</span>
           </div>
-          <div className={`${flexCenter} gap-2 text-sm`}>
+          <div className={`${flexCenter} hidden gap-2 text-sm sm:flex`}>
             <CalendarDays size={13} />
             <span>{formatDate(PUBLISHED_ON * 1000)}</span>
           </div>
@@ -81,14 +81,16 @@ const Card: React.FC<DataEntity> = (props) => {
 
         {/* Body */}
         <div className="mt-3 min-h-[48px]">
-          <p className="line-clamp-2 tracking-wide text-neutral-400">{BODY}</p>
+          <p className="line-clamp-4 tracking-wide text-neutral-400 sm:line-clamp-2">
+            {BODY}
+          </p>
         </div>
 
         {/* Categories/Link */}
         <div className={`${flexBetween} mt-6`}>
           <div className={`${flexCenter} !justify-start *:text-xs`}>
-            <span>CATEGORIES :</span>
-            <div>
+            <span className="min-w-fit">CATEGORIES :</span>
+            <div className="grow">
               {CATEGORY_DATA?.slice(0, 2)?.map((category) => (
                 <span
                   key={category.ID}
@@ -99,7 +101,7 @@ const Card: React.FC<DataEntity> = (props) => {
               ))}
             </div>
           </div>
-          <Link href={URL}>
+          <Link className="max-[25em]:relative max-[25em]:bottom-52" href={URL}>
             <LucideLink size={18} />
           </Link>
         </div>

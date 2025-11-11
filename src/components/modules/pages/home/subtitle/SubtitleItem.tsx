@@ -17,7 +17,7 @@ const SubtitleItem: React.FC<CoinEntity_Gecko> = (props) => {
   return (
     <Link
       href={`/coin/${id}`}
-      className={`${flexCenter} hover:bg-primary-800 h-full min-w-[10%] gap-4 rounded-xs transition-colors`}
+      className={`${flexCenter} hover:bg-primary-800 h-full min-w-fit gap-4 rounded-sm px-10 transition-colors sm:min-w-[10%] sm:px-0`}
     >
       <div>
         <Image

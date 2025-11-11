@@ -59,7 +59,7 @@ export default function RootLayout({
                 enableSystem
               >
                 {/* Header */}
-                <HeaderFn />
+                {/* <HeaderFn /> */}
 
                 {/* Route interface */}
                 <main className="w-full">{children}</main>

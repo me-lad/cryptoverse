@@ -20,7 +20,7 @@ const WhyUs = () => {
         />
 
         {/* Content */}
-        <ul className="mt-10 grid w-full grid-cols-3 gap-6">
+        <ul className="mt-10 grid w-full grid-cols-1 gap-6 min-[35em]:grid-cols-2 lg:grid-cols-3">
           {properties.map((property) => (
             <Card {...property} key={property.id.toString()} />
           ))}
