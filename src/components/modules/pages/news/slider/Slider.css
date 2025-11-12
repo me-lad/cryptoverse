@@ -4,6 +4,13 @@
     width: fit-content !important;
     right: 2rem !important;
     left: unset !important;
+    margin-top: 1rem !important;
+
+    @media screen and (max-width: 40em) {
+      left: 0 !important;
+      right: 0 !important;
+      margin: auto !important;
+    }
   }
 
   .swiper-pagination-bullet {
@@ -35,6 +42,10 @@
       height: 14px !important;
       stroke-width: 2px !important;
       stroke: var(--color-white) !important;
+    }
+
+    @media screen and (max-width: 25em) {
+      display: none;
     }
   }
 

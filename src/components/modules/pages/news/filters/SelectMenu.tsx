@@ -77,8 +77,7 @@ const SelectMenu: React.FC<PropsT> = (props) => {
   return (
     <DropDownMenu
       className={clsx(
-        'left-0 mt-2 max-h-96 w-max translate-x-0 overflow-y-auto',
-        selectId === 'sources' ? 'min-w-[200%]' : 'min-w-[140%]',
+        'left-0 mt-2 max-h-96 w-full translate-x-0 overflow-y-auto sm:w-fit lg:w-max',
       )}
     >
       {/* Search */}

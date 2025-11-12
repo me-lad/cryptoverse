@@ -37,6 +37,7 @@ const NewsListFn = () => {
   if (isLoading) {
     return <NewsLoading />;
   }
+
   if (isError) {
     return (
       <CatchError

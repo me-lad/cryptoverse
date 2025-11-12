@@ -24,13 +24,13 @@ const FiltersWrapper = () => {
   };
 
   return (
-    <div className="grid h-full w-4/6 grid-cols-11 gap-x-4">
+    <div className="grid h-fit min-w-full grid-cols-12 gap-x-4 gap-y-2.5 sm:min-w-4/6">
       {/* Filters select */}
       <Sources />
       <Categories />
 
       {/* Reset filters buttons */}
-      <div className="col-span-2 justify-end">
+      <div className="col-span-12 justify-end sm:col-span-3">
         <Button
           size={'lg'}
           type="button"

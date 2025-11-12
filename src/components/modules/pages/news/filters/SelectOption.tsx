@@ -107,7 +107,7 @@ const SelectOption: React.FC<PropsT> = (props) => {
         {selectId === 'sources' && (
           <Image
             className="rounded-sm"
-            src={data.IMAGE_URL}
+            src={data.IMAGE_URL || '/svgs/logo/logo.svg'}
             width={30}
             height={30}
             alt={data.NAME}

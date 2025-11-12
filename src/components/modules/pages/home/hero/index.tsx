@@ -18,7 +18,7 @@ const Hero = () => {
         </h1>
       </div>
       <div className="max-[48em]:w-full max-[32.5em]:hidden">
-        <div className="text-4xl font-medium min-[71.75em]:text-[2.75rem] md:text-[2rem] lg:text-4xl xl:text-5xl">
+        <div className="text-4xl font-medium tracking-tighter min-[71.75em]:text-[2.75rem] md:text-[2.15rem] lg:text-4xl xl:text-5xl">
           <p className="max-[48em]:text-center">
             Trade Smarter{' '}
             <span className="text-3xl min-[71.75em]:text-[2rem] xl:text-[2.5rem]">
@@ -27,10 +27,10 @@ const Hero = () => {
           </p>
         </div>
         <div
-          className={`${flexCenter} mt-2 gap-2 text-4xl font-medium min-[71.75em]:text-[2.75rem] md:text-[2rem] lg:text-4xl xl:text-5xl`}
+          className={`${flexCenter} mt-2 gap-2 text-4xl font-medium tracking-tighter min-[71.75em]:text-[2.75rem] md:text-[2.15rem] lg:text-4xl xl:text-5xl`}
         >
           <p>Grow Faster with </p>
-          <h1 className="text-primary font-bold">CryptoVerse</h1>
+          <h1 className="text-primary font-bold tracking-tight">CryptoVerse</h1>
         </div>
       </div>
       <div className="hidden md:block">
@@ -38,7 +38,7 @@ const Hero = () => {
           className="drop-shadow-2xl drop-shadow-neutral-800 max-[92.5em]:w-[36rem] max-[88.125em]:w-[32rem] max-[83.75em]:w-[28rem] max-[71.75em]:w-[24rem] max-[64em]:w-[18.5rem]"
           src={'/images/home-page/home-Hero.png'}
           alt="Crypto Verse"
-          width={630}
+          width={540}
           height={410}
         />
       </div>

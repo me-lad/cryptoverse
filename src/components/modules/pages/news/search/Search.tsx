@@ -42,7 +42,7 @@ const Search = () => {
   }, [debouncedSearch]);
 
   return (
-    <div className="!bg-background-lighter has-focus-visible:border-primary shadow-primary/60 flex h-full min-w-1/4 items-center gap-3 rounded-sm border-2 border-neutral-700 px-3 py-1.5 transition-all has-focus-visible:shadow-xs">
+    <div className="!bg-background-lighter has-focus-visible:border-primary shadow-primary/60 flex h-full min-w-full items-center gap-3 rounded-sm border-2 border-neutral-700 px-3 py-1.5 transition-all has-focus-visible:shadow-xs sm:min-w-1/4">
       {isLoading ? (
         <Loader2 className="mt-0.5 animate-spin" size={20} />
       ) : (

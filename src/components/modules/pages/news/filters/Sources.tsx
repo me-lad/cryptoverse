@@ -26,13 +26,16 @@ const Sources = () => {
     gcTime: daysToMillisecond(7),
   });
 
-  if (isLoading) return <Skeleton className="col-span-3 rounded-sm" />;
+  if (isLoading)
+    return (
+      <Skeleton className="col-span-12 min-h-full max-sm:h-10 sm:col-span-3" />
+    );
 
   return (
     <>
       {isError && <ToastError />}
 
-      <DropDownAggregator className="col-span-3 min-h-full">
+      <DropDownAggregator className="col-span-12 min-h-full sm:col-span-3">
         <DropDownTrigger activeClassName="*:!bg-primary *:*:last:rotate-180">
           <Button className="w-full rounded-sm" size={'lg'} variant={'outline'}>
             News Feeds

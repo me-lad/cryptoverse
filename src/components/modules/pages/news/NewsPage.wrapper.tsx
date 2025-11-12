@@ -11,7 +11,9 @@ const NewsPageWrapper = () => {
   return (
     <>
       {/* Search & Filtering */}
-      <div className={`${flexBetween} ${containerDefault} mt-16 h-10 px-0.5`}>
+      <div
+        className={`${flexBetween} ${containerDefault} mt-16 h-fit max-w-full flex-wrap gap-2.5 px-0.5`}
+      >
         <Search />
         <FiltersWrapper />
       </div>

@@ -32,7 +32,7 @@ const SliderUi: React.FC<PropsT> = ({ data }) => {
     <Swiper
       className={clsx(
         containerDefault,
-        'mySwiper newsPage__slider relative mt-16 min-h-[520px] overflow-hidden rounded-lg',
+        'mySwiper newsPage__slider relative mt-16 min-h-[520px] overflow-hidden rounded-lg max-lg:max-w-[calc(100dvw_-_1.5rem)]',
       )}
       spaceBetween={0}
       slidesPerView={1}
@@ -43,7 +43,7 @@ const SliderUi: React.FC<PropsT> = ({ data }) => {
     >
       {data.map((item, index) => (
         <SwiperSlide key={item.ID}>
-          <div className="relative min-h-[520px]">
+          <div className="relative min-h-[520px] overflow-hidden rounded-lg">
             <Image
               className="h-auto max-w-full object-cover"
               src={`/images/news-page/slider-bg-${index % 2 === 0 ? '1' : '2'}.png`}

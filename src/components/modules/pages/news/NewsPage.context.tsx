@@ -2,13 +2,7 @@
 'use client';
 
 // 📦 Third-Party imports
-import React, {
-  createContext,
-  useEffect,
-  useReducer,
-  useRef,
-  useMemo,
-} from 'react';
+import React, { createContext, useEffect, useReducer, useMemo } from 'react';
 
 // 📦 Internal imports
 import type { NewsContextT } from '~types/news';
@@ -17,6 +11,7 @@ import { updateSearchParams } from '~helpers/generators';
 import { newsReducer } from './news.reducer';
 import { createNewsActions } from './news.actions';
 import { buildSearchSource } from './local';
+import { useIsMounted } from '~hooks/useIsMounted';
 
 // 🧾 Local types and variables
 export const NewsContext = createContext<NewsContextT>(newsContextInitialState);
@@ -30,7 +25,6 @@ interface PropsT {
 
 // ⚙️ Functional component
 const NewsPageContext: React.FC<PropsT> = ({ urlParams, children }) => {
-  const hasMounted = useRef(false);
   const [state, dispatch] = useReducer(newsReducer, {
     data: { ...newsContextInitialState.data },
     params: {
@@ -38,8 +32,10 @@ const NewsPageContext: React.FC<PropsT> = ({ urlParams, children }) => {
     },
   });
 
+  const hasMounted = useIsMounted();
+
   useEffect(() => {
-    if (hasMounted.current) {
+    if (hasMounted) {
       const { language, sources, searchString, ...rest } = state.params;
       updateSearchParams({
         ...rest,
@@ -47,8 +43,6 @@ const NewsPageContext: React.FC<PropsT> = ({ urlParams, children }) => {
         language: language !== 'EN' ? language : undefined,
         sources: !searchString ? sources : buildSearchSource(sources),
       });
-    } else {
-      hasMounted.current = true;
     }
   }, [state.params]);
 

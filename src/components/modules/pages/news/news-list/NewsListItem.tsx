@@ -52,12 +52,16 @@ const NewsListItem: React.FC<DataEntity> = (props) => {
     PUBLISHED_ON,
     SOURCE_DATA,
   } = props;
+
   return (
-    <div className="flex w-full items-center gap-8 overflow-hidden border-b border-b-neutral-500 py-8">
+    <div className="w-full border-b border-b-neutral-500 py-8 text-left">
       {/* Image */}
-      <Link href={URL} className={`${flexCenter} min-h-[105px] min-w-[105px]`}>
+      <Link
+        href={URL}
+        className={`float-left min-h-[105px] min-w-[125px] max-[22em]:mr-2.5 max-[22em]:max-w-[90px] max-[22em]:min-w-[90px]`}
+      >
         <Image
-          className={`${flexCenter} rounded-sm text-center`}
+          className={`${flexCenter} rounded-sm object-contain text-center`}
           src={IMAGE_URL || '/svgs/logo/logo.svg'}
           width={105}
           height={105}
@@ -78,32 +82,40 @@ const NewsListItem: React.FC<DataEntity> = (props) => {
         {/* Title */}
         <div className="mt-2">
           <Link href={URL}>
-            <h3 className="text-xl font-semibold">{TITLE}</h3>
+            <h3 className="line-clamp-2 text-lg font-semibold sm:line-clamp-1 sm:text-xl">
+              {TITLE}
+            </h3>
           </Link>
         </div>
 
         {/* Body */}
         <div>
-          <p className="mt-3 line-clamp-2 text-sm font-medium text-neutral-300">
+          <p className="mt-3 line-clamp-3 text-sm font-medium text-neutral-300 max-sm:hidden">
             {BODY}
+          </p>
+          <p className="mt-3 text-sm font-medium text-neutral-300 sm:hidden">
+            {BODY.slice(0, 250) + '...'}
           </p>
         </div>
 
         {/* Categories & Sentiment */}
         <div
-          className={`${flexBetween} mt-4 flex-nowrap overflow-hidden text-xs text-neutral-400`}
+          className={`${flexBetween} mt-4 flex-nowrap overflow-hidden text-xs text-neutral-400 max-[34em]:flex-wrap max-[34em]:gap-2.5 sm:ml-[125px] sm:w-[calc(100%_-_125px)]`}
         >
-          <div className="flex w-3/4 items-center">
+          <div className="flex w-3/4 items-center max-[34em]:w-fit">
             <p>CATEGORIES:</p>
             <div className={flexCenter}>
-              {CATEGORY_DATA?.slice(0, 14).map((category) => (
-                <span className="border-neutral-400 px-1.5 not-first:border-l">
+              {CATEGORY_DATA?.slice(0, 2).map((category) => (
+                <span
+                  key={category.ID}
+                  className="text-primary-400 border-neutral-400 px-1.5 font-semibold not-first:border-l"
+                >
                   {category.NAME}
                 </span>
               ))}
             </div>
           </div>
-          <div className="flex w-1/4 items-center justify-end gap-2">
+          <div className="flex w-1/4 items-center justify-end gap-2 max-[34em]:w-fit">
             <p className="text-sm">Sentiment:</p>
             <span
               className={clsx(
