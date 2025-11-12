@@ -1,0 +1,114 @@
+// 📌 Directives
+'use client';
+
+// 📦 Third-Party imports
+import { toast } from 'react-toastify';
+import React, { Dispatch, useEffect, useRef, useState } from 'react';
+
+// 📦 Internal imports
+import type { SymbolT } from '~types/api-generated/getTradingViewAvailableSymbols';
+import { toastsCustomID } from '~configs/react-toastify';
+import { useSymbols, Heading, ListHeading } from './local';
+import Search from './Search';
+import SymbolsListUi from './SymbolsList.ui';
+
+// 🧾 Local types
+interface PropsT {
+  activeSymbol: string;
+  changeSymbol: Dispatch<React.SetStateAction<string>>;
+}
+
+// ⚙️ Functional component
+const SymbolsListFn: React.FC<PropsT> = (props) => {
+  const { activeSymbol, changeSymbol } = props;
+
+  const [startPoint, setStartPoint] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [symbols, setSymbols] = useState<SymbolT[]>([]);
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isScrollingRef = useRef(false);
+
+  const { data, isLoading } = useSymbols(startPoint, searchQuery);
+
+  useEffect(() => {
+    console.log('searchQuery', searchQuery);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    if (data) {
+      const newSymbols = new Set([...symbols, ...data.symbols]);
+      setSymbols(Array.from(newSymbols));
+    }
+  }, [data]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const container = containerRef.current;
+      if (!container) return;
+
+      const { scrollTop, scrollHeight, clientHeight } = container;
+
+      if (
+        scrollHeight - scrollTop <= clientHeight + 50 &&
+        !isScrollingRef.current
+      ) {
+        isScrollingRef.current = true;
+
+        if (!data || !data.symbols_remaining) return;
+
+        if (data.symbols_remaining === 0) {
+          toast('No more items to get.', {
+            type: 'info',
+            autoClose: 4000,
+            toastId: toastsCustomID,
+          });
+          return;
+        } else {
+          setStartPoint((prev) => prev + Math.min(data?.symbols_remaining, 50));
+        }
+
+        setTimeout(() => {
+          isScrollingRef.current = false;
+        }, 1000);
+      }
+    };
+
+    const container = containerRef.current;
+    if (container && startPoint > 1) {
+      container.addEventListener('scroll', handleScroll);
+    }
+
+    return () => {
+      const container = containerRef.current;
+      if (container) {
+        container.removeEventListener('scroll', handleScroll);
+      }
+    };
+  }, [symbols.length]);
+
+  const resetParams = () => {
+    setStartPoint(1);
+    setSymbols([]);
+  };
+
+  return (
+    <div ref={containerRef} className="max-h-screen w-full overflow-y-auto">
+      <Heading />
+      <Search changeQuery={setSearchQuery} resetParams={resetParams} />
+      <ListHeading />
+
+      <ul className="mx-auto mt-2.5 mb-12 w-[80%] px-2">
+        <SymbolsListUi
+          activeSymbol={activeSymbol}
+          changeSymbol={changeSymbol}
+          symbols={symbols}
+          isLoading={isLoading}
+          startPoint={startPoint}
+          changeStartPoint={setStartPoint}
+        />
+      </ul>
+    </div>
+  );
+};
+export default SymbolsListFn;

@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import type { MessageSendResultT } from '~types/support';
 import { sendMessage } from '~actions/support/support.controller';
 import { toastsCustomID } from '~configs/react-toastify';
-import { supportFormFields } from '~constants/support';
+import { supportFormFields } from './local';
 
 const SupportForm = () => {
   const [formData, setFormData] = useState<{ [key: string]: string }>({});
@@ -76,7 +76,7 @@ const SupportForm = () => {
 
           {/* Error */}
           {!state?.success && state?.properties![field.name] && (
-            <p className="text-status-error-200 px-1 py-2 text-sm font-semibold">
+            <p className="text-status-error-200 relative px-1 py-2 text-sm font-semibold">
               {state.properties[field.name]}
             </p>
           )}

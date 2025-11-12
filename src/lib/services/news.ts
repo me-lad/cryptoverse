@@ -37,14 +37,18 @@ export const getNewsCategories = async () => {
 };
 
 // Fetch filtered news
-export const getNews = async ({
-  language = 'EN',
-  limit = 20,
-  sources,
-  categories,
-  excludeCategories,
-  timestamp,
-}: NewsContextParamsT & { limit?: number; timestamp?: number }) => {
+export const getNews = async (
+  params: NewsContextParamsT & { limit?: number; timestamp?: number },
+) => {
+  const {
+    language = 'EN',
+    limit = 20,
+    sources,
+    categories,
+    excludeCategories,
+    timestamp,
+  } = params;
+
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_CRYPTOCOMPARE;
   const fetchUrl = buildUrl(`${baseUrl}/news/v1/article/list`, {
     lang: language,

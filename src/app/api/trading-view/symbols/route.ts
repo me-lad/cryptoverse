@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 export async function GET(req: Request) {
   try {
     const url = new URL(req.url);
-    const q = url.searchParams.get('q') || '';
+    const q = url.searchParams.get('text') || '';
     const start = url.searchParams.get('start') || '0';
 
     const tvUrl = `https://symbol-search.tradingview.com/local_search/v3/?text=${encodeURIComponent(
@@ -27,6 +27,8 @@ export async function GET(req: Request) {
     }
 
     const data = await resp.json();
+
+    console.log(data);
     return NextResponse.json({ ok: true, data });
   } catch (err: any) {
     return NextResponse.json(

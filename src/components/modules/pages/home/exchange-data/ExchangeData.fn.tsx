@@ -1,24 +1,16 @@
 // 📌 Directives
 'use client';
 
-// 📦 Third-Party imports
-import { useState, useEffect } from 'react';
+// 📦 Third-Party imports 'react';
 import dynamic from 'next/dynamic';
 
 // 📦 Internal imports
+import { useRotatingIndex } from './local';
 const ExchangeDataUi = dynamic(() => import('./ExchangeData.ui'));
 
 // ⚙️ Functional component
 const ExchangeDataFn = () => {
-  const [visibleIndex, setVisibleIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setVisibleIndex((prevVal) => (prevVal === 0 ? 1 : 0));
-    }, 5_000);
-
-    return () => clearInterval(interval);
-  }, []);
+  const visibleIndex = useRotatingIndex(0, 1, 5_000);
 
   return <ExchangeDataUi visibleIndex={visibleIndex as 0 | 1} />;
 };

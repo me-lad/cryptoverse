@@ -1,5 +1,5 @@
 import type { SupportMessageType } from '~models/SupportMessage/types';
-import { fieldLabels } from '~constants/support';
+import { fieldLabels } from '@/components/modules/pages/support/local';
 import { AuthPatterns } from '~constants/patterns';
 
 export const validateFields = (

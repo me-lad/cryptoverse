@@ -7,13 +7,13 @@ export const supportFormFields: SupportFormFieldT[] = [
     id: buildRandomID(),
     placeholder: 'First Name',
     name: 'firstName',
-    parentClassName: 'pr-2',
+    parentClassName: 'sm:pr-2 max-sm:col-span-2',
   },
   {
     id: buildRandomID(),
     placeholder: 'Last Name',
     name: 'lastName',
-    parentClassName: 'pl-2',
+    parentClassName: 'sm:pl-2 max-sm:col-span-2',
   },
   {
     id: buildRandomID(),

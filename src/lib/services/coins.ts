@@ -356,19 +356,15 @@ export const getTradingViewAvailableSymbols = async (
   startPoint: number,
   searchQuery: string,
 ): Promise<GetTradingViewAvailableSymbols | null> => {
-  // allow startPoint = 0; only reject null/undefined
   if (startPoint == null) return null;
 
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    const fetchUrl = `${baseUrl}/api/trading-view/symbols?q=${encodeURIComponent(
+    const fetchUrl = `${baseUrl}/api/trading-view/symbols?text=${encodeURIComponent(
       searchQuery || '',
     )}&start=${encodeURIComponent(String(startPoint))}`;
 
-    const resp = await fetch(fetchUrl, {
-      method: 'GET',
-      headers: Base_Headers,
-    });
+    const resp = await fetch(fetchUrl);
 
     if (!resp.ok) throw new Error(`APIError: ${resp.status}`);
     const json = await resp.json();

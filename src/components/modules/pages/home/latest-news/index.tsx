@@ -4,16 +4,16 @@
 // 📦 Third-Party imports
 import { ChevronRight } from 'lucide-react';
 import { useQuery } from '@tanstack/react-query';
-import { Skeleton } from '@/components/core/ui/shadcn/skeleton';
+import { Skeleton } from '~core/ui/shadcn/skeleton';
 import Link from 'next/link';
+import clsx from 'clsx';
 
 // 📦 Internal imports
-import { containerDefault, flexBetween } from '~styles/tw-custom';
+import { containerDefault } from '~styles/tw-custom';
 import { getNews } from '~services/news';
 import { CatchError } from '~core/ui/shared/typography';
 import { CustomTag, CustomTitle } from '~core/ui/shared/typography';
 import Card from './Card';
-import clsx from 'clsx';
 
 // ⚙️ Functional component
 const LatestNews = () => {
