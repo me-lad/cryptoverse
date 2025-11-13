@@ -60,33 +60,28 @@ const CoinsOrderToggle = () => {
   if (showFavorites) return;
 
   return (
-    <>
-      <div className="relative flex items-center gap-5 font-semibold">
-        <span
-          className="cursor-pointer"
-          onClick={() => actions && actions.setOrder('market_cap_desc')}
-        >
-          Market Cap
-        </span>
-        <span
-          className="cursor-pointer"
-          onClick={() => actions && actions.setOrder('volume_desc')}
-        >
-          Total Volume
-        </span>
-        <span
-          className={clsx(
-            'bg-primary absolute top-full mt-1 h-[2px] transition-all duration-300',
-            params.order === 'market_cap_desc'
-              ? 'w-20'
-              : 'w-[5.7rem] translate-x-[6.5rem]',
-          )}
-        ></span>
-      </div>
-
-      {/* Separator */}
-      <div className="h-8 w-[1px] bg-neutral-500"></div>
-    </>
+    <div className="relative flex items-center gap-5 font-semibold">
+      <span
+        className="cursor-pointer"
+        onClick={() => actions && actions.setOrder('market_cap_desc')}
+      >
+        Market Cap
+      </span>
+      <span
+        className="cursor-pointer"
+        onClick={() => actions && actions.setOrder('volume_desc')}
+      >
+        Total Volume
+      </span>
+      <span
+        className={clsx(
+          'bg-primary absolute top-full mt-1 h-[2px] transition-all duration-300',
+          params.order === 'market_cap_desc'
+            ? 'w-20'
+            : 'w-[5.7rem] translate-x-[6.5rem]',
+        )}
+      ></span>
+    </div>
   );
 };
 
@@ -128,15 +123,9 @@ const CoinsPageSizeChange = () => {
   };
 
   return (
-    <>
-      <p>
-        Coins count on each page{' '}
-        <small title="Current count" className="align-middle text-xs">
-          ( {params.perPage} )
-        </small>
-      </p>
+    <div className="max-lg:hidden">
       <form
-        className="flex gap-2"
+        className="relative flex gap-2"
         onSubmit={(e) => {
           e.preventDefault();
           changeHandler(
@@ -147,7 +136,7 @@ const CoinsPageSizeChange = () => {
       >
         <input
           type="text"
-          className="focus-visible:border-primary bg-background-lighter w-12 rounded-sm border-b border-transparent px-2.5 !outline-0"
+          className="focus-visible:border-primary bg-background-lighter peer w-12 rounded-sm border-b border-transparent px-2.5 !outline-0"
         />
         <Button
           variant={'secondary'}
@@ -157,11 +146,15 @@ const CoinsPageSizeChange = () => {
         >
           <Check />
         </Button>
-      </form>
 
-      {/* Separator */}
-      <div className="h-8 w-[1px] bg-neutral-500"></div>
-    </>
+        <p className="bg-background-lighter invisible absolute bottom-12 -left-3/4 flex w-max items-center justify-center gap-1 rounded-sm p-2 text-sm opacity-0 transition-all peer-focus-visible:visible peer-focus-visible:opacity-100">
+          Coins count on each page
+          <small title="Current count" className="mt-0.5 text-xs">
+            ( {params.perPage} )
+          </small>
+        </p>
+      </form>
+    </div>
   );
 };
 
@@ -227,18 +220,23 @@ const CoinsCurrencyChange = () => {
 
 const FiltersAggregator = () => {
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 max-sm:flex-wrap max-sm:justify-center">
       {/* Table source */}
       <CoinsSourceToggle />
 
-      {/* Separator */}
-      <div className="h-8 w-[1px] bg-neutral-500"></div>
+      <div className="h-8 w-[1px] bg-neutral-500 max-[23.875em]:invisible max-[22.82em]:hidden"></div>
 
       {/* Order  */}
       <CoinsOrderToggle />
 
+      {/* Separator */}
+      <div className="h-8 w-[1px] bg-neutral-500 max-[37.5em]:invisible max-[36.375em]:hidden"></div>
+
       {/* Page size */}
       <CoinsPageSizeChange />
+
+      {/* Separator */}
+      <div className="h-8 w-[1px] bg-neutral-500 max-lg:hidden"></div>
 
       {/* Currency */}
       <CoinsCurrencyChange />

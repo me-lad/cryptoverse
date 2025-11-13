@@ -1,7 +1,5 @@
 // 📦 Third-Party imports
-import { ChevronRight } from 'lucide-react';
 import clsx from 'clsx';
-import Link from 'next/link';
 
 // 📦 Internal imports
 import { highlightsList } from './local';
@@ -10,12 +8,13 @@ import { flexBetween } from '~styles/tw-custom';
 // ⚙️ Functional component
 const Highlights = () => {
   return (
-    <div className="grid grid-cols-3 grid-rows-2 gap-x-5 gap-y-10">
+    <div className="grid gap-x-5 gap-y-10 md:grid-cols-2 xl:grid-cols-3">
       {highlightsList.map((highlight) => (
         <div
           key={highlight.id}
           className={clsx(
             'bg-background-lighter h-[20rem] rounded-sm p-5 shadow-xs shadow-neutral-300/40',
+            highlight.title === 'Global Market Data' && 'max-[26em]:h-[25rem]',
           )}
         >
           {/* Highlight heading */}
@@ -26,9 +25,7 @@ const Highlights = () => {
           </div>
 
           {/* Highlights Content  (Conditional) */}
-          <div className="h-[92%] py-5">
-            <highlight.component />
-          </div>
+          <div className="h-[92%] py-5">{highlight.component}</div>
         </div>
       ))}
     </div>

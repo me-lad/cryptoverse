@@ -62,7 +62,9 @@ export default function RootLayout({
                 <HeaderFn />
 
                 {/* Route interface */}
-                <main className="w-full">{children}</main>
+                <main className="w-full max-[78em]:overflow-x-hidden">
+                  {children}
+                </main>
 
                 {/* Footer */}
                 <FooterFn />

@@ -1,12 +1,12 @@
 // 📦 Internal imports
 import { containerDefault } from '~styles/tw-custom';
-import Highlights from './highlights/Highlights';
-import Coins from './coins/Coins';
+import Highlights from './highlights';
+import Coins from './coins';
 
 // ⚙️ Functional component
 const CoinsPageWrapper = () => {
   return (
-    <div className={`${containerDefault} mt-32`}>
+    <div className={`${containerDefault} my-32`}>
       {/* Highlights */}
       <Highlights />
 

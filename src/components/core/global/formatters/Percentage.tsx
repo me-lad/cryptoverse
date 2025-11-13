@@ -44,6 +44,7 @@ export const Percentage: React.FC<PropsT> = (props) => {
             />
           ) : (
             <Image
+              className="size-4"
               src={
                 !isNegative
                   ? '/svgs/percentage/up.svg'

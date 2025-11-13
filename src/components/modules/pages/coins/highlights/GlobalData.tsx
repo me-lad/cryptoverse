@@ -39,25 +39,31 @@ const GlobalData = async () => {
   return (
     <div className="h-full">
       {/* Market cap */}
-      <div className={`${flexBetween} h-1/2 border-b`}>
+      <div
+        className={`${flexBetween} h-1/2 border-b max-[26em]:flex-col max-[26em]:pb-2.5`}
+      >
         <div>
           <div className="flex items-end gap-2">
             Market Cap
-            <Percentage
-              percentage={change_percentage}
-              fontSize={'0.8rem'}
-              iconSize={14}
-            />
-            <small
-              className={clsx(
-                'text-[0.8rem]',
-                change_percentage.toString().startsWith('-')
-                  ? 'text-status-error-200'
-                  : 'text-status-success-200',
-              )}
-            >
-              ( 24h )
-            </small>
+            <div className="max-[49em]:hidden max-md:flex">
+              <div className="flex items-center gap-2 max-[82.5em]:hidden max-xl:flex">
+                <Percentage
+                  percentage={change_percentage}
+                  fontSize={'0.8rem'}
+                  iconSize={14}
+                />
+                <small
+                  className={clsx(
+                    'text-[0.8rem]',
+                    change_percentage.toString().startsWith('-')
+                      ? 'text-status-error-200'
+                      : 'text-status-success-200',
+                  )}
+                >
+                  ( 24h )
+                </small>
+              </div>
+            </div>
           </div>
           <Tooltip>
             <TooltipTrigger>
@@ -68,7 +74,6 @@ const GlobalData = async () => {
             <TooltipContent>
               <Price
                 price={total_market_cap.usd}
-                fullPrecision
                 darkTheme
                 imageHeight={20}
                 imageWidth={20}
@@ -87,9 +92,11 @@ const GlobalData = async () => {
       </div>
 
       {/* Volume */}
-      <div className={`${flexBetween} h-1/2 border-b`}>
+      <div
+        className={`${flexBetween} h-1/2 border-b max-[26em]:flex-col max-[26em]:pt-5 max-[26em]:pb-2.5`}
+      >
         <div>
-          <p>Total Volume</p>
+          <p className="max-[26em]:text-center">Total Volume</p>
           <Tooltip>
             <TooltipTrigger>
               <div className="mt-1">
@@ -99,7 +106,6 @@ const GlobalData = async () => {
             <TooltipContent>
               <Price
                 price={total_volume.usd}
-                fullPrecision
                 darkTheme
                 imageHeight={20}
                 imageWidth={20}

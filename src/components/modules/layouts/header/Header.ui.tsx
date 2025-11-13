@@ -1,6 +1,6 @@
 // 📦 Internal imports
 import { flexBetween, containerDefault } from '~styles/tw-custom';
-import GlobalSearch from './global-search';
+import GlobalSearch from './search';
 import HeaderAccountFn from './account-center/HeaderAccount.fn';
 import Currency from './currency';
 import Logo from './logo';
@@ -11,7 +11,7 @@ import Navbar from './navbar';
 export default function HeaderUi() {
   return (
     <header className="border-b py-3">
-      <div className={`${flexBetween} ${containerDefault}`}>
+      <div className={`${flexBetween} ${containerDefault} `}>
         {/* Logo & Navbar */}
         <div className="flex items-center gap-8">
           <Logo />

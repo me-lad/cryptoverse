@@ -22,6 +22,7 @@ import {
 import type { CoinEntity_Compare } from '~types/api-generated/shared';
 import type { Coin } from '~types/api-generated/getTrendingCoins';
 import { Percentage, Price } from '~core/global/formatters';
+import TableBodyItem from './TableBodyItem';
 
 // 🧾 Local types
 type PropsT =
@@ -37,14 +38,14 @@ type PropsT =
 // ⚙️ Functional component
 const TableComp: React.FC<PropsT> = ({ list, source }) => {
   return (
-    <div>
-      <Table>
+    <div className="max-sm:max-w-[calc(100dvw-5rem)]">
+      <Table className="overflow-x-auto max-sm:max-w-[calc(100dvw_-_2.5rem)]">
         {/* Header */}
         <TableHeader>
           <TableRow className="!border-0 !outline-0">
-            <TableHead>Pair</TableHead>
-            <TableHead>Price</TableHead>
-            <TableHead>24h Change</TableHead>
+            <TableHead className="min-w-max">Pair</TableHead>
+            <TableHead className="min-w-max max-sm:px-5">Price</TableHead>
+            <TableHead className="min-w-max max-sm:px-5">24h Change</TableHead>
           </TableRow>
         </TableHeader>
 
@@ -52,116 +53,22 @@ const TableComp: React.FC<PropsT> = ({ list, source }) => {
         <TableBody>
           {source === 'Compare' &&
             list.map((item, index) => (
-              <TableRow
-                className={clsx(
-                  '!border-0 !outline-0 hover:cursor-pointer',
-                  index % 2 === 0 && 'bg-background/60 hover:bg-background',
-                )}
+              <TableBodyItem
                 key={item.ID}
-              >
-                <TableCell className="flex items-center gap-4">
-                  <Image
-                    className="rounded-full"
-                    src={item.LOGO_URL}
-                    width={22}
-                    height={22}
-                    alt={item.NAME}
-                  />
-                  <span title={item.NAME}>{item.SYMBOL}</span>
-                </TableCell>
-                <TableCell>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Price className="w-fit" price={item.PRICE_USD || 0} />
-                    </TooltipTrigger>
-
-                    {!!item.PRICE_USD && (
-                      <TooltipContent>
-                        <Price
-                          price={item.PRICE_USD}
-                          darkTheme
-                          imageHeight={19}
-                          imageWidth={19}
-                          fullPrecision
-                        />
-                      </TooltipContent>
-                    )}
-                  </Tooltip>
-                </TableCell>
-                <TableCell>
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <Percentage
-                        percentage={
-                          item.SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD || 0
-                        }
-                        iconSize={15}
-                        fontSize="0.9rem"
-                      />
-                    </TooltipTrigger>
-
-                    {!!item.SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD && (
-                      <TooltipContent>
-                        {item.SPOT_MOVING_24_HOUR_CHANGE_PERCENTAGE_USD}
-                      </TooltipContent>
-                    )}
-                  </Tooltip>
-                </TableCell>
-              </TableRow>
+                source="Compare"
+                data={item}
+                index={index}
+              />
             ))}
 
           {source === 'Gecko' &&
-            list.map(({ item }, index) => (
-              <TableRow
-                className={clsx(
-                  '!border-0 !outline-0 hover:cursor-pointer',
-                  index % 2 === 0 && 'bg-background/60 hover:bg-background',
-                )}
-                key={item.id}
-              >
-                <TableCell className="flex items-center gap-4">
-                  <Image
-                    className="rounded-full"
-                    src={item.small}
-                    width={22}
-                    height={22}
-                    alt={item.symbol}
-                  />
-                  <span title={item.id}>{item.symbol}</span>
-                </TableCell>
-                <TableCell>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Price price={item.data.price || 0} />
-                    </TooltipTrigger>
-
-                    <TooltipContent>
-                      <Price
-                        price={item.data.price || 0}
-                        fullPrecision
-                        darkTheme
-                        imageHeight={19}
-                        imageWidth={19}
-                      />
-                    </TooltipContent>
-                  </Tooltip>
-                </TableCell>
-                <TableCell>
-                  <Tooltip>
-                    <TooltipTrigger asChild>
-                      <Percentage
-                        percentage={item.data.price_change_percentage_24h.usd}
-                        iconSize={15}
-                        fontSize="0.9rem"
-                      />
-                    </TooltipTrigger>
-
-                    <TooltipContent>
-                      {item.data.price_change_percentage_24h.usd}
-                    </TooltipContent>
-                  </Tooltip>
-                </TableCell>
-              </TableRow>
+            list.map((item, index) => (
+              <TableBodyItem
+                key={item.item.id}
+                source="Gecko"
+                data={item}
+                index={index}
+              />
             ))}
         </TableBody>
       </Table>

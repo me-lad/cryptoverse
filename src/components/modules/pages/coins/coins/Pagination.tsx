@@ -40,11 +40,14 @@ const Pagination = () => {
   if (showFavorites) return;
 
   return (
-    <div className={`${flexCenter} mt-10 gap-2`}>
+    <div className={`${flexCenter} mt-10 min-[24em]:gap-2`}>
       {/* Previous page */}
       <Button
         variant={'ghost'}
-        className={clsx('cursor-pointer', params.page === 1 && 'invisible')}
+        className={clsx(
+          'cursor-pointer max-[27.5em]:hidden',
+          params.page === 1 && 'invisible',
+        )}
         disabled={params.page === 1 || flags?.isFetching}
         onClick={() => changePageHandler(params.page - 1)}
       >
@@ -61,7 +64,7 @@ const Pagination = () => {
       <Button
         variant={'ghost'}
         className={clsx(
-          'cursor-pointer',
+          'cursor-pointer max-[27.5em]:hidden',
           params.page === totalPagesCount && 'invisible',
         )}
         disabled={flags?.isFetching || params.page === totalPagesCount}

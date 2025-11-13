@@ -66,10 +66,10 @@ export const PriceCell = ({ value }: PriceCellPropsT) => {
   const { convertedPrice } = useCurrency(value);
 
   return (
-    <div>
+    <div className="min-w-max">
       <Tooltip>
         <TooltipTrigger>
-          <Price imageWidth={22} imageHeight={22} price={value} />
+          <Price shortenUnits imageWidth={22} imageHeight={22} price={value} />
         </TooltipTrigger>
         <TooltipContent>{convertedPrice}</TooltipContent>
       </Tooltip>
@@ -83,7 +83,7 @@ interface PercentageCellPropsT {
 }
 export const PercentageCell = ({ value }: PercentageCellPropsT) => {
   return (
-    <div>
+    <div className="min-w-max">
       <Tooltip>
         <TooltipTrigger>
           <Percentage percentage={value} iconSize={17} />

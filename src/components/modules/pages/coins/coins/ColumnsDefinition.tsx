@@ -50,7 +50,7 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
       }, [row.original.image]);
 
       return (
-        <div className="flex w-full items-center gap-4">
+        <div className="flex w-max items-center gap-4">
           <Image
             src={
               !src.startsWith('http') && !src.startsWith('/')
@@ -141,6 +141,7 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
       return (
         <div>
           <Image
+            className="object-cover max-[78em]:min-w-32"
             src={
               !src.startsWith('http') && !src.startsWith('/')
                 ? fallbackChart

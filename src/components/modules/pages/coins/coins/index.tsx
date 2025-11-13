@@ -57,10 +57,14 @@ const Coins = () => {
   return (
     <div className="mt-32">
       {/* Title */}
-      <h1 className="mb-8 pl-2 text-3xl font-semibold">Coins Data</h1>
+      <h1 className="mb-8 pl-2 text-3xl font-semibold max-md:text-center">
+        Coins Data
+      </h1>
 
       {/* Search & Filters */}
-      <div className={`${flexBetween} mb-8 px-2`}>
+      <div
+        className={`${flexBetween} mb-8 pl-2 max-md:flex-col max-md:gap-y-5`}
+      >
         <Filters />
         <Search setValue={(value: string) => setSearchInputValue(value)} />
       </div>

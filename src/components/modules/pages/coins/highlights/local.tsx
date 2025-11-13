@@ -3,7 +3,6 @@ import React from 'react';
 
 // 📦 Internal imports
 import { Trending, TopGainers, TopLosers, LastUpdated } from './MarketWidgets';
-import type { SentimentClassification } from '~types/api-generated/getMarketSentiment';
 import { buildRandomID } from '~helpers/generators';
 import Sentiment from './Sentiment';
 import GlobalData from './GlobalData';
@@ -12,7 +11,7 @@ import GlobalData from './GlobalData';
 export interface HighlightT {
   id: string;
   title: string;
-  component: React.FC;
+  component: React.ReactNode;
 }
 
 // 🧾 Local variables
@@ -20,31 +19,31 @@ export const highlightsList: HighlightT[] = [
   {
     id: buildRandomID().toString(),
     title: 'Market Sentiment',
-    component: () => <Sentiment />,
+    component: <Sentiment />,
   },
   {
     id: buildRandomID().toString(),
     title: 'Global Market Data',
-    component: () => <GlobalData />,
+    component: <GlobalData />,
   },
   {
     id: buildRandomID().toString(),
     title: 'Trending',
-    component: () => <Trending />,
+    component: <Trending />,
   },
   {
     id: buildRandomID().toString(),
     title: 'Last updated',
-    component: () => <LastUpdated />,
+    component: <LastUpdated />,
   },
   {
     id: buildRandomID().toString(),
     title: 'Top Gainers',
-    component: () => <TopGainers />,
+    component: <TopGainers />,
   },
   {
     id: buildRandomID().toString(),
     title: 'Top Losers',
-    component: () => <TopLosers />,
+    component: <TopLosers />,
   },
 ] as const;

@@ -28,12 +28,14 @@ const TableSearch: React.FC<PropsT> = ({ setValue }) => {
   }, [debounceSearch]);
 
   return (
-    <div className="bg-background-lighter has-focus-visible:border-primary flex w-1/5 items-center gap-2.5 rounded-md border-b border-transparent px-3 py-1.5">
-      {isSearching ? (
-        <Spinner variant="ellipsis" size={16} className="mt-1.5" />
-      ) : (
-        <Search size={16} className="text-neutral-400" />
-      )}
+    <div className="bg-background-lighter has-focus-visible:border-primary flex w-1/5 items-center gap-2.5 rounded-md border-b border-transparent px-3 py-1.5 max-md:min-w-72">
+      <div>
+        {isSearching ? (
+          <Spinner variant="ellipsis" size={16} className="mt-1.5" />
+        ) : (
+          <Search size={16} className="text-neutral-400" />
+        )}
+      </div>
       <input
         type="text"
         className="!outline-0 placeholder:text-sm placeholder:text-neutral-400"
