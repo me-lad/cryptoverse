@@ -51,7 +51,7 @@ interface ReposURL {
   bitbucket: any[];
 }
 
-interface MarketData {
+export interface MarketData {
   current_price: { [key: string]: number };
   total_value_locked: null;
   mcap_to_tvl_ratio: null;

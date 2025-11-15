@@ -19,7 +19,7 @@ const DataTable: React.FC<PropsT> = ({ children }) => {
   const { screenWidth } = useScreenWidth();
 
   useEffect(() => {
-    if (tableContainerElm.current && screenWidth >= 1248) {
+    if (tableContainerElm.current && screenWidth >= 1296) {
       (
         tableContainerElm.current.firstElementChild as HTMLDivElement
       ).style.overflowX = 'unset';
@@ -28,7 +28,7 @@ const DataTable: React.FC<PropsT> = ({ children }) => {
 
   return (
     <div
-      className="relative max-w-full max-[78em]:overflow-hidden max-[78em]:rounded-sm"
+      className="relative max-w-full max-[81em]:overflow-hidden max-[81em]:rounded-sm"
       ref={tableContainerElm}
     >
       <Table className="border-separate border-spacing-0">{children}</Table>

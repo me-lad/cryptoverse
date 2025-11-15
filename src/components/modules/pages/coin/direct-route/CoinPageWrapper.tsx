@@ -43,7 +43,7 @@ const CoinPageWrapper: React.FC<PropsT> = async (props) => {
   }
 
   const gridChildContainerClassName =
-    'bg-background-lighter  max-[28em]:!px-4 p-8';
+    'bg-background-lighter rounded-sm max-[28em]:!px-4 p-8';
 
   return (
     <>
@@ -51,12 +51,15 @@ const CoinPageWrapper: React.FC<PropsT> = async (props) => {
         <CoinData {...coinData} />
 
         <div className="mt-40 grid h-max grid-cols-12 gap-x-5">
+          {/* Desktop sidebar vision orders */}
           <div className="hidden h-full min-xl:col-span-4 min-xl:block">
             <Orders
               coinSymbol={coinData.symbol}
               coinPrice={coinData.market_data.current_price.usd}
             />
           </div>
+
+          {/* Desktop coin chart and additional information & Mobile coin chart and additional information and single orders table */}
           <div className="col-span-12 h-full min-xl:col-span-8">
             <ChartsWrapper coinName={coinData.id} coinSymbol={coinData.symbol}>
               <CoinChartWrapper

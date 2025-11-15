@@ -141,7 +141,7 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
       return (
         <div>
           <Image
-            className="object-cover max-[78em]:min-w-32"
+            className="object-cover max-[81em]:min-w-32"
             src={
               !src.startsWith('http') && !src.startsWith('/')
                 ? fallbackChart
