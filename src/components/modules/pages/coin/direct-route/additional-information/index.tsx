@@ -51,7 +51,7 @@ const CoinAdditionalInformation: React.FC<GetCoinData> = (props) => {
   };
 
   return (
-    <div className="h-full w-full *:text-sm">
+    <div className="h-full w-full *:text-sm *:max-[20.75em]:!text-xs">
       <InfoItem label="Name ( Symbol )" value={`${id}  ( ${symbol} )`} />
       <InfoItem label="Genesis Date" value={timeFormatter(genesis_date)} />
       <InfoItem label="Hashing Algorithm" value={hashing_algorithm} />

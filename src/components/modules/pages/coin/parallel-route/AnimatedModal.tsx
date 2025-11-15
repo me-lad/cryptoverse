@@ -8,7 +8,7 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 
 // 📦 Internal imports
-import { posCenter } from '~styles/tw-custom';
+import { flexCenter, posCenter } from '~styles/tw-custom';
 import Navigator from '~core/global/Navigator';
 
 // 🧾 Local types
@@ -39,10 +39,10 @@ const AnimatedModal: React.FC<PropsT> = ({ children }) => {
 
       <div
         className={clsx(
-          'z-[51] rounded-sm border border-neutral-700 bg-[#151515e6] px-14 py-11 transition-all duration-1000 ease-out *:transition-opacity *:duration-1000 *:ease-in',
+          'z-[51] overflow-x-hidden overflow-y-auto border border-neutral-700 bg-[#151515e6] p-7 py-11 transition-all duration-1000 ease-out *:transition-opacity *:duration-1000 *:ease-in sm:px-14 lg:rounded-sm',
           posCenter,
           hasMounted && !hasClosed
-            ? 'visible h-[85%] w-1/2 *:opacity-100'
+            ? 'max-lg:!no-scrollbar visible h-screen max-w-screen min-w-screen *:opacity-100 lg:h-[82%] lg:max-w-[72.5%] lg:min-w-[72.5%] xl:max-w-[65%] xl:min-w-[65%]'
             : 'invisible h-0 w-0 *:h-0 *:w-0 *:opacity-0',
           hasClosed ? 'delay-300' : '*:delay-300',
           !hasMounted && hasClosed && '*:hidden',
@@ -56,7 +56,7 @@ const AnimatedModal: React.FC<PropsT> = ({ children }) => {
         >
           <Navigator
             order="back"
-            className="absolute top-3 right-3 *:cursor-pointer"
+            className="absolute top-10 right-5 *:cursor-pointer md:top-3 md:right-3"
             delay={900}
           >
             <Button variant={'ghost'} size={'icon'}>

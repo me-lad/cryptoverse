@@ -55,10 +55,10 @@ const CoinData: React.FC<GetCoinData> = ({
   }, [priceChanges.length]);
 
   return (
-    <div className={`${flexBetween} border-b border-neutral-700 pb-8`}>
-      <div className="flex items-center">
+    <div>
+      <div className="flex items-center gap-5 pb-5">
         {/* 🔖 Coin Identity */}
-        <div className="flex items-center gap-2 border-r border-neutral-500 pr-10">
+        <div className="flex items-center gap-2 border-neutral-700 pr-10 min-[22em]:border-r">
           <Button
             className={clsx(
               'cursor-pointer transition-all',
@@ -90,67 +90,67 @@ const CoinData: React.FC<GetCoinData> = ({
           </div>
         </div>
 
-        {/* 📊 Market Metrics */}
-        <div className="ml-10 flex items-center gap-8 *:min-w-28">
-          <MetricBlock
-            label="Current Price"
-            value={market_data.current_price.usd}
-          />
-
-          <div className="relative h-20 w-32 overflow-hidden">
-            <div
-              key={activeChangeIndex} // 👈 forces re-render for animation
-              className={clsx(
-                flexCenter,
-                'animate-fade-in-up absolute top-0 h-full w-full flex-col gap-3.5 opacity-0 transition-all duration-500 ease-in-out',
-              )}
-            >
-              <p
-                className={clsx(
-                  'flex items-center gap-2',
-                  priceChanges[activeChangeIndex].value > 0
-                    ? 'text-status-success-200'
-                    : 'text-status-error-200',
-                )}
-              >
-                <Clock size={15} />
-                {priceChanges[activeChangeIndex].label}
-              </p>
-              <Percentage percentage={priceChanges[activeChangeIndex].value} />
-            </div>
-          </div>
-
-          <MetricBlock
-            label="24 High"
-            icon={<MoveUp size={15} />}
-            value={market_data.high_24h.usd}
-          />
-
-          <MetricBlock
-            icon={<MoveDown size={15} />}
-            value={market_data.low_24h.usd}
-            label="24 Low"
-          />
-
-          <MetricBlock
-            label="Total Volume"
-            value={market_data.total_volume.usd}
-          />
-
-          <MetricBlock label="Market Cap" value={market_data.market_cap.usd} />
+        {/* 📰 Actions */}
+        <div className="max-[22em]:hidden min-[29em]:flex min-[29em]:gap-4">
+          {[`/news?searchString=${id}`, `/create-alert/${id}`].map((e) => (
+            <Link key={e} href={e} className="flex items-center gap-2.5">
+              <Button className="cursor-pointer" variant="ghost" size="lg">
+                {e.includes('news') ? <Newspaper /> : <BellPlus />}
+                <p>{e.includes('news') ? 'News' : 'Alert'}</p>
+              </Button>
+            </Link>
+          ))}
         </div>
       </div>
 
-      {/* 📰 Actions */}
-      <div className="flex gap-4">
-        {[`/news?searchString=${id}`, `/create-alert/${id}`].map((e) => (
-          <Link key={e} href={e} className="flex items-center gap-2.5">
-            <Button className="cursor-pointer" variant="ghost" size="lg">
-              {e.includes('news') ? <Newspaper /> : <BellPlus />}
-              <p>{e.includes('news') ? 'News' : 'Alert'}</p>
-            </Button>
-          </Link>
-        ))}
+      {/* 📊 Market Metrics */}
+      <div className="grid grid-cols-2 gap-8 border-t border-neutral-700 pt-5 *:min-w-28 min-[29em]:grid-cols-3 md:grid-cols-6">
+        <MetricBlock
+          label="Current Price"
+          value={market_data.current_price.usd}
+        />
+
+        <div className="relative h-20 overflow-hidden">
+          <div
+            key={activeChangeIndex} // 👈 forces re-render for animation
+            className={clsx(
+              flexCenter,
+              'animate-fade-in-up absolute top-0 h-full w-full flex-col gap-3.5 opacity-0 transition-all duration-500 ease-in-out',
+            )}
+          >
+            <p
+              className={clsx(
+                'flex items-center gap-2',
+                priceChanges[activeChangeIndex].value > 0
+                  ? 'text-status-success-200'
+                  : 'text-status-error-200',
+              )}
+            >
+              <Clock size={15} />
+              {priceChanges[activeChangeIndex].label}
+            </p>
+            <Percentage percentage={priceChanges[activeChangeIndex].value} />
+          </div>
+        </div>
+
+        <MetricBlock
+          label="24 High"
+          icon={<MoveUp size={15} />}
+          value={market_data.high_24h.usd}
+        />
+
+        <MetricBlock
+          icon={<MoveDown size={15} />}
+          value={market_data.low_24h.usd}
+          label="24 Low"
+        />
+
+        <MetricBlock
+          label="Total Volume"
+          value={market_data.total_volume.usd}
+        />
+
+        <MetricBlock label="Market Cap" value={market_data.market_cap.usd} />
       </div>
     </div>
   );

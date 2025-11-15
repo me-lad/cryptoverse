@@ -6,9 +6,12 @@ import { Dot } from 'recharts';
 
 // 📦 Internal imports
 import { useCurrency } from '~hooks/useCurrency';
+import { useScreenWidth } from '~hooks/useScreenWidth';
 
 // ⚙️ Functional component
 const CustomDot = ({ index, payload, ...props }: any) => {
+  const { screenWidth } = useScreenWidth();
+
   const isEqual = (a: number, b: number) => a === b;
   const isMax = isEqual(props.max, payload.value);
   const isMin = isEqual(props.min, payload.value);
@@ -55,7 +58,13 @@ const CustomDot = ({ index, payload, ...props }: any) => {
         stroke={payload.fill}
       />
       {isLabelNeed && (
-        <text x={posX} y={posY} fontSize={18} fontWeight={600} fill={color}>
+        <text
+          x={posX}
+          y={posY}
+          fontSize={screenWidth >= 420 ? 18 : 16}
+          fontWeight={600}
+          fill={color}
+        >
           {convertedPrice.toString().slice(0, 12).endsWith(',') ||
           convertedPrice.toString().slice(0, 12).endsWith('.')
             ? convertedPrice.toString().slice(0, 11)

@@ -55,9 +55,6 @@ const CoinsSourceToggle = () => {
 
 const CoinsOrderToggle = () => {
   const { actions, params } = use(CoinsContext);
-  const { showFavorites } = use(FavoriteCoinsContext);
-
-  if (showFavorites) return;
 
   return (
     <div className="relative flex items-center gap-5 font-semibold">
@@ -87,9 +84,6 @@ const CoinsOrderToggle = () => {
 
 const CoinsPageSizeChange = () => {
   const { actions, params, flags } = use(CoinsContext);
-  const { showFavorites } = use(FavoriteCoinsContext);
-
-  if (showFavorites) return;
 
   const changeHandler = (value: number) => {
     if (flags?.isFetching || value === params.perPage) return;
@@ -219,6 +213,8 @@ const CoinsCurrencyChange = () => {
 };
 
 const FiltersAggregator = () => {
+  const { showFavorites } = use(FavoriteCoinsContext);
+
   return (
     <div className="flex items-center gap-4 max-sm:flex-wrap max-sm:justify-center">
       {/* Table source */}
@@ -227,16 +223,20 @@ const FiltersAggregator = () => {
       <div className="h-8 w-[1px] bg-neutral-500 max-[23.875em]:invisible max-[22.82em]:hidden"></div>
 
       {/* Order  */}
-      <CoinsOrderToggle />
+      {!showFavorites && <CoinsOrderToggle />}
 
       {/* Separator */}
-      <div className="h-8 w-[1px] bg-neutral-500 max-[37.5em]:invisible max-[36.375em]:hidden"></div>
+      {!showFavorites && (
+        <div className="h-8 w-[1px] bg-neutral-500 max-[37.5em]:invisible max-[36.375em]:hidden"></div>
+      )}
 
       {/* Page size */}
-      <CoinsPageSizeChange />
+      {!showFavorites && <CoinsPageSizeChange />}
 
       {/* Separator */}
-      <div className="h-8 w-[1px] bg-neutral-500 max-lg:hidden"></div>
+      {!showFavorites && (
+        <div className="h-8 w-[1px] bg-neutral-500 max-lg:hidden"></div>
+      )}
 
       {/* Currency */}
       <CoinsCurrencyChange />

@@ -52,7 +52,7 @@ export const columns: ColumnDef<[string, string]>[] = [
     header: ({ column }) => <SortableHeaders column={column} tag="Quantity" />,
     cell: ({ row }) => (
       <div>
-        <PriceCell value={+row.original[1]} />
+        <p className="mr-3 text-center">{+row.original[1]}</p>
       </div>
     ),
   },

@@ -20,15 +20,17 @@ const MarketInfo: React.FC<GetCoinData> = ({
   market_cap_rank,
 }) => {
   return (
-    <div className={`${flexBetween} mx-auto mt-8 w-10/12 gap-5`}>
+    <div
+      className={`${flexBetween} mx-auto mt-8 w-[95%] gap-5 max-[23.438em]:!justify-center *:max-[23.438em]:min-w-24 max-sm:max-w-full max-sm:flex-wrap min-[36.25em]:w-10/12`}
+    >
       <div
-        className={`${flexCenter} flex-col gap-2 *:text-xl *:text-neutral-200`}
+        className={`${flexCenter} flex-col gap-2 *:text-neutral-200 *:md:text-xl`}
       >
         <h2>Rank</h2>
         <span>{market_cap_rank}</span>
       </div>
       <div
-        className={`${flexCenter} flex-col gap-2 *:text-xl *:text-neutral-200`}
+        className={`${flexCenter} flex-col gap-2 *:text-neutral-200 *:md:text-xl`}
       >
         <Tooltip>
           <h2>Market Cap</h2>
@@ -50,7 +52,7 @@ const MarketInfo: React.FC<GetCoinData> = ({
         </Tooltip>
       </div>
       <div
-        className={`${flexCenter} flex-col gap-2 *:text-xl *:text-neutral-200`}
+        className={`${flexCenter} flex-col gap-2 *:text-neutral-200 *:md:text-xl`}
       >
         <h2>Total Volume</h2>
         <Tooltip>

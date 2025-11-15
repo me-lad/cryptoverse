@@ -57,13 +57,13 @@ const ChartCycleController: React.FC<PropsT> = (props) => {
   );
 
   return (
-    <div className={flexBetween}>
+    <div className={`${flexBetween} flex-wrap max-md:gap-y-2.5`}>
       {cycleEntities.map((entity, index) =>
         renderSource === 'DirectPage' ? (
           <a
             key={entity.label}
             className={clsx(
-              'hover:!bg-background w-[24.5%] rounded-sm transition-all',
+              'hover:!bg-background w-full rounded-sm transition-all min-[29em]:w-[49.5%] md:w-[24.5%]',
               chartCycle === entity.cycle && 'bg-background',
             )}
             href={`/coin/${id}${entity.cycle !== '24h' ? `?chartCycle=${entity.cycle}` : ''}`}
@@ -85,7 +85,7 @@ const ChartCycleController: React.FC<PropsT> = (props) => {
           <Link
             key={entity.label}
             className={clsx(
-              'hover:!bg-background-lighter w-[24.5%] rounded-sm transition-all',
+              'hover:!bg-background-lighter w-full rounded-sm transition-all min-[29em]:w-[49.5%] md:w-[24.5%]',
               chartCycle === entity.cycle && 'bg-background-lighter',
             )}
             href={`/coin/${id}${entity.cycle !== '24h' ? `?chartCycle=${entity.cycle}` : ''}`}

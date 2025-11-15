@@ -37,7 +37,7 @@ const ChartsWrapper: React.FC<PropsT> = ({
     useState<ChartSelectT>('CryptoVerse');
 
   return (
-    <div className="bg-background-lighter relative rounded-sm p-8">
+    <div className="bg-background-lighter rounded-sm p-8 max-[28em]:!px-4">
       <div
         className={clsx(
           'bg-background-lighter absolute -top-14 right-5 rounded-sm px-10 py-2.5',
@@ -118,8 +118,8 @@ const ChartsWrapper: React.FC<PropsT> = ({
               {coinName.slice(0, 1).toUpperCase() + coinName.slice(1)}{' '}
               Historical Data
             </h2>
-            <div className="mt-8 overflow-hidden rounded-sm outline-1">
-              <TradingViewChart symbol={coinSymbol} theme="dark" height={500} />
+            <div className="mt-8 h-[28.5rem] min-h-[28.5rem] overflow-hidden rounded-sm outline-1">
+              <TradingViewChart symbol={coinSymbol} theme="dark" />
             </div>
           </Suspense>
         ) : (

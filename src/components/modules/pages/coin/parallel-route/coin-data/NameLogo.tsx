@@ -96,7 +96,7 @@ const NameLogo: React.FC<GetCoinData> = ({
         </h1>
       </div>
 
-      <p className="text-sm">
+      <p className="text-sm max-md:hidden">
         ( Last Updated At : {updateDate} - {updateHour})
       </p>
     </div>

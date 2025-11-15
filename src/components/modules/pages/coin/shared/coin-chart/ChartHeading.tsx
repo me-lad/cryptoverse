@@ -22,13 +22,13 @@ interface PropsT {
 
 // ⚙️ Functional component
 const ChartHeading: React.FC<PropsT> = (props) => {
-  const { chartCycle, chartRef, coinName, renderSource, children } = props;
+  const { chartCycle, chartRef, coinName, children } = props;
 
   return (
-    <div className={flexBetween}>
-      <div>
-        <h2 className="text-xl font-semibold">Historical Data</h2>
-        <p className="mt-1.5">
+    <div className={`${flexBetween} max-[31em]:flex-col max-[31em]:gap-y-5`}>
+      <div className="*:max-[31em]:text-center">
+        <h2 className="font-semibold md:text-xl">Historical Data</h2>
+        <p className="mt-1.5 max-md:text-sm">
           Showing {coinName.toLowerCase()}{' '}
           {chartReferencesLabels[chartRef].default} for the last{' '}
           {cycleLabelsHeading[chartCycle]}

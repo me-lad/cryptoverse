@@ -160,6 +160,7 @@ const Chart: React.FC<PropsT> = (props) => {
                     fontWeight={600}
                     position={modifyReferenceLineLabel()}
                     fontSize={18}
+                    className="max-[26.25em]:!text-base"
                   >
                     {`Current : ${convertedPrice}`}
                   </Label>

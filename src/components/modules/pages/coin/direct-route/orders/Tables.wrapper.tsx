@@ -36,7 +36,7 @@ const TablesWrapper: React.FC<GetCoinOrders> = (props) => {
 
   return (
     <>
-      <div className="absolute top-7 right-8 flex items-center gap-2.5">
+      <div className="absolute top-20 right-8 flex items-center gap-2.5 min-[86em]:top-7 min-[86em]:right-8">
         <Tooltip>
           <TooltipTrigger asChild>
             <Button
