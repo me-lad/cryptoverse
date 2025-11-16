@@ -17,7 +17,7 @@ import Image from 'next/image';
 // 📦 Internal imports
 import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
 import { CoinsContext } from '../CoinsPage.context';
-import { showErrorToast } from '~helpers/toast';
+import { errorToast } from '~vendors/react-toastify';
 import { CurrencyT } from '~types/coins';
 import { CurrencyContext } from '~modules/Currency.context';
 import { currencies } from '~constants/coins';
@@ -96,7 +96,7 @@ const CoinsPageSizeChange = () => {
     const result = pageSizeInputSchema.safeParse(value);
 
     if (!result.success) {
-      showErrorToast(z.treeifyError(result.error).errors[0]);
+      errorToast(z.treeifyError(result.error).errors[0]);
     }
 
     if (actions && result.data) {

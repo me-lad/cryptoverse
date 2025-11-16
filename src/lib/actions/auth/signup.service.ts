@@ -5,7 +5,7 @@ import 'server-only';
 import type { UserModelType } from '~models/User/types';
 import type { FormStateT } from '~types/form';
 import { AuthMessages } from '~constants/messages';
-import { connectToDB } from '~configs/mongoose';
+import { connectToDB } from '~vendors/mongoose';
 import { catchErrorFormState, FormStatusKinds } from '~constants/form';
 import { UserServices } from '~services/user';
 import { doHash } from '~helpers/hash';

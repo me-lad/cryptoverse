@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 import type { ResetPasswordFormStepT } from '~types/form';
 import { resetPassword } from '~actions/auth/reset-password.controller';
 import { FormKinds } from '~constants/form';
-import { connectToDB } from '~configs/mongoose';
+import { connectToDB } from '~vendors/mongoose';
 import { OtpServices } from '~services/otp';
 import { UserServices } from '~services/user';
 import AuthPageWrapper from '@/components/modules/pages/auth/AuthPage.wrapper';

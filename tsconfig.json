@@ -31,7 +31,8 @@
       "~services/*": ["./src/lib/services/*"],
       "~styles/*": ["./src/lib/styles/*"],
       "~types/*": ["./src/lib/types/*"],
-      "~utils/*": ["./src/lib/utils/*"]
+      "~utils/*": ["./src/lib/utils/*"],
+      "~vendors/*": ["./src/lib/vendors/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

@@ -11,7 +11,7 @@ import { useLocalStorage } from '~hooks/useLocalStorage';
 import { coinsContextInitialState } from '~constants/coins';
 import { getCoins } from '~services/coins';
 import { minutesToMillisecond } from '~helpers/time';
-import { showErrorToast } from '~helpers/toast';
+import { errorToast } from '~vendors/react-toastify';
 import { AuthMessages } from '~constants/messages';
 import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
 
@@ -58,7 +58,7 @@ const CoinsPageContext: React.FC<PropsT> = ({ children }) => {
     },
   };
 
-  if (error) showErrorToast(AuthMessages.Error.CatchHandler);
+  if (error) errorToast(AuthMessages.Error.CatchHandler);
 
   return <CoinsContext value={value}>{children}</CoinsContext>;
 };

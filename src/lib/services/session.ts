@@ -5,7 +5,7 @@ import 'server-only';
 import mongoose from 'mongoose';
 
 // 📦 Internal imports
-import { connectToDB } from '../configs/mongoose';
+import { connectToDB } from '~vendors/mongoose';
 import { UserRolesType } from '../models/types';
 import { daysToMillisecond, hoursToMillisecond } from '~helpers/time';
 import SessionModel from '../models/Session';

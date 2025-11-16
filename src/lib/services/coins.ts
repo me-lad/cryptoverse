@@ -15,7 +15,7 @@ import { useServerFetch } from '~hooks/useServerFetch';
 import { minutesToMillisecond } from '~helpers/time';
 import { GetWidgetCoins } from '~types/api-generated/getWidgetCoins';
 import { Base_Headers } from '~constants/api';
-import { showErrorToast } from '~helpers/toast';
+import { errorToast } from '~vendors/react-toastify';
 import { AuthMessages } from '~constants/messages';
 
 // 🧾 Local variables
@@ -180,13 +180,15 @@ export const getCoins = async (
   } catch (err: any) {
     if (err instanceof TypeError) {
       showFallbackCatcher(err.message);
-      showErrorToast(AuthMessages.Error.CatchHandler, 5000);
+      errorToast(AuthMessages.Error.CatchHandler, { autoClose: 5000 });
     } else if (err.message === 'RateLimitExceeded') {
       showFallbackCatcher('CoinGecko rate limit hit');
-      showErrorToast('Too many requests. Please wait and try again.', 7000);
+      errorToast('Too many requests. Please wait and try again.', {
+        autoClose: 7000,
+      });
     } else {
       showFallbackCatcher(err);
-      showErrorToast(AuthMessages.Error.CatchHandler, 5000);
+      errorToast(AuthMessages.Error.CatchHandler, { autoClose: 5000 });
     }
     return [];
   }
@@ -221,13 +223,15 @@ export const getCoinsByIDs = async (
   } catch (err: any) {
     if (err instanceof TypeError) {
       showFallbackCatcher(err.message);
-      showErrorToast(AuthMessages.Error.CatchHandler, 5000);
+      errorToast(AuthMessages.Error.CatchHandler, { autoClose: 5000 });
     } else if (err.message === 'RateLimitExceeded') {
       showFallbackCatcher('CoinGecko rate limit hit');
-      showErrorToast('Too many requests. Please wait and try again.', 7000);
+      errorToast('Too many requests. Please wait and try again.', {
+        autoClose: 7000,
+      });
     } else {
       showFallbackCatcher(err);
-      showErrorToast(AuthMessages.Error.CatchHandler, 5000);
+      errorToast(AuthMessages.Error.CatchHandler, { autoClose: 5000 });
     }
     return [];
   }
@@ -266,13 +270,15 @@ export const searchCoins = async (
   } catch (err: any) {
     if (err instanceof TypeError) {
       showFallbackCatcher(err.message);
-      showErrorToast(AuthMessages.Error.CatchHandler, 5000);
+      errorToast(AuthMessages.Error.CatchHandler, { autoClose: 5000 });
     } else if (err.message === 'RateLimitExceeded') {
       showFallbackCatcher('CoinGecko rate limit hit');
-      showErrorToast('Too many requests. Please wait and try again.', 7000);
+      errorToast('Too many requests. Please wait and try again.', {
+        autoClose: 7000,
+      });
     } else {
       showFallbackCatcher(err);
-      showErrorToast(AuthMessages.Error.CatchHandler, 5000);
+      errorToast(AuthMessages.Error.CatchHandler, { autoClose: 5000 });
     }
     return [];
   }
@@ -329,10 +335,10 @@ export const getCoinsCryptoCompare = async (
   } catch (err: any) {
     if (err instanceof TypeError) {
       showFallbackCatcher(err.message);
-      showErrorToast(AuthMessages.Error.CatchHandler, 5000);
+      errorToast(AuthMessages.Error.CatchHandler, { autoClose: 5000 });
     } else {
       showFallbackCatcher(err);
-      showErrorToast(AuthMessages.Error.CatchHandler, 5000);
+      errorToast(AuthMessages.Error.CatchHandler, { autoClose: 5000 });
     }
     return [];
   }
@@ -374,7 +380,7 @@ export const getTradingViewAvailableSymbols = async (
     return json.data as GetTradingViewAvailableSymbols;
   } catch (err: any) {
     showFallbackCatcher(err?.message || err);
-    showErrorToast(AuthMessages.Error.CatchHandler, 5000);
+    errorToast(AuthMessages.Error.CatchHandler, { autoClose: 5000 });
     return null;
   }
 };

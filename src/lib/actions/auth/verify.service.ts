@@ -8,7 +8,7 @@ import type {
   FormStateT,
 } from '~types/form';
 import type { OtpDocumentType } from '~models/Otp/types';
-import { connectToDB } from '~configs/mongoose';
+import { connectToDB } from '~vendors/mongoose';
 import { AuthMessages } from '~constants/messages';
 import { isDatePassedTime } from '~helpers/time';
 import { buildRandomCode } from '~helpers/generators';

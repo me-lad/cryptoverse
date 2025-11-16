@@ -5,7 +5,7 @@ import 'server-only';
 // 📦 Internal imports
 import type { SigninFormDataT, FormStateT } from '~types/form';
 import { AuthMessages } from '~constants/messages';
-import { connectToDB } from '~configs/mongoose';
+import { connectToDB } from '~vendors/mongoose';
 import { catchErrorFormState, FormStatusKinds } from '~constants/form';
 import { sanitizeFormData } from '~helpers/sanitize';
 import { UserServices } from '~services/user';

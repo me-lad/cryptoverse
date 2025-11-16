@@ -1,14 +1,6 @@
-// 📦 Third-Party imports
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
 
-// 🧾 Local types
-export const toastsCustomID = 'verse-toast-2024';
-export const showErrorToastId = 'error-toast';
-export const successToastId = 'success-toast';
-export const infoToastId = 'info-toast';
-
-// ⚙️ Functional component
 const ReactToastify = () => {
   return (
     <ToastContainer

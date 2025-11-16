@@ -4,12 +4,11 @@
 // 📦 Third-Party imports
 import { useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
-import { toast } from 'react-toastify';
 
 // 📦 Internal imports
 import { FormStatusKinds, FormKinds } from '~constants/form';
 import { FormContext } from './AuthForm.context';
-import { toastsCustomID } from '~configs/react-toastify';
+import { errorToast, successToast } from '~vendors/react-toastify';
 
 // ⚙️ Functional component
 const FormResultHandler = () => {
@@ -18,12 +17,15 @@ const FormResultHandler = () => {
 
   useEffect(() => {
     if (state.redirectNeed && state.toastNeed) {
-      toast(state.toastMessage, {
-        type: state.status === FormStatusKinds.Error ? 'error' : 'success',
-        autoClose: state.toastMessage.length >= 100 ? 25000 : 10000,
-        onClose: () =>
-          state.redirectPath.startsWith('/') && router.push(state.redirectPath),
-      });
+      const autoClose = state.toastMessage.length >= 100 ? 25000 : 10000;
+      const onClose = () =>
+        state.redirectPath.startsWith('/') && router.push(state.redirectPath);
+
+      if (state.status === FormStatusKinds.Error) {
+        errorToast(state.toastMessage, { autoClose, onClose });
+      } else {
+        successToast(state.toastMessage, { autoClose, onClose });
+      }
 
       if (
         activeForm === FormKinds.ResetPassword &&
@@ -41,11 +43,13 @@ const FormResultHandler = () => {
     }
 
     if (state.toastNeed) {
-      toast(state.toastMessage, {
-        type: state.status === FormStatusKinds.Error ? 'error' : 'success',
-        toastId: toastsCustomID,
-        autoClose: state.toastMessage.length >= 100 ? 25000 : 10000,
-      });
+      const autoClose = state.toastMessage.length >= 100 ? 25000 : 10000;
+
+      if (state.status === FormStatusKinds.Error) {
+        errorToast(state.toastMessage, { autoClose });
+      } else {
+        successToast(state.toastMessage, { autoClose });
+      }
     }
   }, [state]);
 

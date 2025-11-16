@@ -8,7 +8,7 @@ import { treeifyError } from 'zod';
 // 📦 Internal imports
 import type { FormStateT, SignupFormDataT } from '~types/form';
 import { SignupFormSchema } from './signup.validator';
-import { connectToDB } from '~configs/mongoose';
+import { connectToDB } from '~vendors/mongoose';
 import { AuthMessages } from '~constants/messages';
 import { catchErrorFormState, FormStatusKinds } from '~constants/form';
 import { UserServices } from '~services/user';

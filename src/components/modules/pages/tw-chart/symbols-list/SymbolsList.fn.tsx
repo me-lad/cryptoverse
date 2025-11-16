@@ -2,13 +2,12 @@
 'use client';
 
 // 📦 Third-Party imports
-import { toast } from 'react-toastify';
 import React, { Dispatch, useEffect, useRef, useState } from 'react';
 
 // 📦 Internal imports
 import type { SymbolT } from '~types/api-generated/getTradingViewAvailableSymbols';
-import { toastsCustomID } from '~configs/react-toastify';
 import { useSymbols, Heading, ListHeading } from './local';
+import { infoToast } from '~vendors/react-toastify';
 import Search from './Search';
 import SymbolsListUi from './SymbolsList.ui';
 
@@ -58,11 +57,7 @@ const SymbolsListFn: React.FC<PropsT> = (props) => {
         if (!data || !data.symbols_remaining) return;
 
         if (data.symbols_remaining === 0) {
-          toast('No more items to get.', {
-            type: 'info',
-            autoClose: 4000,
-            toastId: toastsCustomID,
-          });
+          infoToast('No more items to get.', { autoClose: 4000 });
           return;
         } else {
           setStartPoint((prev) => prev + Math.min(data?.symbols_remaining, 50));

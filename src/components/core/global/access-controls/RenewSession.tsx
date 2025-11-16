@@ -2,10 +2,12 @@
 'use client';
 
 // 📦 Third-Party imports
-
 import React, { useLayoutEffect, useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { toast } from 'react-toastify';
+
+// 📦 Internal imports
+import { infoToast } from '~vendors/react-toastify';
 
 // 🧾 Local types
 interface PropsT {
@@ -44,8 +46,7 @@ const RenewSession: React.FC<PropsT> = ({ userId }) => {
 
   useEffect(() => {
     if (isFetching) {
-      const toastId = toast('Refreshing user sessions', {
-        type: 'info',
+      const toastId = infoToast('Refreshing user sessions', {
         autoClose: false,
         className: 'border-b border-status-warning-200',
       });

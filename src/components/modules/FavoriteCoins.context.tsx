@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 // 📦 Internal imports
 import type { FavoriteCoinsContextT } from '~types/coins';
 import { useLocalStorage } from '~hooks/useLocalStorage';
-import { showErrorToast } from '~helpers/toast';
+import { errorToast } from '~vendors/react-toastify';
 import { ToastError } from '~core/ui/shared/typography';
 import { getCoinsByIDs } from '~services/coins';
 
@@ -59,9 +59,9 @@ const FavoriteCoinsContextProvider: React.FC<PropsT> = ({ children }) => {
     }
 
     if (newList.length > 50) {
-      showErrorToast(
+      errorToast(
         'The maximum count for favorite coins is 50. to add some more please remove some of existence coins first.',
-        10_000,
+        { autoClose: 10_000 },
       );
     } else {
       setFavoriteIDs(newList);

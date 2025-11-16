@@ -4,8 +4,8 @@ import mongoose, { Model } from 'mongoose';
 // 📦 Internal imports
 import type { UserDocumentType } from './types';
 import { UserRolesEnum } from '../types';
-import { daysToMillisecond, hoursToMillisecond } from '~helpers/time';
-import { connectToDB } from '~configs/mongoose';
+import { hoursToMillisecond } from '~helpers/time';
+import { connectToDB } from '~vendors/mongoose';
 
 class UserModel {
   private schema;

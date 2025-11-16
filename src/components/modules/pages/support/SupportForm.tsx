@@ -6,13 +6,12 @@ import { useActionState, useEffect, useState } from 'react';
 import { Input } from '~core/ui/shadcn/input';
 import { Textarea } from '~core/ui/shadcn/textarea';
 import { Button } from '~core/ui/shadcn/button';
-import { toast } from 'react-toastify';
 
 // 📦 Internal imports
 import type { MessageSendResultT } from '~types/support';
 import { sendMessage } from '~actions/support/support.controller';
-import { toastsCustomID } from '~configs/react-toastify';
 import { supportFormFields } from './local';
+import { errorToast, successToast } from '~vendors/react-toastify';
 
 const SupportForm = () => {
   const [formData, setFormData] = useState<{ [key: string]: string }>({});
@@ -23,18 +22,14 @@ const SupportForm = () => {
 
   useEffect(() => {
     if (state?.success) {
-      toast(state.message, {
-        type: 'success',
+      successToast(state.message, {
         autoClose: 10_000,
-        toastId: toastsCustomID,
         position: 'top-center',
       });
     }
     if (!state?.success && state?.errMessage) {
-      toast(state.errMessage, {
-        type: 'error',
+      errorToast(state.errMessage, {
         autoClose: 10_000,
-        toastId: toastsCustomID,
         position: 'top-center',
       });
     }

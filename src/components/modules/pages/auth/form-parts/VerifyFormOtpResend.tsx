@@ -3,7 +3,6 @@
 
 // 📦 Third-Party imports
 import { Button } from '~core/ui/shadcn/button';
-import { toast } from 'react-toastify';
 import React, { useLayoutEffect, useState } from 'react';
 import clsx from 'clsx';
 
@@ -11,7 +10,7 @@ import clsx from 'clsx';
 import type { OtpResendResultT } from '~types/form';
 import { isDatePassedTime } from '~helpers/time';
 import { startCountdownTimer } from '~helpers/formatters';
-import { toastsCustomID } from '~configs/react-toastify';
+import { errorToast } from '~vendors/react-toastify';
 
 // 🧾 Local types
 type PropsT = {
@@ -51,10 +50,8 @@ const VerifyFormOtpResend: React.FC<PropsT> = (props) => {
         setReferenceTime(new Date(result.referenceTime));
       }
 
-      toast(result.message, {
-        type: 'error',
+      errorToast(result.message, {
         autoClose: 12000,
-        toastId: toastsCustomID,
         onClose: () =>
           result.refreshNeed &&
           typeof window !== 'undefined' &&

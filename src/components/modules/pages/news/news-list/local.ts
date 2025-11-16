@@ -3,13 +3,12 @@
 // 📦 Third-Party imports
 import { useRef, useState, useEffect, use } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { toast } from 'react-toastify';
 
 // 📦 Internal imports
 import { NewsContext } from '../NewsPage.context';
 import { getNews, searchNews } from '~services/news';
-import { toastsCustomID } from '~configs/react-toastify';
 import { buildSearchSource } from '../local';
+import { infoToast } from '~vendors/react-toastify';
 
 // Get news custom hook
 export function useNewsQuery() {
@@ -35,10 +34,8 @@ export function useNewsQuery() {
 
 // No more news toast
 function showNoMoreNewsToast() {
-  toast('No more news', {
-    type: 'info',
+  infoToast('No more news', {
     autoClose: 4000,
-    toastId: toastsCustomID,
     position: 'top-center',
     className: 'min-w-[280px] flex justify-center !text-xl',
     closeButton: false,

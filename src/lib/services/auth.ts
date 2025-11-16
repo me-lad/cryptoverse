@@ -11,7 +11,7 @@ import type {
   SessionCreationResultT,
 } from '~types/session';
 import { daysToMillisecond, hoursToMillisecond } from '~helpers/time';
-import { connectToDB } from '~configs/mongoose';
+import { connectToDB } from '~vendors/mongoose';
 import { UserServices } from '~services/user';
 import { SessionServices } from '~services/session';
 import { decrypt, encrypt } from '~helpers/token';

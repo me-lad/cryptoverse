@@ -5,7 +5,7 @@ import 'server-only';
 import mongoose from 'mongoose';
 
 // 📦 Internal imports
-import { connectToDB } from '../configs/mongoose';
+import { connectToDB } from '~vendors/mongoose';
 import BlockedNumberModel from '../models/BlockedNumber';
 
 // 🧠 Ensure DB is connected and model is initialized

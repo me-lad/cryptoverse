@@ -1,5 +1,5 @@
 import type { SupportMessageType } from '~models/SupportMessage/types';
-import { connectToDB } from '~configs/mongoose';
+import { connectToDB } from '~vendors/mongoose';
 import SupportMessageModel from '~models/SupportMessage';
 
 const createMessage = async (data: SupportMessageType) => {

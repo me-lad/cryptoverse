@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { IBM_Plex_Sans, Roboto } from 'next/font/google';
 import clsx from 'clsx';
 
-import ReactQueryProvider from '~configs/react-query';
-import ReactToastify from '~configs/react-toastify';
+import ReactQueryProvider from '~vendors/react-query';
+import ReactToastify from '~vendors/react-toastify';
 import CurrencyContextProvider from '~modules/Currency.context';
 import FavoriteCoinsContextProvider from '~modules/FavoriteCoins.context';
 import HeaderFn from '~modules/layouts/header/Header.fn';
@@ -13,7 +13,7 @@ import ThemeController from '~modules/Theme.controller';
 
 import '../lib/styles/global.css';
 import '../lib/styles/override.css';
-import '../lib/styles/react-toastify.css';
+import '../lib/vendors/react-toastify/index.css';
 
 // Metadata
 export const metadata: Metadata = {

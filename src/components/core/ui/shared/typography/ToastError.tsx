@@ -3,10 +3,9 @@
 
 // 📦 Third-Party imports
 import React, { useEffect } from 'react';
-import { toast } from 'react-toastify';
 
 // 📦 Internal imports
-import { toastsCustomID } from '~configs/react-toastify';
+import { errorToast } from '~vendors/react-toastify';
 
 // 🧾 Local types
 interface PropsT {
@@ -18,11 +17,7 @@ export const ToastError: React.FC<PropsT> = ({ message }) => {
   message ||=
     'Something went wrong during the process. Please check your network connection and try again.';
   useEffect(() => {
-    toast(message, {
-      type: 'error',
-      autoClose: 10_000,
-      toastId: toastsCustomID,
-    });
+    errorToast(message, { autoClose: 10_000 });
   }, []);
 
   return null;

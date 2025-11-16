@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 import type { FormStateT } from '~types/form.states';
 import { FormStatusKinds } from '~constants/form';
 import { catchErrorFormState } from '~constants/form';
-import { connectToDB } from '~configs/mongoose';
+import { connectToDB } from '~vendors/mongoose';
 import { AuthMessages } from '~constants/messages';
 import { doHash } from '~helpers/hash';
 import { VerifyService } from './verify.service';

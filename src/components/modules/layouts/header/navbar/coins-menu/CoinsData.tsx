@@ -18,13 +18,13 @@ import { flexBetween } from '~styles/tw-custom';
 import { HeaderNavbarCoinsContext } from '../Navbar.context';
 import { useLockBodyScroll } from '~hooks/useLockBodyScroll';
 import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
+import { errorToast } from '~vendors/react-toastify';
 import {
   DropDownAggregator,
   DropDownMenu,
   DropDownTrigger,
 } from '~core/global/dropdown';
 import CoinsList from './CoinsList';
-import { showErrorToast } from '@/lib/helpers/toast';
 
 // 🧾 Local types and variables
 const orderMap: { [key in HeaderNavbarCoinsFetchOrderT]: string } = {
@@ -61,9 +61,7 @@ const CoinsData = () => {
               if (favoriteIDs.length) {
                 actions?.changeShowFavorites(true);
               } else {
-                showErrorToast(
-                  'No coin has already been added to favorites list.',
-                );
+                errorToast('No coin has already been added to favorites list.');
               }
             }}
             className="cursor-pointer"

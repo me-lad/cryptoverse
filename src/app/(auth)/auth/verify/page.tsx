@@ -3,7 +3,7 @@ import React from 'react';
 import { redirect } from 'next/navigation';
 
 // 📦 Internal imports
-import { connectToDB } from '~configs/mongoose';
+import { connectToDB } from '~vendors/mongoose';
 import { verify } from '~actions/auth/verify.controller';
 import { FormKinds } from '~constants/form';
 import { UserServices } from '~services/user';

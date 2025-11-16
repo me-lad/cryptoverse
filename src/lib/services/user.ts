@@ -5,7 +5,7 @@ import 'server-only';
 import mongoose, { Schema } from 'mongoose';
 
 // 📦 Internal imports
-import { connectToDB } from '../configs/mongoose';
+import { connectToDB } from '~vendors/mongoose';
 import { doHash } from '~helpers/hash';
 import { daysToMillisecond } from '~helpers/time';
 import UserModel from '../models/User';

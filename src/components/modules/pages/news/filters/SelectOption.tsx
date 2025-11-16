@@ -2,8 +2,7 @@
 'use client';
 
 // 📦 Third-Party imports
-import { toast } from 'react-toastify';
-import React, { use, useEffect, useState, useRef } from 'react';
+import React, { use, useState } from 'react';
 import clsx from 'clsx';
 import Image from 'next/image';
 
@@ -11,8 +10,7 @@ import Image from 'next/image';
 import type { DataEntity as SourceDataEntity } from '~types/api-generated/getNewsSources';
 import type { DataEntity as CategoryDataEntity } from '~types/api-generated/getNewsCategories';
 import { NewsContext } from '../NewsPage.context';
-import { toastsCustomID } from '~configs/react-toastify';
-import { buildSearchSource } from '../local';
+import { infoToast } from '~vendors/react-toastify';
 
 // 🧾 Local types
 type PropsT = {
@@ -57,12 +55,10 @@ const SelectOption: React.FC<PropsT> = (props) => {
 
     // Validate before updating state
     if (selectId === 'sources' && params.searchString && !newQuery) {
-      toast('At least one source is required when searching.', {
-        type: 'info',
+      infoToast('At least one source is required when searching.', {
         autoClose: 10_000,
         closeButton: false,
         position: 'top-center',
-        toastId: toastsCustomID,
       });
       return;
     }

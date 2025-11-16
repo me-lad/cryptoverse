@@ -3,16 +3,15 @@
 
 // 📦 Third-Party imports
 import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import { ChevronRight, Menu } from 'lucide-react';
 import { Button } from '~core/ui/shadcn/button';
 import clsx from 'clsx';
 
 // 📦 Internal imports
-import { toastsCustomID } from '~configs/react-toastify';
 import { flexCenter } from '~styles/tw-custom';
 import ChartView from './chart-view';
 import SymbolsListFn from './symbols-list/SymbolsList.fn';
+import { infoToast } from '~vendors/react-toastify';
 
 // ⚙️ Functional component
 const TradingViewChartWrapper = () => {
@@ -22,10 +21,8 @@ const TradingViewChartWrapper = () => {
   );
 
   useEffect(() => {
-    toast('Use a VPN if you have any problems visiting this page.', {
-      type: 'info',
+    infoToast('Use a VPN if you have any problems visiting this page.', {
       autoClose: 6000,
-      toastId: toastsCustomID,
       position: 'top-center',
     });
   }, []);

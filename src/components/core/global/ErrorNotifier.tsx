@@ -6,7 +6,7 @@ import React from 'react';
 import { useEffect } from 'react';
 
 // 📦 Internal imports
-import { showErrorToast } from '~helpers/toast';
+import { errorToast } from '~vendors/react-toastify';
 
 // 🧾 Local types
 interface PropsT {
@@ -17,7 +17,7 @@ interface PropsT {
 // ⚙️ Functional component
 const ErrorNotifier: React.FC<PropsT> = ({ error, closeTime }) => {
   useEffect(() => {
-    showErrorToast(error, closeTime);
+    errorToast(error, { autoClose: closeTime });
   }, []);
 
   return null;
