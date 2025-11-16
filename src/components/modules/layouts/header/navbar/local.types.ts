@@ -1,7 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import type { CoinEntity_Compare } from './api-generated/shared';
-
-export type HeaderNavbarCoinsFetchOrderT = 'TOTAL_MKT_CAP_USD' | 'PRICE_USD';
+import type { CoinEntity_Compare } from '~types/api-generated/shared';
 
 interface HeaderNavbarCoinsMenuParamsT {
   order: HeaderNavbarCoinsFetchOrderT;
@@ -26,3 +24,20 @@ export interface HeaderNavbarCoinsMenuContextT {
   params?: HeaderNavbarCoinsMenuParamsT;
   actions?: HeaderNavbarCoinsMenuActionsT;
 }
+
+export type HeaderNavbarCoinsFetchOrderT = 'TOTAL_MKT_CAP_USD' | 'PRICE_USD';
+
+export interface NewsNavItemT {
+  label: string;
+  url: string;
+  icon: string;
+}
+
+export interface NewsNavItemsT {
+  coins: NewsNavItemT[];
+  languages: NewsNavItemT[];
+}
+
+export type CoinNavItemT = NewsNavItemT & {
+  shortName?: string;
+};

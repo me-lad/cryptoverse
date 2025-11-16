@@ -1,7 +1,6 @@
 import type { DataEntity } from './api-generated/getLatestNews';
 import type { DataEntity as CategoryDataEntity } from './api-generated/getNewsCategories';
 import type { DataEntity as SourceDataEntity } from './api-generated/getNewsSources';
-import { NewsReducerActions } from '~constants/news';
 
 export type NewsLanguagesT = 'EN' | 'ES' | 'FR' | 'TR';
 
@@ -31,6 +30,19 @@ interface NewsContextActionsT {
   setExcludeCategoriesParam: (excludeCategories: string) => void;
   setSearchStringParam: (searchString: string) => void;
 }
+
+export const NewsReducerActions = {
+  SetNewsList: 'SetNewsList',
+  SetSearchedNewsList: 'SetSearchedNewsList',
+  SetSourcesList: 'SetSourcesList',
+  SetCategoriesList: 'SetCategoriesList',
+  SetLanguageParam: 'SetLanguageParam',
+  SetSourcesParam: 'SetSourcesParam',
+  SetCategoriesParam: 'SetCategoriesParam',
+  SetExcludeCategoriesParam: 'SetExcludeCategoriesParam',
+  SetSearchStringParam: 'SetSearchStringParam',
+  SetSearchSourceParam: 'SetSearchSourceParam',
+} as const;
 
 export interface NewsContextT {
   data: NewsContextDataT;

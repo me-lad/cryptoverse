@@ -12,7 +12,7 @@ import Image from 'next/image';
 import type { CoinEntity_Gecko } from '~types/api-generated/shared';
 import { useDebounce } from '~hooks/useDebounce';
 import { flexBetween, flexCenter } from '~styles/tw-custom';
-import { searchCoins } from '~services/coins';
+import { searchCoins } from '~services/integrations/coins';
 import { Percentage, Price } from '~core/global/formatters';
 
 // 🧾 Local types

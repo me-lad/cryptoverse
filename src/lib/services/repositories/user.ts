@@ -8,7 +8,7 @@ import mongoose, { Schema } from 'mongoose';
 import { connectToDB } from '~vendors/mongoose';
 import { doHash } from '~helpers/hash';
 import { daysToMillisecond } from '~helpers/time';
-import UserModel from '../models/User';
+import UserModel from '~models/User';
 
 // 🧠 Ensure DB is connected and model is initialized
 const initializeUserModel = async () => {

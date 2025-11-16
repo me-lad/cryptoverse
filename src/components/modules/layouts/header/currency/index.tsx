@@ -58,8 +58,8 @@ const Currency = () => {
             <li
               key={curr.id}
               className={clsx(
-                'mt-3 flex items-center gap-4 p-2.5 py-1.5 select-none hover:cursor-pointer',
-                curr.id === currency && 'bg-background rounded-sm',
+                'hover:bg-background mt-3 flex items-center gap-4 rounded-sm p-2.5 py-1.5 transition-all select-none hover:cursor-pointer',
+                curr.id === currency && 'bg-background',
               )}
               onClick={() => handlerCurrencyChange(curr.id)}
             >

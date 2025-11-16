@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 
 // 📦 Internal imports
-import { AuthServices } from '~services/auth';
+import { AuthServices } from '~services/repositories/auth';
 
 export async function GET() {
   const { isAuthenticated, username } =

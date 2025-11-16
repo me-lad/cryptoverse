@@ -5,32 +5,38 @@ export interface DashboardSidebarSettingsT {
   hoverable: boolean;
 }
 
+interface DashboardSidebarContextActions {
+  setOpenState: Dispatch<React.SetStateAction<boolean>>;
+  setHoverState: Dispatch<React.SetStateAction<boolean>>;
+  setSettings: Dispatch<React.SetStateAction<DashboardSidebarSettingsT>>;
+  getOpenState: () => boolean;
+}
+
 export interface DashboardSidebarContextT {
   isOpen: boolean;
   isHover: boolean;
   settings: DashboardSidebarSettingsT;
-
-  action?: {
-    setOpenState: Dispatch<React.SetStateAction<boolean>>;
-    setHoverState: Dispatch<React.SetStateAction<boolean>>;
-    setSettings: Dispatch<React.SetStateAction<DashboardSidebarSettingsT>>;
-    getOpenState: () => boolean;
-  };
+  action?: DashboardSidebarContextActions;
 }
 
-export type DashboardSidebarMenuItemT = {
+export type DashboardSidebarMenuBaseT = {
   title: string;
   icon: string;
-} & (
-  | {
-      url: string;
-      subItems?: never;
-    }
-  | {
-      url?: never;
-      subItems: Partial<DashboardSidebarMenuItemT>[];
-    }
-);
+};
+
+export type DashboardSidebarMenuLeafT = DashboardSidebarMenuBaseT & {
+  url: string;
+  subItems?: never;
+};
+
+export type DashboardSidebarMenuNodeT = DashboardSidebarMenuBaseT & {
+  url?: never;
+  subItems: Partial<DashboardSidebarMenuItemT>[];
+};
+
+export type DashboardSidebarMenuItemT =
+  | DashboardSidebarMenuLeafT
+  | DashboardSidebarMenuNodeT;
 
 export interface DashboardSidebarMenuGroupT {
   title: string;

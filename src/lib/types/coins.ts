@@ -11,7 +11,7 @@ export interface CurrencyContextT {
   setCurrency: (value: CurrencyT) => void;
 }
 
-// Context
+// Context ( Coins )
 export type CoinsOrderT = 'volume_desc' | 'market_cap_desc';
 
 interface CoinsContextParamsT {

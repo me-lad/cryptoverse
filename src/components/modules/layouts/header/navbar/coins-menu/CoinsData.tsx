@@ -13,7 +13,7 @@ import { use, useEffect } from 'react';
 import clsx from 'clsx';
 
 // 📦 Internal imports
-import type { HeaderNavbarCoinsFetchOrderT } from '~types/header';
+import type { HeaderNavbarCoinsFetchOrderT } from '../local.types';
 import { flexBetween } from '~styles/tw-custom';
 import { HeaderNavbarCoinsContext } from '../Navbar.context';
 import { useLockBodyScroll } from '~hooks/useLockBodyScroll';

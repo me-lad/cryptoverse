@@ -10,7 +10,7 @@ import type { FavoriteCoinsContextT } from '~types/coins';
 import { useLocalStorage } from '~hooks/useLocalStorage';
 import { errorToast } from '~vendors/react-toastify';
 import { ToastError } from '~core/ui/shared/typography';
-import { getCoinsByIDs } from '~services/coins';
+import { getCoinsByIDs } from '~services/integrations/coins';
 
 // 🧾 Context declaration and local types
 interface PropsT {

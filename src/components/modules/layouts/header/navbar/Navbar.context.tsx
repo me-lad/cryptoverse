@@ -9,8 +9,8 @@ import React, { createContext, useState, useEffect } from 'react';
 import type {
   HeaderNavbarCoinsFetchOrderT,
   HeaderNavbarCoinsMenuContextT,
-} from '~types/header';
-import { getCoinsCryptoCompare } from '~services/coins';
+} from './local.types';
+import { getCoinsCryptoCompare } from '~services/integrations/coins';
 import { errorToast } from '~vendors/react-toastify';
 import { CoinEntity_Compare } from '~types/api-generated/shared';
 import { minutesToMillisecond } from '~helpers/time';

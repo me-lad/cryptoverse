@@ -1,6 +1,6 @@
-import type { FormStateT } from './form';
-import type { FormKindsT } from './form';
-import type { ResetPasswordFormStepT } from './form';
+import type { FormStateT } from '.';
+import type { FormKindsT } from '.';
+import type { ResetPasswordFormStepT } from '.';
 
 export interface FormContextT {
   state: FormStateT;

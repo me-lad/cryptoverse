@@ -2,7 +2,7 @@
 import React from 'react';
 
 // 📦 Internal imports
-import { getCoinOrders } from '~services/coins';
+import { getCoinOrders } from '~services/integrations/coins';
 import { CatchError } from '~core/ui/shared/typography';
 import { buildFakeOrderBookFromPrice } from '~helpers/generators';
 import TablesWrapper from './Tables.wrapper';

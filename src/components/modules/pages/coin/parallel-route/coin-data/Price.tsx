@@ -25,6 +25,7 @@ const Price: React.FC<GetCoinData> = ({ market_data, symbol }) => {
 
   const frameRef = useRef<number | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const previousFactor = useRef(1);
 
   useEffect(() => {
     const handleKeyboardEvent = (event: KeyboardEvent) => {
@@ -45,6 +46,7 @@ const Price: React.FC<GetCoinData> = ({ market_data, symbol }) => {
     calculatePrice(factor);
     return () => {
       if (frameRef.current) cancelAnimationFrame(frameRef.current);
+      setPriceBg('#fff');
       if (inputRef.current)
         inputRef.current.removeEventListener('keydown', handleKeyboardEvent);
     };
@@ -60,10 +62,10 @@ const Price: React.FC<GetCoinData> = ({ market_data, symbol }) => {
     const duration = 1000;
     const start = performance.now();
 
-    if (targetPrice > price) {
+    if (+factor > previousFactor.current) {
       setPriceBg('#2fa766');
     }
-    if (targetPrice < price) {
+    if (+factor < previousFactor.current) {
       setPriceBg('#e2464a');
     }
 
@@ -87,6 +89,7 @@ const Price: React.FC<GetCoinData> = ({ market_data, symbol }) => {
       }
     };
 
+    previousFactor.current = +factor;
     frameRef.current = requestAnimationFrame(animate);
   };
 

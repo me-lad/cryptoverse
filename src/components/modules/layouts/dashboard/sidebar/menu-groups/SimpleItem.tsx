@@ -24,7 +24,7 @@ import {
   DropDownMenu,
   DropDownTrigger,
 } from '~core/global/dropdown';
-import { useIsMounted } from '~hooks/useIsMounted';
+import { useHasMounted } from '~hooks/useHasMounted';
 
 // ⚙️ Functional components
 const InnerUi: React.FC<DashboardSidebarMenuItemT> = (props) => {
@@ -32,7 +32,7 @@ const InnerUi: React.FC<DashboardSidebarMenuItemT> = (props) => {
   const { action } = use(DashboardSidebarContext);
   const { theme } = useTheme();
 
-  const mounted = useIsMounted();
+  const mounted = useHasMounted();
 
   return (
     <>

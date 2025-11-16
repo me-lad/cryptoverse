@@ -1,6 +1,6 @@
 // 📦 Internal imports
 import AnimatedSubtitleUi from './AnimatedSubtitle.ui';
-import { getTopCoins } from '~services/coins';
+import { getTopCoins } from '~services/integrations/coins';
 
 // ⚙️ Functional component
 const AnimatedSubtitleFn = async () => {

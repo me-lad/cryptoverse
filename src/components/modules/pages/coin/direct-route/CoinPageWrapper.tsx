@@ -10,7 +10,11 @@ import CoinAdditionalInformation from './additional-information';
 import BidsTable from './orders/TableBids.fn';
 import AsksTable from './orders/TableAsks.fn';
 import { containerDefault, flexBetween } from '~styles/tw-custom';
-import { getCoinChartData, getCoinData, getCoinOrders } from '~services/coins';
+import {
+  getCoinChartData,
+  getCoinData,
+  getCoinOrders,
+} from '~services/integrations/coins';
 import { cycleMap, type CycleT } from '../local';
 import { CatchError } from '~core/ui/shared/typography';
 import { buildFakeOrderBookFromPrice } from '~helpers/generators';

@@ -1,5 +1,5 @@
 // 📦 Internal imports
-import { getNews } from '~services/news';
+import { getNews } from '~services/integrations/news';
 import { CatchError } from '~core/ui/shared/typography/CatchError';
 import SliderUi from './Slider.ui';
 

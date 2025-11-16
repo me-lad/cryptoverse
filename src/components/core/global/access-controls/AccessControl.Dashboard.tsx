@@ -2,7 +2,7 @@
 import { redirect } from 'next/navigation';
 
 // 📦 Internal imports
-import { AuthServices } from '~services/auth';
+import { AuthServices } from '~services/repositories/auth';
 import RenewSession from './RenewSession';
 
 // 🧾 Local types

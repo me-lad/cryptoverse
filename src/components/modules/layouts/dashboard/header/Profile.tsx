@@ -8,7 +8,7 @@ import { Button } from '~core/ui/shadcn/button';
 
 // 📦 Internal imports
 import { extractUsername } from '~helpers/generators';
-import { AuthServices } from '~services/auth';
+import { AuthServices } from '~services/repositories/auth';
 
 // ⚙️ Functional component
 const Profile = async () => {

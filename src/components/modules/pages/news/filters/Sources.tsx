@@ -10,7 +10,7 @@ import { Button } from '~core/ui/shadcn/button';
 
 // 📦 Internal imports
 import { NewsContext } from '../NewsPage.context';
-import { getNewsSources } from '~services/news';
+import { getNewsSources } from '~services/integrations/news';
 import { daysToMillisecond } from '~helpers/time';
 import { ToastError } from '~core/ui/shared/typography';
 import { DropDownAggregator, DropDownTrigger } from '~core/global/dropdown';

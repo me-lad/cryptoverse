@@ -6,7 +6,7 @@ import Link from 'next/link';
 // 📦 Internal imports
 import { flexCenter } from '~styles/tw-custom';
 import { minutesToMillisecond } from '~helpers/time';
-import { getTradingViewAvailableSymbols } from '~services/coins';
+import { getTradingViewAvailableSymbols } from '~services/integrations/coins';
 
 // ⚙️ Custom hooks
 export const useSymbols = (startPoint: number, searchQuery: string) => {

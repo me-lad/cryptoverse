@@ -9,7 +9,7 @@ import {
 
 // 📦 Internal imports
 import { flexBetween, flexCenter } from '~styles/tw-custom';
-import { getMarketGlobalData } from '~services/coins';
+import { getMarketGlobalData } from '~services/integrations/coins';
 import { Price, Percentage } from '~core/global/formatters';
 import { CatchError } from '~core/ui/shared/typography';
 import ErrorNotifier from '~core/global/ErrorNotifier';

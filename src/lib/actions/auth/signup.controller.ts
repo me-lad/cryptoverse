@@ -11,8 +11,8 @@ import { SignupFormSchema } from './signup.validator';
 import { connectToDB } from '~vendors/mongoose';
 import { Messages } from '~constants/messages';
 import { catchErrorFormState, FormStatusKinds } from '~constants/form';
-import { UserServices } from '~services/user';
-import { BlockedNumberServices } from '~services/blockedNumber';
+import { UserServices } from '~services/repositories/user';
+import { BlockedNumberServices } from '~services/repositories/blockedNumber';
 import { sanitizeFormData } from '~helpers/sanitize';
 import { SignupService } from './signup.service';
 

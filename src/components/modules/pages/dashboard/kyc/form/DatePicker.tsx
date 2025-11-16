@@ -7,6 +7,7 @@ import { CalendarDays, CalendarArrowUp } from 'lucide-react';
 import { Button } from '~core/ui/shadcn/button';
 import { Calendar } from '~core/ui/shadcn/calendar';
 import { Input } from '~core/ui/shadcn/input';
+import { formatDate } from '~helpers/time';
 import {
   Popover,
   PopoverContent,
@@ -14,17 +15,6 @@ import {
 } from '~core/ui/shadcn/popover';
 
 // 🧾 Local helpers
-const formatDate = (date: Date | undefined) => {
-  if (!date) {
-    return '';
-  }
-  return date.toLocaleDateString('en-US', {
-    day: '2-digit',
-    month: 'long',
-    year: 'numeric',
-  });
-};
-
 const isValidDate = (date: Date | undefined) => {
   if (!date) {
     return false;
@@ -36,7 +26,7 @@ const DatePicker = () => {
   const [open, setOpen] = React.useState(false);
   const [date, setDate] = React.useState<Date | undefined>(new Date());
   const [month, setMonth] = React.useState<Date | undefined>(date);
-  const [value, setValue] = React.useState(formatDate(date));
+  const [value, setValue] = React.useState(formatDate(date, 'long'));
 
   return (
     <div className="flex w-full justify-center">
@@ -95,7 +85,7 @@ const DatePicker = () => {
                 onMonthChange={setMonth}
                 onSelect={(date) => {
                   setDate(date);
-                  setValue(formatDate(date));
+                  setValue(formatDate(date, 'long'));
                   setOpen(false);
                 }}
               />

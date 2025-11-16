@@ -10,7 +10,7 @@ import React from 'react';
 
 // 📦 Internal imports
 import { DropDownAggregator, DropDownTrigger } from '~core/global/dropdown';
-import { getNewsCategories } from '~services/news';
+import { getNewsCategories } from '~services/integrations/news';
 import { ToastError } from '~core/ui/shared/typography';
 import { daysToMillisecond } from '~helpers/time';
 import SelectMenu from './SelectMenu';

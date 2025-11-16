@@ -11,7 +11,7 @@ import type {
   CurrencyT,
 } from '~types/coins';
 import { useLocalStorage } from '~hooks/useLocalStorage';
-import { getCurrencyConversionFactors } from '~services/coins';
+import { getCurrencyConversionFactors } from '~services/integrations/coins';
 
 // 🧾 Local types & variables
 export const CurrencyContext = createContext<Partial<CurrencyContextT>>({});

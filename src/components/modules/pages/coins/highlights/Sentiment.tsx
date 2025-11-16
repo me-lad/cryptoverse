@@ -1,6 +1,6 @@
 // 📦 Internal imports
 import { flexCenter } from '~styles/tw-custom';
-import { getMarketSentiment } from '~services/coins';
+import { getMarketSentiment } from '~services/integrations/coins';
 import { Messages } from '~constants/messages';
 import { CatchError } from '~core/ui/shared/typography';
 import { SentimentUi } from '~core/global/sentiment';

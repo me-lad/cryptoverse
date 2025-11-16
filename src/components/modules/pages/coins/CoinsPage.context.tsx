@@ -8,7 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 // 📦 Internal imports
 import type { CoinsContextT, CoinsOrderT } from '~types/coins';
 import { useLocalStorage } from '~hooks/useLocalStorage';
-import { getCoins } from '~services/coins';
+import { getCoins } from '~services/integrations/coins';
 import { minutesToMillisecond } from '~helpers/time';
 import { errorToast } from '~vendors/react-toastify';
 import { Messages } from '~constants/messages';

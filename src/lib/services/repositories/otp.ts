@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 
 // 📦 Internal imports
 import { connectToDB } from '~vendors/mongoose';
-import OtpModel from '../models/Otp';
+import OtpModel from '~models/Otp';
 
 // 🧠 Ensure DB is connected and model is initialized
 const initializeOtpModel = async () => {

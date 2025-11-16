@@ -10,7 +10,7 @@ import clsx from 'clsx';
 
 // 📦 Internal imports
 import { containerDefault } from '~styles/tw-custom';
-import { getNews } from '~services/news';
+import { getNews } from '~services/integrations/news';
 import { CatchError } from '~core/ui/shared/typography';
 import { CustomTag, CustomTitle } from '~core/ui/shared/typography';
 import Card from './Card';

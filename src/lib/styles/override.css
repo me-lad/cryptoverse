@@ -4,7 +4,7 @@ img {
 
 * {
   scrollbar-width: thin; /* Options: auto, thin, none */
-  scrollbar-color: var(--neutral-500) #252525; /* thumb color, track color */
+  scrollbar-color: var(--neutral-700) #252525; /* thumb color, track color */
 }
 
 button {

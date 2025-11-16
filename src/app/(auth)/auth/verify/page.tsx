@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation';
 import { connectToDB } from '~vendors/mongoose';
 import { verify } from '~actions/auth/verify.controller';
 import { FormKinds } from '~constants/form';
-import { UserServices } from '~services/user';
+import { UserServices } from '~services/repositories/user';
 import AuthFormContext from '@/components/modules/pages/auth/AuthForm.context';
 import AuthPageWrapper from '@/components/modules/pages/auth/AuthPage.wrapper';
 import VerifyFormFn from '@/components/modules/pages/auth/form-containers/VerifyForm.fn';

@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 
 // 📦 Internal imports
 import { NewsContext } from '../NewsPage.context';
-import { getNews, searchNews } from '~services/news';
+import { getNews, searchNews } from '~services/integrations/news';
 import { buildSearchSource } from '../local';
 import { infoToast } from '~vendors/react-toastify';
 

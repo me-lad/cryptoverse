@@ -20,7 +20,7 @@ import { CoinsContext } from '../CoinsPage.context';
 import { errorToast } from '~vendors/react-toastify';
 import { CurrencyT } from '~types/coins';
 import { CurrencyContext } from '~modules/Currency.context';
-import { currencies } from '~constants/coins';
+import { currencies } from '~modules/layouts/header/currency/local';
 
 // ⚙️ Functional components
 const CoinsSourceToggle = () => {

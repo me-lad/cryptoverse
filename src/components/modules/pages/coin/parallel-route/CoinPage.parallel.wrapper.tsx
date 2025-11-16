@@ -3,7 +3,7 @@ import React from 'react';
 
 // 📦 Internal imports
 import { BlurWrapper } from '~core/ui/shared/overlays';
-import { getCoinChartData, getCoinData } from '~services/coins';
+import { getCoinChartData, getCoinData } from '~services/integrations/coins';
 import { CatchError } from '~core/ui/shared/typography/CatchError';
 import { cycleMap, type CycleT } from '../local';
 import AnimatedModal from './AnimatedModal';

@@ -11,15 +11,18 @@ import type { OtpDocumentType } from '~models/Otp/types';
 import { connectToDB } from '~vendors/mongoose';
 import { Messages } from '~constants/messages';
 import { isDatePassedTime } from '~helpers/time';
-import { buildRandomCode } from '~helpers/generators';
-import { UserServices } from '~services/user';
-import { BlockedNumberServices } from '~services/blockedNumber';
-import { OtpServices } from '~services/otp';
+import { UserServices } from '~services/repositories/user';
+import { BlockedNumberServices } from '~services/repositories/blockedNumber';
+import { OtpServices } from '~services/repositories/otp';
 import { FormStatusKinds, catchErrorFormState } from '~constants/form';
-import { AuthServices } from '~services/auth';
+import { AuthServices } from '~services/repositories/auth';
 
-// 🧾 Local types
+// 🧾 Local types and helpers
 const restrictionThresholds: number[] = [3, 6, 9, 10] as const;
+
+const buildRandomOtp = (length: number = 6): string => {
+  return Array.from({ length }, () => Math.floor(Math.random() * 10)).join('');
+};
 
 // 🧠 Cache system
 interface CachedOtpStatusType {
@@ -205,7 +208,7 @@ const sendOtp = async (
   try {
     const data = {
       phoneNumber,
-      code: buildRandomCode(),
+      code: buildRandomOtp(),
       usage: isResetPassword ? 'ResetPassword' : 'Verify',
     };
 

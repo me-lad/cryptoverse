@@ -8,7 +8,6 @@ import type { GetTrendingCoins } from '~types/api-generated/getTrendingCoins';
 import type { CoinEntity_Gecko } from '~types/api-generated/shared';
 import type { GetCoinChartData } from '~types/api-generated/getCoinChartData';
 import type { CoinsOrderT } from '~types/coins';
-import type { HeaderNavbarCoinsFetchOrderT } from '~types/header';
 import type { GetCoinOrders } from '~types/api-generated/getCoinOrders';
 import type { GetTradingViewAvailableSymbols } from '~types/api-generated/getTradingViewAvailableSymbols';
 import { useServerFetch } from '~hooks/useServerFetch';
@@ -314,10 +313,7 @@ export const getCoinChartData = async (coinId: string, cycle: number) => {
   }
 };
 
-export const getCoinsCryptoCompare = async (
-  order: HeaderNavbarCoinsFetchOrderT,
-  page: number,
-) => {
+export const getCoinsCryptoCompare = async (order: string, page: number) => {
   try {
     if (!order || !page) return [];
 

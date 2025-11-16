@@ -4,7 +4,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 // 📦 Internal imports
-import { newsNavItems, type NewsNavItemT } from '../local';
+import type { NewsNavItemT } from '../local.types';
+import { newsNavItems } from '../local.constants';
 
 // ⚙️ Functional components
 const ListItem = ({ icon, label, url }: NewsNavItemT) => {

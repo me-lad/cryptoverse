@@ -2,9 +2,9 @@
 import type { FormStateT } from '~types/form';
 import { Messages } from '~constants/messages';
 import { catchErrorFormState, FormStatusKinds } from '~constants/form';
-import { OtpServices } from '~services/otp';
+import { OtpServices } from '~services/repositories/otp';
 import { verifyHash } from '~helpers/hash';
-import { AuthServices } from '~services/auth';
+import { AuthServices } from '~services/repositories/auth';
 
 const signinUser = async (
   username: string,

@@ -8,7 +8,7 @@ import { Messages } from '~constants/messages';
 import { connectToDB } from '~vendors/mongoose';
 import { catchErrorFormState, FormStatusKinds } from '~constants/form';
 import { sanitizeFormData } from '~helpers/sanitize';
-import { UserServices } from '~services/user';
+import { UserServices } from '~services/repositories/user';
 import { SigninService } from './signin.service';
 
 export async function signin(

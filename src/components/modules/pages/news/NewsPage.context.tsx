@@ -10,7 +10,7 @@ import { updateSearchParams } from '~helpers/generators';
 import { newsReducer } from './news.reducer';
 import { createNewsActions } from './news.actions';
 import { buildSearchSource } from './local';
-import { useIsMounted } from '~hooks/useIsMounted';
+import { useHasMounted } from '~hooks/useHasMounted';
 
 // 🧾 Local types and variables
 const initialState: NewsContextT = {
@@ -44,7 +44,7 @@ const NewsPageContext: React.FC<PropsT> = ({ urlParams, children }) => {
     },
   });
 
-  const hasMounted = useIsMounted();
+  const hasMounted = useHasMounted();
 
   useEffect(() => {
     if (hasMounted) {

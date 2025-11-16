@@ -25,7 +25,7 @@ import { CoinsContext } from '../CoinsPage.context';
 import { flexCenter } from '~styles/tw-custom';
 import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
 import SkeltonTableRow from './SkeltonTableRow';
-import { useIsMounted } from '~hooks/useIsMounted';
+import { useHasMounted } from '~hooks/useHasMounted';
 
 // 🧾 Local types
 interface PropsT<TData> {
@@ -37,10 +37,10 @@ function TableBody<TData>({ table }: PropsT<TData>) {
   const { params, flags } = use(CoinsContext);
   const { showFavorites, isFetchingFavorites } = use(FavoriteCoinsContext);
   const firstIndex = (params.page - 1) * params.perPage + 1;
-  const isMounted = useIsMounted();
+  const hasMounted = useHasMounted();
 
   //   Loading ui
-  if (!isMounted || flags?.isFetching || isFetchingFavorites) {
+  if (!hasMounted || flags?.isFetching || isFetchingFavorites) {
     return (
       <TableBodyShadcn>
         {Array.from({ length: 10 }).map((_, index) => (

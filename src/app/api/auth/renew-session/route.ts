@@ -2,8 +2,8 @@
 import { NextResponse } from 'next/server';
 
 // 📦 Internal imports
-import { AuthServices } from '~services/auth';
-import { UserServices } from '~services/user';
+import { AuthServices } from '~services/repositories/auth';
+import { UserServices } from '~services/repositories/user';
 
 export async function POST(req: Request) {
   const { userId } = await req.json();

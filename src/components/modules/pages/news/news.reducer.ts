@@ -1,10 +1,10 @@
-import { NewsReducerActions } from '~constants/news';
 import type {
   NewsContextT,
   NewsContextDataT,
   NewsContextParamsT,
   NewsReducerActionT,
 } from '~types/news';
+import { NewsReducerActions } from '~types/news';
 
 export const newsReducer = (
   state: NewsContextT,

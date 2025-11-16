@@ -1,13 +1,6 @@
-export interface NewsNavItemT {
-  label: string;
-  url: string;
-  icon: string;
-}
+import type { CoinNavItemT, NewsNavItemsT, NewsNavItemT } from './local.types';
 
-export const newsNavItems: {
-  coins: NewsNavItemT[];
-  languages: NewsNavItemT[];
-} = {
+export const newsNavItems: NewsNavItemsT = {
   coins: [
     {
       label: 'Bitcoin News',
@@ -62,10 +55,6 @@ export const newsNavItems: {
       url: '/news?language=TR',
     },
   ],
-};
-
-export type CoinNavItemT = NewsNavItemT & {
-  shortName?: string;
 };
 
 export const coinsNavItems: CoinNavItemT[] = [

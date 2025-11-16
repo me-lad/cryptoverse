@@ -26,14 +26,14 @@ import {
 import type { DashboardSidebarMenuItemT } from '~types/dashboard';
 import { DashboardSidebarContext } from '../../Dashboard.context';
 import { NavLink } from '~core/global/NavLink';
-import { useIsMounted } from '~hooks/useIsMounted';
+import { useHasMounted } from '~hooks/useHasMounted';
 
 // ⚙️ Functional component
 const AccordionItem: React.FC<DashboardSidebarMenuItemT> = (props) => {
   const { title, icon, subItems } = props;
   const { action } = use(DashboardSidebarContext);
   const { theme } = useTheme();
-  const mounted = useIsMounted();
+  const mounted = useHasMounted();
 
   const pathname = usePathname();
   const isContentActive = subItems?.find((item) => item.url === pathname);

@@ -2,15 +2,15 @@
 import { redirect } from 'next/navigation';
 
 // 📦 Internal imports
-import type { FormStateT } from '~types/form.states';
+import type { FormStateT } from '~types/form';
 import { FormStatusKinds } from '~constants/form';
 import { catchErrorFormState } from '~constants/form';
 import { connectToDB } from '~vendors/mongoose';
 import { Messages } from '~constants/messages';
 import { doHash } from '~helpers/hash';
 import { VerifyService } from './verify.service';
-import { UserServices } from '~services/user';
-import { OtpServices } from '~services/otp';
+import { UserServices } from '~services/repositories/user';
+import { OtpServices } from '~services/repositories/otp';
 import { SessionServices } from '~services/session';
 
 const sendVerificationCode = async (

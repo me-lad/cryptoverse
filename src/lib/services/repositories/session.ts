@@ -6,9 +6,9 @@ import mongoose from 'mongoose';
 
 // 📦 Internal imports
 import { connectToDB } from '~vendors/mongoose';
-import { UserRolesType } from '../models/types';
+import { UserRolesType } from '~models/types';
 import { daysToMillisecond, hoursToMillisecond } from '~helpers/time';
-import SessionModel from '../models/Session';
+import SessionModel from '~models/Session';
 
 // 🧠 Ensure DB is connected and model is initialized
 const initializeSessionModel = async () => {

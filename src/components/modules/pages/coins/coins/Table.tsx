@@ -6,7 +6,7 @@ import { Table } from '~core/ui/shadcn/table';
 import { useRef, useEffect } from 'react';
 
 // 📦 Internal imports
-import { useScreenWidth } from '~hooks/useScreenWidth';
+import { useMediaQuery } from '~hooks/useMediaQuery';
 
 // 🧾 Local types
 interface PropsT {
@@ -16,15 +16,20 @@ interface PropsT {
 // ⚙️ Functional component
 const DataTable: React.FC<PropsT> = ({ children }) => {
   const tableContainerElm = useRef<null | HTMLDivElement>(null);
-  const { screenWidth } = useScreenWidth();
+
+  const isOverBreakpoint = useMediaQuery('min-width', 1296);
 
   useEffect(() => {
-    if (tableContainerElm.current && screenWidth >= 1296) {
-      (
-        tableContainerElm.current.firstElementChild as HTMLDivElement
-      ).style.overflowX = 'unset';
+    if (tableContainerElm.current) {
+      const innerContainer = tableContainerElm.current
+        .firstElementChild as HTMLDivElement;
+      if (isOverBreakpoint) {
+        innerContainer.style.overflowX = 'unset';
+      } else {
+        innerContainer.style.overflowX = 'auto';
+      }
     }
-  }, [tableContainerElm.current, screenWidth]);
+  }, [tableContainerElm.current, isOverBreakpoint]);
 
   return (
     <div

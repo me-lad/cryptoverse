@@ -9,7 +9,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 // 📦 Internal imports
-import type { CoinNavItemT } from '../local';
+import type { CoinNavItemT } from '../local.types';
 import clsx from 'clsx';
 
 // ⚙️ Functional component

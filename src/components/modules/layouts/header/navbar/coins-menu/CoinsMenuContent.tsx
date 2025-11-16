@@ -1,5 +1,5 @@
 // 📦 Internal imports
-import { coinsNavItems } from '../local';
+import { coinsNavItems } from '../local.constants';
 import CoinsData from './CoinsData';
 import ListLinkItem from './ListLinkItem';
 

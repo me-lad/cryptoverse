@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import React, { useRef, useState } from 'react';
 
 // 📦 Internal imports
-import { useIsMounted } from '~hooks/useIsMounted';
+import { useHasMounted } from '~hooks/useHasMounted';
 import { flexCenter } from '~styles/tw-custom';
 
 // 🧾 Local types
@@ -19,10 +19,10 @@ const FluidContainerToggler: React.FC<PropsT> = ({ title }) => {
   const toggler = useRef<HTMLDivElement | null>(null);
   const [status, setStatus] = useState<'condense' | 'expand'>('expand');
 
-  const isMounted = useIsMounted();
+  const hasMounted = useHasMounted();
 
   const changeParentExpand = () => {
-    if (isMounted && toggler.current && typeof document !== 'undefined') {
+    if (hasMounted && toggler.current && typeof document !== 'undefined') {
       const parent = toggler.current.parentElement?.parentElement;
       if (!parent) return;
 
@@ -48,7 +48,7 @@ const FluidContainerToggler: React.FC<PropsT> = ({ title }) => {
         className={clsx(
           'bg-background shadow-foreground before:bg-background absolute -top-10 right-5 z-[2] size-7 cursor-pointer rounded-md shadow-2xl before:absolute before:top-full before:z-[1] before:h-4 before:w-0.5',
           flexCenter,
-          !isMounted && 'pointer-events-none',
+          !hasMounted && 'pointer-events-none',
         )}
         onClick={changeParentExpand}
       >

@@ -12,8 +12,8 @@ import type {
 } from '~types/session';
 import { daysToMillisecond, hoursToMillisecond } from '~helpers/time';
 import { connectToDB } from '~vendors/mongoose';
-import { UserServices } from '~services/user';
-import { SessionServices } from '~services/session';
+import { UserServices } from '~services/repositories/user';
+import { SessionServices } from '~services/repositories/session';
 import { decrypt, encrypt } from '~helpers/token';
 import { getAccessTokenSecret, getRefreshTokenSecret } from '~helpers/token';
 import { verifyHash } from '~helpers/hash';

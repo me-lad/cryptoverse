@@ -1,9 +1,9 @@
 // 📦 Internal imports
 import { default as Table } from './Table';
-import { getLastUpdatedCoins } from '~services/coins';
-import { getTopGainerCoins } from '~services/coins';
-import { getTopLoserCoins } from '~services/coins';
-import { getTrendingCoins } from '~services/coins';
+import { getLastUpdatedCoins } from '~services/integrations/coins';
+import { getTopGainerCoins } from '~services/integrations/coins';
+import { getTopLoserCoins } from '~services/integrations/coins';
+import { getTrendingCoins } from '~services/integrations/coins';
 import { CatchError } from '~core/ui/shared/typography';
 import { flexCenter } from '~styles/tw-custom';
 import ErrorNotifier from '~core/global/ErrorNotifier';

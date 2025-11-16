@@ -29,28 +29,37 @@ export const durationToSeconds = (duration: string): number => {
   const match = duration.match(regex);
 
   if (!match) {
-    throw new Error(`Invalid duration format: "${duration}". Use "X h" or "X d".`);
+    throw new Error(
+      `Invalid duration format: "${duration}". Use "X h" or "X d".`,
+    );
   }
 
   const value = parseInt(match[1], 10);
   const unit = match[2].toLowerCase();
 
   switch (unit) {
-    case "h":
+    case 'h':
       return value * 60 * 60; // hours to seconds
-    case "d":
+    case 'd':
       return value * 60 * 60 * 24; // days to seconds
     default:
       throw new Error(`Unsupported time unit: "${unit}"`);
   }
 };
 
-export const formatDate = (ms: number): string => {
-  const date = new Date(ms);
+export const formatDate = (
+  date?: number | Date,
+  monthType?: 'short' | 'long',
+): string => {
+  if (!date) return '';
 
-  const day = String(date.getDate()).padStart(2, "0");
-  const month = date.toLocaleString("en-US", { month: "short" });
+  if (typeof date === 'number') {
+    date = new Date(date);
+  }
+
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = date.toLocaleString('en-US', { month: monthType || 'short' });
   const year = date.getFullYear();
 
-  return `${day} ${month}, ${year}`;
+  return `${month} ${day}, ${year}`;
 };

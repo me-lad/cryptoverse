@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 // 📦 Internal imports
 import { Messages } from '~constants/messages';
-import { UserServices } from '~services/user';
+import { UserServices } from '~services/repositories/user';
 
 export async function POST(req: Request) {
   const { username } = await req.json();
