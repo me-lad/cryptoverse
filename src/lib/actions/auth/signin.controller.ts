@@ -4,7 +4,7 @@ import 'server-only';
 
 // 📦 Internal imports
 import type { SigninFormDataT, FormStateT } from '~types/form';
-import { AuthMessages } from '~constants/messages';
+import { Messages } from '~constants/messages';
 import { connectToDB } from '~vendors/mongoose';
 import { catchErrorFormState, FormStatusKinds } from '~constants/form';
 import { sanitizeFormData } from '~helpers/sanitize';
@@ -30,10 +30,10 @@ export async function signin(
       toastNeed: false,
       properties: {
         identifier: {
-          errors: [AuthMessages.Error.FieldEmpty],
+          errors: [Messages.Error.FieldEmpty],
         },
         password: {
-          errors: [AuthMessages.Error.FieldEmpty],
+          errors: [Messages.Error.FieldEmpty],
         },
       },
     };
@@ -45,7 +45,7 @@ export async function signin(
       toastNeed: false,
       properties: {
         identifier: {
-          errors: [AuthMessages.Error.FieldEmpty],
+          errors: [Messages.Error.FieldEmpty],
         },
       },
     };
@@ -57,7 +57,7 @@ export async function signin(
       toastNeed: false,
       properties: {
         password: {
-          errors: [AuthMessages.Error.FieldEmpty],
+          errors: [Messages.Error.FieldEmpty],
         },
       },
     };
@@ -78,7 +78,7 @@ export async function signin(
         toastNeed: false,
         properties: {
           password: {
-            errors: [AuthMessages.Error.SigninIncorrectData],
+            errors: [Messages.Error.SigninIncorrectData],
           },
         },
       };
@@ -90,7 +90,7 @@ export async function signin(
         redirectNeed: true,
         redirectPath: `/auth/verify?username=${userData?.username}`,
         toastNeed: true,
-        toastMessage: AuthMessages.Error.SigninNotVerifiedAccount,
+        toastMessage: Messages.Error.SigninNotVerifiedAccount,
       };
     }
 
@@ -99,7 +99,7 @@ export async function signin(
         status: FormStatusKinds.Error,
         redirectNeed: false,
         toastNeed: true,
-        toastMessage: AuthMessages.Error.SigninWithRestrictedAccount,
+        toastMessage: Messages.Error.SigninWithRestrictedAccount,
       };
     }
 

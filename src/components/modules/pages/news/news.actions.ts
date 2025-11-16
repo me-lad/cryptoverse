@@ -6,7 +6,20 @@ import type { NewsLanguagesT, NewsReducerActionT } from '~types/news';
 import type { DataEntity } from '~types/api-generated/getLatestNews';
 import type { DataEntity as CategoryDataEntity } from '~types/api-generated/getNewsCategories';
 import type { DataEntity as SourceDataEntity } from '~types/api-generated/getNewsSources';
-import { NewsReducerActions } from '~constants/news';
+
+// 🧾 Local types and variables
+const NewsReducerActions = {
+  SetNewsList: 'SetNewsList',
+  SetSearchedNewsList: 'SetSearchedNewsList',
+  SetSourcesList: 'SetSourcesList',
+  SetCategoriesList: 'SetCategoriesList',
+  SetLanguageParam: 'SetLanguageParam',
+  SetSourcesParam: 'SetSourcesParam',
+  SetCategoriesParam: 'SetCategoriesParam',
+  SetExcludeCategoriesParam: 'SetExcludeCategoriesParam',
+  SetSearchStringParam: 'SetSearchStringParam',
+  SetSearchSourceParam: 'SetSearchSourceParam',
+} as const;
 
 export const createNewsActions = (dispatch: Dispatch<NewsReducerActionT>) => {
   return {

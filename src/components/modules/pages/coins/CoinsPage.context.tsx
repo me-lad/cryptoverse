@@ -8,17 +8,24 @@ import { useQuery } from '@tanstack/react-query';
 // 📦 Internal imports
 import type { CoinsContextT, CoinsOrderT } from '~types/coins';
 import { useLocalStorage } from '~hooks/useLocalStorage';
-import { coinsContextInitialState } from '~constants/coins';
 import { getCoins } from '~services/coins';
 import { minutesToMillisecond } from '~helpers/time';
 import { errorToast } from '~vendors/react-toastify';
-import { AuthMessages } from '~constants/messages';
+import { Messages } from '~constants/messages';
 import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
 
 // 🧾 Local types and variables
-export const CoinsContext = createContext<CoinsContextT>(
-  coinsContextInitialState,
-);
+const initialState: CoinsContextT = {
+  coins: [],
+  params: {
+    page: 1,
+    perPage: 20,
+    order: 'market_cap_desc',
+  },
+  flags: {},
+} as const;
+
+export const CoinsContext = createContext<CoinsContextT>(initialState);
 
 interface PropsT {
   children: React.ReactNode;
@@ -58,7 +65,7 @@ const CoinsPageContext: React.FC<PropsT> = ({ children }) => {
     },
   };
 
-  if (error) errorToast(AuthMessages.Error.CatchHandler);
+  if (error) errorToast(Messages.Error.CatchHandler);
 
   return <CoinsContext value={value}>{children}</CoinsContext>;
 };

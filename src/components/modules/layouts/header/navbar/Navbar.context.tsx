@@ -14,7 +14,7 @@ import { getCoinsCryptoCompare } from '~services/coins';
 import { errorToast } from '~vendors/react-toastify';
 import { CoinEntity_Compare } from '~types/api-generated/shared';
 import { minutesToMillisecond } from '~helpers/time';
-import { AuthMessages } from '~constants/messages';
+import { Messages } from '~constants/messages';
 
 // 🧾 Local types and context creation
 interface PropsT {
@@ -79,7 +79,7 @@ const NavbarContext: React.FC<PropsT> = ({ children }) => {
     },
   };
 
-  if (error) errorToast(AuthMessages.Error.CatchHandler);
+  if (error) errorToast(Messages.Error.CatchHandler);
 
   return (
     <HeaderNavbarCoinsContext value={value}>

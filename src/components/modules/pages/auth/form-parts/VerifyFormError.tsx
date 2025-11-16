@@ -5,7 +5,7 @@
 import { useLayoutEffect } from 'react';
 
 // 📦 Internal imports
-import { AuthMessages } from '~constants/messages';
+import { Messages } from '~constants/messages';
 
 // ⚙️ Functional component
 const VerifyFormError = () => {
@@ -18,7 +18,7 @@ const VerifyFormError = () => {
 
   return (
     <p className="text-status-error-200 mt-6 text-center text-xl font-bold tracking-wider">
-      {AuthMessages.Error.VerificationPermanentLimit}
+      {Messages.Error.VerificationPermanentLimit}
     </p>
   );
 };

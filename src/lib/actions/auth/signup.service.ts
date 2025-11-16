@@ -4,7 +4,7 @@ import 'server-only';
 // 📦 Internal imports
 import type { UserModelType } from '~models/User/types';
 import type { FormStateT } from '~types/form';
-import { AuthMessages } from '~constants/messages';
+import { Messages } from '~constants/messages';
 import { connectToDB } from '~vendors/mongoose';
 import { catchErrorFormState, FormStatusKinds } from '~constants/form';
 import { UserServices } from '~services/user';
@@ -42,7 +42,7 @@ const signupUser = async (
     return {
       status: FormStatusKinds.Success,
       toastNeed: true,
-      toastMessage: AuthMessages.Success.CompleteSignup,
+      toastMessage: Messages.Success.CompleteSignup,
       redirectNeed: true,
       redirectPath: createdUser.isVerified
         ? '/auth/signin'

@@ -1,5 +1,5 @@
 // 📦 imports
-import { AuthMessages } from '~constants/messages';
+import { Messages } from '~constants/messages';
 import { buildRandomID } from '~helpers/generators';
 import type { FormFieldT } from '~types/form';
 import type { FormStateT } from '~types/form';
@@ -43,7 +43,7 @@ export const catchErrorFormState: FormStateT = {
   status: FormStatusKinds.Error,
   redirectNeed: false,
   toastNeed: true,
-  toastMessage: AuthMessages.Error.CatchHandler,
+  toastMessage: Messages.Error.CatchHandler,
 };
 
 // Fields

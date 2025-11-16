@@ -1,21 +1,12 @@
-import type { CoinsContextT } from '~types/coins';
 import type { CurrencyT } from '~types/coins';
 
-export const coinsContextInitialState: CoinsContextT = {
-  coins: [],
-  params: {
-    page: 1,
-    perPage: 20,
-    order: 'market_cap_desc',
-  },
-  flags: {},
-} as const;
-
-export const currencies: {
+interface CurrencyListItemT {
   id: CurrencyT;
   label: string;
   titleAttr: string;
-}[] = [
+}
+
+export const currencies: CurrencyListItemT[] = [
   {
     id: 'USD',
     label: 'US Dollar',

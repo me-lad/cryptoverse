@@ -9,7 +9,7 @@ import type {
 } from '~types/form';
 import type { OtpDocumentType } from '~models/Otp/types';
 import { connectToDB } from '~vendors/mongoose';
-import { AuthMessages } from '~constants/messages';
+import { Messages } from '~constants/messages';
 import { isDatePassedTime } from '~helpers/time';
 import { buildRandomCode } from '~helpers/generators';
 import { UserServices } from '~services/user';
@@ -55,7 +55,7 @@ const checkUserOtpStatus = async (
     await connectToDB();
     const userData = await UserServices.getUserDataByIdentifier(username);
     if (!userData) {
-      return { status: 'Error', message: AuthMessages.Error.CatchHandler };
+      return { status: 'Error', message: Messages.Error.CatchHandler };
     }
 
     const { phoneNumber } = userData;
@@ -103,7 +103,7 @@ const checkUserOtpStatus = async (
     return result;
   } catch (err) {
     console.log('Error in verify service ->', err);
-    return { status: 'Error', message: AuthMessages.Error.CatchHandler };
+    return { status: 'Error', message: Messages.Error.CatchHandler };
   }
 };
 
@@ -137,7 +137,7 @@ const doVerify = async (
         status: FormStatusKinds.Error,
         redirectNeed: false,
         toastNeed: true,
-        toastMessage: AuthMessages.Error.InvalidUsername,
+        toastMessage: Messages.Error.InvalidUsername,
       };
     }
 
@@ -148,7 +148,7 @@ const doVerify = async (
         status: FormStatusKinds.Error,
         redirectNeed: false,
         toastNeed: true,
-        toastMessage: AuthMessages.Error.VerifyCodeExpire,
+        toastMessage: Messages.Error.VerifyCodeExpire,
       };
     }
 
@@ -159,7 +159,7 @@ const doVerify = async (
         status: FormStatusKinds.Error,
         redirectNeed: false,
         toastNeed: true,
-        toastMessage: AuthMessages.Error.VerifyCodeOverUse,
+        toastMessage: Messages.Error.VerifyCodeOverUse,
       };
     }
 
@@ -170,7 +170,7 @@ const doVerify = async (
         status: FormStatusKinds.Error,
         redirectNeed: false,
         toastNeed: true,
-        toastMessage: AuthMessages.Error.VerificationIncorrectCode,
+        toastMessage: Messages.Error.VerificationIncorrectCode,
       };
     }
 
@@ -187,7 +187,7 @@ const doVerify = async (
     return {
       status: FormStatusKinds.Success,
       toastNeed: true,
-      toastMessage: AuthMessages.Success.CompleteVerify,
+      toastMessage: Messages.Success.CompleteVerify,
       redirectNeed: true,
       redirectPath: '/dashboard',
     };
@@ -224,13 +224,13 @@ const resendOtp = async (username: string): Promise<OtpResendResultT> => {
 
   const userData = await UserServices.getUserDataByIdentifier(username);
   if (!userData || status === 'Error') {
-    return { success: false, message: AuthMessages.Error.CatchHandler };
+    return { success: false, message: Messages.Error.CatchHandler };
   }
 
   if (status === 'Limited') {
     return {
       success: false,
-      message: AuthMessages.Error.VerificationPermanentLimit,
+      message: Messages.Error.VerificationPermanentLimit,
       refreshNeed: true,
     };
   }
@@ -257,7 +257,7 @@ const resendOtp = async (username: string): Promise<OtpResendResultT> => {
   const { phoneNumber } = userData;
   const sendResult = await sendOtp(phoneNumber);
   if (!sendResult || !sendResult.createdAt) {
-    return { success: false, message: AuthMessages.Error.CatchHandler };
+    return { success: false, message: Messages.Error.CatchHandler };
   }
 
   return {

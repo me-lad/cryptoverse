@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 
 // 📦 Internal imports
-import { AuthMessages } from '~constants/messages';
+import { Messages } from '~constants/messages';
 import { UserServices } from '~services/user';
 
 export async function POST(req: Request) {
@@ -11,7 +11,7 @@ export async function POST(req: Request) {
   if (!username) {
     return NextResponse.json({
       success: false,
-      message: AuthMessages.Error.DataLack,
+      message: Messages.Error.DataLack,
     });
   }
 
@@ -20,7 +20,7 @@ export async function POST(req: Request) {
   if (!userData) {
     return NextResponse.json({
       success: false,
-      message: AuthMessages.Error.CatchHandler,
+      message: Messages.Error.CatchHandler,
     });
   }
 

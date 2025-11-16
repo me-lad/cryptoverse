@@ -1,5 +1,9 @@
 // 📦 Imports
-import { Base_Headers } from '~constants/api';
+import {
+  BaseHeaders,
+  AdditiveApiKeyHeaderCompare,
+  AdditiveApiKeyHeaderGecko,
+} from '~constants/api';
 
 // 🧾 Local types and variables
 const Api_Key_Gecko = process.env.API_KEY_COINGECKO;
@@ -10,11 +14,11 @@ export async function useServerFetch<T>(
   options?: RequestInit,
 ): Promise<T> {
   let headerAuth = {};
-  if (url.includes('coingecko'))
-    headerAuth = { 'x-cg-demo-api-key': Api_Key_Gecko };
+  if (url.includes('coingecko')) headerAuth = AdditiveApiKeyHeaderGecko;
+  if (url.includes('coindesk')) headerAuth = AdditiveApiKeyHeaderCompare;
 
   const headers = {
-    ...Base_Headers,
+    ...BaseHeaders,
     ...headerAuth,
     ...(options?.headers || {}),
   };

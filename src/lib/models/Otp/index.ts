@@ -5,7 +5,7 @@ import mongoose, { Model } from 'mongoose';
 import type { OtpDocumentType } from './types';
 import { OtpUsagesEnum } from '../types';
 import { AuthPatterns } from '~constants/patterns';
-import { AuthMessages } from '~constants/messages';
+import { Messages } from '~constants/messages';
 import { minutesToMillisecond } from '~helpers/time';
 
 class OtpModel {
@@ -34,7 +34,7 @@ class OtpModel {
           required: true,
           validate: {
             validator: (value: string) => AuthPatterns.Phone.test(value),
-            message: AuthMessages.Error.InvalidPhoneNumber,
+            message: Messages.Error.InvalidPhoneNumber,
           },
         },
         code: {

@@ -2,7 +2,7 @@
 import { z } from 'zod';
 
 // 📦 Internal imports
-import { AuthMessages } from '~constants/messages';
+import { Messages } from '~constants/messages';
 import { AuthPatterns } from '~constants/patterns';
 
 export const ResetPasswordFormSchema = z
@@ -10,45 +10,45 @@ export const ResetPasswordFormSchema = z
     username: z
       .string()
       .min(4, {
-        error: `${AuthMessages.Error.FieldEmpty} (min-length: 4)`,
+        error: `${Messages.Error.FieldEmpty} (min-length: 4)`,
         abort: true,
       })
-      .max(64, AuthMessages.Error.UsernameMaxLengthViolation)
+      .max(64, Messages.Error.UsernameMaxLengthViolation)
       .regex(AuthPatterns.UsernameLetter, {
-        error: AuthMessages.Error.UsernameLetterCheck,
+        error: Messages.Error.UsernameLetterCheck,
       })
       .trim(),
 
     code: z.string().length(6, {
-      error: `${AuthMessages.Error.FieldEmpty} (length: 6)`,
+      error: `${Messages.Error.FieldEmpty} (length: 6)`,
       abort: true,
     }),
 
     password: z
       .string()
       .min(1, {
-        error: AuthMessages.Error.FieldEmpty,
+        error: Messages.Error.FieldEmpty,
         abort: true,
       })
-      .max(64, AuthMessages.Error.PasswordLengthViolation)
+      .max(64, Messages.Error.PasswordLengthViolation)
       .regex(AuthPatterns.PasswordLetter, {
-        error: AuthMessages.Error.PasswordLetterLack,
+        error: Messages.Error.PasswordLetterLack,
       })
       .regex(AuthPatterns.PasswordCharacter, {
-        error: AuthMessages.Error.PasswordCharacterLack,
+        error: Messages.Error.PasswordCharacterLack,
       })
       .regex(AuthPatterns.PasswordNumber, {
-        error: AuthMessages.Error.PasswordNumberLack,
+        error: Messages.Error.PasswordNumberLack,
       })
       .trim(),
 
     passwordRepeat: z
       .string()
-      .min(1, AuthMessages.Error.FieldEmpty)
-      .max(64, AuthMessages.Error.PasswordLengthViolation)
+      .min(1, Messages.Error.FieldEmpty)
+      .max(64, Messages.Error.PasswordLengthViolation)
       .trim(),
   })
   .refine((data) => data.password === data.passwordRepeat, {
-    error: AuthMessages.Error.PasswordConfirmMismatch,
+    error: Messages.Error.PasswordConfirmMismatch,
     path: ['passwordRepeat'],
   });

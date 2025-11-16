@@ -4,7 +4,7 @@ import 'server-only';
 
 // 📦 Internal imports
 import type { VerifyFormDataT, FormStateT } from '~types/form';
-import { AuthMessages } from '~constants/messages';
+import { Messages } from '~constants/messages';
 import { sanitizeFormData } from '~helpers/sanitize';
 import { FormStatusKinds } from '~constants/form';
 import { VerifyService } from './verify.service';
@@ -26,7 +26,7 @@ export async function verify(
       status: FormStatusKinds.Error,
       redirectNeed: false,
       toastNeed: true,
-      toastMessage: AuthMessages.Error.DataLack,
+      toastMessage: Messages.Error.DataLack,
     };
   }
 

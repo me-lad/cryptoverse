@@ -1,6 +1,6 @@
 // 📦 Imports
 import { useQuery, UseQueryOptions } from '@tanstack/react-query';
-import { Base_Headers } from '~constants/api';
+import { BaseHeaders } from '~constants/api';
 
 // 🧾 Fetch method
 async function clientFetcher<T>(
@@ -8,7 +8,7 @@ async function clientFetcher<T>(
   options?: RequestInit,
 ): Promise<T> {
   const headers = {
-    ...Base_Headers,
+    ...BaseHeaders,
     ...(options?.headers || {}),
   };
 

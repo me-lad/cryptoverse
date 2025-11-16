@@ -1,7 +1,7 @@
 // 📦 Internal imports
 import { flexCenter } from '~styles/tw-custom';
 import { getMarketSentiment } from '~services/coins';
-import { AuthMessages } from '~constants/messages';
+import { Messages } from '~constants/messages';
 import { CatchError } from '~core/ui/shared/typography';
 import { SentimentUi } from '~core/global/sentiment';
 import ErrorNotifier from '~core/global/ErrorNotifier';
@@ -26,7 +26,7 @@ const Sentiment = async () => {
   if (metadata.err) {
     return (
       <p className="text-status-error-200 flex h-full items-center justify-center text-center text-lg font-semibold">
-        {AuthMessages.Error.CatchHandler}
+        {Messages.Error.CatchHandler}
       </p>
     );
   }

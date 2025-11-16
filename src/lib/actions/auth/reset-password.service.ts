@@ -6,7 +6,7 @@ import type { FormStateT } from '~types/form.states';
 import { FormStatusKinds } from '~constants/form';
 import { catchErrorFormState } from '~constants/form';
 import { connectToDB } from '~vendors/mongoose';
-import { AuthMessages } from '~constants/messages';
+import { Messages } from '~constants/messages';
 import { doHash } from '~helpers/hash';
 import { VerifyService } from './verify.service';
 import { UserServices } from '~services/user';
@@ -42,7 +42,7 @@ const sendVerificationCode = async (
         status: FormStatusKinds.Error,
         redirectNeed: false,
         toastNeed: true,
-        toastMessage: AuthMessages.Error.VerificationPermanentLimit,
+        toastMessage: Messages.Error.VerificationPermanentLimit,
       };
     }
 
@@ -91,7 +91,7 @@ const doResetPassword = async (data: {
         redirectNeed: false,
         toastNeed: false,
         properties: {
-          code: { errors: [AuthMessages.Error.VerificationIncorrectCode] },
+          code: { errors: [Messages.Error.VerificationIncorrectCode] },
         },
       };
     }
@@ -112,7 +112,7 @@ const doResetPassword = async (data: {
       redirectNeed: true,
       redirectPath: '/auth/signin',
       toastNeed: true,
-      toastMessage: AuthMessages.Success.CompleteResetPassword,
+      toastMessage: Messages.Success.CompleteResetPassword,
     };
   } catch (err) {
     console.log('Error in reset password process ->', err);

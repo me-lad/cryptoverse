@@ -9,7 +9,7 @@ import { treeifyError } from 'zod';
 import type { FormStateT, SignupFormDataT } from '~types/form';
 import { SignupFormSchema } from './signup.validator';
 import { connectToDB } from '~vendors/mongoose';
-import { AuthMessages } from '~constants/messages';
+import { Messages } from '~constants/messages';
 import { catchErrorFormState, FormStatusKinds } from '~constants/form';
 import { UserServices } from '~services/user';
 import { BlockedNumberServices } from '~services/blockedNumber';
@@ -51,7 +51,7 @@ export async function signup(
         status: FormStatusKinds.Error,
         redirectNeed: false,
         toastNeed: true,
-        toastMessage: AuthMessages.Error.VerificationPermanentLimit,
+        toastMessage: Messages.Error.VerificationPermanentLimit,
       };
     }
 
@@ -69,11 +69,11 @@ export async function signup(
 
       if (userExistence.phoneNumber === validatedFields.data.phoneNumber) {
         returningObject.properties!.phoneNumber = {
-          errors: [AuthMessages.Error.DuplicatePhoneNumber],
+          errors: [Messages.Error.DuplicatePhoneNumber],
         };
       } else {
         returningObject.properties!.username = {
-          errors: [AuthMessages.Error.DuplicateUsername],
+          errors: [Messages.Error.DuplicateUsername],
         };
       }
 

@@ -6,7 +6,6 @@ import React, { createContext, useEffect, useReducer, useMemo } from 'react';
 
 // 📦 Internal imports
 import type { NewsContextT } from '~types/news';
-import { newsContextInitialState } from '~constants/news';
 import { updateSearchParams } from '~helpers/generators';
 import { newsReducer } from './news.reducer';
 import { createNewsActions } from './news.actions';
@@ -14,7 +13,20 @@ import { buildSearchSource } from './local';
 import { useIsMounted } from '~hooks/useIsMounted';
 
 // 🧾 Local types and variables
-export const NewsContext = createContext<NewsContextT>(newsContextInitialState);
+const initialState: NewsContextT = {
+  data: {
+    news: [],
+    searchedNews: [],
+    sources: [],
+    categories: [],
+  },
+
+  params: {
+    language: 'EN',
+  },
+};
+
+export const NewsContext = createContext<NewsContextT>(initialState);
 
 interface PropsT {
   children: React.ReactNode;
@@ -26,7 +38,7 @@ interface PropsT {
 // ⚙️ Functional component
 const NewsPageContext: React.FC<PropsT> = ({ urlParams, children }) => {
   const [state, dispatch] = useReducer(newsReducer, {
-    data: { ...newsContextInitialState.data },
+    data: { ...initialState.data },
     params: {
       ...urlParams,
     },

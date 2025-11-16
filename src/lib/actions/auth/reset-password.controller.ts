@@ -7,7 +7,7 @@ import { treeifyError } from 'zod';
 
 // 📦 Internal imports
 import type { ResetPasswordFormDataT, FormStateT } from '~types/form';
-import { AuthMessages } from '~constants/messages';
+import { Messages } from '~constants/messages';
 import { ResetPasswordFormSchema } from './reset-password.validator';
 import { FormStatusKinds, catchErrorFormState } from '~constants/form';
 import { sanitizeFormData } from '~helpers/sanitize';
@@ -35,7 +35,7 @@ export async function resetPassword(
         toastNeed: false,
         properties: {
           identifier: {
-            errors: [AuthMessages.Error.FieldEmpty],
+            errors: [Messages.Error.FieldEmpty],
           },
         },
       };

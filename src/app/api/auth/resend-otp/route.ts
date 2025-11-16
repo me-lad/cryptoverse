@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 
 // 📦 Internal imports
 import { VerifyService } from '~actions/auth/verify.service';
-import { AuthMessages } from '~constants/messages';
+import { Messages } from '~constants/messages';
 
 export async function POST(req: Request) {
   const { username } = await req.json();
@@ -11,7 +11,7 @@ export async function POST(req: Request) {
   if (!username) {
     return NextResponse.json({
       success: false,
-      message: AuthMessages.Error.DataLack,
+      message: Messages.Error.DataLack,
     });
   }
 

@@ -61,6 +61,7 @@ const SidebarSettings = () => {
           )}
           size={'lg'}
           variant={'ghost'}
+          disabled={settings.disabled}
           onClick={() => changeHandler('hoverable', !settings.hoverable)}
         >
           {settings.hoverable && !settings.disabled ? (

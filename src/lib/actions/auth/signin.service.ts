@@ -1,6 +1,6 @@
 // 📦 Internal imports
 import type { FormStateT } from '~types/form';
-import { AuthMessages } from '~constants/messages';
+import { Messages } from '~constants/messages';
 import { catchErrorFormState, FormStatusKinds } from '~constants/form';
 import { OtpServices } from '~services/otp';
 import { verifyHash } from '~helpers/hash';
@@ -21,7 +21,7 @@ const signinUser = async (
       redirectNeed: false,
       toastNeed: false,
       properties: {
-        password: { errors: [AuthMessages.Error.SigninIncorrectData] },
+        password: { errors: [Messages.Error.SigninIncorrectData] },
       },
     };
   }
@@ -38,7 +38,7 @@ const signinUser = async (
   return {
     status: FormStatusKinds.Success,
     toastNeed: true,
-    toastMessage: AuthMessages.Success.CompleteSignin,
+    toastMessage: Messages.Success.CompleteSignin,
     redirectNeed: true,
     redirectPath: '/dashboard',
   };
