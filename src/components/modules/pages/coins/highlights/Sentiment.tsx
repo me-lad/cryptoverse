@@ -10,7 +10,7 @@ import ErrorNotifier from '~core/global/ErrorNotifier';
 const Sentiment = async () => {
   const result = await getMarketSentiment();
 
-  if (!result) {
+  if (!result.success) {
     return (
       <>
         <ErrorNotifier error={'Error in fetching market sentiment data. :(('} />
@@ -19,7 +19,7 @@ const Sentiment = async () => {
     );
   }
 
-  const { data, metadata } = result;
+  const { data, metadata } = result.result;
   const value = +data[0].value;
   const classification = data[0].value_classification;
 

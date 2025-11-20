@@ -12,7 +12,7 @@ export type SentimentClassification =
   | 'Greed'
   | 'Extreme Greed';
 
-export interface DataEntity {
+interface DataEntity {
   value: string;
   value_classification: SentimentClassification;
   timestamp: string;

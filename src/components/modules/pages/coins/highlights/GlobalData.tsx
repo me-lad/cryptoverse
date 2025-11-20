@@ -17,7 +17,7 @@ import ErrorNotifier from '~core/global/ErrorNotifier';
 // ⚙️ Functional component
 const GlobalData = async () => {
   const result = await getMarketGlobalData();
-  if (!result) {
+  if (!result.success) {
     return (
       <>
         <ErrorNotifier
@@ -29,7 +29,7 @@ const GlobalData = async () => {
     );
   }
 
-  const { data } = result;
+  const { data } = result.result;
   const {
     total_market_cap,
     total_volume,

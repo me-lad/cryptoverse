@@ -2,7 +2,7 @@ export interface GetMarketGlobalData {
   data: DataEntity;
 }
 
-export interface DataEntity {
+interface DataEntity {
   active_cryptocurrencies: number;
   upcoming_icos: number;
   ongoing_icos: number;

@@ -1,4 +1,4 @@
-import type { GetTradingViewAvailableSymbols } from '~types/api-generated/getTradingViewAvailableSymbols';
+import type { GetTradingViewAvailableSymbols } from '@/lib/types/api-generated/coins/getTradingViewAvailableSymbols';
 import { errorToast } from '~vendors/react-toastify';
 import { Messages } from '~constants/messages';
 import { showFallbackCatcher } from './shared';

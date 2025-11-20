@@ -1,6 +1,6 @@
 import type { NewsContextParamsT } from '~types/news';
-import type { GetCoinChartData } from '~types/api-generated/getCoinChartData';
-import type { GetCoinOrders } from '../types/api-generated/getCoinOrders';
+import type { GetCoinChartData } from '@/lib/types/api-generated/coins/getCoinChartData';
+import type { GetCoinOrders } from '../types/api-generated/coins/getCoinOrders';
 
 // Random ID generator
 export const buildRandomID = () => {

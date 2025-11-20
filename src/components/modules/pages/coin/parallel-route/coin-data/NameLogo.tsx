@@ -5,7 +5,7 @@
 import React from 'react';
 
 // 📦 Internal imports
-import type { GetCoinData } from '~types/api-generated/getCoinData';
+import type { GetCoinData } from '@/lib/types/api-generated/coins/getCoinData';
 import { flexBetween, flexCenter } from '~styles/tw-custom';
 import LogoFavoriteToggler from './LogoFavoriteToggler';
 

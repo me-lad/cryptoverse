@@ -5,7 +5,7 @@
 import React, { Dispatch, useEffect, useRef, useState } from 'react';
 
 // 📦 Internal imports
-import type { SymbolT } from '~types/api-generated/getTradingViewAvailableSymbols';
+import type { SymbolT } from '@/lib/types/api-generated/coins/getTradingViewAvailableSymbols';
 import { useSymbols, Heading, ListHeading } from './local';
 import { infoToast } from '~vendors/react-toastify';
 import Search from './Search';

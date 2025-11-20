@@ -1,8 +1,10 @@
 // 📦 Internal imports
+import {
+  getTopLoserCoins,
+  getTopGainerCoins,
+  getLastUpdatedCoins,
+} from '~services/integrations/coins/getWidgetCoins';
 import { default as Table } from './Table';
-import { getLastUpdatedCoins } from '~services/integrations/coins';
-import { getTopGainerCoins } from '~services/integrations/coins';
-import { getTopLoserCoins } from '~services/integrations/coins';
 import { getTrendingCoins } from '~services/integrations/coins';
 import { CatchError } from '~core/ui/shared/typography';
 import { flexCenter } from '~styles/tw-custom';
@@ -13,7 +15,7 @@ import ErrorNotifier from '~core/global/ErrorNotifier';
 export const LastUpdated = async () => {
   const result = await getLastUpdatedCoins();
 
-  if (!result) {
+  if (!result.success) {
     return (
       <>
         <ErrorNotifier
@@ -25,13 +27,13 @@ export const LastUpdated = async () => {
     );
   }
 
-  const { Data } = result;
+  const { Data } = result.result;
   return <Table source="Compare" list={Data.LIST?.slice(0, 4) || []} />;
 };
 
 export const TopGainers = async () => {
   const result = await getTopGainerCoins();
-  if (!result) {
+  if (!result.success) {
     return (
       <>
         <CatchError className={`${flexCenter} h-full`} />
@@ -43,13 +45,13 @@ export const TopGainers = async () => {
     );
   }
 
-  const { Data } = result;
+  const { Data } = result.result;
   return <Table source="Compare" list={Data.LIST?.slice(0, 4) || []} />;
 };
 
 export const TopLosers = async () => {
   const result = await getTopLoserCoins();
-  if (!result) {
+  if (!result.success) {
     return (
       <>
         <ErrorNotifier
@@ -61,14 +63,14 @@ export const TopLosers = async () => {
     );
   }
 
-  const { Data } = result;
+  const { Data } = result.result;
   return <Table source="Compare" list={Data.LIST?.slice(0, 4) || []} />;
 };
 
 export const Trending = async () => {
   const result = await getTrendingCoins();
 
-  if (!result) {
+  if (!result.success) {
     return (
       <>
         <CatchError className={`${flexCenter} h-full`} />;
@@ -77,6 +79,6 @@ export const Trending = async () => {
     );
   }
 
-  const { coins } = result;
+  const { coins } = result.result;
   return <Table list={coins.slice(0, 4)} source="Gecko" />;
 };

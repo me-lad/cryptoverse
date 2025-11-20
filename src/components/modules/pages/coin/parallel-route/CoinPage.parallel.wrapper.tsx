@@ -28,21 +28,21 @@ const ParallelCoinPageWrapper: React.FC<PropsT> = async (props) => {
   return (
     <BlurWrapper>
       <AnimatedModal>
-        {!coinData || !chartData ? (
+        {!coinData.success || !chartData.success ? (
           <CatchError />
         ) : (
           <>
             {/* Coin data */}
             <>
-              <NameLogo {...coinData} />
-              <MarketInfo {...coinData} />
-              <Price {...coinData} />
+              <NameLogo {...coinData.result} />
+              <MarketInfo {...coinData.result} />
+              <Price {...coinData.result} />
             </>
 
             {/* Coin chart */}
             <CoinChartWrapper
-              coinData={coinData}
-              chartData={chartData}
+              coinData={coinData.result}
+              chartData={chartData.result}
               chartCycle={chartCycle}
               renderSource="ParallelPage"
             />

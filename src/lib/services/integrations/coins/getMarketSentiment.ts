@@ -1,16 +1,14 @@
-import type { GetMarketSentiment } from '~types/api-generated/getMarketSentiment';
-import { useServerFetch } from '~hooks/useServerFetch';
-import { showFallbackCatcher } from './shared';
+import type { GetMarketSentiment } from '@/lib/types/api-generated/coins/getMarketSentiment';
+import { safeFetch } from '~helpers/safeFetch';
 
 export const getMarketSentiment = async () => {
-  try {
-    const fetchUrl = 'https://api.alternative.me/fng/';
-    return await useServerFetch<GetMarketSentiment>(fetchUrl, {
+  const fetchUrl = 'https://api.alternative.me/fng/';
+  return await safeFetch<GetMarketSentiment>(
+    fetchUrl,
+    'Something went wrong getting market sentiment.',
+    {
       method: 'GET',
       cache: 'default',
-    });
-  } catch (err) {
-    showFallbackCatcher(err);
-    return;
-  }
+    },
+  );
 };

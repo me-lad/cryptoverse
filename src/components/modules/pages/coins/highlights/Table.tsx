@@ -20,7 +20,7 @@ import {
 
 // 📦 Internal imports
 import type { CoinEntity_Compare } from '~types/api-generated/shared';
-import type { Coin } from '~types/api-generated/getTrendingCoins';
+import type { Coin } from '@/lib/types/api-generated/coins/getTrendingCoins';
 import { Percentage, Price } from '~core/global/formatters';
 import TableBodyItem from './TableBodyItem';
 

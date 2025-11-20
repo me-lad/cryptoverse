@@ -16,46 +16,46 @@ export interface SymbolT {
   prefix: Prefix;
 }
 
-export enum CurrencyLogoid {
+enum CurrencyLogoid {
   CountryUS = 'country/US',
   CryptoXTVCUSDC = 'crypto/XTVCUSDC',
   CryptoXTVCUSDT = 'crypto/XTVCUSDT',
 }
 
-export enum CurrencyCode {
+enum CurrencyCode {
   Usd = 'USD',
   Usdc = 'USDC',
   Usdt = 'USDT',
 }
 
-export enum Exchange {
+enum Exchange {
   Binance = 'Binance',
 }
 
-export enum Prefix {
+enum Prefix {
   Binance = 'BINANCE',
 }
 
-export enum ProviderID {
+enum ProviderID {
   Binance = 'binance',
 }
 
-export interface Source2 {
+interface Source2 {
   id: Prefix;
   name: Exchange;
   description: Exchange;
 }
 
-export enum SourceLogoid {
+enum SourceLogoid {
   ProviderBinance = 'provider/binance',
 }
 
-export enum Type {
+enum Type {
   Spot = 'spot',
   Swap = 'swap',
 }
 
-export enum Typespec {
+enum Typespec {
   Crypto = 'crypto',
   Defi = 'defi',
   Perpetual = 'perpetual',
@@ -63,7 +63,7 @@ export enum Typespec {
   TvCalculatedPair = 'tv-calculated-pair',
 }
 
-export interface GetTradingViewAvailableSymbols {
+interface GetTradingViewAvailableSymbols {
   symbols_remaining: number;
   symbols: SymbolT[];
 }

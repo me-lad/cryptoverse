@@ -10,7 +10,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 // 📦 Internal imports
-import type { GetCoinData } from '~types/api-generated/getCoinData';
+import type { GetCoinData } from '@/lib/types/api-generated/coins/getCoinData';
 import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
 import Metrics from './Metrics';
 

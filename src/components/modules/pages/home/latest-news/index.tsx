@@ -22,7 +22,7 @@ const LatestNews = () => {
     queryFn: () => getNews({ language: 'EN', limit: 9 }, { method: 'GET' }),
   });
 
-  if (isError || !data?.success) return <CatchError />;
+  if (isError || !data?.success || !data.result.Data) return <CatchError />;
 
   const { Data: newsList } = data.result;
 

@@ -7,7 +7,7 @@ import React from 'react';
 
 // 📦 Internal imports
 import type { ChartRenderSourceT, CycleT } from '../../local';
-import type { GetCoinChartData } from '~types/api-generated/getCoinChartData';
+import type { GetCoinChartData } from '@/lib/types/api-generated/coins/getCoinChartData';
 import { flexBetween } from '~styles/tw-custom';
 import { cycleLabelsHeading, chartReferencesLabels } from '../../local';
 

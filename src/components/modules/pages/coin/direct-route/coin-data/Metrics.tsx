@@ -7,7 +7,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
 
 // 📦 Internal imports
-import type { MarketData } from '~types/api-generated/getCoinData';
+import type { MarketData } from '@/lib/types/api-generated/coins/getCoinData';
 import { flexCenter } from '~styles/tw-custom';
 import { Percentage } from '~core/global/formatters';
 import MetricBlock from './MetricBlock';

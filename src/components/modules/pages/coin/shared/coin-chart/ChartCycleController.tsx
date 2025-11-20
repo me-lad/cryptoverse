@@ -7,8 +7,8 @@ import Link from 'next/link';
 import clsx from 'clsx';
 
 // 📦 Internal imports
-import type { GetCoinChartData } from '~types/api-generated/getCoinChartData';
-import type { GetCoinData } from '~types/api-generated/getCoinData';
+import type { GetCoinChartData } from '@/lib/types/api-generated/coins/getCoinChartData';
+import type { GetCoinData } from '@/lib/types/api-generated/coins/getCoinData';
 import type { ChartRenderSourceT, CycleT } from '../../local';
 import { flexBetween, flexCenter } from '~styles/tw-custom';
 import { Percentage } from '~core/global/formatters';

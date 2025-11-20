@@ -1,4 +1,3 @@
-import type { GetTopCoins } from '~types/api-generated/getTopCoins';
 import type { CurrencyConversionFactorsT, CurrencyT } from '~types/coins';
 import type { GetCurrencyConversionFactors } from '~types/api-generated/getConversionFactors';
 

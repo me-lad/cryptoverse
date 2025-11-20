@@ -13,7 +13,7 @@ import { Input } from '~core/ui/shadcn/input';
 import { Button } from '~core/ui/shadcn/button';
 
 // 📦 Internal imports
-import type { GetCoinData } from '~types/api-generated/getCoinData';
+import type { GetCoinData } from '@/lib/types/api-generated/coins/getCoinData';
 import { flexCenter } from '~styles/tw-custom';
 import { Price as PriceFormatter } from '~core/global/formatters';
 

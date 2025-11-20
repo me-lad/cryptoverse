@@ -30,7 +30,7 @@ const OrderTypeToggler: React.FC<PropsT> = ({
   return (
     <div className="absolute top-20 right-8 flex items-center gap-2.5 min-[86em]:top-7 min-[86em]:right-8">
       {typesList.map((type) => (
-        <Tooltip>
+        <Tooltip key={type}>
           <TooltipTrigger asChild>
             <Button
               onClick={() => changeActiveType(type)}
