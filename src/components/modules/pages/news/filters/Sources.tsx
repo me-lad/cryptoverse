@@ -31,10 +31,10 @@ const Sources = () => {
       <Skeleton className="col-span-12 min-h-full max-sm:h-10 sm:col-span-3" />
     );
 
+  if (isError || !data?.success) return <ToastError />;
+
   return (
     <>
-      {isError && <ToastError />}
-
       <DropDownAggregator className="col-span-12 min-h-full sm:col-span-3">
         <DropDownTrigger activeClassName="*:!bg-primary *:*:last:rotate-180">
           <Button className="w-full rounded-sm" size={'lg'} variant={'outline'}>
@@ -46,7 +46,7 @@ const Sources = () => {
           </Button>
         </DropDownTrigger>
 
-        <SelectMenu selectId={'sources'} options={data?.Data || []} />
+        <SelectMenu selectId={'sources'} options={data.result?.Data || []} />
       </DropDownAggregator>
     </>
   );

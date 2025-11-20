@@ -19,10 +19,14 @@ import Card from './Card';
 const LatestNews = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ['home-news'],
-    queryFn: () => getNews({ language: 'EN', limit: 9 }),
+    queryFn: () => getNews({ language: 'EN', limit: 9 }, { method: 'GET' }),
   });
 
-  if (isError) return <CatchError />;
+  if (isError || !data?.success) return <CatchError />;
+
+  const { Data: newsList } = data.result;
+
+  if (!newsList) return <CatchError />;
 
   return (
     <section className={`${containerDefault} relative mt-32`}>
@@ -55,8 +59,7 @@ const LatestNews = () => {
                 <Skeleton className="h-full w-full" />
               </div>
             ))
-          : data?.Data &&
-            data?.Data.map((item, index) => (
+          : newsList.map((item, index) => (
               <li
                 key={item.ID}
                 className={clsx(

@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 
 // 📦 Internal imports
-import type { DataEntity } from '~types/api-generated/getLatestNews';
+import type { NewsDataEntity } from '@/lib/types/api-generated/news/getLatestNews';
 import { flexBetween, flexCenter } from '~styles/tw-custom';
 import { TimeAgo } from '~core/global/formatters';
 import { Skeleton } from '~core/ui/shadcn/skeleton';
@@ -41,7 +41,7 @@ export const NewsLoadingItem = () => {
 };
 
 // ⚙️ Functional component
-const NewsListItem: React.FC<DataEntity> = (props) => {
+const NewsListItem: React.FC<NewsDataEntity> = (props) => {
   const {
     IMAGE_URL,
     URL,

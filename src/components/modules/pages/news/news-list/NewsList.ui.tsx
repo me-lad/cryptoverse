@@ -2,14 +2,14 @@
 import React from 'react';
 
 // 📦 Internal imports
-import type { DataEntity } from '~types/api-generated/getLatestNews';
+import type { NewsDataEntity } from '@/lib/types/api-generated/news/getLatestNews';
 import { containerDefault } from '~styles/tw-custom';
 import { CatchError } from '~core/ui/shared/typography';
 import NewsListItem, { NewsLoadingItem } from './NewsListItem';
 
 // 🧾 Local types
 interface PropsT {
-  news: DataEntity[];
+  news: NewsDataEntity[];
 }
 
 export const NewsLoading = () => {

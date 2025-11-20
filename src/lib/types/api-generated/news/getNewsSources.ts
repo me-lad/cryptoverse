@@ -1,8 +1,8 @@
 export type GetNewsSources = {
-  Data?: (DataEntity)[] | null;
+  Data?: SourceDataEntity[] | null;
   Err: Err;
-}
-export type DataEntity = {
+};
+export type SourceDataEntity = {
   TYPE: string;
   ID: number;
   SOURCE_KEY: string;
@@ -18,6 +18,5 @@ export type DataEntity = {
   LAST_UPDATED_TS: number;
   CREATED_ON: number;
   UPDATED_ON: number;
-}
-export type Err = {
-}
+};
+export type Err = {};

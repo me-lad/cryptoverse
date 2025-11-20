@@ -25,25 +25,25 @@ const NewsListFn = () => {
   } = useInfiniteScroll();
 
   useEffect(() => {
-    if (actions?.setNewsList && actions.setSearchedNewsList) {
-      if (params.searchString && data?.Data) {
-        actions.setSearchedNewsList(data?.Data || []);
+    if (actions?.setNewsList && actions.setSearchedNewsList && data?.success) {
+      if (params.searchString && data.result?.Data) {
+        actions.setSearchedNewsList(data.result?.Data || []);
       } else {
-        actions.setNewsList(data?.Data || contextData.news);
+        actions.setNewsList(data.result?.Data || contextData.news);
       }
     }
-  }, [data?.Data, params.searchString]);
+  }, [data, params.searchString]);
 
   if (isLoading) {
     return <NewsLoading />;
   }
 
-  if (isError) {
+  if (isError || !data?.success) {
     return (
       <CatchError
         className="mt-20"
         message={
-          (error.message.includes('"type":1,') &&
+          (error?.message.includes('"type":1,') &&
             'No article found with given filters or search string.') ||
           ''
         }

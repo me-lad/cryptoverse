@@ -1,6 +1,6 @@
-import type { GetLatestNews } from '~types/api-generated/getLatestNews';
+import type { GetLatestNews } from '@/lib/types/api-generated/news/getLatestNews';
 import { buildUrl } from '~helpers/generators';
-import { useServerFetch } from '~hooks/useServerFetch';
+import { safeFetch } from '~helpers/safeFetch';
 
 export const searchNews = async (
   searchString: string,
@@ -17,7 +17,11 @@ export const searchNews = async (
     },
   );
 
-  return await useServerFetch<GetLatestNews>(url, {
-    method: 'GET',
-  });
+  return await safeFetch<GetLatestNews>(
+    url,
+    'Something went wrong during news search.',
+    {
+      method: 'GET',
+    },
+  );
 };

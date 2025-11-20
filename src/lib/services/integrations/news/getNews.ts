@@ -1,11 +1,11 @@
 import type { NewsContextParamsT } from '~types/news';
-import type { GetLatestNews } from '~types/api-generated/getLatestNews';
+import type { GetLatestNews } from '~types/api-generated/news/getLatestNews';
 import { buildUrl } from '~helpers/generators';
-import { useServerFetch } from '~hooks/useServerFetch';
+import { safeFetch } from '~helpers/safeFetch';
 
 type ParamsT = NewsContextParamsT & { limit?: number; timestamp?: number };
 
-export const getNews = async (params: ParamsT) => {
+export const getNews = async (params: ParamsT, options?: RequestInit) => {
   const {
     language = 'EN',
     limit = 20,
@@ -26,7 +26,9 @@ export const getNews = async (params: ParamsT) => {
     sortOrder: 'latest',
   });
 
-  return await useServerFetch<GetLatestNews>(fetchUrl, {
-    method: 'GET',
-  });
+  return await safeFetch<GetLatestNews>(
+    fetchUrl,
+    'Something went wrong in fetching news data.',
+    options,
+  );
 };

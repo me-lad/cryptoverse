@@ -1,7 +1,6 @@
-import type { GetNewsCategories } from '~types/api-generated/getNewsCategories';
-import { daysToMinutes } from '~helpers/time';
+import type { GetNewsCategories } from '@/lib/types/api-generated/news/getNewsCategories';
 import { buildUrl } from '~helpers/generators';
-import { useServerFetch } from '~hooks/useServerFetch';
+import { safeFetch } from '~helpers/safeFetch';
 
 export const getNewsCategories = async () => {
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_CRYPTOCOMPARE;
@@ -9,9 +8,11 @@ export const getNewsCategories = async () => {
     status: 'ACTIVE',
   });
 
-  return await useServerFetch<GetNewsCategories>(fetchUrl, {
-    method: 'GET',
-    cache: 'force-cache',
-    next: { revalidate: daysToMinutes(3) * 60 },
-  });
+  return await safeFetch<GetNewsCategories>(
+    fetchUrl,
+    'Something went wrong getting news categories data.',
+    {
+      method: 'GET',
+    },
+  );
 };

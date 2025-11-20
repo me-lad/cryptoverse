@@ -1,12 +1,12 @@
-import type { DataEntity } from './api-generated/getLatestNews';
-import type { DataEntity as CategoryDataEntity } from './api-generated/getNewsCategories';
-import type { DataEntity as SourceDataEntity } from './api-generated/getNewsSources';
+import type { NewsDataEntity } from './api-generated/news/getLatestNews';
+import type { CategoryDataEntity } from './api-generated/news/getNewsCategories';
+import type { SourceDataEntity } from './api-generated/news/getNewsSources';
 
 export type NewsLanguagesT = 'EN' | 'ES' | 'FR' | 'TR';
 
 export interface NewsContextDataT {
-  news: DataEntity[];
-  searchedNews: DataEntity[];
+  news: NewsDataEntity[];
+  searchedNews: NewsDataEntity[];
   sources: SourceDataEntity[];
   categories: CategoryDataEntity[];
 }
@@ -20,8 +20,8 @@ export interface NewsContextParamsT {
 }
 
 interface NewsContextActionsT {
-  setNewsList: (news: DataEntity[]) => void;
-  setSearchedNewsList: (searchedNews: DataEntity[]) => void;
+  setNewsList: (news: NewsDataEntity[]) => void;
+  setSearchedNewsList: (searchedNews: NewsDataEntity[]) => void;
   setSourcesList: (sources: SourceDataEntity[]) => void;
   setCategoriesList: (categories: CategoryDataEntity[]) => void;
   setLanguageParam: (language: NewsLanguagesT) => void;

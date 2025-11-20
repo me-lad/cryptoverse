@@ -1,14 +1,9 @@
-// 📦 Imports
 import {
   BaseHeaders,
   AdditiveApiKeyHeaderCompare,
   AdditiveApiKeyHeaderGecko,
 } from '~constants/api';
 
-// 🧾 Local types and variables
-const Api_Key_Gecko = process.env.API_KEY_COINGECKO;
-
-// ⚙️ Custom hook
 export async function useServerFetch<T>(
   url: string,
   options?: RequestInit,

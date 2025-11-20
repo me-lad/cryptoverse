@@ -11,12 +11,12 @@ import {
 } from '~core/ui/shadcn/tooltip';
 
 // 📦 Internal imports
-import type { DataEntity } from '~types/api-generated/getLatestNews';
+import type { NewsDataEntity } from '@/lib/types/api-generated/news/getLatestNews';
 import { flexBetween, flexCenter } from '~styles/tw-custom';
 import { formatDate } from '~helpers/time';
 
 // ⚙️ Functional component
-const Card: React.FC<DataEntity> = (props) => {
+const Card: React.FC<NewsDataEntity> = (props) => {
   const {
     IMAGE_URL,
     TITLE,

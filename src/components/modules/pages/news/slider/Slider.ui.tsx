@@ -13,14 +13,14 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 // 📦 Internal imports
-import type { DataEntity } from '~types/api-generated/getLatestNews';
+import type { NewsDataEntity } from '@/lib/types/api-generated/news/getLatestNews';
 import { containerDefault } from '~styles/tw-custom';
 import { NewsContext } from '../NewsPage.context';
 import './Slider.css';
 
 // 🧾 Local types
 interface PropsT {
-  data: DataEntity[];
+  data: NewsDataEntity[];
 }
 
 // ⚙️ Functional component

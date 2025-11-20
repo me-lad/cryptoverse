@@ -3,21 +3,21 @@ import type { Dispatch } from 'react';
 
 // 📦 Internal imports
 import type { NewsLanguagesT, NewsReducerActionT } from '~types/news';
-import type { DataEntity } from '~types/api-generated/getLatestNews';
-import type { DataEntity as CategoryDataEntity } from '~types/api-generated/getNewsCategories';
-import type { DataEntity as SourceDataEntity } from '~types/api-generated/getNewsSources';
+import type { NewsDataEntity } from '@/lib/types/api-generated/news/getLatestNews';
+import type { CategoryDataEntity } from '@/lib/types/api-generated/news/getNewsCategories';
+import type { SourceDataEntity } from '@/lib/types/api-generated/news/getNewsSources';
 import { NewsReducerActions } from '~types/news';
 
 export const createNewsActions = (dispatch: Dispatch<NewsReducerActionT>) => {
   return {
-    setNewsList(news: DataEntity[]) {
+    setNewsList(news: NewsDataEntity[]) {
       dispatch({
         type: NewsReducerActions.SetNewsList,
         payload: { data: { news } },
       });
     },
 
-    setSearchedNewsList(searchedNews: DataEntity[]) {
+    setSearchedNewsList(searchedNews: NewsDataEntity[]) {
       dispatch({
         type: NewsReducerActions.SetSearchedNewsList,
         payload: { data: { searchedNews } },

@@ -1,8 +1,9 @@
 export type GetLatestNews = {
-  Data?: DataEntity[] | null;
+  Data?: NewsDataEntity[] | null;
   Err: Err;
 };
-export type DataEntity = {
+
+export type NewsDataEntity = {
   TYPE: string;
   ID: number;
   GUID: string;
@@ -27,7 +28,8 @@ export type DataEntity = {
   SOURCE_DATA: SOURCEDATA;
   CATEGORY_DATA?: CATEGORYDATAEntity[] | null;
 };
-export type SOURCEDATA = {
+
+type SOURCEDATA = {
   TYPE: string;
   ID: number;
   SOURCE_KEY: string;
@@ -44,13 +46,15 @@ export type SOURCEDATA = {
   CREATED_ON: number;
   UPDATED_ON: number;
 };
-export type CATEGORYDATAEntity = {
+
+type CATEGORYDATAEntity = {
   TYPE: string;
   ID: number;
   NAME: string;
   CATEGORY: string;
 };
-export type Err = {
+
+type Err = {
   type: number;
   message: string;
 };

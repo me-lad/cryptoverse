@@ -26,7 +26,7 @@ export function useNewsQuery() {
   const queryFn = () => {
     return params.searchString
       ? searchNews(params.searchString, buildSearchSource(params.sources))
-      : getNews(params);
+      : getNews(params, { method: 'GET' });
   };
 
   return useQuery({ queryKey, queryFn });
@@ -112,8 +112,8 @@ export function useInfiniteScroll() {
       };
       const olderNews = await fetchNewsByTimestamp();
 
-      if (olderNews.Data) {
-        if (olderNews.Data.length === 1 && !hasScrollFinished.current) {
+      if (olderNews.success && olderNews.result.Data) {
+        if (olderNews.result.Data.length === 1 && !hasScrollFinished.current) {
           hasScrollFinished.current = true;
           return showNoMoreNewsToast();
         }
@@ -121,8 +121,8 @@ export function useInfiniteScroll() {
         setScrollFetchTimes(1);
 
         const updatedNews = params.searchString
-          ? [...data.searchedNews, ...olderNews.Data.slice(1)]
-          : [...data.news, ...olderNews.Data.slice(1)];
+          ? [...data.searchedNews, ...olderNews.result.Data.slice(1)]
+          : [...data.news, ...olderNews.result.Data.slice(1)];
 
         params.searchString
           ? actions?.setSearchedNewsList(updatedNews)

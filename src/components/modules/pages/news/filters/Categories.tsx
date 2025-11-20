@@ -27,10 +27,10 @@ const Categories = () => {
   if (isLoading)
     return <Skeleton className="col-span-12 min-h-full max-sm:h-10" />;
 
+  if (isError || !data?.success) return <ToastError />;
+
   return (
     <>
-      {isError && <ToastError />}
-
       <DropDownAggregator className="col-span-12 min-h-full sm:col-span-3">
         <DropDownTrigger activeClassName="*:!bg-primary *:*:last:rotate-180">
           <Button className="w-full rounded-sm" size={'lg'} variant={'outline'}>
@@ -42,7 +42,7 @@ const Categories = () => {
           </Button>
         </DropDownTrigger>
 
-        <SelectMenu selectId={'categories'} options={data?.Data || []} />
+        <SelectMenu selectId={'categories'} options={data.result?.Data || []} />
       </DropDownAggregator>
 
       <DropDownAggregator className="col-span-12 min-h-full sm:col-span-3">
@@ -56,7 +56,10 @@ const Categories = () => {
           </Button>
         </DropDownTrigger>
 
-        <SelectMenu selectId={'excludeCategories'} options={data?.Data || []} />
+        <SelectMenu
+          selectId={'excludeCategories'}
+          options={data.result?.Data || []}
+        />
       </DropDownAggregator>
     </>
   );

@@ -5,10 +5,10 @@ import SliderUi from './Slider.ui';
 
 // ⚙️ Functional component
 const SliderFn = async () => {
-  const { Data: data } = await getNews({ limit: 6 });
+  const resp = await getNews({ limit: 6 });
 
-  if (!data) return <CatchError />;
+  if (!resp.success || !resp.result.Data) return <CatchError />;
 
-  return <SliderUi data={data} />;
+  return <SliderUi data={resp.result.Data} />;
 };
 export default SliderFn;
