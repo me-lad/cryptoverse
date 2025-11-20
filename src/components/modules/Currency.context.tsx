@@ -11,7 +11,7 @@ import type {
   CurrencyT,
 } from '~types/coins';
 import { useLocalStorage } from '~hooks/useLocalStorage';
-import { getCurrencyConversionFactors } from '~services/integrations/coins';
+import { getConversionFactors } from '~services/integrations/coins';
 
 // 🧾 Local types & variables
 export const CurrencyContext = createContext<Partial<CurrencyContextT>>({});
@@ -32,7 +32,7 @@ const CurrencyContextProvider: React.FC<PropsType> = ({ children }) => {
   useEffect(() => {
     const getFactors = async () => {
       if (hasMounted.current) {
-        const resp = await getCurrencyConversionFactors(selectedCurrency);
+        const resp = await getConversionFactors(selectedCurrency);
         if (!resp) return;
 
         setFactors(resp);
