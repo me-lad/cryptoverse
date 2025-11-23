@@ -16,10 +16,10 @@ const FiltersWrapper = () => {
   const { actions, params } = use(NewsContext);
 
   const resetFiltersHandler = () => {
-    if (actions) {
-      actions.setSourcesParam('');
-      actions.setCategoriesParam('');
-      actions.setExcludeCategoriesParam('');
+    if (actions?.setParams) {
+      actions.setParams('sources', '');
+      actions.setParams('categories', '');
+      actions.setParams('excludeCategories', '');
     }
   };
 

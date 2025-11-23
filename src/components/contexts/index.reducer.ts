@@ -6,7 +6,7 @@ export const sharedReducer = <TData, TParams, TFlags>(
 ) => {
   const { source, key, payload } = action;
 
-  if (!source || !key || !payload) return state;
+  if (!source || !key) return state;
 
   return {
     ...state,

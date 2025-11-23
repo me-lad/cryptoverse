@@ -23,8 +23,8 @@ const Language = () => {
   const { actions, params } = use(NewsContext);
 
   const changeLanguage = (language: NewsLanguagesT) => {
-    if (actions?.setLanguageParam) {
-      actions.setLanguageParam(language);
+    if (actions?.setParams) {
+      actions.setParams('language', language);
     }
   };
 

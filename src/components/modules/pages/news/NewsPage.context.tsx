@@ -2,32 +2,17 @@
 'use client';
 
 // 📦 Third-Party imports
-import React, { createContext, useEffect, useReducer, useMemo } from 'react';
+import React, { useEffect, useReducer, useMemo, createContext } from 'react';
 
 // 📦 Internal imports
-import type { NewsContextT } from '~types/news';
-import { updateSearchParams } from '~helpers/generators';
-import { newsReducer } from './news.reducer';
-import { createNewsActions } from './news.actions';
-import { buildSearchSource } from './local';
+import type { ContextGeneralT } from '~contexts/local';
+import type { NewsContextDataT, NewsContextParamsT } from '~types/news';
 import { useHasMounted } from '~hooks/useHasMounted';
+import { updateSearchParams } from '~helpers/generators';
+import { sharedReducer } from '~contexts/index.reducer';
+import { createActions } from '~contexts/index.actions';
 
-// 🧾 Local types and variables
-const initialState: NewsContextT = {
-  data: {
-    news: [],
-    searchedNews: [],
-    sources: [],
-    categories: [],
-  },
-
-  params: {
-    language: 'EN',
-  },
-};
-
-export const NewsContext = createContext<NewsContextT>(initialState);
-
+// 🧾 Local types and helpers and context declare
 interface PropsT {
   children: React.ReactNode;
   urlParams: {
@@ -35,19 +20,36 @@ interface PropsT {
   };
 }
 
-// ⚙️ Functional component
-const NewsPageContext: React.FC<PropsT> = ({ urlParams, children }) => {
-  const [state, dispatch] = useReducer(newsReducer, {
-    data: { ...initialState.data },
-    params: {
-      ...urlParams,
+const buildSearchSource = (sourcesParam?: string) => {
+  return (sourcesParam || '5').split(',').slice(-1)[0];
+};
+
+const initialState: ContextGeneralT<NewsContextDataT, NewsContextParamsT, {}> =
+  {
+    data: {
+      news: [],
+      searchedNews: [],
+      categories: [],
+      sources: [],
     },
-  });
+    params: {},
+    flags: {},
+  };
+
+export const NewsContext =
+  createContext<ContextGeneralT<NewsContextDataT, NewsContextParamsT, {}>>(
+    initialState,
+  );
+
+const NewsPageContext: React.FC<PropsT> = ({ urlParams, children }) => {
+  const [state, dispatch] = useReducer(
+    sharedReducer<NewsContextDataT, NewsContextParamsT, {}>,
+    { ...initialState, params: { ...urlParams } },
+  );
 
   const hasMounted = useHasMounted();
-
   useEffect(() => {
-    if (hasMounted) {
+    if (hasMounted && state.params) {
       const { language, sources, searchString, ...rest } = state.params;
       updateSearchParams({
         ...rest,
@@ -58,7 +60,7 @@ const NewsPageContext: React.FC<PropsT> = ({ urlParams, children }) => {
     }
   }, [state.params]);
 
-  const actions = useMemo(() => createNewsActions(dispatch), [dispatch]);
+  const actions = useMemo(() => createActions(dispatch), [dispatch]);
 
   return <NewsContext value={{ ...state, actions }}>{children}</NewsContext>;
 };

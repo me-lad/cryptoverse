@@ -25,11 +25,11 @@ const NewsListFn = () => {
   } = useInfiniteScroll();
 
   useEffect(() => {
-    if (actions?.setNewsList && actions.setSearchedNewsList && data?.success) {
+    if (actions?.setData && data?.success) {
       if (params.searchString && data.result?.Data) {
-        actions.setSearchedNewsList(data.result?.Data || []);
+        actions.setData('searchedNews', data.result?.Data || []);
       } else {
-        actions.setNewsList(data.result?.Data || contextData.news);
+        actions.setData('news', data.result?.Data || contextData.news);
       }
     }
   }, [data, params.searchString]);

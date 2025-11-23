@@ -1,8 +1,8 @@
 export interface ContextGeneralT<TData, TParams, TFlags> {
-  data: Partial<TData>;
-  params: Partial<TParams>;
-  flags: Partial<TFlags>;
-  actions: ActionsGeneralT<TData, TParams, TFlags>;
+  data: TData;
+  params: TParams;
+  flags: TFlags;
+  actions?: ActionsGeneralT<TData, TParams, TFlags>;
 }
 
 export interface DataReducerActionT<TData> {

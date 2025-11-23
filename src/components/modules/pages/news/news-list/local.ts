@@ -1,5 +1,3 @@
-// 📌 Directives
-
 // 📦 Third-Party imports
 import { useRef, useState, useEffect, use } from 'react';
 import { useQuery } from '@tanstack/react-query';
@@ -125,8 +123,8 @@ export function useInfiniteScroll() {
           : [...data.news, ...olderNews.result.Data.slice(1)];
 
         params.searchString
-          ? actions?.setSearchedNewsList(updatedNews)
-          : actions?.setNewsList(updatedNews);
+          ? actions?.setData('searchedNews', updatedNews)
+          : actions?.setData('news', updatedNews);
       }
     } catch (err) {
       console.error('Failed to fetch older news:', err);

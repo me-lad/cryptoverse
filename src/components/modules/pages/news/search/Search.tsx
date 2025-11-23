@@ -24,19 +24,19 @@ const Search = () => {
       setIsLoading(true);
     } else {
       setIsLoading(false);
-      actions?.setSearchedNewsList([]);
+      actions?.setData('searchedNews', []);
     }
   }, [search]);
 
   useEffect(() => {
     if (debouncedSearch.length >= 3) {
-      actions?.setCategoriesParam('');
-      actions?.setExcludeCategoriesParam('');
-      actions?.setLanguageParam('EN');
-      actions?.setSearchStringParam(debouncedSearch);
-      actions?.setSourcesParam(buildSearchSource(params.sources));
+      actions?.setParams('categories', '');
+      actions?.setParams('excludeCategories', '');
+      actions?.setParams('language', 'EN');
+      actions?.setParams('searchString', debouncedSearch);
+      actions?.setParams('sources', buildSearchSource(params.sources));
     } else {
-      actions?.setSearchStringParam('');
+      actions?.setParams('searchString', '');
     }
     setIsLoading(false);
   }, [debouncedSearch]);

@@ -68,11 +68,11 @@ const SelectOption: React.FC<PropsT> = (props) => {
 
     // Apply filter changes
     if (selectId === 'sources') {
-      actions?.setSourcesParam(newQuery);
+      actions?.setParams('sources', newQuery);
     } else if (selectId === 'categories') {
-      actions?.setCategoriesParam(newQuery);
+      actions?.setParams('categories', newQuery);
     } else if (selectId === 'excludeCategories') {
-      actions?.setExcludeCategoriesParam(newQuery);
+      actions?.setParams('excludeCategories', newQuery);
     }
   };
 
