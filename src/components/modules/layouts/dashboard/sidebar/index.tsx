@@ -12,21 +12,21 @@ import SidebarMenu from './Menu';
 
 // ⚙️ Functional component
 const Sidebar = () => {
-  const { settings, action } = use(DashboardSidebarContext);
+  const { flags, actions, getters } = use(DashboardSidebarContext);
 
   return (
     <aside
       className={cn(
         'fixed top-0 left-0 z-20 h-screen -translate-x-full transition-[width] duration-300 ease-in-out lg:translate-x-0',
-        !action?.getOpenState() ? 'w-[110px]' : 'w-72',
-        settings.disabled && 'hidden',
+        !getters?.getOpenState() ? 'w-[110px]' : 'w-72',
+        flags.isDisabled && 'hidden',
       )}
     >
       <SidebarToggler />
 
       <div
-        onMouseEnter={() => action?.setHoverState(true)}
-        onMouseLeave={() => action?.setHoverState(false)}
+        onMouseEnter={() => actions?.setFlags('isHovered', true)}
+        onMouseLeave={() => actions?.setFlags('isHovered', false)}
         className="!no-scrollbar relative flex h-full flex-col overflow-y-auto border-r border-neutral-400 px-3 pt-4 dark:border-neutral-700"
       >
         <SidebarMenu />

@@ -31,7 +31,7 @@ import { useHasMounted } from '~hooks/useHasMounted';
 // ⚙️ Functional component
 const AccordionItem: React.FC<DashboardSidebarMenuItemT> = (props) => {
   const { title, icon, subItems } = props;
-  const { action } = use(DashboardSidebarContext);
+  const { getters } = use(DashboardSidebarContext);
   const { theme } = useTheme();
   const mounted = useHasMounted();
 
@@ -66,7 +66,7 @@ const AccordionItem: React.FC<DashboardSidebarMenuItemT> = (props) => {
               )}
             </TooltipTrigger>
 
-            {action?.getOpenState() ? (
+            {getters?.getOpenState() ? (
               <p className="line-clamp-1">{title}</p>
             ) : (
               <TooltipContent side="right">{title}</TooltipContent>

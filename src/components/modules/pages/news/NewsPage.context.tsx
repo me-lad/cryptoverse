@@ -19,28 +19,26 @@ interface PropsT {
     [key: string]: string | undefined;
   };
 }
+type NewsContextT = ContextGeneralT<NewsContextDataT, NewsContextParamsT, {}>;
 
 const buildSearchSource = (sourcesParam?: string) => {
   return (sourcesParam || '5').split(',').slice(-1)[0];
 };
 
-const initialState: ContextGeneralT<NewsContextDataT, NewsContextParamsT, {}> =
-  {
-    data: {
-      news: [],
-      searchedNews: [],
-      categories: [],
-      sources: [],
-    },
-    params: {},
-    flags: {},
-  };
+const initialState: NewsContextT = {
+  data: {
+    news: [],
+    searchedNews: [],
+    categories: [],
+    sources: [],
+  },
+  params: {},
+  flags: {},
+};
 
-export const NewsContext =
-  createContext<ContextGeneralT<NewsContextDataT, NewsContextParamsT, {}>>(
-    initialState,
-  );
+export const NewsContext = createContext<NewsContextT>(initialState);
 
+// ⚙️ Functional component
 const NewsPageContext: React.FC<PropsT> = ({ urlParams, children }) => {
   const [state, dispatch] = useReducer(
     sharedReducer<NewsContextDataT, NewsContextParamsT, {}>,

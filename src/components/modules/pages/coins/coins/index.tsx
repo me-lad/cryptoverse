@@ -26,13 +26,13 @@ import TableBody from './TableBody';
 
 // ⚙️ Functional component
 const Coins = () => {
-  const { coins } = use(CoinsContext);
+  const { data } = use(CoinsContext);
 
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable<CoinEntity_Gecko>({
-    data: coins,
+    data: data.coins,
     columns,
     getCoreRowModel: getCoreRowModel(),
     onSortingChange: setSorting,

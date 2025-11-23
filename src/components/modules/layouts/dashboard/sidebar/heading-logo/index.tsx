@@ -16,7 +16,7 @@ import { DashboardSidebarContext } from '../../Dashboard.context';
 
 // ⚙️ Functional component
 const HeadingLogo = () => {
-  const { action } = use(DashboardSidebarContext);
+  const { getters } = use(DashboardSidebarContext);
 
   return (
     <div className="relative h-10 w-full">
@@ -25,7 +25,7 @@ const HeadingLogo = () => {
           <div
             className={clsx(
               'relative flex h-full w-full justify-center pt-1',
-              action?.getOpenState() && 'hidden',
+              getters?.getOpenState() && 'hidden',
             )}
           >
             <Link href={'/'}>
@@ -46,7 +46,7 @@ const HeadingLogo = () => {
           src={'/svgs/logo/logo-text.svg'}
           fill
           alt="Crypto Verse"
-          className={clsx(!action?.getOpenState() && 'hidden')}
+          className={clsx(!getters?.getOpenState() && 'hidden')}
         />
       </Link>
 

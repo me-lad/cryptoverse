@@ -7,7 +7,6 @@ import { Button } from '~core/ui/shadcn/button';
 import { Lock, LockOpen, Pointer, PointerOff, Settings } from 'lucide-react';
 
 // 📦 Internal imports
-import type { DashboardSidebarSettingsT } from '~types/dashboard';
 import { DashboardSidebarContext } from '../Dashboard.context';
 import {
   DropDownAggregator,
@@ -23,18 +22,7 @@ import clsx from 'clsx';
 
 // ⚙️ Functional component
 const SidebarSettings = () => {
-  const { action, settings } = use(DashboardSidebarContext);
-
-  const changeHandler = (
-    key: keyof DashboardSidebarSettingsT,
-    newStatus: boolean,
-  ) => {
-    action?.setSettings((prev) => ({ ...prev, [key]: newStatus }));
-
-    if (key === 'hoverable' && newStatus) {
-      action?.setOpenState(false);
-    }
-  };
+  const { actions, flags } = use(DashboardSidebarContext);
 
   return (
     <DropDownAggregator hideScroll={false}>
@@ -57,14 +45,14 @@ const SidebarSettings = () => {
         <Button
           className={clsx(
             'justify text-foreground w-full cursor-pointer !rounded-none',
-            settings.hoverable && !settings.disabled && '!text-primary',
+            flags.isHoverable && !flags.isDisabled && '!text-primary',
           )}
           size={'lg'}
           variant={'ghost'}
-          disabled={settings.disabled}
-          onClick={() => changeHandler('hoverable', !settings.hoverable)}
+          disabled={flags.isDisabled}
+          onClick={() => actions?.setFlags('isHoverable', !flags.isHoverable)}
         >
-          {settings.hoverable && !settings.disabled ? (
+          {flags.isHoverable && !flags.isDisabled ? (
             <Pointer />
           ) : (
             <PointerOff />
@@ -75,30 +63,30 @@ const SidebarSettings = () => {
         <Button
           className={clsx(
             'justify text-foreground w-full cursor-pointer !rounded-none',
-            settings.disabled && '!text-primary',
+            flags.isDisabled && '!text-primary',
           )}
           size={'lg'}
           variant={'ghost'}
-          onClick={() => changeHandler('disabled', !settings.disabled)}
+          onClick={() => actions?.setFlags('isDisabled', !flags.isDisabled)}
         >
-          {settings.disabled ? <Lock /> : <LockOpen />}
+          {flags.isDisabled ? <Lock /> : <LockOpen />}
           Disable
         </Button>
       </DropDownMenu>
       {/* <DropDownMenu className="mt-2.5 flex flex-col gap-y-2 overflow-hidden px-5 py-2.5 !shadow-none">
         <label className="flex items-center gap-x-3 text-sm">
           <Checkbox
-            defaultChecked={settings.hoverable}
+            defaultChecked={flags.isHoverable}
             className="!text-white"
-            onClick={() => changeHandler('hoverable', !settings.hoverable)}
+            onClick={() => changeHandler('hoverable', !flags.isHoverable)}
           />
           <span>Hoverable</span>
         </label>
         <label className="flex items-center gap-x-3 text-sm">
           <Checkbox
-            defaultChecked={settings.disabled}
+            defaultChecked={flags.isDisabled}
             className="!text-white"
-            onClick={() => changeHandler('disabled', !settings.disabled)}
+            onClick={() => changeHandler('disabled', !flags.isDisabled)}
           />
           <span>Disable</span>
         </label>

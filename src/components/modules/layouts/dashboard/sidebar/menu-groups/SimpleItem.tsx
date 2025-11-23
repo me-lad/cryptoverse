@@ -29,7 +29,7 @@ import { useHasMounted } from '~hooks/useHasMounted';
 // ⚙️ Functional components
 const InnerUi: React.FC<DashboardSidebarMenuItemT> = (props) => {
   const { icon, title } = props;
-  const { action } = use(DashboardSidebarContext);
+  const { getters } = use(DashboardSidebarContext);
   const { theme } = useTheme();
 
   const mounted = useHasMounted();
@@ -50,7 +50,7 @@ const InnerUi: React.FC<DashboardSidebarMenuItemT> = (props) => {
         )}
       </TooltipTrigger>
 
-      {action?.getOpenState() ? (
+      {getters?.getOpenState() ? (
         <p className="line-clamp-1">{title}</p>
       ) : (
         <TooltipContent side="right">{title}</TooltipContent>
@@ -61,7 +61,7 @@ const InnerUi: React.FC<DashboardSidebarMenuItemT> = (props) => {
 
 const SimpleItem: React.FC<DashboardSidebarMenuItemT> = (props) => {
   const { url, title, subItems } = props;
-  const { action } = use(DashboardSidebarContext);
+  const { getters } = use(DashboardSidebarContext);
 
   const pathname = usePathname();
   const isContentActive = subItems?.find((item) => item.url === pathname);
@@ -80,13 +80,13 @@ const SimpleItem: React.FC<DashboardSidebarMenuItemT> = (props) => {
             <NavLink
               className={clsx(
                 'relative flex h-full w-full items-center gap-4',
-                action?.getOpenState() ? 'justify-start' : 'justify-center',
+                getters?.getOpenState() ? 'justify-start' : 'justify-center',
               )}
               href={url}
               activeClassName={clsx(
                 'before:absolute  before:-z-[2] before:h-full before:py-[1.1rem] before:rounded-sm before:-left-5',
 
-                action?.getOpenState() ? 'before:w-[120%]' : 'before:w-[800%]',
+                getters?.getOpenState() ? 'before:w-[120%]' : 'before:w-[800%]',
 
                 'before:bg-gradient-to-r before:from-primary before:via-primary/10 before:to-secondary before:opacity-100 before:from-5% before:via-5% before:to-150%',
               )}

@@ -1,22 +1,8 @@
-import React, { Dispatch } from 'react';
-
-export interface DashboardSidebarSettingsT {
-  disabled: boolean;
-  hoverable: boolean;
-}
-
-interface DashboardSidebarContextActions {
-  setOpenState: Dispatch<React.SetStateAction<boolean>>;
-  setHoverState: Dispatch<React.SetStateAction<boolean>>;
-  setSettings: Dispatch<React.SetStateAction<DashboardSidebarSettingsT>>;
-  getOpenState: () => boolean;
-}
-
-export interface DashboardSidebarContextT {
+export interface DashboardSidebarContextFlagsT {
   isOpen: boolean;
-  isHover: boolean;
-  settings: DashboardSidebarSettingsT;
-  action?: DashboardSidebarContextActions;
+  isHovered: boolean;
+  isDisabled: boolean;
+  isHoverable: boolean;
 }
 
 export type DashboardSidebarMenuBaseT = {

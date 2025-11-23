@@ -24,21 +24,14 @@ import { currencies } from '~modules/layouts/header/currency/local';
 
 // ⚙️ Functional components
 const CoinsSourceToggle = () => {
-  const { actions } = use(CoinsContext);
   const { showFavorites, setShowFavorites } = use(FavoriteCoinsContext);
 
   return (
     <div className="relative flex items-center gap-5 font-semibold">
-      <span
-        onClick={() => actions && setShowFavorites(false)}
-        className="cursor-pointer"
-      >
+      <span onClick={() => setShowFavorites(false)} className="cursor-pointer">
         All
       </span>
-      <span
-        onClick={() => actions && setShowFavorites(true)}
-        className="cursor-pointer"
-      >
+      <span onClick={() => setShowFavorites(true)} className="cursor-pointer">
         Favorites
       </span>
       <span
@@ -60,13 +53,13 @@ const CoinsOrderToggle = () => {
     <div className="relative flex items-center gap-5 font-semibold">
       <span
         className="cursor-pointer"
-        onClick={() => actions && actions.setOrder('market_cap_desc')}
+        onClick={() => actions && actions.setParams('order', 'market_cap_desc')}
       >
         Market Cap
       </span>
       <span
         className="cursor-pointer"
-        onClick={() => actions && actions.setOrder('volume_desc')}
+        onClick={() => actions && actions.setParams('order', 'volume_desc')}
       >
         Total Volume
       </span>
@@ -109,8 +102,9 @@ const CoinsPageSizeChange = () => {
           : Math.floor(currentPageFirstIndex / result.data + 1);
       const lastAvailablePage = Math.floor(totalCoinsCount / result.data);
 
-      actions.setPerPage(result.data);
-      actions.setPage(
+      actions.setParams('perPage', result.data);
+      actions.setParams(
+        'page',
         lastAvailablePage < newPageNumber ? lastAvailablePage : newPageNumber,
       );
     }

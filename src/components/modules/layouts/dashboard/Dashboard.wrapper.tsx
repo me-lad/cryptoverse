@@ -16,7 +16,7 @@ interface PropsT {
 
 // ⚙️ Functional component
 const DashboardWrapper: React.FC<PropsT> = ({ children }) => {
-  const { settings, action } = use(DashboardSidebarContext);
+  const { flags, getters } = use(DashboardSidebarContext);
 
   return (
     <>
@@ -25,8 +25,8 @@ const DashboardWrapper: React.FC<PropsT> = ({ children }) => {
       <div
         className={cn(
           'bg-background-lighter min-h-[calc(100vh_-_70px)] overflow-hidden transition-[margin-left] duration-300 ease-in-out',
-          !settings.disabled &&
-            (!action?.getOpenState() ? 'lg:ml-[110px]' : 'lg:ml-72'),
+          !flags.isDisabled &&
+            (!getters?.getOpenState() ? 'lg:ml-[110px]' : 'lg:ml-72'),
         )}
       >
         {children}

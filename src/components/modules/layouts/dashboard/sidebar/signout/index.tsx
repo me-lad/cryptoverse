@@ -17,7 +17,7 @@ import { DashboardSidebarContext } from '../../Dashboard.context';
 
 // ⚙️ Functional component
 const Signout = () => {
-  const { action } = use(DashboardSidebarContext);
+  const { getters } = use(DashboardSidebarContext);
 
   return (
     <Tooltip disableHoverableContent delayDuration={100}>
@@ -32,14 +32,14 @@ const Signout = () => {
           <p
             className={cn(
               'whitespace-nowrap',
-              !action?.getOpenState() ? 'hidden opacity-0' : 'opacity-100',
+              !getters?.getOpenState() ? 'hidden opacity-0' : 'opacity-100',
             )}
           >
             Sign out
           </p>
         </Button>
       </TooltipTrigger>
-      {action?.getOpenState() === false && (
+      {getters?.getOpenState() === false && (
         <TooltipContent side="right">Sign out</TooltipContent>
       )}
     </Tooltip>

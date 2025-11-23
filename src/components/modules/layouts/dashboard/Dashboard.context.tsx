@@ -2,56 +2,69 @@
 'use client';
 
 // 📦 Third-Party imports
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useReducer, useMemo } from 'react';
 
 // 📦 Internal imports
-import type {
-  DashboardSidebarContextT,
-  DashboardSidebarSettingsT,
-} from '~types/dashboard';
+import type { DashboardSidebarContextFlagsT } from '~types/dashboard';
 import { dashboardSidebarInitialValue } from '~constants/dashboard';
+import type { ContextGeneralT } from '~contexts/local';
+import { sharedReducer } from '~contexts/index.reducer';
+import { createActions } from '~contexts/index.actions';
 
 // 🧾 Local types and context declare
 interface PropsT {
   children: React.ReactNode;
 }
 
-export const DashboardSidebarContext = createContext<DashboardSidebarContextT>(
-  dashboardSidebarInitialValue,
-);
+type DashboardSidebarContextT = ContextGeneralT<
+  {},
+  {},
+  DashboardSidebarContextFlagsT
+> & {
+  getters?: {
+    getOpenState: () => boolean;
+  };
+};
+
+const initialState: DashboardSidebarContextT = {
+  data: {},
+  params: {},
+  flags: {
+    isOpen: true,
+    isHovered: false,
+    isDisabled: false,
+    isHoverable: false,
+  },
+};
+
+export const DashboardSidebarContext =
+  createContext<DashboardSidebarContextT>(initialState);
 
 // ⚙️ Functional component
 const DashboardContext: React.FC<PropsT> = ({ children }) => {
-  const [isOpen, setIsOpen] = useState(dashboardSidebarInitialValue.isOpen);
-  const [isHover, setIsHover] = useState(dashboardSidebarInitialValue.isHover);
-  const [settings, setSettings] = useState<DashboardSidebarSettingsT>(
-    dashboardSidebarInitialValue.settings,
+  const [state, dispatch] = useReducer(
+    sharedReducer<{}, {}, DashboardSidebarContextFlagsT>,
+    initialState,
   );
 
   const getOpenState = () => {
-    if (settings.disabled) return false;
+    if (state.flags.isDisabled) return false;
 
-    if (settings.hoverable) {
-      return isHover;
+    if (state.flags.isHoverable) {
+      return state.flags.isHovered;
     } else {
-      return isOpen;
+      return state.flags.isOpen;
     }
   };
 
-  const value: DashboardSidebarContextT = {
-    isOpen,
-    isHover,
-    settings,
-    action: {
-      setOpenState: setIsOpen,
-      setHoverState: setIsHover,
-      setSettings,
-      getOpenState,
-    },
-  };
+  const actions = useMemo(() => createActions(dispatch), [dispatch]);
 
   return (
-    <DashboardSidebarContext value={value}>{children}</DashboardSidebarContext>
+    <DashboardSidebarContext
+      value={{ ...state, actions, getters: { getOpenState } }}
+    >
+      {children}
+    </DashboardSidebarContext>
   );
 };
 export default DashboardContext;

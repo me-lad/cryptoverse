@@ -17,16 +17,14 @@ import { DashboardSidebarContext } from '../Dashboard.context';
 
 // ⚙️ Functional component
 const SidebarToggler = () => {
-  const { action, settings } = use(DashboardSidebarContext);
+  const { flags, getters, actions } = use(DashboardSidebarContext);
 
   useEffect(() => {
     const keyboardHandler = (event: KeyboardEvent) => {
       const ctrlKey = event.ctrlKey;
       const key = event.code;
 
-      if (key === 'KeyB' && ctrlKey) {
-        action?.setOpenState((prev) => !prev);
-      }
+      if (key === 'KeyB' && ctrlKey) changeOpenState();
     };
 
     if (typeof window !== 'undefined') {
@@ -36,12 +34,17 @@ const SidebarToggler = () => {
     return () => window.removeEventListener('keyup', keyboardHandler);
   }, []);
 
+  const changeOpenState = () => {
+    const newState = !flags.isOpen;
+    actions?.setFlags('isOpen', newState);
+  };
+
   return (
     <div className="invisible absolute top-5 -right-[16px] z-20 lg:visible">
       <Tooltip>
         <TooltipTrigger asChild>
           <Button
-            onClick={() => action?.setOpenState((prev) => !prev)}
+            onClick={changeOpenState}
             className="size-8 cursor-pointer rounded-md"
             variant="secondary"
             size="icon"
@@ -50,13 +53,13 @@ const SidebarToggler = () => {
               strokeWidth={3}
               className={cn(
                 'size-4 transition-transform duration-700 ease-in-out',
-                !action?.getOpenState() ? 'rotate-180' : 'rotate-0',
+                !getters?.getOpenState() ? 'rotate-180' : 'rotate-0',
               )}
             />
           </Button>
         </TooltipTrigger>
 
-        {!settings.hoverable && (
+        {!flags.isHoverable && (
           <TooltipContent className="rounded-[9999px] font-bold">
             Ctrl + B
           </TooltipContent>

@@ -14,23 +14,18 @@ export interface CurrencyContextT {
 // Context ( Coins )
 export type CoinsOrderT = 'volume_desc' | 'market_cap_desc';
 
-interface CoinsContextParamsT {
+export interface CoinsContextParamsT {
   page: number;
   perPage: number;
   order: CoinsOrderT;
 }
 
-interface CoinsContextActionsT {
-  setPage: (page: number) => void;
-  setPerPage: (perPage: number) => void;
-  setOrder: (order: CoinsOrderT) => void;
+export interface CoinsContextDataT {
+  coins: CoinEntity_Gecko[];
 }
 
-export interface CoinsContextT {
-  coins: CoinEntity_Gecko[];
-  params: CoinsContextParamsT;
-  actions?: CoinsContextActionsT;
-  flags: { isFetching?: boolean };
+export interface CoinsContextFlagsT {
+  isFetching: boolean;
 }
 
 export interface FavoriteCoinsContextT {

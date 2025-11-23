@@ -19,11 +19,11 @@ interface PropsT {
 
 // ⚙️ Functional component
 const Title: React.FC<PropsT> = ({ title }) => {
-  const { action } = use(DashboardSidebarContext);
+  const { getters } = use(DashboardSidebarContext);
 
   return (
     <div className="px-4 text-sm opacity-70">
-      {action?.getOpenState() ? (
+      {getters?.getOpenState() ? (
         <h2 className="line-clamp-1 min-h-6">{title}</h2>
       ) : (
         <Tooltip>

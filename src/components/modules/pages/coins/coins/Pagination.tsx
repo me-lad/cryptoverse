@@ -34,7 +34,7 @@ const Pagination = () => {
 
   const changePageHandler = (newPage: number) => {
     if (newPage === params.page) return;
-    if (actions && !flags?.isFetching) actions.setPage(newPage);
+    if (actions && !flags?.isFetching) actions.setParams('page', newPage);
   };
 
   if (showFavorites) return;

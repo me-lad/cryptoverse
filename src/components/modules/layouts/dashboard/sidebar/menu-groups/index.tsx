@@ -14,7 +14,7 @@ import AccordionItem from './AccordionItem';
 
 // ⚙️ Functional component
 const MenuGroups = () => {
-  const { action } = use(DashboardSidebarContext);
+  const { getters } = use(DashboardSidebarContext);
 
   return (
     <>
@@ -22,7 +22,7 @@ const MenuGroups = () => {
         <li
           className={clsx(
             'flex w-full flex-col justify-end gap-2.5 not-first:mt-8',
-            !action?.getOpenState() && 'items-center',
+            !getters?.getOpenState() && 'items-center',
           )}
           key={group.title}
         >
@@ -31,7 +31,7 @@ const MenuGroups = () => {
           <div>
             {group.items.map((item) => (
               <div key={item.title} className="flex">
-                {item.url || !action?.getOpenState() ? (
+                {item.url || !getters?.getOpenState() ? (
                   <SimpleItem {...item} />
                 ) : (
                   <AccordionItem {...item} />
