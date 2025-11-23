@@ -63,7 +63,7 @@ enum Typespec {
   TvCalculatedPair = 'tv-calculated-pair',
 }
 
-interface GetTradingViewAvailableSymbols {
+export interface GetTradingViewAvailableSymbols {
   symbols_remaining: number;
   symbols: SymbolT[];
 }

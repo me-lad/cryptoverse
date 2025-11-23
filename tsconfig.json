@@ -22,6 +22,7 @@
       "@/*": ["./src/*"],
       "~core/*": ["./src/components/core/*"],
       "~modules/*": ["./src/components/modules/*"],
+      "~contexts/*": ["./src/components/contexts/*"],
       "~actions/*": ["./src/lib/actions/*"],
       "~configs/*": ["./src/lib/configs/*"],
       "~constants/*": ["./src/lib/constants/*"],

@@ -1,6 +1,7 @@
 import type { NewsDataEntity } from './api-generated/news/getLatestNews';
 import type { CategoryDataEntity } from './api-generated/news/getNewsCategories';
 import type { SourceDataEntity } from './api-generated/news/getNewsSources';
+import type { ContextGeneralT } from '~contexts/local';
 
 export type NewsLanguagesT = 'EN' | 'ES' | 'FR' | 'TR';
 

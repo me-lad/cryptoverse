@@ -1,5 +1,5 @@
 import type { CurrencyConversionFactorsT, CurrencyT } from '~types/coins';
-import type { GetCurrencyConversionFactors } from '~types/api-generated/getConversionFactors';
+import type { GetCurrencyConversionFactors } from '~types/api-generated/coins/getConversionFactors';
 
 export const getConversionFactors = async (
   baseCurrency: CurrencyT,

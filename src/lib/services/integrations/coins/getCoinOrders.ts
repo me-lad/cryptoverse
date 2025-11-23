@@ -7,6 +7,6 @@ export const getCoinOrders = async (coinSymbol: string) => {
   return await safeFetch<GetCoinOrders>(
     fetchUrl,
     'Something went wrong getting coin orders.',
-    { next: { revalidate: minutesToMillisecond(1) } },
+    { next: { revalidate: minutesToMillisecond(2.5) } },
   );
 };

@@ -1,7 +1,8 @@
-import type { GetTradingViewAvailableSymbols } from '@/lib/types/api-generated/coins/getTradingViewAvailableSymbols';
+import type { GetTradingViewAvailableSymbols } from '~types/api-generated/coins/getTradingViewAvailableSymbols';
 import { errorToast } from '~vendors/react-toastify';
 import { Messages } from '~constants/messages';
 import { showFallbackCatcher } from './shared';
+import { buildUrl } from '~helpers/generators';
 
 export const getTradingViewAvailableSymbols = async (
   startPoint: number,
@@ -11,9 +12,10 @@ export const getTradingViewAvailableSymbols = async (
 
   try {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    const fetchUrl = `${baseUrl}/api/trading-view/symbols?text=${encodeURIComponent(
-      searchQuery || '',
-    )}&start=${encodeURIComponent(String(startPoint))}`;
+    const fetchUrl = buildUrl(`${baseUrl}/api/trading-view/symbols`, {
+      text: searchQuery,
+      start: startPoint,
+    });
 
     const resp = await fetch(fetchUrl);
 
