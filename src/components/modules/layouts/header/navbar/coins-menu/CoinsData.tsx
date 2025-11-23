@@ -17,7 +17,7 @@ import type { HeaderNavbarCoinsFetchOrderT } from '../local.types';
 import { flexBetween } from '~styles/tw-custom';
 import { HeaderNavbarCoinsContext } from '../Navbar.context';
 import { useLockBodyScroll } from '~hooks/useLockBodyScroll';
-import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
+import { FavoriteCoinsContext } from '@/components/contexts/FavoriteCoins.context';
 import { errorToast } from '~vendors/react-toastify';
 import {
   DropDownAggregator,

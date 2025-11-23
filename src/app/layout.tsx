@@ -4,12 +4,12 @@ import clsx from 'clsx';
 
 import ReactQueryProvider from '~vendors/react-query';
 import ReactToastify from '~vendors/react-toastify';
-import CurrencyContextProvider from '~modules/Currency.context';
-import FavoriteCoinsContextProvider from '~modules/FavoriteCoins.context';
+import CurrencyContextProvider from '~contexts/Currency.context';
+import FavoriteCoinsContextProvider from '~contexts/FavoriteCoins.context';
 import HeaderFn from '~modules/layouts/header/Header.fn';
 import FooterFn from '~modules/layouts/footer/Footer.fn';
-import ThemeProvider from '~modules/Theme.provider';
-import ThemeController from '~modules/Theme.controller';
+import ThemeProvider from '~providers/Theme.provider';
+import ThemeController from '~providers/Theme.controller';
 
 import '../lib/styles/global.css';
 import '../lib/styles/override.css';

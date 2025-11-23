@@ -5,7 +5,7 @@ import * as RechartsPrimitive from 'recharts';
 
 import { cn } from '~utils/shadcn';
 import { formatPrice } from '~helpers/formatters';
-import { CurrencyContext } from '~modules/Currency.context';
+import { CurrencyContext } from '@/components/contexts/Currency.context';
 
 // Format: { THEME_NAME: CSS_SELECTOR }
 const THEMES = { light: '', dark: '.dark' } as const;

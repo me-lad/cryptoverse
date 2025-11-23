@@ -16,7 +16,7 @@ import clsx from 'clsx';
 // 📦 Internal imports
 import type { CoinEntity_Gecko } from '~types/api-generated/shared';
 import { Percentage, Price } from '~core/global/formatters';
-import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
+import { FavoriteCoinsContext } from '@/components/contexts/FavoriteCoins.context';
 import { flexCenter } from '~styles/tw-custom';
 import { useCurrency } from '~hooks/useCurrency';
 

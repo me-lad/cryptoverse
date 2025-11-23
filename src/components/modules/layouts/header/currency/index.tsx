@@ -16,7 +16,7 @@ import {
 
 // 📦 Internal imports
 import type { CurrencyT } from '~types/coins';
-import { CurrencyContext } from '~modules/Currency.context';
+import { CurrencyContext } from '@/components/contexts/Currency.context';
 import { currencies } from './local';
 import {
   DropDownAggregator,

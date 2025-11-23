@@ -8,7 +8,7 @@ import { cn } from '~utils/shadcn';
 
 // 📦 Internal imports
 import { formatPrice } from '~helpers/formatters';
-import { CurrencyContext } from '~modules/Currency.context';
+import { CurrencyContext } from '@/components/contexts/Currency.context';
 import clsx from 'clsx';
 
 // 🧾 Local types

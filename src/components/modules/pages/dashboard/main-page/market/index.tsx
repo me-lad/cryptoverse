@@ -11,7 +11,7 @@ import clsx from 'clsx';
 // 📦 Internal imports
 import type { OrderT } from './local';
 import { flexBetween } from '~styles/tw-custom';
-import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
+import { FavoriteCoinsContext } from '@/components/contexts/FavoriteCoins.context';
 import FluidContainer from '../../FluidContainer';
 import CoinsList from './CoinsList';
 

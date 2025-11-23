@@ -12,7 +12,7 @@ import { getCoins } from '~services/integrations/coins';
 import { minutesToMillisecond } from '~helpers/time';
 import { errorToast } from '~vendors/react-toastify';
 import { Messages } from '~constants/messages';
-import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
+import { FavoriteCoinsContext } from '@/components/contexts/FavoriteCoins.context';
 
 // 🧾 Local types and variables
 const initialState: CoinsContextT = {

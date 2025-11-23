@@ -13,7 +13,7 @@ import clsx from 'clsx';
 import Image from 'next/image';
 
 // 📦 Internal imports
-import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
+import { FavoriteCoinsContext } from '@/components/contexts/FavoriteCoins.context';
 import { flexCenter } from '~styles/tw-custom';
 
 // 🧾 Local types

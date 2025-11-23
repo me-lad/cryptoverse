@@ -11,7 +11,7 @@ import Link from 'next/link';
 
 // 📦 Internal imports
 import type { GetCoinData } from '@/lib/types/api-generated/coins/getCoinData';
-import { FavoriteCoinsContext } from '~modules/FavoriteCoins.context';
+import { FavoriteCoinsContext } from '@/components/contexts/FavoriteCoins.context';
 import Metrics from './Metrics';
 
 const CoinData: React.FC<GetCoinData> = (props) => {
