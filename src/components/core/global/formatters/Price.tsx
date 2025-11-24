@@ -35,7 +35,9 @@ export const Price: React.FC<PropsT> = (props) => {
     className,
     ...rest
   } = props;
-  const { currency, conversionFactors } = use(CurrencyContext);
+  const {
+    data: { currency, conversionFactors },
+  } = use(CurrencyContext);
 
   return (
     <span className={cn('flex items-center gap-1', className)} {...rest}>

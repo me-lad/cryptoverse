@@ -147,11 +147,14 @@ const CoinsPageSizeChange = () => {
 };
 
 const CoinsCurrencyChange = () => {
-  const { currency, setCurrency } = use(CurrencyContext);
+  const {
+    data: { currency },
+    actions,
+  } = use(CurrencyContext);
 
   const changeHandler = (value: CurrencyT) => {
-    if (currency !== value && setCurrency) {
-      setCurrency(value);
+    if (currency !== value && actions) {
+      actions.setData('currency', value);
     }
   };
 

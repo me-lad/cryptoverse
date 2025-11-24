@@ -11,7 +11,9 @@ export const useCurrency = (
   shortenUnits?: boolean,
   fullPrecision?: boolean,
 ) => {
-  const { currency, conversionFactors } = use(CurrencyContext);
+  const {
+    data: { currency, conversionFactors },
+  } = use(CurrencyContext);
 
   const convertedPrice = formatPrice(
     price,

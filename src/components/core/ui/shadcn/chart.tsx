@@ -172,7 +172,9 @@ function ChartTooltipContent({
 
   const nestLabel = payload.length === 1 && indicator !== 'dot';
 
-  const { conversionFactors, currency } = React.use(CurrencyContext);
+  const {
+    data: { conversionFactors, currency },
+  } = React.use(CurrencyContext);
 
   return (
     <div

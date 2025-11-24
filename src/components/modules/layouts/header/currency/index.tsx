@@ -26,11 +26,11 @@ import {
 
 // ⚙️ Functional component
 const Currency = () => {
-  const { currency, setCurrency } = use(CurrencyContext);
+  const { data, actions } = use(CurrencyContext);
 
   const handlerCurrencyChange = (value: CurrencyT) => {
-    if (currency !== value && setCurrency) {
-      setCurrency(value);
+    if (data.currency !== value && actions) {
+      actions.setData('currency', value);
     }
   };
 
@@ -59,7 +59,7 @@ const Currency = () => {
               key={curr.id}
               className={clsx(
                 'hover:bg-background mt-3 flex items-center gap-4 rounded-sm p-2.5 py-1.5 transition-all select-none hover:cursor-pointer',
-                curr.id === currency && 'bg-background',
+                curr.id === data.currency && 'bg-background',
               )}
               onClick={() => handlerCurrencyChange(curr.id)}
             >
