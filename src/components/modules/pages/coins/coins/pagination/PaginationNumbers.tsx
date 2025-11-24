@@ -1,10 +1,13 @@
+// 📌 Directives
+'use client';
+
 // 📦 Third-Party imports
 import { MoreHorizontal } from 'lucide-react';
 import { Button } from '~core/ui/shadcn/button';
 import React, { use } from 'react';
 
 // 📦 Internal imports
-import { CoinsContext } from '../CoinsPage.context';
+import { CoinsContext } from '../../CoinsPage.context';
 
 // 🧾 Local types and variables
 interface PropsT {

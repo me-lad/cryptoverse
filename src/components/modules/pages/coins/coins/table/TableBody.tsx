@@ -21,10 +21,10 @@ import {
 
 // 📦 Internal imports
 import type { CoinEntity_Gecko } from '~types/api-generated/shared';
-import { CoinsContext } from '../CoinsPage.context';
+import { CoinsContext } from '../../CoinsPage.context';
 import { flexCenter } from '~styles/tw-custom';
 import { FavoriteCoinsContext } from '@/components/contexts/FavoriteCoins.context';
-import SkeltonTableRow from './SkeltonTableRow';
+import SkeltonTableRow from '../loader/SkeltonTableRow';
 import { useHasMounted } from '~hooks/useHasMounted';
 
 // 🧾 Local types

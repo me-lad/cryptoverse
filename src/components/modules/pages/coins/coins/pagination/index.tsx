@@ -9,7 +9,7 @@ import clsx from 'clsx';
 
 // 📦 Internal imports
 import { FavoriteCoinsContext } from '@/components/contexts/FavoriteCoins.context';
-import { CoinsContext } from '../CoinsPage.context';
+import { CoinsContext } from '../../CoinsPage.context';
 import { flexCenter } from '~styles/tw-custom';
 import PaginationNumbers from './PaginationNumbers';
 

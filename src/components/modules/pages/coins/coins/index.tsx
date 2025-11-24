@@ -14,15 +14,15 @@ import {
 
 // 📦 Internal imports
 import type { CoinEntity_Gecko } from '~types/api-generated/shared';
-import { columns } from './ColumnsDefinition';
+import { columns } from './table/ColumnsDefinition';
 import { CoinsContext } from '../CoinsPage.context';
 import { flexBetween } from '~styles/tw-custom';
-import DataTable from './Table';
-import Pagination from './Pagination';
-import Filters from './Filters';
-import Search from './Search';
-import TableHead from './TableHead';
-import TableBody from './TableBody';
+import DataTable from './table/Table';
+import Pagination from './pagination';
+import Filters from './filters';
+import Search from './search';
+import TableHead from './table/TableHead';
+import TableBody from './table/TableBody';
 
 // ⚙️ Functional component
 const Coins = () => {

@@ -33,21 +33,3 @@ export type ActionsGeneralT<TData, TParams, TFlags> = {
   setParams: <K extends keyof TParams>(key: K, value: TParams[K]) => void;
   setFlags: <K extends keyof TFlags>(key: K, value: TFlags[K]) => void;
 };
-
-// interface DataActionT<TData, K extends keyof TData> {
-//   source: 'data';
-//   key: K;
-//   payload: TData[K];
-// }
-
-// interface ParamsActionT<TParams, K extends keyof TParams> {
-//   source: 'params';
-//   key: K;
-//   payload: TParams[K];
-// }
-
-// interface FlagsActionT<TFlags, K extends keyof TFlags> {
-//   source: 'flags';
-//   key: K;
-//   payload: TFlags[K];
-// }

@@ -1,12 +1,9 @@
-// 📌 Directives
-
 // 📦 Third-Party imports
 import React from 'react';
 import { Button } from '~core/ui/shadcn/button';
 import { flexRender, SortingState, Table } from '@tanstack/react-table';
 import { RefreshCcw } from 'lucide-react';
 import {
-  TableCell,
   TableHeader,
   TableRow,
   TableHead as TableHeadShadcn,
