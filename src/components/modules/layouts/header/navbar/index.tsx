@@ -41,7 +41,7 @@ const Navbar = () => {
         {/* Support */}
         <NavigationMenuItem>
           <NavigationMenuLink
-            className="!h-fit min-w-[6.5rem] cursor-pointer rounded-sm !p-2 text-lg font-normal !text-neutral-300 *:mt-1 *:!fill-neutral-300 *:stroke-3"
+            className="!h-fit min-w-[6.5rem] cursor-pointer rounded-sm !p-2 text-lg font-normal !text-neutral-300 *:mt-1 *:!fill-neutral-300 *:stroke-3 not-hover:!bg-transparent"
             asChild
           >
             <NavLink

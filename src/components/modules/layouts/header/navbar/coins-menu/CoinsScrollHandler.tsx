@@ -59,7 +59,7 @@ const CoinsScrollHandler: React.FC<PropsT> = ({ container }) => {
   }, [params?.lastScrollPosition]);
 
   return flags.isLoading ? (
-    <div className={`${flexCenter} mt-[5.5rem]`}>
+    <div className={`${flexCenter} mt-10`}>
       <Spinner variant="ellipsis" size={50} />
     </div>
   ) : null;

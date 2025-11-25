@@ -1,4 +1,4 @@
-import type { GetTopCoins } from '~types/api-generated/getTopCoins';
+import type { GetTopCoins } from '~types/api-generated/coins/getTopCoins';
 import { safeFetch } from '~helpers/safeFetch';
 import { minutesToMillisecond } from '~helpers/time';
 

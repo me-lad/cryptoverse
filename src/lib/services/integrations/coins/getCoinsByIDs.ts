@@ -1,5 +1,4 @@
 import type { CoinEntity_Gecko } from '~types/api-generated/shared';
-import { BaseHeaders } from '~constants/api';
 import { errorToast } from '~vendors/react-toastify';
 import { Messages } from '~constants/messages';
 import { showFallbackCatcher } from './shared';
@@ -10,16 +9,10 @@ export const getCoinsByIDs = async (
   try {
     if (ids.length === 0) return [];
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_COINGECKO;
-    const fetchUrl = `${baseUrl}/api/v3/coins/markets?vs_currency=usd&price_change_percentage=1h%2C24h%2C7d%2C30d&ids=${ids.join('%2C')}`;
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const fetchUrl = `${baseUrl}/api/coins/specifics?ids=${ids.join('%2C')}`;
 
-    const resp = await fetch(fetchUrl, {
-      method: 'GET',
-      headers: {
-        ...BaseHeaders,
-        'x-cg-demo-api-key': process.env.API_KEY_COINGECKO || '',
-      },
-    });
+    const resp = await fetch(fetchUrl);
 
     if (!resp.ok) {
       if (resp.status === 429) {

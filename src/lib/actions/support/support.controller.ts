@@ -3,10 +3,11 @@
 
 // 📦 Internal imports
 import type { SupportMessageType } from '~models/SupportMessage/types';
+import type { MessageSendResultT } from '~types/support';
 import { sanitizeFormData } from '~helpers/sanitize';
 import { SupportService } from './support.service';
 import { validateFields } from './support.validator';
-import type { MessageSendResultT } from '~types/support';
+import { Messages } from '~constants/messages';
 
 // ⚙️ Server action
 export async function sendMessage(
@@ -36,11 +37,7 @@ export async function sendMessage(
   const creationResult = await SupportService.createMessage(sanitizedData);
 
   if (!creationResult) {
-    return {
-      success: false,
-      errMessage:
-        'Something went wrong during the process. Please check your connection and try again later. ',
-    };
+    return { success: false, errMessage: Messages.Error.CatchHandler };
   }
 
   return {

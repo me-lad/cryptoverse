@@ -1,5 +1,4 @@
 import type { CoinEntity_Gecko } from '~types/api-generated/shared';
-import { BaseHeaders } from '~constants/api';
 import { errorToast } from '~vendors/react-toastify';
 import { Messages } from '~constants/messages';
 import { showFallbackCatcher } from './shared';
@@ -11,16 +10,10 @@ export const searchCoins = async (
   try {
     if (!query || query.length < 2) return [];
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL_REQUEST_COINGECKO;
-    const fetchUrl = `${baseUrl}/api/v3/search?query=${query}`;
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const fetchUrl = `${baseUrl}/api/coins/search?query=${query}`;
 
-    const resp = await fetch(fetchUrl, {
-      method: 'GET',
-      headers: {
-        ...BaseHeaders,
-        'x-cg-demo-api-key': process.env.API_KEY_COINGECKO || '',
-      },
-    });
+    const resp = await fetch(fetchUrl);
 
     if (!resp.ok) {
       if (resp.status === 429) {
