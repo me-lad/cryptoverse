@@ -2,14 +2,8 @@
 'use client';
 
 // 📦 Third-Party imports
-import React, {
-  createContext,
-  use,
-  useMemo,
-  useReducer,
-  useEffect,
-  useRef,
-} from 'react';
+import * as React from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 // 📦 Internal imports
 import { type CoinsContextT, initialState, coinsReducer } from './local';
@@ -19,32 +13,29 @@ import { errorToast } from '~vendors/react-toastify';
 import { Messages } from '~constants/messages';
 import { FavoriteCoinsContext } from '~contexts/FavoriteCoins.context';
 import { useLocalStorage } from '~hooks/useLocalStorage';
-import { useCoinsQuery } from './coins/useCoinsQuery';
+import { getCoins } from '~services/integrations/coins';
+import { minutesToMillisecond } from '~helpers/time';
 
 // 🧾 Local types and context declare
 interface PropsT {
   children: React.ReactNode;
 }
 
-export const CoinsContext = createContext<CoinsContextT>(initialState);
+export const CoinsContext = React.createContext<CoinsContextT>(initialState);
 
 // ⚙️ Functional component
 const CoinsPageContext: React.FC<PropsT> = ({ children }) => {
   const [coinsParams, setCoinsParams] = useLocalStorage<CoinsContextParamsT>(
     'coins_params',
-    {
-      page: 1,
-      perPage: 20,
-      order: 'market_cap_desc',
-    },
+    initialState.params,
   );
-  const hasHydrated = useRef(false);
+  const hasHydrated = React.useRef(false);
 
-  const [state, dispatch] = useReducer(coinsReducer, initialState);
+  const [state, dispatch] = React.useReducer(coinsReducer, initialState);
 
-  const actions = useMemo(() => createActions(dispatch), [dispatch]);
+  const actions = React.useMemo(() => createActions(dispatch), [dispatch]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (hasHydrated.current || !coinsParams) return;
     const { order, page, perPage } = coinsParams;
     actions.setParams('page', page);
@@ -53,14 +44,24 @@ const CoinsPageContext: React.FC<PropsT> = ({ children }) => {
     hasHydrated.current = true;
   }, [coinsParams]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (!hasHydrated.current) return;
     setCoinsParams(state.params);
   }, [state]);
 
-  const { data, error, isLoading } = useCoinsQuery();
+  const { data, error, isLoading } = useQuery({
+    queryKey: [
+      'coins',
+      state.params.page,
+      state.params.perPage,
+      state.params.order,
+    ],
+    queryFn: () =>
+      getCoins(state.params.order, state.params.page, state.params.perPage),
+    staleTime: minutesToMillisecond(1.5),
+  });
 
-  const favoritesContext = use(FavoriteCoinsContext);
+  const favoritesContext = React.use(FavoriteCoinsContext);
 
   const value: CoinsContextT = {
     data: {
