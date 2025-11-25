@@ -23,7 +23,9 @@ const calculateTotalPages = (perPage: number) => {
 // ⚙️ Functional components
 const Pagination = () => {
   const { params, actions, flags } = use(CoinsContext);
-  const { showFavorites } = use(FavoriteCoinsContext);
+  const {
+    params: { showFavorites },
+  } = use(FavoriteCoinsContext);
   const [totalPagesCount, setTotalPagesCount] = useState(() =>
     calculateTotalPages(params.perPage || 10),
   );

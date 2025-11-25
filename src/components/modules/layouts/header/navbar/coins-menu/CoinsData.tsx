@@ -35,15 +35,11 @@ const orderMap: { [key in HeaderNavbarCoinsFetchOrderT]: string } = {
 // ⚙️ Functional component
 const CoinsData = () => {
   const { params, actions } = use(HeaderNavbarCoinsContext);
-  const { favoriteIDs } = use(FavoriteCoinsContext);
+  const {
+    data: { favoriteIDs },
+  } = use(FavoriteCoinsContext);
 
   useLockBodyScroll();
-
-  useEffect(() => {
-    if (!favoriteIDs.length) {
-      actions?.changeShowFavorites(false);
-    }
-  }, [favoriteIDs]);
 
   return (
     <div className="h-96 border-t border-neutral-700 px-4 py-6">

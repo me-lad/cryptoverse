@@ -6,7 +6,6 @@ import React, { createContext, useState, useReducer, useMemo } from 'react';
 
 // 📦 Internal imports
 import type { DashboardSidebarContextFlagsT } from '~types/dashboard';
-import { dashboardSidebarInitialValue } from '~constants/dashboard';
 import type { ContextGeneralT } from '~contexts/local';
 import { sharedReducer } from '~contexts/index.reducer';
 import { createActions } from '~contexts/index.actions';

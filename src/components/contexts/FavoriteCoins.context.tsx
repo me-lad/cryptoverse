@@ -2,81 +2,116 @@
 'use client';
 
 // 📦 Third-Party imports
-import React, { createContext, useState } from 'react';
+import * as React from 'react';
 import { useQuery } from '@tanstack/react-query';
 
 // 📦 Internal imports
-import type { FavoriteCoinsContextT } from '~types/coins';
+import type {
+  FavoriteCoinsContextDataT,
+  FavoriteCoinsContextParamsT,
+  FavoriteCoinsContextFlagsT,
+} from '~types/coins';
+import type { ContextGeneralT } from '~contexts/local';
 import { useLocalStorage } from '~hooks/useLocalStorage';
 import { errorToast } from '~vendors/react-toastify';
 import { ToastError } from '~core/ui/shared/typography';
 import { getCoinsByIDs } from '~services/integrations/coins';
+import { sharedReducer } from '~contexts/index.reducer';
+import { createActions } from '~contexts/index.actions';
 
 // 🧾 Context declaration and local types
 interface PropsT {
   children: React.ReactNode;
 }
 
-export const FavoriteCoinsContext = createContext<FavoriteCoinsContextT>({
-  favoriteIDs: [],
-  favoriteCoins: [],
-  showFavorites: false,
-  fetchFavorites: false,
-  isFetchingFavorites: false,
-  changeHandler: () => {},
-  setShowFavorites: () => {},
-  setFetchFavorites: () => {},
-});
+type FavoriteCoinsContextT = ContextGeneralT<
+  FavoriteCoinsContextDataT,
+  FavoriteCoinsContextParamsT,
+  FavoriteCoinsContextFlagsT
+> & {
+  handlers?: {
+    changeHandler: (id: string) => void;
+  };
+};
+
+const initialState: FavoriteCoinsContextT = {
+  data: { favoriteIDs: [], favoriteCoins: [] },
+  params: { showFavorites: false, fetchFavorites: false },
+  flags: { isFetching: false },
+};
+
+export const FavoriteCoinsContext =
+  React.createContext<FavoriteCoinsContextT>(initialState);
 
 // ⚙️ Functional component
 const FavoriteCoinsContextProvider: React.FC<PropsT> = ({ children }) => {
-  const [favoriteIDs, setFavoriteIDs] = useLocalStorage<string[]>(
-    'favoriteCoins',
+  const [storedFavorites, setStoredFavorites] = useLocalStorage<string[]>(
+    'favorite_coins',
     [],
   );
-  const [showFavorites, setShowFavorites] = useState(false);
-  const [fetchFavorites, setFetchFavorites] = useState(false);
+
+  const [state, dispatch] = React.useReducer(
+    sharedReducer<
+      FavoriteCoinsContextDataT,
+      FavoriteCoinsContextParamsT,
+      FavoriteCoinsContextFlagsT
+    >,
+    initialState,
+  );
+
+  const actions = React.useMemo(() => createActions(dispatch), [dispatch]);
+
+  const hasHydrated = React.useRef(false);
+
+  React.useEffect(() => {
+    if (hasHydrated.current || !storedFavorites) return;
+    actions.setData('favoriteIDs', storedFavorites);
+    hasHydrated.current = true;
+  }, [storedFavorites]);
+  React.useEffect(() => {
+    if (!hasHydrated.current) return;
+    setStoredFavorites(state.data.favoriteIDs);
+  }, [state]);
 
   const queryKey = [
     'favoriteCoins',
-    showFavorites,
-    !!favoriteIDs && favoriteIDs.sort().join(','),
+    state.params.showFavorites,
+    state.data.favoriteIDs.sort().join(','),
   ];
   const { data, error, isLoading } = useQuery({
     queryKey,
-    queryFn: () => getCoinsByIDs(favoriteIDs || []),
+    queryFn: () => getCoinsByIDs(state.data.favoriteIDs),
     staleTime: 2500,
     gcTime: 5000,
-    enabled: !!favoriteIDs?.length && (showFavorites || fetchFavorites),
+    enabled:
+      !!state.data.favoriteIDs?.length &&
+      (state.params.showFavorites || state.params.fetchFavorites),
   });
 
   const changeHandler = (id: string) => {
-    let newList: string[] = [];
-    if (favoriteIDs.includes(id)) {
-      newList = favoriteIDs.filter((item) => item !== id);
-    } else {
-      newList = Array.from(new Set([...favoriteIDs, id]));
-    }
-
-    if (newList.length > 50) {
-      errorToast(
+    if (state.data.favoriteIDs.length >= 50) {
+      return errorToast(
         'The maximum count for favorite coins is 50. to add some more please remove some of existence coins first.',
         { autoClose: 10_000 },
       );
-    } else {
-      setFavoriteIDs(newList);
     }
+
+    let newList: string[] = [];
+    if (state.data.favoriteIDs.includes(id)) {
+      newList = state.data.favoriteIDs.filter((item) => item !== id);
+    } else {
+      newList = Array.from(new Set([...state.data.favoriteIDs, id]));
+    }
+
+    actions.setData('favoriteIDs', newList);
   };
 
-  const value = {
-    favoriteIDs,
-    favoriteCoins: data || [],
-    changeHandler,
-    showFavorites,
-    fetchFavorites,
-    isFetchingFavorites: isLoading,
-    setShowFavorites,
-    setFetchFavorites,
+  const value: FavoriteCoinsContextT = {
+    ...state,
+    data: { ...state.data, favoriteCoins: data || [] },
+    flags: { isFetching: isLoading },
+    handlers: { changeHandler },
+    actions,
   };
 
   return (

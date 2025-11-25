@@ -24,20 +24,26 @@ import { currencies } from '~modules/layouts/header/currency/local';
 
 // ⚙️ Functional components
 const CoinsSourceToggle = () => {
-  const { showFavorites, setShowFavorites } = use(FavoriteCoinsContext);
+  const { params, actions } = use(FavoriteCoinsContext);
 
   return (
     <div className="relative flex items-center gap-5 font-semibold">
-      <span onClick={() => setShowFavorites(false)} className="cursor-pointer">
+      <span
+        onClick={() => actions?.setParams('showFavorites', false)}
+        className="cursor-pointer"
+      >
         All
       </span>
-      <span onClick={() => setShowFavorites(true)} className="cursor-pointer">
+      <span
+        onClick={() => actions?.setParams('showFavorites', true)}
+        className="cursor-pointer"
+      >
         Favorites
       </span>
       <span
         className={clsx(
           'bg-primary absolute top-full mt-1 h-[2px] transition-transform',
-          showFavorites
+          params.showFavorites
             ? 'w-16 translate-x-10 duration-300'
             : 'w-5 duration-500',
         )}
@@ -210,7 +216,9 @@ const CoinsCurrencyChange = () => {
 };
 
 const FiltersAggregator = () => {
-  const { showFavorites } = use(FavoriteCoinsContext);
+  const {
+    params: { showFavorites },
+  } = use(FavoriteCoinsContext);
 
   return (
     <div className="flex items-center gap-4 max-sm:flex-wrap max-sm:justify-center">

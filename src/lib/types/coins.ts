@@ -10,7 +10,6 @@ export interface CurrencyContextDataT {
   conversionFactors?: CurrencyConversionFactorsT;
 }
 
-// Context ( Coins )
 export type CoinsOrderT = 'volume_desc' | 'market_cap_desc';
 
 export interface CoinsContextParamsT {
@@ -27,13 +26,16 @@ export interface CoinsContextFlagsT {
   isFetching: boolean;
 }
 
-export interface FavoriteCoinsContextT {
-  favoriteIDs: string[]; // Coins IDs;
+export interface FavoriteCoinsContextDataT {
+  favoriteIDs: string[];
   favoriteCoins: CoinEntity_Gecko[];
+}
+
+export interface FavoriteCoinsContextParamsT {
   showFavorites: boolean;
   fetchFavorites: boolean;
-  isFetchingFavorites: boolean;
-  changeHandler: (id: string) => void;
-  setShowFavorites: (order: boolean) => void;
-  setFetchFavorites: (order: boolean) => void;
+}
+
+export interface FavoriteCoinsContextFlagsT {
+  isFetching: boolean;
 }

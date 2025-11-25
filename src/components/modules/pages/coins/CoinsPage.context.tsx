@@ -60,11 +60,13 @@ const CoinsPageContext: React.FC<PropsT> = ({ children }) => {
 
   const { data, error, isLoading } = useCoinsQuery();
 
-  const { favoriteCoins, showFavorites } = use(FavoriteCoinsContext);
+  const favoritesContext = use(FavoriteCoinsContext);
 
   const value: CoinsContextT = {
     data: {
-      coins: showFavorites ? favoriteCoins : data || [],
+      coins: favoritesContext.params.showFavorites
+        ? favoritesContext.data.favoriteCoins
+        : data || [],
     },
     params: { ...state.params },
     flags: { isFetching: isLoading },

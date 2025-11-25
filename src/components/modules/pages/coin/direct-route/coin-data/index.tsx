@@ -17,8 +17,8 @@ import Metrics from './Metrics';
 const CoinData: React.FC<GetCoinData> = (props) => {
   const { id, symbol, market_data, image } = props;
 
-  const { favoriteIDs, changeHandler } = use(FavoriteCoinsContext);
-  const isFavoriteCoin = favoriteIDs?.includes(id) ?? false;
+  const { data, handlers } = use(FavoriteCoinsContext);
+  const isFavoriteCoin = data.favoriteIDs?.includes(id) ?? false;
 
   return (
     <div>
@@ -28,11 +28,11 @@ const CoinData: React.FC<GetCoinData> = (props) => {
           <Button
             className={clsx(
               'cursor-pointer transition-all',
-              !favoriteIDs && 'invisible opacity-0',
+              !data.favoriteIDs && 'invisible opacity-0',
             )}
             variant="ghost"
             size="icon"
-            onClick={() => changeHandler(id)}
+            onClick={() => handlers?.changeHandler(id)}
           >
             <Star
               className={clsx(isFavoriteCoin && 'text-[#DBA400]')}

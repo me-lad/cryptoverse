@@ -18,10 +18,10 @@ import CoinsList from './CoinsList';
 // ⚙️ Functional component
 const Market = () => {
   const [order, setOrder] = useState<OrderT>('trending');
-  const { setFetchFavorites } = use(FavoriteCoinsContext);
+  const { actions } = use(FavoriteCoinsContext);
 
   useEffect(() => {
-    if (order === 'favorite') setFetchFavorites(true);
+    if (order === 'favorite') actions?.setParams('fetchFavorites', true);
   }, [order]);
 
   return (

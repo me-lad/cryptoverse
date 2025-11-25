@@ -35,12 +35,15 @@ interface PropsT<TData> {
 // ⚙️ Functional component
 function TableBody<TData>({ table }: PropsT<TData>) {
   const { params, flags } = use(CoinsContext);
-  const { showFavorites, isFetchingFavorites } = use(FavoriteCoinsContext);
+  const {
+    params: { showFavorites },
+    flags: { isFetching },
+  } = use(FavoriteCoinsContext);
   const firstIndex = (params.page - 1) * params.perPage + 1;
   const hasMounted = useHasMounted();
 
   //   Loading ui
-  if (!hasMounted || flags?.isFetching || isFetchingFavorites) {
+  if (!hasMounted || flags?.isFetching || isFetching) {
     return (
       <TableBodyShadcn>
         {Array.from({ length: 10 }).map((_, index) => (

@@ -24,12 +24,11 @@ import CoinsScrollHandler from './CoinsScrollHandler';
 // ⚙️ Functional component
 const CoinsList = () => {
   const { coins, params } = use(HeaderNavbarCoinsContext);
-  const { favoriteCoins, setFetchFavorites, favoriteIDs, changeHandler } =
-    use(FavoriteCoinsContext);
+  const { data, actions, handlers } = use(FavoriteCoinsContext);
   const coinsContainerElm = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    setFetchFavorites(true);
+    actions?.setParams('fetchFavorites', true);
   }, [params?.showFavorites]);
 
   return (
@@ -47,7 +46,7 @@ const CoinsList = () => {
         </TableHeader>
         <TableBody>
           {params?.showFavorites
-            ? favoriteCoins.map((item) => (
+            ? data.favoriteCoins.map((item) => (
                 <TableRow
                   className={clsx(
                     'hover:!bg-background-lighter !border-0 !outline-0 hover:cursor-pointer',
@@ -55,19 +54,15 @@ const CoinsList = () => {
                   key={item.id}
                 >
                   <TableCell className="w-2">
-                    <div
-                      onClick={() => {
-                        changeHandler(item.id);
-                        favoriteIDs.length;
-                      }}
-                    >
+                    <div onClick={() => handlers?.changeHandler(item.id)}>
                       <Star
                         className={clsx(
-                          favoriteIDs.includes(item.id) && 'text-[#DBA400]',
+                          data.favoriteIDs.includes(item.id) &&
+                            'text-[#DBA400]',
                         )}
                         size={16}
                         fill={
-                          favoriteIDs.includes(item.id)
+                          data.favoriteIDs.includes(item.id)
                             ? '#DBA400'
                             : 'transparent'
                         }

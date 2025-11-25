@@ -42,7 +42,9 @@ const ListRenderingItem = ({ symbol }: { symbol: string }) => {
 };
 
 const CoinsList: React.FC<PropsT> = ({ targetOrder }) => {
-  const { favoriteCoins } = use(FavoriteCoinsContext);
+  const {
+    data: { favoriteCoins },
+  } = use(FavoriteCoinsContext);
 
   return (
     <div className="mt-8 grid min-h-[9.3rem] grid-cols-4 gap-x-2.5">
@@ -50,9 +52,11 @@ const CoinsList: React.FC<PropsT> = ({ targetOrder }) => {
         ? coinsSymbolList[targetOrder]!.map((item) => (
             <ListRenderingItem key={item} symbol={item} />
           ))
-        : favoriteCoins.map((item) => (
-            <ListRenderingItem key={item.id} symbol={item.symbol} />
-          ))}
+        : favoriteCoins
+            .slice(0, 3)
+            .map((item) => (
+              <ListRenderingItem key={item.id} symbol={item.symbol} />
+            ))}
     </div>
   );
 };

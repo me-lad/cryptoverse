@@ -24,7 +24,7 @@ interface PropsT {
 
 // ⚙️ Functional component
 const LogoFavoriteToggler: React.FC<PropsT> = ({ coinId, imageUrl }) => {
-  const { favoriteIDs, changeHandler } = use(FavoriteCoinsContext);
+  const { data, handlers } = use(FavoriteCoinsContext);
   const [tick, setTick] = useState(false);
 
   useEffect(() => {
@@ -46,21 +46,33 @@ const LogoFavoriteToggler: React.FC<PropsT> = ({ coinId, imageUrl }) => {
               tick && '!visible !opacity-100',
               flexCenter,
             )}
-            onClick={() => changeHandler(coinId)}
+            onClick={() => handlers?.changeHandler(coinId)}
           >
             <Star
-              className={clsx(favoriteIDs.includes(coinId) && 'text-[#DBA400]')}
+              className={clsx(
+                data.favoriteIDs.includes(coinId) && 'text-[#DBA400]',
+              )}
               size={16}
-              fill={favoriteIDs.includes(coinId) ? '#DBA400' : 'transparent'}
+              fill={
+                data.favoriteIDs.includes(coinId) ? '#DBA400' : 'transparent'
+              }
             />
           </div>
         </TooltipTrigger>
 
         <TooltipContent className="absolute bottom-full -left-14 mb-5 w-max text-center">
-          <p className={clsx(!favoriteIDs.includes(coinId) && 'invisible h-0')}>
+          <p
+            className={clsx(
+              !data.favoriteIDs.includes(coinId) && 'invisible h-0',
+            )}
+          >
             Remove from favorites
           </p>
-          <p className={clsx(favoriteIDs.includes(coinId) && 'invisible h-0')}>
+          <p
+            className={clsx(
+              data.favoriteIDs.includes(coinId) && 'invisible h-0',
+            )}
+          >
             Add to favorites
           </p>
         </TooltipContent>

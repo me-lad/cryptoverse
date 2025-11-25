@@ -25,12 +25,12 @@ interface FavoriteTogglerPropsT {
   id: string;
 }
 export const FavoriteToggler: React.FC<FavoriteTogglerPropsT> = ({ id }) => {
-  const { favoriteIDs, changeHandler } = use(FavoriteCoinsContext);
-  const isAlreadySelected = favoriteIDs.includes(id);
+  const { data, handlers } = use(FavoriteCoinsContext);
+  const isAlreadySelected = data.favoriteIDs.includes(id);
 
   return (
     <div
-      onClick={() => changeHandler(id)}
+      onClick={() => handlers?.changeHandler(id)}
       className={`${flexCenter} cursor-pointer`}
     >
       <Star
