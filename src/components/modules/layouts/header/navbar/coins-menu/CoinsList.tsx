@@ -23,7 +23,10 @@ import CoinsScrollHandler from './CoinsScrollHandler';
 
 // ⚙️ Functional component
 const CoinsList = () => {
-  const { coins, params } = use(HeaderNavbarCoinsContext);
+  const {
+    data: { coins },
+    params,
+  } = use(HeaderNavbarCoinsContext);
   const { data, actions, handlers } = use(FavoriteCoinsContext);
   const coinsContainerElm = useRef<HTMLDivElement | null>(null);
 
@@ -45,7 +48,7 @@ const CoinsList = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {params?.showFavorites
+          {params.showFavorites
             ? data.favoriteCoins.map((item) => (
                 <TableRow
                   className={clsx(
@@ -97,7 +100,7 @@ const CoinsList = () => {
                   </TableCell>
                 </TableRow>
               ))
-            : coins.slice(0, params?.slicePoint).map((item) => (
+            : coins.slice(0, params.slicePoint).map((item) => (
                 <TableRow
                   className={clsx(
                     'hover:!bg-background-lighter !border-0 !outline-0 hover:cursor-pointer',

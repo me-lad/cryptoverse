@@ -1,4 +1,12 @@
-import type { CoinNavItemT, NewsNavItemsT, NewsNavItemT } from './local.types';
+import type {
+  CoinNavItemT,
+  NewsNavItemsT,
+  HeaderNavbarCoinsMenuContextT,
+  HeaderNavbarCoinsContextDataT,
+  HeaderNavbarCoinsContextFlagsT,
+  HeaderNavbarCoinsContextParamsT,
+} from './local.types';
+import { sharedReducer } from '~contexts/index.reducer';
 
 export const newsNavItems: NewsNavItemsT = {
   coins: [
@@ -115,3 +123,21 @@ export const coinsNavItems: CoinNavItemT[] = [
     url: '/coins-calculator',
   },
 ];
+
+export const initialState: HeaderNavbarCoinsMenuContextT = {
+  data: { coins: [] },
+  params: {
+    page: 1,
+    order: 'TOTAL_MKT_CAP_USD',
+    slicePoint: 25,
+    showFavorites: false,
+    lastScrollPosition: 0,
+  },
+  flags: { isLoading: false },
+};
+
+export const navbarReducer = sharedReducer<
+  HeaderNavbarCoinsContextDataT,
+  HeaderNavbarCoinsContextParamsT,
+  HeaderNavbarCoinsContextFlagsT
+>;

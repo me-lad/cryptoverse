@@ -1,29 +1,27 @@
-import { Dispatch, SetStateAction } from 'react';
 import type { CoinEntity_Compare } from '~types/api-generated/shared';
+import type { ContextGeneralT } from '~contexts/local';
 
-interface HeaderNavbarCoinsMenuParamsT {
-  order: HeaderNavbarCoinsFetchOrderT;
+export interface HeaderNavbarCoinsContextDataT {
+  coins: CoinEntity_Compare[];
+}
+
+export interface HeaderNavbarCoinsContextParamsT {
   page: number;
   slicePoint: number;
-  showFavorites?: boolean;
+  order: HeaderNavbarCoinsFetchOrderT;
+  lastScrollPosition: number;
+  showFavorites: boolean;
+}
+
+export interface HeaderNavbarCoinsContextFlagsT {
   isLoading: boolean;
-  lastScrollPosition?: number;
 }
 
-interface HeaderNavbarCoinsMenuActionsT {
-  setOrder: (value: HeaderNavbarCoinsFetchOrderT) => void;
-  changeShowFavorites: (value: boolean) => void;
-  setPage: (value: number) => void;
-  resetCoins: () => void;
-  setSlicePoint: Dispatch<SetStateAction<number>>;
-  setLastScrollPosition: Dispatch<SetStateAction<number>>;
-}
-
-export interface HeaderNavbarCoinsMenuContextT {
-  coins: CoinEntity_Compare[];
-  params?: HeaderNavbarCoinsMenuParamsT;
-  actions?: HeaderNavbarCoinsMenuActionsT;
-}
+export type HeaderNavbarCoinsMenuContextT = ContextGeneralT<
+  HeaderNavbarCoinsContextDataT,
+  HeaderNavbarCoinsContextParamsT,
+  HeaderNavbarCoinsContextFlagsT
+>;
 
 export type HeaderNavbarCoinsFetchOrderT = 'TOTAL_MKT_CAP_USD' | 'PRICE_USD';
 

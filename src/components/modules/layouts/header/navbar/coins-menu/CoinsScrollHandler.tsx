@@ -1,39 +1,44 @@
+// 📌 Directives
 'use client';
 
-import React, { RefObject, useEffect, useCallback, use, useRef } from 'react';
+// 📦 Third-Party imports
+import React, { RefObject, useEffect, useCallback, use } from 'react';
 import { Spinner } from '~core/ui/shadcn/spinner';
+
+// 📦 Internal imports
 import { HeaderNavbarCoinsContext } from '../Navbar.context';
 import { flexCenter } from '~styles/tw-custom';
+import { useHasMounted } from '~hooks/useHasMounted';
 
+// 🧾 Local types
 interface PropsT {
   container: RefObject<HTMLDivElement | null>;
 }
 
 const CoinsScrollHandler: React.FC<PropsT> = ({ container }) => {
-  const { actions, params } = use(HeaderNavbarCoinsContext);
-  const hasMounted = useRef(false);
+  const { params, flags, actions } = use(HeaderNavbarCoinsContext);
+  const hasMounted = useHasMounted();
 
   const checkScrollPosition = useCallback(
     (target: HTMLDivElement) => {
       const { scrollHeight, clientHeight, scrollTop } = target;
-      const nearBottom =
-        Math.abs(scrollHeight - clientHeight - scrollTop) < 200;
+      const distanceToBottom = scrollHeight - clientHeight - scrollTop;
+      const nearBottom = distanceToBottom < 200;
 
-      if (nearBottom && !params?.isLoading && params?.page! < 30) {
-        actions?.setSlicePoint((prev) => prev + 25);
+      if (nearBottom && !flags.isLoading && params.page < 30) {
+        actions?.setParams('slicePoint', params.slicePoint + 25);
       }
     },
-    [params?.isLoading, actions],
+    [flags.isLoading, params.slicePoint, params.page, actions],
   );
 
   useEffect(() => {
     const el = container.current;
     if (!el) return;
 
-    const handleScroll = (e: Event) => {
-      const target = e.target as HTMLDivElement;
-      actions?.setLastScrollPosition(el.scrollTop);
-      checkScrollPosition(target);
+    const handleScroll = () => {
+      actions?.setParams('lastScrollPosition', el.scrollTop);
+      checkScrollPosition(el);
     };
 
     el.addEventListener('scroll', handleScroll);
@@ -42,17 +47,18 @@ const CoinsScrollHandler: React.FC<PropsT> = ({ container }) => {
 
   useEffect(() => {
     const el = container.current;
-    if (!el || !params?.lastScrollPosition || hasMounted.current) return;
+    if (!el || hasMounted) return;
 
-    if (!hasMounted.current) {
+    if (params?.lastScrollPosition) {
       requestAnimationFrame(() => {
-        el.scrollTo({ top: params.lastScrollPosition });
+        el.scrollTo({
+          top: params.lastScrollPosition - el.clientHeight * 0.25,
+        });
       });
-      hasMounted.current = true;
     }
   }, [params?.lastScrollPosition]);
 
-  return params?.isLoading ? (
+  return flags.isLoading ? (
     <div className={`${flexCenter} mt-[5.5rem]`}>
       <Spinner variant="ellipsis" size={50} />
     </div>

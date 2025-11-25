@@ -9,7 +9,7 @@ import {
 } from '~core/ui/shadcn/tooltip';
 import { Button } from '~core/ui/shadcn/button';
 import { ChevronDown } from 'lucide-react';
-import { use, useEffect } from 'react';
+import { use } from 'react';
 import clsx from 'clsx';
 
 // 📦 Internal imports
@@ -47,7 +47,7 @@ const CoinsData = () => {
       <div className={flexBetween}>
         <div className="relative flex items-center gap-5 font-semibold">
           <span
-            onClick={() => actions?.changeShowFavorites(false)}
+            onClick={() => actions?.setParams('showFavorites', false)}
             className="cursor-pointer"
           >
             All
@@ -55,7 +55,7 @@ const CoinsData = () => {
           <span
             onClick={() => {
               if (favoriteIDs.length) {
-                actions?.changeShowFavorites(true);
+                actions?.setParams('showFavorites', true);
               } else {
                 errorToast('No coin has already been added to favorites list.');
               }
@@ -95,11 +95,13 @@ const CoinsData = () => {
                 <Button
                   className="w-full cursor-pointer !rounded-none !py-5"
                   variant={'ghost'}
+                  disabled={params.order === 'TOTAL_MKT_CAP_USD'}
                   onClick={() => {
-                    actions?.setPage(1);
-                    actions?.setSlicePoint(25);
-                    actions?.resetCoins();
-                    actions?.setOrder('TOTAL_MKT_CAP_USD');
+                    if (params.order === 'TOTAL_MKT_CAP_USD') return;
+                    actions?.setParams('page', 1);
+                    actions?.setParams('slicePoint', 25);
+                    actions?.setData('coins', []);
+                    actions?.setParams('order', 'TOTAL_MKT_CAP_USD');
                   }}
                 >
                   Market Cap
@@ -107,11 +109,13 @@ const CoinsData = () => {
                 <Button
                   className="w-full cursor-pointer !rounded-none !py-5"
                   variant={'ghost'}
+                  disabled={params.order === 'PRICE_USD'}
                   onClick={() => {
-                    actions?.setPage(1);
-                    actions?.setSlicePoint(25);
-                    actions?.resetCoins();
-                    actions?.setOrder('PRICE_USD');
+                    if (params.order === 'PRICE_USD') return;
+                    actions?.setParams('page', 1);
+                    actions?.setParams('slicePoint', 25);
+                    actions?.setData('coins', []);
+                    actions?.setParams('order', 'PRICE_USD');
                   }}
                 >
                   Price USD
