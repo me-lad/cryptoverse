@@ -62,12 +62,12 @@ export default function RootLayout({
                 <HeaderFn />
 
                 {/* Route interface */}
-                <main className="w-full max-[81em]:overflow-x-hidden">
+                {/* <main className="w-full max-[81em]:overflow-x-hidden">
                   {children}
-                </main>
+                </main> */}
 
                 {/* Footer */}
-                <FooterFn />
+                {/* <FooterFn /> */}
 
                 {/* Theme controller */}
                 <ThemeController />

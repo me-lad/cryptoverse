@@ -17,11 +17,15 @@ const initializeUserModel = async () => {
 };
 
 // 🔍 Get user by identifier
-const getUserDataByIdentifier = async (identifier: string) => {
+const getUserDataByIdentifier = async (
+  identifier: string,
+  requiredData?: string,
+) => {
   await initializeUserModel();
-  return UserModel.model.findOne({
-    $or: [{ username: identifier }, { phoneNumber: identifier }],
-  });
+  return UserModel.model.findOne(
+    { $or: [{ username: identifier }, { phoneNumber: identifier }] },
+    requiredData && requiredData,
+  );
 };
 
 // 🔍 Get user by id

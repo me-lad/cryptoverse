@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 // 📦 Internal imports
 import { NewsContext } from '../NewsPage.context';
 import { getNews, searchNews } from '~services/integrations/news';
-import { buildSearchSource } from '../local';
+import { buildSearchSource } from '../NewsPage.context';
 import { infoToast } from '~vendors/react-toastify';
 
 // Get news custom hook

@@ -1,38 +1,30 @@
 // 📦 Third-Party imports
-import { Button } from '@/components/core/ui/shadcn/button';
-import { BellDot, User } from 'lucide-react';
+import { Button } from '~core/ui/shadcn/button';
 import Link from 'next/link';
-import Image from 'next/image';
 
 // 📦 Internal imports
+import type { HeaderReceivableUserDataT } from '~types/dto/user';
 import { flexCenter } from '~styles/tw-custom';
+
+import Notifications from './notifications';
+import Profile from './profile';
 
 // 🧾 Local types
 interface PropsT {
   isAuthenticated: boolean;
+  userData?: HeaderReceivableUserDataT;
 }
 
 // ⚙️ Functional component
-export default function HeaderAccountUi({ isAuthenticated }: PropsT) {
+export default function HeaderAccountUi({ isAuthenticated, userData }: PropsT) {
   return (
     <>
       {isAuthenticated ? (
-        // Dashboard button
-        <div className={`${flexCenter} gap-4`}>
-          {/* Notifications */}
-          <div className="hover:cursor-pointer">
-            <BellDot size={22} />
-          </div>
+        <div className={`${flexCenter} ml-1 gap-4 pt-1`}>
+          <Notifications />
 
           {/* Account center */}
-          <div className="hover:cursor-pointer">
-            <User />
-          </div>
-          {/* <div className={`${flexCenter} h-[60px] w-[60px] rounded-full bg-neutral-900`}>
-            <div className="relative h-5/6 w-5/6 rounded-full">
-              <Image src={"/images/dashboard/avatar.png"} fill alt="Profile image" />
-            </div>
-          </div> */}
+          <Profile userData={userData} />
         </div>
       ) : (
         // Signin/Signup

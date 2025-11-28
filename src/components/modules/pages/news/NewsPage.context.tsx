@@ -21,7 +21,7 @@ interface PropsT {
 }
 type NewsContextT = ContextGeneralT<NewsContextDataT, NewsContextParamsT, {}>;
 
-const buildSearchSource = (sourcesParam?: string) => {
+export const buildSearchSource = (sourcesParam?: string) => {
   return (sourcesParam || '5').split(',').slice(-1)[0];
 };
 

@@ -1,5 +1,5 @@
-import { Document, ObjectId } from "mongoose";
-import type { UserRolesType } from "../types";
+import { Document, ObjectId } from 'mongoose';
+import type { UserRolesType } from '../types';
 
 export type UserModelType = {
   username: string;

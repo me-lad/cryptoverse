@@ -2,11 +2,8 @@
 'use client';
 
 // 📦 Third-Party imports
-import { use } from 'react';
 import { Globe } from 'lucide-react';
 import { Button } from '~core/ui/shadcn/button';
-import Image from 'next/image';
-import clsx from 'clsx';
 
 import {
   Tooltip,
@@ -15,25 +12,16 @@ import {
 } from '~core/ui/shadcn/tooltip';
 
 // 📦 Internal imports
-import type { CurrencyT } from '~types/coins';
-import { CurrencyContext } from '@/components/contexts/Currency.context';
-import { currencies } from './local';
+
 import {
   DropDownAggregator,
   DropDownMenu,
   DropDownTrigger,
 } from '~core/global/dropdown';
+import Currencies from './Currencies';
 
 // ⚙️ Functional component
 const Currency = () => {
-  const { data, actions } = use(CurrencyContext);
-
-  const handlerCurrencyChange = (value: CurrencyT) => {
-    if (data.currency !== value && actions) {
-      actions.setData('currency', value);
-    }
-  };
-
   return (
     <DropDownAggregator overlay="dark">
       <DropDownTrigger activeClassName="*:!bg-primary/85">
@@ -53,26 +41,7 @@ const Currency = () => {
           Select currency
         </h5>
 
-        <ul className="mt-5">
-          {currencies.map((curr) => (
-            <li
-              key={curr.id}
-              className={clsx(
-                'hover:bg-background mt-3 flex items-center gap-4 rounded-sm p-2.5 py-1.5 transition-all select-none hover:cursor-pointer',
-                curr.id === data.currency && 'bg-background',
-              )}
-              onClick={() => handlerCurrencyChange(curr.id)}
-            >
-              <Image
-                src={`/svgs/logo/currencies/${curr.id.toLowerCase()}.svg`}
-                width={32}
-                height={32}
-                alt={curr.id}
-              />
-              <span title={curr.titleAttr + '  ' + curr.id}>{curr.label}</span>
-            </li>
-          ))}
-        </ul>
+        <Currencies />
       </DropDownMenu>
     </DropDownAggregator>
   );

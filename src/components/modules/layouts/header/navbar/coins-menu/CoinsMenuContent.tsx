@@ -6,7 +6,7 @@ import ListLinkItem from './ListLinkItem';
 // ⚙️ Functional components
 const CoinsMenuContent = () => {
   return (
-    <div className="w-max">
+    <div className="max-h-[85dvh] w-max">
       <ul className="grid grid-cols-2">
         {coinsNavItems.map((item) => (
           <ListLinkItem key={item.url} {...item} />

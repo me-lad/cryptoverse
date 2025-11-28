@@ -4,6 +4,7 @@
 // 📦 Third-Party imports
 import { Search as SearchIcon } from 'lucide-react';
 import { Button } from '~core/ui/shadcn/button';
+import clsx from 'clsx';
 
 // 📦 Internal imports
 import {
@@ -23,7 +24,13 @@ export default function Search() {
         </Button>
       </DropDownTrigger>
 
-      <DropDownMenu className="!no-scrollbar mt-7 max-h-96 w-96 overflow-auto p-5 xl:w-[28rem]">
+      <DropDownMenu
+        className={clsx(
+          '!no-scrollbar mt-7 max-h-96 w-max overflow-auto p-5',
+          'sm:min-w-96',
+          'max-sm:fixed max-sm:top-10 max-sm:right-0 max-sm:left-0 max-sm:mx-auto max-sm:w-[90vw] max-sm:translate-x-0',
+        )}
+      >
         <GlobalSearchMenu />
       </DropDownMenu>
     </DropDownAggregator>

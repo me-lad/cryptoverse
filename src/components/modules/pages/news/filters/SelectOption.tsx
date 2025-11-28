@@ -9,8 +9,8 @@ import Image from 'next/image';
 // 📦 Internal imports
 import type { SourceDataEntity } from '@/lib/types/api-generated/news/getNewsSources';
 import type { CategoryDataEntity } from '@/lib/types/api-generated/news/getNewsCategories';
+import { errorToast, infoToast } from '~vendors/react-toastify';
 import { NewsContext } from '../NewsPage.context';
-import { infoToast } from '~vendors/react-toastify';
 
 // 🧾 Local types
 type PropsT = {
@@ -35,6 +35,13 @@ const SelectOption: React.FC<PropsT> = (props) => {
   const [selected, setSelected] = useState(isSelected);
 
   const changeHandler = (checked: boolean) => {
+    if (isDisabled) {
+      return errorToast(
+        'Category filter cannot be both excluded and included at the same time.',
+        { autoClose: 4000 },
+      );
+    }
+
     let currentFilters = (params[selectId]?.split(',') || []).filter(Boolean);
 
     if (checked) {

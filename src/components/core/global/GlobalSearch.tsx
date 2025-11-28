@@ -36,12 +36,6 @@ const GlobalSearchMenu: React.FC<PropsT> = ({ coinEvent }) => {
     setIsSearching(false);
   }, [debouncedSearch]);
 
-  const clickHandler = (data: CoinEntity_Gecko) => {
-    if (coinEvent) {
-      coinEvent(data);
-    }
-  };
-
   return (
     <>
       <Input
@@ -79,15 +73,8 @@ const GlobalSearchMenu: React.FC<PropsT> = ({ coinEvent }) => {
         <ul>
           {data.map((coin) => (
             <li key={coin.id} className="mt-5">
-              <a
-                onClick={(e) => {
-                  e.preventDefault();
-                  clickHandler(coin);
-                }}
-                className={flexBetween}
-                href={`/coin/${coin.id}`}
-              >
-                <div className="flex w-fit items-center gap-4">
+              <a className={flexBetween} href={`/coin/${coin.id}`}>
+                <div className="min-[27.5emw-fit flex w-full items-center gap-4">
                   <Image
                     src={coin.image}
                     width={30}
@@ -95,7 +82,7 @@ const GlobalSearchMenu: React.FC<PropsT> = ({ coinEvent }) => {
                     alt={coin.name}
                     className="mix-blend-screen"
                   />
-                  <div className="w-2/3">
+                  <div className="max-[27.5em]:grow min-[27.5em]:w-2/3">
                     <h4 className="text-lg font-semibold">
                       {coin.symbol.toUpperCase()}
                     </h4>
@@ -108,7 +95,7 @@ const GlobalSearchMenu: React.FC<PropsT> = ({ coinEvent }) => {
                   </div>
                 </div>
                 <div
-                  className={`flex w-1/4 flex-col items-start justify-center`}
+                  className={`hidden w-1/4 flex-col items-start justify-center min-[27.5em]:flex`}
                 >
                   <div className={`${flexCenter} w-full flex-col`}>
                     <Price className="w-full" price={coin.current_price} />

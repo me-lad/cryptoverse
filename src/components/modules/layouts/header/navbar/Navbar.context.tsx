@@ -41,8 +41,6 @@ const NavbarContext: React.FC<PropsT> = ({ children }) => {
       .toString()
       .endsWith('75');
 
-    console.log(state.params.slicePoint, 'Slice point');
-
     if (shouldFetchNextPage) {
       const newPageValue = state.params.page + 1;
       actions.setParams('page', newPageValue);
@@ -58,10 +56,6 @@ const NavbarContext: React.FC<PropsT> = ({ children }) => {
       actions.setData('coins', updateCoinsList);
     }
   }, [data]);
-
-  useEffect(() => {
-    console.log(state.params.page, 'Page');
-  }, [state.params.page]);
 
   const value: HeaderNavbarCoinsMenuContextT = {
     ...state,

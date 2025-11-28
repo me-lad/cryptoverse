@@ -5,14 +5,23 @@ import { NextResponse } from 'next/server';
 import { AuthServices } from '~services/repositories/auth';
 
 export async function GET() {
-  const { isAuthenticated, username } =
+  const { isAuthenticated, username: accessUsername } =
     await AuthServices.verifyAccessSession();
+
   if (isAuthenticated) {
-    return NextResponse.json({ isAuthenticated: true, username });
+    return NextResponse.json({
+      isAuthenticated: true,
+      username: accessUsername,
+    });
   }
 
-  const { isAllowed } = await AuthServices.verifyRefreshSession();
-  if (isAllowed) return NextResponse.json({ isAuthenticated: true });
+  const { isAllowed, username: refreshUsername } =
+    await AuthServices.verifyRefreshSession();
+  if (isAllowed)
+    return NextResponse.json({
+      isAuthenticated: true,
+      username: refreshUsername,
+    });
 
   return NextResponse.json({ isAuthenticated: false });
 }

@@ -9,7 +9,7 @@ import clsx from 'clsx';
 // 📦 Internal imports
 import { NewsContext } from '../NewsPage.context';
 import { useDebounce } from '~hooks/useDebounce';
-import { buildSearchSource } from '../local';
+import { buildSearchSource } from '../NewsPage.context';
 
 // ⚙️ Functional component
 const Search = () => {
