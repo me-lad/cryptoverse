@@ -47,14 +47,14 @@ const CoinsList: React.FC<PropsT> = ({ targetOrder }) => {
   } = use(FavoriteCoinsContext);
 
   return (
-    <div className="mt-8 grid min-h-[9.3rem] grid-cols-4 gap-x-2.5">
+    <div className="mt-8 grid min-h-[9.3rem] grid-cols-1 gap-2.5 min-[35em]:grid-cols-2 xl:grid-cols-4">
       {targetOrder !== 'favorite' ? (
         coinsSymbolList[targetOrder]!.map((item) => (
           <ListRenderingItem key={item} symbol={item} />
         ))
       ) : !favoriteCoins.length ? (
         <p
-          className={`${flexCenter} col-span-4 rounded-sm border text-lg font-semibold`}
+          className={`${flexCenter} col-span-1 rounded-sm border text-lg font-semibold min-[35em]:col-span-2 xl:col-span-4`}
         >
           Add some coins to your favorite list first.
         </p>

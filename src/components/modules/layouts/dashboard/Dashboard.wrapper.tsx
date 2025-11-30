@@ -7,6 +7,7 @@ import { cn } from '~utils/shadcn';
 
 // 📦 Internal imports
 import { DashboardSidebarContext } from './Dashboard.context';
+import { DarkOverlay } from '~core/ui/shared/overlays';
 import Sidebar from './sidebar';
 
 // 🧾 Local types
@@ -29,6 +30,14 @@ const DashboardWrapper: React.FC<PropsT> = ({ children }) => {
             (!getters?.getOpenState() ? 'lg:ml-[110px]' : 'lg:ml-72'),
         )}
       >
+        <div
+          className={cn(
+            'block lg:hidden',
+            !getters?.getOpenState() && '!hidden',
+          )}
+        >
+          <DarkOverlay />
+        </div>
         {children}
       </div>
     </>

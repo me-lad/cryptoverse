@@ -9,7 +9,7 @@ interface PropsT {
 // ⚙️ Functional component
 const ContentLayout: React.FC<PropsT> = ({ children }) => {
   return (
-    <div className="h-[calc(100dvh-_70px_)] overflow-y-auto p-8">
+    <div className="h-[calc(100dvh-_70px_)] overflow-y-auto px-4 py-8 sm:px-8">
       {children}
     </div>
   );

@@ -10,7 +10,7 @@ interface PropsT {
 const Description: React.FC<PropsT> = ({ children }) => {
   return (
     <>
-      <div className="bg-background/55 mt-5 rounded-sm p-4">
+      <div className="bg-background/55 mt-10 rounded-sm p-4">
         <div className="relative min-h-[7.75rem] gap-10">
           <div className="absolute">
             <Image
@@ -35,8 +35,8 @@ const Description: React.FC<PropsT> = ({ children }) => {
         </div>
       </div>
 
-      <div className="mt-16 px-8">
-        <ul className="list-disc text-sm font-medium opacity-85 *:mt-4">
+      <div className="mt-20 px-8">
+        <ul className="list-disc font-medium opacity-85 *:mt-4">
           <li>
             <p>You can verify with ID Card, Driving Licence and Passport.</p>
           </li>

@@ -3,13 +3,13 @@
 
 // 📦 Third-Party imports
 import { useState } from 'react';
+import { ChevronRight } from 'lucide-react';
+import { Button } from '~core/ui/shadcn/button';
 
 // 📦 Internal imports
+import type { StepsLabelT } from './local';
 import Steps from './steps';
-import type { StepsLabelT, StepT } from './local';
 import Description from './description';
-import { Button } from '@/components/core/ui/shadcn/button';
-import { ChevronRight } from 'lucide-react';
 import KycForm from './form';
 
 // ⚙️ Functional component
@@ -42,9 +42,9 @@ const KycWrapper = () => {
         <Description>
           <div className="flex justify-center">
             <Button
-              className="mt-10 cursor-pointer !px-10 text-white"
-              size={'lg'}
+              className="mt-20 cursor-pointer !px-10 text-white"
               onClick={() => setCurrentStep('Personal Information')}
+              size={'lg'}
             >
               Start
               <ChevronRight strokeWidth={4} className="mt-0.5 size-3.5" />

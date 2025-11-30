@@ -55,7 +55,7 @@ const ThemeSwitcher = () => {
         </Tooltip>
       </DropDownTrigger>
 
-      <DropDownMenu className="mt-2.5 overflow-hidden !shadow-none">
+      <DropDownMenu className="mt-2.5 overflow-hidden !shadow-none max-[28em]:left-0">
         {['dark', 'light', 'system'].map((t, index) => (
           <Button
             key={t}

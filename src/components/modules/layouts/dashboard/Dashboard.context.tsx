@@ -2,7 +2,7 @@
 'use client';
 
 // 📦 Third-Party imports
-import React, { createContext, useState, useReducer, useMemo } from 'react';
+import React, { createContext, useReducer, useMemo } from 'react';
 
 // 📦 Internal imports
 import type { DashboardSidebarContextFlagsT } from '~types/dashboard';
@@ -29,7 +29,7 @@ const initialState: DashboardSidebarContextT = {
   data: {},
   params: {},
   flags: {
-    isOpen: true,
+    isOpen: false,
     isHovered: false,
     isDisabled: false,
     isHoverable: false,

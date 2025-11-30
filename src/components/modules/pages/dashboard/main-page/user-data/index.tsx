@@ -6,14 +6,23 @@ import Link from 'next/link';
 
 // 📦 Internal imports
 import FluidContainer from '../../FluidContainer';
+import { flexBetween } from '@/lib/styles/tw-custom';
 
 // ⚙️ Functional component
 const UserData = async () => {
   return (
     <FluidContainer className="mt-5" condense_title="Account Information">
-      <h2 className="text-xl font-semibold">Mohammad Mahdi Esmaeli</h2>
+      <div className={`${flexBetween}`}>
+        <h2 className="text-xl font-semibold">Mohammad Mahdi Esmaeli</h2>
+        <Link
+          href={'/dashboard/account-management'}
+          className="flex min-w-8 justify-end"
+        >
+          <PenSquare size={18} className="mt-1" />
+        </Link>
+      </div>
 
-      <div className="mt-5 flex items-center gap-14">
+      <div className="mt-5 flex flex-wrap items-center gap-x-14 gap-y-7">
         <div className="flex flex-col gap-2 font-medium *:last:tracking-wide *:last:opacity-70">
           <p>Username</p>
           <p>MiladEsm</p>
@@ -31,7 +40,7 @@ const UserData = async () => {
           <p>MiladEsm@gmail.com</p>
         </div>
 
-        <div className="flex flex-col gap-2 font-medium *:last:tracking-wide *:last:opacity-70">
+        <div className="hidden flex-col gap-2 font-medium *:last:tracking-wide *:last:opacity-70 xl:flex">
           <p>Last Login</p>
           <p>
             2024-08-29 | 19:32:12 | ( 192.
@@ -39,12 +48,6 @@ const UserData = async () => {
             .87 )
           </p>
         </div>
-      </div>
-
-      <div className="absolute top-5 right-5">
-        <Link href={'/dashboard/account-management'}>
-          <PenSquare size={18} />
-        </Link>
       </div>
     </FluidContainer>
   );

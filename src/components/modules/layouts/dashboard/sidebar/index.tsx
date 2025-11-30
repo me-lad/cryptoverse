@@ -17,8 +17,8 @@ const Sidebar = () => {
   return (
     <aside
       className={cn(
-        'fixed top-0 left-0 z-20 h-screen -translate-x-full transition-[width] duration-300 ease-in-out lg:translate-x-0',
-        !getters?.getOpenState() ? 'w-[110px]' : 'w-72',
+        'max-lg:bg-background fixed top-0 left-0 z-50 h-screen transition-[width] duration-300 ease-in-out lg:translate-x-0',
+        !getters?.getOpenState() ? 'w-[110px] -translate-x-full' : 'w-72',
         flags.isDisabled && 'hidden',
       )}
     >

@@ -1,10 +1,10 @@
 // 📦 Third-Party imports
 import React from 'react';
+import clsx from 'clsx';
 
 // 📦 Internal imports
 import { flexCenter } from '~styles/tw-custom';
 import { steps, type StepsLabelT } from '../local';
-import clsx from 'clsx';
 
 // 🧾 Local types
 interface PropsT {

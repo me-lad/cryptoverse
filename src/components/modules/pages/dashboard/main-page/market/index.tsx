@@ -28,7 +28,9 @@ const Market = () => {
     <FluidContainer condense_title="Market Overview">
       <h2 className="text-xl font-semibold">Market</h2>
 
-      <div className={`${flexBetween} mt-2.5`}>
+      <div
+        className={`${flexBetween} mt-2.5 max-[30em]:flex-col max-[30em]:items-start max-[30em]:gap-y-5`}
+      >
         <div className="relative flex items-center gap-5 font-semibold">
           <span onClick={() => setOrder('trending')} className="cursor-pointer">
             Trending

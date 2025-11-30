@@ -11,6 +11,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~core/ui/shadcn/tooltip';
+import clsx from 'clsx';
 
 // 📦 Internal imports
 import { DashboardSidebarContext } from '../Dashboard.context';
@@ -40,7 +41,12 @@ const SidebarToggler = () => {
   };
 
   return (
-    <div className="invisible absolute top-5 -right-[16px] z-20 lg:visible">
+    <div
+      className={clsx(
+        'absolute top-5 -right-[16px] z-20',
+        !getters?.getOpenState() && 'max-lg:hidden',
+      )}
+    >
       <Tooltip>
         <TooltipTrigger asChild>
           <Button

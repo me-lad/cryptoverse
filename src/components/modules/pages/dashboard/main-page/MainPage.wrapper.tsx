@@ -14,7 +14,14 @@ const MainPageWrapper = () => {
     <div>
       <UserData />
 
-      <div className="mt-20 flex items-start">
+      <div className="mt-20 md:hidden">
+        <Security />
+      </div>
+      <div className="mt-20 md:hidden">
+        <Identity />
+      </div>
+
+      <div className="mt-20 hidden items-start md:flex">
         <div className="w-1/2 -translate-x-2.5 pl-2.5">
           <Security />
         </div>

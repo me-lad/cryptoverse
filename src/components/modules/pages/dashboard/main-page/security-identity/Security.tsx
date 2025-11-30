@@ -11,12 +11,24 @@ import Link from 'next/link';
 const Security = () => {
   return (
     <FluidContainer condense_title="Security">
-      <h2 className="text-xl font-semibold">
-        Security
-        <small className="mt-1 block text-xs font-normal opacity-70">
+      <div>
+        <div className={`${flexBetween}`}>
+          <h2 className="text-xl font-semibold">Security</h2>
+          <div>
+            <p className="text-xs font-medium opacity-90">Strength</p>
+            <div className="mt-1 flex items-center gap-1">
+              <div className="bg-primary h-1.5 w-5 rounded-[9999px]"></div>
+              <div className="bg-primary h-1.5 w-5 rounded-[9999px]"></div>
+              <div className="bg-primary h-1.5 w-5 rounded-[9999px]"></div>
+              <div className="bg-background-lighter h-1.5 w-5 rounded-[9999px]"></div>
+              <div className="bg-background-lighter h-1.5 w-5 rounded-[9999px]"></div>
+            </div>
+          </div>
+        </div>
+        <p className="mt-1 block text-xs font-normal opacity-70">
           Increase your account security strength
-        </small>
-      </h2>
+        </p>
+      </div>
 
       <div className="mt-5 *:not-first:mt-2">
         <div className={flexBetween}>
@@ -59,17 +71,6 @@ const Security = () => {
               Activate
             </Button>
           </Link>
-        </div>
-      </div>
-
-      <div className="absolute top-4 right-4 flex items-center gap-3">
-        <p className="text-xs font-medium opacity-90">Strength</p>
-        <div className="mt-1 flex items-center gap-1">
-          <div className="bg-primary h-1.5 w-5 rounded-[9999px]"></div>
-          <div className="bg-primary h-1.5 w-5 rounded-[9999px]"></div>
-          <div className="bg-primary h-1.5 w-5 rounded-[9999px]"></div>
-          <div className="bg-background-lighter h-1.5 w-5 rounded-[9999px]"></div>
-          <div className="bg-background-lighter h-1.5 w-5 rounded-[9999px]"></div>
         </div>
       </div>
     </FluidContainer>

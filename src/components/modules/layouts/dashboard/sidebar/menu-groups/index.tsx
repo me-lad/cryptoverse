@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { use } from 'react';
 
 // 📦 Internal imports
-import { dashboardSidebarMenuGroups } from '~constants/dashboard';
+import { dashboardSidebarMenuGroups } from './local';
 import { DashboardSidebarContext } from '../../Dashboard.context';
 import Title from './Title';
 import SimpleItem from './SimpleItem';

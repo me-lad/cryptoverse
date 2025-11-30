@@ -3,9 +3,6 @@ import type {
   DashboardSidebarMenuItemT,
 } from '~types/dashboard';
 
-// Sidebar context
-
-// Sidebar items
 const coreMenuGroupItems: DashboardSidebarMenuItemT[] = [
   {
     title: 'Dashboard',
