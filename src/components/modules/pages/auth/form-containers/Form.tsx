@@ -31,7 +31,7 @@ const Form: React.FC<PropsT> = ({ formFields, formType, submitButtonText }) => {
       ))}
 
       {formType === FormKinds.Signin && (
-        <div className="mt-4 flex items-center justify-between px-1 text-sm">
+        <div className="mt-4 flex items-center justify-between gap-y-2 px-1 text-sm max-[25em]:flex-col max-[25em]:!items-start">
           <Link
             className="hover:text-primary-400 transition-all"
             href={'/auth/reset-password'}

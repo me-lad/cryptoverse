@@ -16,7 +16,7 @@ import React, { use, useEffect, useRef } from 'react';
 import { Star } from 'lucide-react';
 
 // 📦 Internal imports
-import { FavoriteCoinsContext } from '@/components/contexts/FavoriteCoins.context';
+import { FavoriteCoinsContext } from '~contexts/FavoriteCoins.context';
 import { Percentage, Price } from '~core/global/formatters';
 import { HeaderNavbarCoinsContext } from '../Navbar.context';
 import CoinsScrollHandler from './CoinsScrollHandler';

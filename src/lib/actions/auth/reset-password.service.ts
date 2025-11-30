@@ -11,7 +11,7 @@ import { doHash } from '~helpers/hash';
 import { VerifyService } from './verify.service';
 import { UserServices } from '~services/repositories/user';
 import { OtpServices } from '~services/repositories/otp';
-import { SessionServices } from '~services/session';
+import { SessionServices } from '~services/repositories/session';
 
 const sendVerificationCode = async (
   userIdentifier: string,

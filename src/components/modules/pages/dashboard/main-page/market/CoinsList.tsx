@@ -8,7 +8,7 @@ import { useTheme } from 'next-themes';
 
 // 📦 Internal imports
 import { coinsSymbolList, type OrderT } from './local';
-import { FavoriteCoinsContext } from '@/components/contexts/FavoriteCoins.context';
+import { FavoriteCoinsContext } from '~contexts/FavoriteCoins.context';
 import { flexCenter } from '~styles/tw-custom';
 const MiniChart = lazy(() => import('~core/global/trading-view/MiniChart'));
 

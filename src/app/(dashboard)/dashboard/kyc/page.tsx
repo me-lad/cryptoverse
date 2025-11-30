@@ -2,7 +2,7 @@
 import DashboardHeader from '~modules/layouts/dashboard/header';
 import ContentLayout from '~modules/layouts/dashboard/content-layout';
 import KycWrapper from '~modules/pages/dashboard/kyc/Kyc.wrapper';
-import DevelopingPage from '@/components/modules/layouts/dashboard/developing-page';
+import DevelopingPage from '~modules/layouts/dashboard/developing-page';
 
 // ⚙️ Functional component
 const Page = () => {

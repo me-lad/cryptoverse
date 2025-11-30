@@ -2,7 +2,7 @@
 import { notFound, redirect } from 'next/navigation';
 
 // 📦 Internal imports
-import DashboardHeader from '@/components/modules/layouts/dashboard/header';
+import DashboardHeader from '~modules/layouts/dashboard/header';
 import DevelopingPage from '~modules/layouts/dashboard/developing-page';
 import ContentLayout from '~modules/layouts/dashboard/content-layout';
 

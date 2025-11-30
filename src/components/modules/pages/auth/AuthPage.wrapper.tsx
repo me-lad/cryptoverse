@@ -30,11 +30,20 @@ const AuthPageWrapper: React.FC<PropsT> = ({
   return (
     <>
       {/* Page pattern */}
-      <Pattern />
+      <div className="max-lg:hidden">
+        <Pattern />
+      </div>
 
       {/* Page content */}
       <div className={clsx('relative z-[2] h-screen w-full', flexCenter)}>
-        <div className="border-t-primary h-fit w-fit max-w-3/6 overflow-x-hidden rounded-md border border-t-2 border-neutral-800 bg-[rgba(0,0,0,0.15)] px-36 py-12 backdrop-brightness-105">
+        <div
+          className={clsx(
+            'border-t-primary overflow-x-hidden rounded-md border border-t-2 border-neutral-800 bg-[rgba(0,0,0,0.15)] backdrop-brightness-105',
+            'py-5 min-[27.5em]:py-8 min-[33em]:py-12',
+            'px-8 min-[27.5em]:px-12 min-[33em]:px-18 min-[36em]:px-24 md:px-36',
+            'h-fit w-fit max-w-[97.5%] min-[29em]:max-w-[95%] lg:max-w-4/6 xl:max-w-3/6',
+          )}
+        >
           {/* Form heading */}
           <div>
             {/* Icon */}
@@ -44,6 +53,7 @@ const AuthPageWrapper: React.FC<PropsT> = ({
                 alt={'Auth page'}
                 width={98}
                 height={36}
+                className="max-[25em]:hidden"
               />
               <Image src={iconPath} alt={subtitleText} width={80} height={50} />
               <Image
@@ -51,13 +61,14 @@ const AuthPageWrapper: React.FC<PropsT> = ({
                 alt={subtitleText}
                 width={98}
                 height={36}
+                className="max-[25em]:hidden"
               />
             </div>
 
             {/* Title */}
             <h2
               className={clsx(
-                'mt-8 flex gap-2 text-3xl font-bold text-white',
+                'mt-8 flex gap-x-2 text-2xl font-bold text-white max-[22.5em]:flex-col min-[33em]:text-3xl',
                 flexCenter,
               )}
             >
@@ -70,7 +81,7 @@ const AuthPageWrapper: React.FC<PropsT> = ({
             {/* Subtitle */}
             <p
               id="form-wrapper-subtitle"
-              className="mt-2 text-center text-lg font-light tracking-wide text-neutral-400"
+              className="mt-2 text-center font-light tracking-wide text-neutral-400 min-[33em]:text-lg"
             >
               {subtitleText}
             </p>

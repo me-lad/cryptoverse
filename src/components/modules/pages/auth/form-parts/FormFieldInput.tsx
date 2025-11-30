@@ -33,7 +33,7 @@ const FormFieldInput: React.FC<FormFieldT> = (props) => {
         onPaste={copyPasteBlocker}
         onCopy={copyPasteBlocker}
         autoComplete="off"
-        className="peer mt-4 !bg-transparent pl-10 placeholder:text-white focus-visible:ring-0 focus-visible:placeholder:text-transparent"
+        className="peer mt-4 !bg-transparent pl-10 placeholder:text-white focus-visible:ring-0 focus-visible:placeholder:text-transparent max-[29em]:placeholder:text-sm"
       />
 
       {/* Field label on focus visible */}

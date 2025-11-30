@@ -8,7 +8,7 @@ import { Button } from '~core/ui/shadcn/button';
 import clsx from 'clsx';
 
 // 📦 Internal imports
-import { FavoriteCoinsContext } from '@/components/contexts/FavoriteCoins.context';
+import { FavoriteCoinsContext } from '~contexts/FavoriteCoins.context';
 import { CoinsContext } from '../../CoinsPage.context';
 import { flexCenter } from '~styles/tw-custom';
 import PaginationNumbers from './PaginationNumbers';

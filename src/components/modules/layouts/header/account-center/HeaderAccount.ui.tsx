@@ -12,11 +12,16 @@ import Profile from './profile';
 // 🧾 Local types
 interface PropsT {
   isAuthenticated: boolean;
+  signoutHandler: () => void;
   userData?: HeaderReceivableUserDataT;
 }
 
 // ⚙️ Functional component
-export default function HeaderAccountUi({ isAuthenticated, userData }: PropsT) {
+export default function HeaderAccountUi({
+  isAuthenticated,
+  userData,
+  signoutHandler,
+}: PropsT) {
   return (
     <>
       {isAuthenticated ? (
@@ -24,7 +29,7 @@ export default function HeaderAccountUi({ isAuthenticated, userData }: PropsT) {
           <Notifications />
 
           {/* Account center */}
-          <Profile userData={userData} />
+          <Profile userData={userData} signoutHandler={signoutHandler} />
         </div>
       ) : (
         // Signin/Signup

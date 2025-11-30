@@ -8,7 +8,7 @@ import clsx from 'clsx';
 
 // 📦 Internal imports
 import type { CurrencyT } from '~types/coins';
-import { CurrencyContext } from '@/components/contexts/Currency.context';
+import { CurrencyContext } from '~contexts/Currency.context';
 import { currencies } from './local';
 
 // ⚙️ Functional component

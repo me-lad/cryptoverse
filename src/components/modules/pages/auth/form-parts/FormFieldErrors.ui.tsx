@@ -12,7 +12,7 @@ const FormFieldErrorsUi: React.FC<PropsT> = ({ errors }) => {
     <ul className="flex list-inside list-disc flex-col gap-1">
       {errors.map((err, index) => (
         <li
-          className="text-status-error-200 items-center text-[0.915rem] font-medium first:mt-2"
+          className="text-status-error-200 line-clamp-1 items-center text-[0.915rem] font-medium first:mt-2"
           key={index}
         >
           {err}

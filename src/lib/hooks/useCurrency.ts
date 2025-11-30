@@ -2,7 +2,7 @@
 import { use } from 'react';
 
 // 📦 Internal imports
-import { CurrencyContext } from '@/components/contexts/Currency.context';
+import { CurrencyContext } from '~contexts/Currency.context';
 import { formatPrice } from '~helpers/formatters';
 
 // ⚙️ Custom hook

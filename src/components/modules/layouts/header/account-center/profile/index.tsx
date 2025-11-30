@@ -25,11 +25,12 @@ import {
 
 // 🧾 Local types
 interface PropsT {
+  signoutHandler: () => void;
   userData?: HeaderReceivableUserDataT;
 }
 
 // ⚙️ Functional component
-const Profile: React.FC<PropsT> = ({ userData }) => {
+const Profile: React.FC<PropsT> = ({ userData, signoutHandler }) => {
   return (
     <DropDownAggregator overlay="dark">
       <DropDownTrigger>
@@ -104,6 +105,7 @@ const Profile: React.FC<PropsT> = ({ userData }) => {
           <Button
             variant={'outline'}
             className="w-full cursor-pointer rounded-sm"
+            onClick={signoutHandler}
           >
             <LogOut />
             Sign out

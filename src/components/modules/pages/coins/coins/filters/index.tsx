@@ -15,11 +15,11 @@ import clsx from 'clsx';
 import Image from 'next/image';
 
 // 📦 Internal imports
-import { FavoriteCoinsContext } from '@/components/contexts/FavoriteCoins.context';
+import { FavoriteCoinsContext } from '~contexts/FavoriteCoins.context';
 import { CoinsContext } from '../../CoinsPage.context';
 import { errorToast } from '~vendors/react-toastify';
 import { CurrencyT } from '~types/coins';
-import { CurrencyContext } from '@/components/contexts/Currency.context';
+import { CurrencyContext } from '~contexts/Currency.context';
 import { currencies } from '~modules/layouts/header/currency/local';
 
 // ⚙️ Functional components

@@ -3,7 +3,7 @@ import Image from 'next/image';
 // ⚙️ Functional component
 const Pattern = () => {
   return (
-    <div className="absolute top-0 right-0 bottom-0 left-0 -z-[1] m-auto h-screen w-screen select-none">
+    <div className="absolute top-0 right-0 bottom-0 left-0 -z-[1] m-auto h-screen w-screen opacity-60 select-none">
       <div className="absolute top-40 left-0">
         <Image
           src="/svgs/auth-page/auth-pattern-1.svg"

@@ -3,7 +3,7 @@
 
 // 📦 Third-Party imports
 import { use, useEffect } from 'react';
-import { Button } from '@/components/core/ui/shadcn/button';
+import { Button } from '~core/ui/shadcn/button';
 import { ChevronLeft } from 'lucide-react';
 import { cn } from '~utils/shadcn';
 import {

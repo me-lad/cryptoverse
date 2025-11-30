@@ -17,7 +17,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '@/components/core/ui/shadcn/tooltip';
+} from '~core/ui/shadcn/tooltip';
 import clsx from 'clsx';
 
 // ⚙️ Functional component

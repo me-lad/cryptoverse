@@ -49,7 +49,10 @@ const VerifyFormOtpInput = () => {
           {new Array(6).fill(0).map((item, index) => (
             <InputOTPSlot
               key={index}
-              className="data-[active=true]:border-primary min-h-[50px] w-1/7 min-w-[60px] !rounded-sm !border-0 !border-b-2 text-lg !ring-0 data-[active=true]:border-2"
+              className={clsx(
+                'data-[active=true]:border-primary !rounded-sm !border-0 !border-b-2 text-lg !ring-0 data-[active=true]:border-2',
+                'min-h-[38px] w-1/7 min-w-[38px] min-[25em]:min-h-[50px] min-[25em]:min-w-[50px] 2xl:min-w-[60px]',
+              )}
               index={index}
             />
           ))}

@@ -17,15 +17,22 @@ const VerifyFormUi: React.FC<PropsT> = ({ children }) => {
   return (
     <>
       {/* Otp input */}
-      <div className="mx-auto w-5/6">
+      <div className="2xl:mx-auto 2xl:w-5/6">
         <VerifyFormOtpInput />
       </div>
 
       {/* Resend code section */}
-      <div className={clsx(flexBetween, 'mx-auto mb-4 w-5/6')}>{children}</div>
+      <div
+        className={clsx(
+          flexBetween,
+          'mb-4 max-[23em]:flex-col max-[23em]:!items-start 2xl:mx-auto 2xl:w-5/6',
+        )}
+      >
+        {children}
+      </div>
 
       {/* Submit button */}
-      <div className="mx-auto w-5/6 select-none">
+      <div className="select-none 2xl:mx-auto 2xl:w-5/6">
         <VerifyFormOtpButton />
       </div>
     </>

@@ -4,9 +4,9 @@ import Link from 'next/link';
 // 📦 Internal imports
 import { FormKinds, signupFormFields } from '~constants/form';
 import { signup } from '~actions/auth/signup.controller';
-import AuthPageWrapper from '@/components/modules/pages/auth/AuthPage.wrapper';
-import AuthFormContext from '@/components/modules/pages/auth/AuthForm.context';
-import Form from '@/components/modules/pages/auth/form-containers/Form';
+import AuthPageWrapper from '~modules/pages/auth/AuthPage.wrapper';
+import AuthFormContext from '~modules/pages/auth/AuthForm.context';
+import Form from '~modules/pages/auth/form-containers/Form';
 
 // ⚙️ Functional component
 const SignupPage = () => {
@@ -19,7 +19,7 @@ const SignupPage = () => {
         <Form formFields={signupFormFields} submitButtonText="Sign up" />
 
         {/* Signin page link */}
-        <p className="mt-4 text-center">
+        <p className="mt-4 text-center max-[25em]:text-sm">
           Already have an account ?
           <Link className="text-primary ml-2 font-medium" href={'/auth/signin'}>
             Sign in
