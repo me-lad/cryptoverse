@@ -6,6 +6,8 @@ export type UserModelType = {
   phoneNumber: string;
   password: string;
   profileImage?: string;
+  email?: string;
+  fullName?: string;
   role: UserRolesType;
   isVerified: boolean;
   isRestricted: boolean;

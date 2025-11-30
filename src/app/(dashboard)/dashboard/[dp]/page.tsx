@@ -22,7 +22,6 @@ const developingPages: { [key: string]: string } = {
   'device-management': 'Device Management',
   performance: 'Performance',
   'tax-reports': 'Tax Reports',
-  'account-management': 'Account Management',
   support: 'Support & Help Center',
   notifications: 'Notification Center',
 };

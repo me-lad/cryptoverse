@@ -2,7 +2,7 @@
 'use client';
 
 // 📦 Third-Party imports
-import { BellDot } from 'lucide-react';
+import { Bell } from 'lucide-react';
 
 // 📦 Internal imports
 import { flexBetween, flexCenter } from '~styles/tw-custom';
@@ -17,7 +17,12 @@ const Notifications = () => {
   return (
     <DropDownAggregator overlay="dark">
       <DropDownTrigger>
-        <BellDot className="hover:cursor-pointer" size={22} />
+        <div className="relative">
+          <Bell className="hover:cursor-pointer" size={22} />
+          <span className="bg-primary absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full text-xs font-bold text-white">
+            3
+          </span>
+        </div>
       </DropDownTrigger>
       <DropDownMenu className="mt-7 w-88 p-5 max-[37.5em]:-left-32 max-[27.5em]:fixed max-[27.5em]:top-10 max-[27.5em]:right-0 max-[27.5em]:left-0 max-[27.5em]:mx-auto max-[27.5em]:w-[90vw] max-[27.5em]:translate-x-0 lg:-left-28 xl:-left-20 2xl:left-1/2">
         <div className={flexBetween}>

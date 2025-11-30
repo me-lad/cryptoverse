@@ -90,6 +90,15 @@ const SimpleItem: React.FC<DashboardSidebarMenuItemT> = (props) => {
 
                 'before:bg-gradient-to-r before:from-primary before:via-primary/10 before:to-secondary before:opacity-100 before:from-5% before:via-5% before:to-150%',
               )}
+              subLinks={
+                title === 'Account Management'
+                  ? [
+                      '/dashboard/account-management/security',
+                      '/dashboard/account-management/trading',
+                      '/dashboard/account-management/notification',
+                    ]
+                  : []
+              }
             >
               <InnerUi {...props} />
             </NavLink>

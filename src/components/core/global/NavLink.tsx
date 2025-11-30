@@ -12,14 +12,20 @@ interface PropsT {
   children: React.ReactNode;
   className?: string;
   activeClassName?: string;
+  subLinks?: string[];
 }
 
 // ⚙️ Functional component
 export const NavLink: React.FC<PropsT> = (props) => {
-  const { href, className, activeClassName, children } = props;
+  const { href, className, activeClassName, subLinks = [], children } = props;
   const pathname = usePathname();
   const isActive = pathname === href;
-  const combinedClassName = clsx(className, isActive && activeClassName);
+  const isSubActive =
+    !!subLinks.length && subLinks.find((item) => item === pathname);
+  const combinedClassName = clsx(
+    className,
+    (isActive || isSubActive) && activeClassName,
+  );
 
   return (
     <Link href={href} className={combinedClassName}>

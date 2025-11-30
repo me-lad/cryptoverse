@@ -28,7 +28,7 @@ const UserData = async () => {
 
         <div className="flex flex-col gap-2 font-medium *:last:tracking-wide *:last:opacity-70">
           <p>Email Address</p>
-          <p>MiladEsmaeili@gmail.com</p>
+          <p>MiladEsm@gmail.com</p>
         </div>
 
         <div className="flex flex-col gap-2 font-medium *:last:tracking-wide *:last:opacity-70">

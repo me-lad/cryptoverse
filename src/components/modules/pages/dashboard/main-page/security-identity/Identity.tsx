@@ -23,7 +23,7 @@ const Identity = () => {
           <Button
             variant={'ghost'}
             disabled
-            className="text-status-success-200 min-w-28 justify-start !opacity-100"
+            className="text-status-success-200 min-w-28 !opacity-100"
           >
             <Check className="mt-0.5" strokeWidth={2.5} />
             Uploaded
@@ -34,7 +34,7 @@ const Identity = () => {
           <p>Additional Information</p>
           <Button
             variant={'ghost'}
-            className="min-w-28 cursor-pointer justify-start !opacity-100"
+            className="min-w-28 cursor-pointer !opacity-100"
           >
             <Upload />
             Upload
@@ -45,7 +45,7 @@ const Identity = () => {
           <p>ID Photo</p>
           <Button
             variant={'ghost'}
-            className="min-w-28 cursor-pointer justify-start !opacity-100"
+            className="min-w-28 cursor-pointer !opacity-100"
           >
             <Upload />
             Upload
@@ -56,7 +56,7 @@ const Identity = () => {
           <p>Terms & Agreements</p>
           <Button
             variant={'ghost'}
-            className="min-w-28 cursor-pointer justify-start !opacity-100"
+            className="min-w-28 cursor-pointer !opacity-100"
           >
             <Upload />
             Upload

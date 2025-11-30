@@ -49,6 +49,12 @@ class UserModel {
         profileImage: {
           type: String,
         },
+        email: {
+          type: String,
+        },
+        fullName: {
+          type: String,
+        },
         role: {
           type: String,
           enum: UserRolesEnum,
