@@ -3,6 +3,7 @@
 
 // 📦 Third-Party imports
 import React, { useEffect, useRef } from 'react';
+import { infoToast } from '~vendors/react-toastify';
 
 // 🧾 Local types
 interface PropsT {
@@ -19,6 +20,10 @@ const AdvanceChart: React.FC<PropsT> = (props) => {
   const { symbol, theme, fullSymbol, allowChangeSymbol = true } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    infoToast('Use VPN if you have any problem loading Trading-View chart');
+  }, []);
 
   useEffect(() => {
     const script = document.createElement('script');

@@ -1,50 +1,55 @@
 // 📌 Directives
 'use client';
 
-// 📦 Third-Party imports
+// 📦 Imports
 import { Dot } from 'recharts';
-
-// 📦 Internal imports
 import { useCurrency } from '~hooks/useCurrency';
 import { useScreenWidth } from '~hooks/useScreenWidth';
 
-// ⚙️ Functional component
 const CustomDot = ({ index, payload, ...props }: any) => {
   const { screenWidth } = useScreenWidth();
+  const { convertedPrice } = useCurrency(payload?.value);
 
-  const isEqual = (a: number, b: number) => a === b;
-  const isMax = isEqual(props.max, payload.value);
-  const isMin = isEqual(props.min, payload.value);
+  if (!payload) return null;
 
+  // Detect MIN / MAX
+  const isMax = props.max === payload.value;
+  const isMin = props.min === payload.value;
   if (!isMax && !isMin) return null;
 
-  let posX = props.cx + 10;
-  let posY = props.cy + 5.5;
-
-  const color = isMax ? 'var(--chart-green-normal)' : 'var(--chart-red-normal)';
   const isLabelNeed =
     (isMax && props.maxIndex === index) || (isMin && props.minIndex === index);
 
-  const { convertedPrice } = useCurrency(payload.value);
+  const color = isMax ? 'var(--chart-green-normal)' : 'var(--chart-red-normal)';
 
-  if (props.cx > props.containerWidth * 0.6) {
-    let newPosX = props.cx - 64;
+  // >= 1024px → use Recharts width
+  // < 1024px  → full screen minus Tailwind padding (px-7 → 28px)
+  const chartWidth =
+    screenWidth >= 1024
+      ? props.width // ✔ desktop/tablet accurate
+      : screenWidth - 28; // ✔ mobile accurate
 
-    if (convertedPrice.length > 6) {
-      newPosX = props.cx - 80;
-    }
-    if (convertedPrice.length > 8) {
-      newPosX = props.cx - 85;
-    }
-    if (convertedPrice.length > 10) {
-      newPosX = props.cx - 100;
-    }
-    if (convertedPrice.length > 12) {
-      newPosX = props.cx - 108;
-    }
+  // Right-side detection
+  const isRightSide = props.cx > chartWidth * 0.5;
 
-    posX = newPosX;
-  }
+  // Label positioning
+  const charWidth = screenWidth >= 420 ? 8 : 7;
+  const labelWidth = convertedPrice.length * charWidth;
+  const padding = isRightSide ? 20 : 14;
+
+  const posX = isRightSide
+    ? props.cx - labelWidth - padding
+    : props.cx + padding;
+
+  const posY = props.cy + 5.5;
+
+  // Clean text output
+  const safeText = (() => {
+    const sliced = convertedPrice.toString().slice(0, 12);
+    return sliced.endsWith('.') || sliced.endsWith(',')
+      ? sliced.slice(0, -1)
+      : sliced;
+  })();
 
   return (
     <g>
@@ -57,6 +62,7 @@ const CustomDot = ({ index, payload, ...props }: any) => {
         fill={color}
         stroke={payload.fill}
       />
+
       {isLabelNeed && (
         <text
           x={posX}
@@ -65,13 +71,11 @@ const CustomDot = ({ index, payload, ...props }: any) => {
           fontWeight={600}
           fill={color}
         >
-          {convertedPrice.toString().slice(0, 12).endsWith(',') ||
-          convertedPrice.toString().slice(0, 12).endsWith('.')
-            ? convertedPrice.toString().slice(0, 11)
-            : convertedPrice.toString().slice(0, 12)}
+          {safeText}
         </text>
       )}
     </g>
   );
 };
+
 export default CustomDot;

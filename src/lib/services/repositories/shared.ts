@@ -1,7 +1,6 @@
 import { connectToDB } from '~vendors/mongoose';
 import { AuthServices } from './auth';
 import { Messages } from '~constants/messages';
-import { hoursToMillisecond } from '~helpers/time';
 import SessionModel from '@/lib/models/Session';
 import OtpModel from '@/lib/models/Otp';
 import UserModel from '~models/User';
@@ -20,7 +19,7 @@ export const doSignout = async () => {
 
     const id = accessReceivedId || refreshReceivedId;
     const user = await UserModel.model.findOneAndUpdate(
-      { id },
+      { _id: id },
       {
         $unset: {
           sessionId: '',

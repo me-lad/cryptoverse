@@ -17,7 +17,7 @@ interface PropsT {
 const DataTable: React.FC<PropsT> = ({ children }) => {
   const tableContainerElm = useRef<null | HTMLDivElement>(null);
 
-  const isOverBreakpoint = useMediaQuery('min-width', 1296);
+  const isOverBreakpoint = useMediaQuery('min-width', 1416);
 
   useEffect(() => {
     if (tableContainerElm.current) {
@@ -33,7 +33,7 @@ const DataTable: React.FC<PropsT> = ({ children }) => {
 
   return (
     <div
-      className="relative max-w-full max-[81em]:overflow-hidden max-[81em]:rounded-sm"
+      className="relative max-w-full max-[88.5em]:overflow-hidden max-[88.5em]:rounded-sm"
       ref={tableContainerElm}
     >
       <Table className="border-separate border-spacing-0">{children}</Table>

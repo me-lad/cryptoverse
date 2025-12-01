@@ -3,6 +3,7 @@
 
 // 📦 Third-Party imports
 import React, { useEffect, useRef } from 'react';
+import { infoToast } from '~vendors/react-toastify';
 
 // 🧾 Local types
 interface PropsT {
@@ -14,6 +15,10 @@ interface PropsT {
 const MiniChart: React.FC<PropsT> = (props) => {
   const { symbol, theme = 'dark' } = props;
   const container = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    infoToast('Use VPN if you have any problem loading Trading-View chart');
+  }, []);
 
   useEffect(() => {
     if (!container.current) return;

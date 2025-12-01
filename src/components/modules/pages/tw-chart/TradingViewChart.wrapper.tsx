@@ -34,7 +34,7 @@ const TradingViewChartWrapper = () => {
       </div>
 
       <Button
-        className={`${flexCenter} fixed top-5 right-20 size-10 cursor-pointer rounded-full !p-0 text-white max-sm:top-16 lg:hidden`}
+        className={`${flexCenter} fixed top-5 right-5 size-10 cursor-pointer rounded-full !p-0 text-white lg:hidden`}
         onClick={() => setSidebarStatus('open')}
       >
         <Menu className="size-1/2" />

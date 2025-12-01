@@ -24,8 +24,8 @@ import type { CoinEntity_Gecko } from '~types/api-generated/shared';
 import { CoinsContext } from '../../CoinsPage.context';
 import { flexCenter } from '~styles/tw-custom';
 import { FavoriteCoinsContext } from '~contexts/FavoriteCoins.context';
-import SkeltonTableRow from '../loader/SkeltonTableRow';
 import { useHasMounted } from '~hooks/useHasMounted';
+import SkeltonTableRow from '../loader/SkeltonTableRow';
 
 // 🧾 Local types
 interface PropsT<TData> {
@@ -61,7 +61,9 @@ function TableBody<TData>({ table }: PropsT<TData>) {
       <TableBodyShadcn>
         {table.getRowModel().rows.map((row, index) => (
           <TableRow
-            className={clsx('hover:*:border-primary/50 h-20 *:border-b')}
+            className={clsx(
+              'hover:*:border-primary/50 hover:*:bg-background-lighter h-20 !bg-transparent *:border-b',
+            )}
             key={row.id}
             data-state={row.getIsSelected() && 'selected'}
           >

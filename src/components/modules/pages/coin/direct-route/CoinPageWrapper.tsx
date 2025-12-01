@@ -116,12 +116,13 @@ const CoinPageWrapper: React.FC<PropsT> = async (props) => {
                 <CoinAdditionalInformation {...coinData.result} />
               </div>
 
+              {/* Mobile Orders */}
               <div className={`${gridChildContainerClassName} xl:hidden`}>
-                <BidsTable data={bids} />
+                <BidsTable data={bids.slice(0, 5)} />
               </div>
 
               <div className={`${gridChildContainerClassName} xl:hidden`}>
-                <AsksTable data={asks} />
+                <AsksTable data={asks.slice(0, 5)} />
               </div>
             </div>
           </div>

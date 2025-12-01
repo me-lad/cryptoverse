@@ -49,7 +49,7 @@ const LatestNews = () => {
         </Link>
       </div>
 
-      <ul className="mt-10 flex justify-between overflow-x-auto max-lg:gap-5">
+      <ul className="!no-scrollbar mt-10 flex justify-between overflow-x-auto max-lg:gap-5">
         {isLoading
           ? Array.from({ length: 3 }).map((_, index) => (
               <div

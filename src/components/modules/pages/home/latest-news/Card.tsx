@@ -29,7 +29,7 @@ const Card: React.FC<NewsDataEntity> = (props) => {
   } = props;
 
   return (
-    <div className="w-full overflow-hidden rounded-lg border-1 border-neutral-600">
+    <div className="h-full w-full overflow-hidden rounded-lg border-1 border-neutral-600">
       {/* Image */}
       <div
         className={clsx(
@@ -81,7 +81,7 @@ const Card: React.FC<NewsDataEntity> = (props) => {
 
         {/* Body */}
         <div className="mt-3 min-h-[48px]">
-          <p className="line-clamp-4 tracking-wide text-neutral-400 sm:line-clamp-2">
+          <p className="line-clamp-4 tracking-wide text-neutral-400 max-sm:min-h-20 sm:line-clamp-2">
             {BODY}
           </p>
         </div>

@@ -62,7 +62,7 @@ export default function RootLayout({
                 <HeaderFn />
 
                 {/* Route interface */}
-                <main className="w-full max-[81em]:overflow-x-hidden">
+                <main className="w-full max-[88.5em]:overflow-hidden">
                   {children}
                 </main>
 
