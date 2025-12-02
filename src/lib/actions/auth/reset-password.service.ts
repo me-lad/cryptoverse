@@ -60,7 +60,6 @@ const sendVerificationCode = async (
     return catchErrorFormState;
   } catch (err: any) {
     if (!err.digest.startsWith('NEXT_REDIRECT')) {
-      console.log('Error in sending reset password verification code ->', err);
       return catchErrorFormState;
     }
     throw err;
@@ -83,7 +82,6 @@ const doResetPassword = async (data: {
 
     // 7. Check code existence
     if (data.code !== otpData.code) {
-      console.log('Wrong code');
       otpData.usageCount += 1;
       await otpData.save();
       return {
@@ -115,7 +113,6 @@ const doResetPassword = async (data: {
       toastMessage: Messages.Success.CompleteResetPassword,
     };
   } catch (err) {
-    console.log('Error in reset password process ->', err);
     return catchErrorFormState;
   }
 };

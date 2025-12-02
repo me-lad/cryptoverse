@@ -34,7 +34,6 @@ export const doSignout = async () => {
 
     return true;
   } catch (err) {
-    console.log(err);
     return;
   }
 };

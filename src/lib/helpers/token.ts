@@ -23,13 +23,6 @@ export const decrypt = async (session: string, secret: Uint8Array) => {
 
     return payload;
   } catch (err: any) {
-    if (err.name === 'TokenExpiredError') {
-      console.log('Token has expired');
-    } else if (err.name === 'JWTInvalid') {
-      console.log('Invalid token');
-    } else {
-      console.log('Other JWT error:', err);
-    }
     return false;
   }
 };

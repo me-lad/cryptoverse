@@ -67,12 +67,7 @@ const updateUserSessionRelatedFields = async (
         },
       },
     );
-    if (!result) {
-      console.log('No user found with that ID — update skipped.');
-    }
-  } catch (err) {
-    console.log('Error in updating user session data ->', err);
-  }
+  } catch {}
 };
 
 export const UserServices = {

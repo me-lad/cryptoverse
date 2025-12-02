@@ -43,8 +43,6 @@ export async function safeFetch<T>(
 
     return { success: true, result: (await response.json()) as T };
   } catch (err: any) {
-    console.log('Error:', err);
-    console.log('Message:', catchMessage);
     return { success: false };
   }
 }

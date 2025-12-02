@@ -9,7 +9,7 @@ const createMessage = async (data: SupportMessageType) => {
     await SupportMessageModel.model.create(data);
     return true;
   } catch (err) {
-    console.log('Error in creating support message ->', err);
+    return null;
   }
 };
 

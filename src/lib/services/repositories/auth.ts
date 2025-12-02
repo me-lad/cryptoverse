@@ -85,7 +85,6 @@ const createUserSessions = async (
       };
     }
   } catch (err) {
-    console.log('Error in user session creation ->', err);
     return { success: false };
   }
 };
@@ -131,7 +130,6 @@ const verifyAccessSession =
         userId: userData.id,
       };
     } catch (err) {
-      console.log('Error in verify session DAL ->', err);
       return falsyReturn;
     }
   };
@@ -169,7 +167,6 @@ const verifyRefreshSession =
         userId: userData.id,
       };
     } catch (err) {
-      console.log('Error in verify session DAL ->', err);
       return falsyReturn;
     }
   };

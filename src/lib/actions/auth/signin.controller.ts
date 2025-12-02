@@ -111,7 +111,6 @@ export async function signin(
       sanitizedData?.remember,
     );
   } catch (err) {
-    console.log('Error in signin controller ->', err);
     return catchErrorFormState;
   }
 }

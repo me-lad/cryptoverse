@@ -11,7 +11,6 @@ export const verifyHash = async (
   try {
     return await compare(originalText, hashedText);
   } catch (err) {
-    console.log('Error in password verification =>', err);
     return false;
   }
 };

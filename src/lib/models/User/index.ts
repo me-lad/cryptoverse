@@ -117,9 +117,8 @@ class UserModel {
           partialFilterExpression: { isVerified: false },
         },
       );
-      console.log('TTL index for unverified users created.');
     } catch (err) {
-      console.log('Failed to create TTL index:', err);
+      return false;
     }
   }
 }

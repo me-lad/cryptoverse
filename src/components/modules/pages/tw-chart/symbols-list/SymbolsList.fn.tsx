@@ -31,10 +31,6 @@ const SymbolsListFn: React.FC<PropsT> = (props) => {
   const { data, isLoading } = useSymbols(startPoint, searchQuery);
 
   useEffect(() => {
-    console.log('searchQuery', searchQuery);
-  }, [searchQuery]);
-
-  useEffect(() => {
     if (data) {
       const newSymbols = new Set([...symbols, ...data.symbols]);
       setSymbols(Array.from(newSymbols));

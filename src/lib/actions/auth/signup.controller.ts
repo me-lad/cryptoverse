@@ -87,7 +87,6 @@ export async function signup(
       validatedFields.data.password,
     );
   } catch (err) {
-    console.log('Error in signup controller ->', err);
     return catchErrorFormState;
   }
 }

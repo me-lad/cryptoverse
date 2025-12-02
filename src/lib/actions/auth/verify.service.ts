@@ -105,7 +105,6 @@ const checkUserOtpStatus = async (
 
     return result;
   } catch (err) {
-    console.log('Error in verify service ->', err);
     return { status: 'Error', message: Messages.Error.CatchHandler };
   }
 };
@@ -195,7 +194,6 @@ const doVerify = async (
       redirectPath: '/dashboard',
     };
   } catch (err) {
-    console.log('Error in verify controller ->', err);
     return catchErrorFormState;
   }
 };
@@ -215,7 +213,6 @@ const sendOtp = async (
     await sms(data.phoneNumber, data.code);
     return await OtpServices.createOtp(data);
   } catch (err) {
-    console.log('Error in create otp document ->', err);
     return null;
   }
 };

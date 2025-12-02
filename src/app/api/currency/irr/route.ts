@@ -21,10 +21,6 @@ export async function GET() {
 
     return Response.json(result.usd.value);
   } catch (err: any) {
-    console.log(
-      'Error in getting NAVASAN api for usd price ->',
-      err && err?.message,
-    );
     return Response.json(err);
   }
 }

@@ -49,7 +49,6 @@ const signupUser = async (
         : `/auth/verify?username=${createdUser.username}`,
     };
   } catch (err) {
-    console.log('Error in Signup handler', err);
     return catchErrorFormState;
   }
 };

@@ -26,9 +26,7 @@ export const getConversionFactors = async (
       const respIRR = await fetch(`${fetchUrl}/irr`, { method: 'GET' });
       const resultIRR = await respIRR.json();
       rates.USD = 1 / resultIRR / 10;
-    } catch (err) {
-      console.log(err);
-    }
+    } catch {}
   }
 
   return rates;
