@@ -16,7 +16,6 @@ export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
   const isLoginNecessary = loginNecessaryRoutes.includes(path);
   const isLogoutNecessary = logoutNecessaryRoutes.includes(path);
-  1;
   const cookieStore = await cookies();
   const accessCookie = cookieStore.get('access_token')?.value;
   const refreshCookie = cookieStore.get('refresh_token')?.value;
@@ -29,7 +28,7 @@ export default async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL('/dashboard', req.nextUrl));
   }
 
-  NextResponse.next();
+  return NextResponse.next();
 }
 
 export const config = {

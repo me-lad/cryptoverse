@@ -1,4 +1,4 @@
-import type { GetNewsCategories } from '@/lib/types/api-generated/news/getNewsCategories';
+import type { GetNewsCategories } from '~types/api-generated/news/getNewsCategories';
 import { buildUrl } from '~helpers/generators';
 import { safeFetch } from '~helpers/safeFetch';
 

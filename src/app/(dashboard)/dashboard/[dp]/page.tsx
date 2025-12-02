@@ -1,5 +1,5 @@
 // 📦 Third-Party imports
-import { notFound, redirect } from 'next/navigation';
+import { redirect } from 'next/navigation';
 
 // 📦 Internal imports
 import DashboardHeader from '~modules/layouts/dashboard/header';

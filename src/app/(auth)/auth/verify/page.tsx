@@ -14,9 +14,9 @@ import AuthVerifyFormErrorUnit from '~modules/pages/auth/form-parts/VerifyFormEr
 
 // 🧾 Local types
 type PropsT = {
-  searchParams: {
+  searchParams: Promise<{
     [key: string]: string | string[] | undefined;
-  };
+  }>;
 };
 
 // ⚙️ Functional component

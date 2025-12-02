@@ -11,7 +11,7 @@ import {
 } from '~core/ui/shadcn/tooltip';
 
 // 📦 Internal imports
-import type { NewsDataEntity } from '@/lib/types/api-generated/news/getLatestNews';
+import type { NewsDataEntity } from '~types/api-generated/news/getLatestNews';
 import { flexBetween, flexCenter } from '~styles/tw-custom';
 import { formatDate } from '~helpers/time';
 

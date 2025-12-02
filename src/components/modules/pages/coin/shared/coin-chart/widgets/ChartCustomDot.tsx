@@ -32,10 +32,22 @@ const CustomDot = ({ index, payload, ...props }: any) => {
   // Right-side detection
   const isRightSide = props.cx > chartWidth * 0.5;
 
-  // Label positioning
-  const charWidth = screenWidth >= 420 ? 8 : 7;
+  // Label positioning - calculate actual label width
+  let charWidth: number;
+  const priceLength = convertedPrice.length;
+
+  if (screenWidth >= 420) {
+    if (priceLength <= 6) charWidth = 9;
+    else if (priceLength <= 10) charWidth = 8.5;
+    else charWidth = 6;
+  } else {
+    if (priceLength <= 6) charWidth = 8;
+    else if (priceLength <= 10) charWidth = 7.5;
+    else charWidth = 5;
+  }
+
   const labelWidth = convertedPrice.length * charWidth;
-  const padding = isRightSide ? 20 : 14;
+  const padding = 8;
 
   const posX = isRightSide
     ? props.cx - labelWidth - padding

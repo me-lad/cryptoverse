@@ -11,8 +11,8 @@ import {
   type CycleT,
   type FormattedChartDataT,
 } from '../../local';
-import type { GetCoinChartData } from '@/lib/types/api-generated/coins/getCoinChartData';
-import type { GetCoinData } from '@/lib/types/api-generated/coins/getCoinData';
+import type { GetCoinChartData } from '~types/api-generated/coins/getCoinChartData';
+import type { GetCoinData } from '~types/api-generated/coins/getCoinData';
 import { buildCoinChartData } from '~helpers/generators';
 import ChartHeading from './ChartHeading';
 import ChartDataRefSelect from './ChartDataRefSelect';

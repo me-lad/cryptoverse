@@ -1,8 +1,8 @@
 import { connectToDB } from '~vendors/mongoose';
 import { AuthServices } from './auth';
 import { Messages } from '~constants/messages';
-import SessionModel from '@/lib/models/Session';
-import OtpModel from '@/lib/models/Otp';
+import SessionModel from '~models/Session';
+import OtpModel from '~models/Otp';
 import UserModel from '~models/User';
 
 export const doSignout = async () => {

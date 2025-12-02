@@ -20,7 +20,7 @@ import {
 } from '~core/ui/shadcn/chart';
 
 // 📦 Internal imports
-import type { GetCoinChartData } from '@/lib/types/api-generated/coins/getCoinChartData';
+import type { GetCoinChartData } from '~types/api-generated/coins/getCoinChartData';
 import { chartConfig, type FormattedChartDataT } from '../../local';
 import { useChartExtremes } from './widgets/useChartExtremes';
 import { useChartContainerSize } from './widgets/useContainerSize';

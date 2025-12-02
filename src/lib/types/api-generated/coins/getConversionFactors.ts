@@ -1,4 +1,4 @@
-import type { CurrencyConversionFactorsT, CurrencyT } from '../coins';
+import type { CurrencyConversionFactorsT, CurrencyT } from '../../coins';
 
 export interface GetCurrencyConversionFactors {
   result: 'success' | 'error';

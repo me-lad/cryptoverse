@@ -5,7 +5,7 @@ import React from 'react';
 import Image from 'next/image';
 
 // 📦 Internal imports
-import type { SentimentClassification } from '@/lib/types/api-generated/coins/getMarketSentiment';
+import type { SentimentClassification } from '~types/api-generated/coins/getMarketSentiment';
 import { buildColorByClassification, buildSentimentClipPath } from './local';
 import { flexBetween, flexCenter } from '~styles/tw-custom';
 

@@ -1,4 +1,4 @@
-import type { CoinEntity_Compare } from './shared';
+import type { CoinEntity_Compare } from '../shared';
 
 export type GetWidgetCoins = {
   Data: Data;

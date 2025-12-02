@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 // 📦 Internal imports
 import FluidContainer from '../../FluidContainer';
-import { flexBetween } from '@/lib/styles/tw-custom';
+import { flexBetween } from '~styles/tw-custom';
 
 // ⚙️ Functional component
 const UserData = async () => {

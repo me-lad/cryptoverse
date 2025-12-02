@@ -28,7 +28,6 @@ export async function GET(req: Request) {
 
     const data = await resp.json();
 
-    console.log(data);
     return NextResponse.json({ ok: true, data });
   } catch (err: any) {
     return NextResponse.json(

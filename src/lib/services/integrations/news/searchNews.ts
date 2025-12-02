@@ -1,4 +1,4 @@
-import type { GetLatestNews } from '@/lib/types/api-generated/news/getLatestNews';
+import type { GetLatestNews } from '~types/api-generated/news/getLatestNews';
 import { buildUrl } from '~helpers/generators';
 import { safeFetch } from '~helpers/safeFetch';
 

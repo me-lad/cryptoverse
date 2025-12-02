@@ -36,7 +36,7 @@ const Hero = () => {
       <div className="hidden md:block">
         <Image
           className="drop-shadow-2xl drop-shadow-neutral-800 max-[92.5em]:w-[36rem] max-[88.125em]:w-[32rem] max-[83.75em]:w-[28rem] max-[71.75em]:w-[24rem] max-[64em]:w-[18.5rem]"
-          src={'/images/home-page/home-Hero.png'}
+          src={'/images/home-page/home-hero.png'}
           alt="Crypto Verse"
           width={540}
           height={410}

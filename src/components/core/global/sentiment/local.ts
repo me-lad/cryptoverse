@@ -1,4 +1,4 @@
-import type { SentimentClassification } from '@/lib/types/api-generated/coins/getMarketSentiment';
+import type { SentimentClassification } from '~types/api-generated/coins/getMarketSentiment';
 
 interface ClipPathOutputT {
   fearPath: string;

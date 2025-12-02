@@ -6,7 +6,7 @@ import React, { Dispatch } from 'react';
 import clsx from 'clsx';
 
 // 📦 Internal imports
-import type { SymbolT } from '@/lib/types/api-generated/coins/getTradingViewAvailableSymbols';
+import type { SymbolT } from '~types/api-generated/coins/getTradingViewAvailableSymbols';
 import { flexCenter } from '~styles/tw-custom';
 import SymbolItem from './SymbolItem';
 

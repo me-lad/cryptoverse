@@ -77,7 +77,8 @@ const SelectMenu: React.FC<PropsT> = (props) => {
   return (
     <DropDownMenu
       className={clsx(
-        'left-0 mt-2 max-h-96 w-full translate-x-0 overflow-y-auto sm:w-fit lg:w-max',
+        'left-0 mt-2 max-h-96 w-max translate-x-0 overflow-y-auto max-sm:w-full',
+        selectId === 'excludeCategories' && 'max-lg:-left-28 max-sm:left-0',
       )}
     >
       {/* Search */}

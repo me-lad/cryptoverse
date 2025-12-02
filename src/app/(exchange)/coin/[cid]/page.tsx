@@ -4,9 +4,9 @@ import CoinPageWrapper from '~modules/pages/coin/direct-route/CoinPageWrapper';
 // 🧾 Local types
 interface PropsT {
   params: Promise<{ cid: string }>;
-  searchParams: {
+  searchParams: Promise<{
     [key: string]: string | undefined;
-  };
+  }>;
 }
 
 // ⚙️ Functional component

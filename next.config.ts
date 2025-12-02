@@ -14,10 +14,6 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'images.cryptocompare.com',
-      },
-      {
-        protocol: 'https',
         hostname: 'cdn.sanity.io',
       },
       {

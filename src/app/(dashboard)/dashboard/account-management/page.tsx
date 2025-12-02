@@ -1,5 +1,4 @@
 // 📦 Internal imports
-import PersonalInformationPageWrapper from '~modules/pages/dashboard/account-management/personal-information/PersonalInformationPage.wrapper';
 import DevelopingPage from '~modules/layouts/dashboard/developing-page';
 
 // ⚙️ Functional component

@@ -6,9 +6,9 @@ import NewsPageWrapper from '~modules/pages/news/NewsPage.wrapper';
 import NewsPageContext from '~modules/pages/news/NewsPage.context';
 
 interface PropsT {
-  searchParams: {
+  searchParams: Promise<{
     [key: string]: string | undefined;
-  };
+  }>;
 }
 
 // ⚙️ Functional component
@@ -21,8 +21,15 @@ const NewsPage: React.FC<PropsT> = async ({ searchParams }) => {
     }
   }
 
+  const key = [
+    params.searchString ?? '',
+    params.language ?? '',
+    params.sources ?? '',
+    params.categories ?? '',
+  ].join('|');
+
   return (
-    <NewsPageContext urlParams={params}>
+    <NewsPageContext key={key} urlParams={params}>
       <NewsPageWrapper />
     </NewsPageContext>
   );

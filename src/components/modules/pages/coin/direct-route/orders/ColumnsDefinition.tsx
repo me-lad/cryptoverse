@@ -6,7 +6,7 @@ import { Column, ColumnDef } from '@tanstack/react-table';
 
 // 📦 Internal imports
 import { PriceCell } from '~core/global/TableColumnsPrerequisites';
-import { flexCenter } from '@/lib/styles/tw-custom';
+import { flexCenter } from '~styles/tw-custom';
 import { ArrowDownUp } from 'lucide-react';
 
 // 🧾 Table columns

@@ -25,7 +25,7 @@ const SigninPage = () => {
 
         {/* Signup page link */}
         <p className="mt-4 text-center max-[25em]:text-sm">
-          Don't have an account ?
+          {"Don't have an account ?"}
           <Link className="text-primary ml-2 font-medium" href={'/auth/signup'}>
             Sign up
           </Link>

@@ -72,7 +72,9 @@ class OtpModel {
   private attachHooks() {
     this.schema ||= this.createSchema();
     this.schema.pre('save', function (next) {
+      // @ts-expect-error
       if (this.usage && this.usage === 'ResetPassword') {
+        // @ts-expect-error
         this.expiresAt = new Date(Date.now() + minutesToMillisecond(6));
       }
       next();

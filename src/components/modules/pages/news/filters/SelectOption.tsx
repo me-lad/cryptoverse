@@ -7,8 +7,8 @@ import clsx from 'clsx';
 import Image from 'next/image';
 
 // 📦 Internal imports
-import type { SourceDataEntity } from '@/lib/types/api-generated/news/getNewsSources';
-import type { CategoryDataEntity } from '@/lib/types/api-generated/news/getNewsCategories';
+import type { SourceDataEntity } from '~types/api-generated/news/getNewsSources';
+import type { CategoryDataEntity } from '~types/api-generated/news/getNewsCategories';
 import { errorToast, infoToast } from '~vendors/react-toastify';
 import { NewsContext } from '../NewsPage.context';
 

@@ -8,7 +8,7 @@ import React from 'react';
 import Image from 'next/image';
 
 // 📦 Internal imports
-import type { SymbolT } from '@/lib/types/api-generated/coins/getTradingViewAvailableSymbols';
+import type { SymbolT } from '~types/api-generated/coins/getTradingViewAvailableSymbols';
 import SourcesLogo from './SourcesLogo';
 
 // 🧾 Local types

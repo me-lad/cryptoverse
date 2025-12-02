@@ -10,7 +10,7 @@ import {
 } from '~core/ui/shadcn/tooltip';
 
 // 📦 Internal imports
-import type { GetCoinData } from '@/lib/types/api-generated/coins/getCoinData';
+import type { GetCoinData } from '~types/api-generated/coins/getCoinData';
 import { flexBetween, flexCenter } from '~styles/tw-custom';
 import { Price } from '~core/global/formatters';
 

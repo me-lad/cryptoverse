@@ -1,4 +1,4 @@
-import type { GetMarketSentiment } from '@/lib/types/api-generated/coins/getMarketSentiment';
+import type { GetMarketSentiment } from '~types/api-generated/coins/getMarketSentiment';
 import { safeFetch } from '~helpers/safeFetch';
 
 export const getMarketSentiment = async () => {

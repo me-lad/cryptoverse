@@ -13,7 +13,7 @@ import clsx from 'clsx';
 import React, { useState } from 'react';
 
 // 📦 Internal imports
-import { GetCoinChartData } from '@/lib/types/api-generated/coins/getCoinChartData';
+import { GetCoinChartData } from '~types/api-generated/coins/getCoinChartData';
 import {
   chartReferences,
   chartReferencesLabels,

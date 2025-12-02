@@ -10,7 +10,7 @@ import Image from 'next/image';
 import React from 'react';
 
 // 📦 Internal imports
-import type { Coin } from '@/lib/types/api-generated/coins/getTrendingCoins';
+import type { Coin } from '~types/api-generated/coins/getTrendingCoins';
 import type { CoinEntity_Compare } from '~types/api-generated/shared';
 import { Percentage, Price } from '~core/global/formatters';
 

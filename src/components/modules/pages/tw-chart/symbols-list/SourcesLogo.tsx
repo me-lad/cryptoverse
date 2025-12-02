@@ -1,7 +1,7 @@
 // 📦 Third-Party imports
 import React from 'react';
 import Image from 'next/image';
-import { flexCenter } from '@/lib/styles/tw-custom';
+import { flexCenter } from '~styles/tw-custom';
 
 // 📦 Internal imports
 

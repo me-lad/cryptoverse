@@ -7,7 +7,7 @@ import clsx from 'clsx';
 
 // 📦 Internal imports
 import type { ShowSectionT } from './local';
-import { GetCoinOrders } from '@/lib/types/api-generated/coins/getCoinOrders';
+import { GetCoinOrders } from '~types/api-generated/coins/getCoinOrders';
 import AsksTable from './TableAsks.fn';
 import BidsTable from './TableBids.fn';
 import OrderTypeToggler from './OrderTypeToggler';

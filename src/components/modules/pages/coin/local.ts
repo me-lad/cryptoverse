@@ -1,5 +1,5 @@
 // 📦 Imports
-import type { GetCoinChartData } from '@/lib/types/api-generated/coins/getCoinChartData';
+import type { GetCoinChartData } from '~types/api-generated/coins/getCoinChartData';
 import { ChartConfig } from '~core/ui/shadcn/chart';
 
 // 🧾 Types

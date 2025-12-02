@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import Link from 'next/link';
 
 // 📦 Internal imports
-import type { NewsDataEntity } from '@/lib/types/api-generated/news/getLatestNews';
+import type { NewsDataEntity } from '~types/api-generated/news/getLatestNews';
 import { flexBetween, flexCenter } from '~styles/tw-custom';
 import { TimeAgo } from '~core/global/formatters';
 import { Skeleton } from '~core/ui/shadcn/skeleton';
@@ -103,17 +103,13 @@ const NewsListItem: React.FC<NewsDataEntity> = (props) => {
           className={`${flexBetween} mt-4 flex-nowrap overflow-hidden text-xs text-neutral-400 max-[34em]:flex-wrap max-[34em]:gap-2.5 sm:ml-[125px] sm:w-[calc(100%_-_125px)]`}
         >
           <div className="flex w-3/4 items-center max-[34em]:w-fit">
-            <p>CATEGORIES:</p>
-            <div className={flexCenter}>
-              {CATEGORY_DATA?.slice(0, 2).map((category) => (
-                <span
-                  key={category.ID}
-                  className="text-primary-400 border-neutral-400 px-1.5 font-semibold not-first:border-l"
-                >
-                  {category.NAME}
-                </span>
-              ))}
-            </div>
+            <p className="mr-1">CATEGORIES: </p>
+            <p className="text-primary-400 line-clamp-1 max-w-[70%] font-semibold">
+              {CATEGORY_DATA?.map(
+                (category, index) =>
+                  `${index !== 0 ? ' | ' : ''} ${category.NAME}`,
+              )}
+            </p>
           </div>
           <div className="flex w-1/4 items-center justify-end gap-2 max-[34em]:w-fit">
             <p className="text-sm">Sentiment:</p>

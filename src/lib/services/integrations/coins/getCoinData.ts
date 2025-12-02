@@ -1,4 +1,4 @@
-import type { GetCoinData } from '@/lib/types/api-generated/coins/getCoinData';
+import type { GetCoinData } from '~types/api-generated/coins/getCoinData';
 import { safeFetch } from '~helpers/safeFetch';
 import { minutesToMillisecond } from '~helpers/time';
 

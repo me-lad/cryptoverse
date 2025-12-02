@@ -96,7 +96,9 @@ class UserModel {
   private attachHooks() {
     this.schema ||= this.createSchema();
     this.schema.pre('save', async function () {
+      // @ts-expect-error
       if (!this.isVerified && !this.expiresAt) {
+        // @ts-expect-error
         this.expiresAt = new Date(Date.now() + hoursToMillisecond(24));
       }
     });
