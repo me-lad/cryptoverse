@@ -47,7 +47,7 @@ function TableBody<TData>({ table }: PropsT<TData>) {
     return (
       <TableBodyShadcn>
         {Array.from({ length: 10 }).map((_, index) => (
-          <TableRow className="mb-6 h-20" key={index}>
+          <TableRow className="mb-6 h-20 !bg-transparent" key={index}>
             <SkeltonTableRow />
           </TableRow>
         ))}
@@ -128,7 +128,7 @@ function TableBody<TData>({ table }: PropsT<TData>) {
   //   No data ui
   return (
     <TableBodyShadcn>
-      <TableRow>
+      <TableRow className="!bg-transparent">
         <TableCell
           colSpan={table.getAllColumns().length + 2}
           className="h-24 text-center text-lg"

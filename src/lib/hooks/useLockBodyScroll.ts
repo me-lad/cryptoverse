@@ -1,9 +1,12 @@
-import { useLayoutEffect } from 'react';
+import { useEffect } from 'react';
 
-export const useLockBodyScroll = (): void => {
-  useLayoutEffect(() => {
+export const useLockBodyScroll = (lock: boolean = true): void => {
+  useEffect(() => {
+    if (!lock) return;
+
     // 1. Getting page original overflow & scrollbar width
-    const scrollbarWidth = innerWidth - document.documentElement.scrollWidth;
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.scrollWidth;
     const originalStyle: string = window.getComputedStyle(
       document.documentElement,
     ).overflow;
@@ -13,11 +16,10 @@ export const useLockBodyScroll = (): void => {
     document.documentElement.style.overflow = 'hidden';
     document.documentElement.style.paddingRight = `${scrollbarWidth}px`;
 
-    // 3. Return the cleanup function that reset the page overflow by
-    //    parent component unmount
+    // 3. Return the cleanup function that resets the page overflow
     return () => {
       document.documentElement.style.overflow = originalStyle || 'auto';
       document.documentElement.style.paddingRight = '0';
     };
-  }, []);
+  }, [lock]);
 };

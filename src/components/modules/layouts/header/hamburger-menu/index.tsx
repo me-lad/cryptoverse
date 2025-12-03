@@ -11,6 +11,7 @@ import clsx from 'clsx';
 import { BlurWrapper } from '~core/ui/shared/overlays';
 import { flexBetween } from '~styles/tw-custom';
 import { NavLink } from '~core/global/NavLink';
+import { useLockBodyScroll } from '~hooks/useLockBodyScroll';
 import Logo from '../logo';
 import Currencies from '../currency/Currencies';
 
@@ -21,6 +22,8 @@ const HamburgerMenu = () => {
   const changeOpenState = () => {
     setIsOpen((prev) => !prev);
   };
+
+  useLockBodyScroll(isOpen);
 
   return (
     <div>
@@ -36,7 +39,7 @@ const HamburgerMenu = () => {
       >
         <div
           className={clsx(
-            'bg-background-lighter invisible fixed top-0 left-0 z-50 h-dvh w-[58dvw] -translate-x-96 rounded-r-sm p-5 transition-all duration-500 max-[33em]:w-[70dvw] max-[27.5em]:w-[95dvw]',
+            'bg-background-lighter invisible fixed top-0 left-0 z-50 h-dvh w-[58dvw] -translate-x-96 overflow-y-auto rounded-r-sm p-5 transition-all duration-500 max-[33em]:w-[70dvw] max-[27.5em]:w-[95dvw]',
             isOpen && 'visible translate-x-0',
           )}
         >

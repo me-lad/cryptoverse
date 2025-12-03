@@ -55,14 +55,18 @@ const SelectMenu: React.FC<PropsT> = (props) => {
 
   const checkFilterStatus = useCallback(
     (keys: [string, string], targetSelectId: SelectIDsT) => {
-      const targetSources = !params.searchString
+      const sourcesRaw = !params.searchString
         ? params.sources
         : (params.sources || '5').split(',').slice(-1);
+
       const list = {
-        sources: targetSources || [],
+        sources:
+          typeof sourcesRaw === 'string' ? sourcesRaw.split(',') : sourcesRaw,
         categories: params.categories?.split(',') || [],
         excludeCategories: params.excludeCategories?.split(',') || [],
       }[targetSelectId!];
+
+      if (!list) return false;
 
       return keys.filter(Boolean).some((key) => list.includes(key));
     },

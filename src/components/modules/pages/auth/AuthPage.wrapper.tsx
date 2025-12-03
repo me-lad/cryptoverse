@@ -40,8 +40,9 @@ const AuthPageWrapper: React.FC<PropsT> = ({
           className={clsx(
             'border-t-primary overflow-x-hidden rounded-md border border-t-2 border-neutral-800 bg-[rgba(0,0,0,0.15)] backdrop-brightness-105',
             'py-5 min-[27.5em]:py-8 min-[33em]:py-12',
+            '!no-scrollbar h-fit max-h-[95dvh]',
             'px-8 min-[27.5em]:px-12 min-[33em]:px-18 min-[36em]:px-24 md:px-36',
-            'h-fit w-fit max-w-[97.5%] min-[29em]:max-w-[95%] lg:max-w-4/6 xl:max-w-3/6',
+            'w-fit max-w-[97.5%] min-[29em]:max-w-[95%] lg:max-w-4/6 xl:max-w-3/6',
           )}
         >
           {/* Form heading */}
