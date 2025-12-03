@@ -3,16 +3,16 @@ import CoinPageWrapper from '~modules/pages/coin/direct-route/CoinPageWrapper';
 
 // 🧾 Local types
 interface PropsT {
-  params: { cid: string };
-  searchParams: {
+  params: Promise<{ cid: string }>;
+  searchParams: Promise<{
     [key: string]: string | undefined;
-  };
+  }>;
 }
 
 // ⚙️ Functional component
 const ParallelCoinPage = async ({ params, searchParams }: PropsT) => {
-  const { chartCycle } = searchParams;
-  const { cid } = params;
+  const { chartCycle } = await searchParams;
+  const { cid } = await params;
 
   const isCycleValid =
     chartCycle === '24h' ||

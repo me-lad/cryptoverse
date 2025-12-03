@@ -7,7 +7,6 @@ import FluidContainer from '../../FluidContainer';
 import { flexBetween } from '~styles/tw-custom';
 import { UserServices } from '~services/repositories/user';
 import { AuthServices } from '~services/repositories/auth';
-import { extractUsername } from '~helpers/generators';
 
 // ⚙️ Functional component
 const UserData = async () => {
@@ -19,6 +18,8 @@ const UserData = async () => {
     accessIdentifier || refreshIdentifier || '',
     'phoneNumber username createdAt email',
   );
+
+  if (!userData) return null;
 
   return (
     <FluidContainer className="mt-5" condense_title="Account Information">
@@ -35,27 +36,27 @@ const UserData = async () => {
       <div className="mt-5 flex flex-wrap items-center gap-x-14 gap-y-7">
         <div className="flex flex-col gap-2 font-medium *:last:tracking-wide *:last:opacity-70">
           <p>Username</p>
-          <p>{userData.username}</p>
+          <p>{userData?.username}</p>
         </div>
 
         <div className="flex flex-col gap-2 font-medium *:last:tracking-wide *:last:opacity-70">
           <p>Phone Number</p>
           <p>
-            {userData.phoneNumber.slice(0, 4)}{' '}
+            {userData?.phoneNumber.slice(0, 4)}{' '}
             <small className="text-xs">****</small>{' '}
-            {userData.phoneNumber.slice(8)}
+            {userData?.phoneNumber.slice(8)}
           </p>
         </div>
 
         <div className="flex flex-col gap-2 font-medium *:last:tracking-wide *:last:opacity-70">
           <p>Email Address</p>
-          <p>{userData.email || 'cryptoverse@gmail.com'}</p>
+          <p className="text-center">{userData?.email || '---'}</p>
         </div>
 
         <div className="hidden flex-col gap-2 font-medium *:last:tracking-wide *:last:opacity-70 xl:flex">
           <p>Account Registration Date</p>
           <p>
-            {new Date(userData.createdAt).toLocaleString('en-US', {
+            {new Date(userData?.createdAt).toLocaleString('en-US', {
               year: 'numeric',
               day: 'numeric',
               month: 'long',
