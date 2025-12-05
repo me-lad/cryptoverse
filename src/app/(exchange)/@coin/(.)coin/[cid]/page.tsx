@@ -9,8 +9,6 @@ interface PropsT {
   }>;
 }
 
-export const dynamic = 'force-dynamic';
-
 // ⚙️ Functional component
 const CoinPage = async ({ params, searchParams }: PropsT) => {
   const { chartCycle } = await searchParams;

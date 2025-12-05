@@ -45,7 +45,7 @@ const Language = () => {
                 src={`/svgs/news-page/${lang}.svg`}
                 fill
                 alt={languagesMap[lang]}
-                className="object-cover"
+                className="object-cover max-sm:brightness-[25%]"
               />
             </div>
             <div

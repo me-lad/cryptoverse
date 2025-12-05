@@ -54,7 +54,7 @@ const CoinsList: React.FC<PropsT> = ({ targetOrder }) => {
         ))
       ) : !favoriteCoins.length ? (
         <p
-          className={`${flexCenter} col-span-1 rounded-sm border text-lg font-semibold min-[35em]:col-span-2 xl:col-span-4`}
+          className={`${flexCenter} col-span-1 rounded-sm border text-center text-lg font-semibold min-[35em]:col-span-2 xl:col-span-4`}
         >
           Add some coins to your favorite list first.
         </p>

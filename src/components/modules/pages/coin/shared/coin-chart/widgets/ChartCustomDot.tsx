@@ -37,8 +37,8 @@ const CustomDot = ({ index, payload, ...props }: any) => {
   const priceLength = convertedPrice.length;
 
   if (screenWidth >= 420) {
-    if (priceLength <= 6) charWidth = 9;
-    else if (priceLength <= 10) charWidth = 8.5;
+    if (priceLength <= 6) charWidth = 10;
+    else if (priceLength <= 10) charWidth = 9.25;
     else charWidth = 6;
   } else {
     if (priceLength <= 6) charWidth = 8;

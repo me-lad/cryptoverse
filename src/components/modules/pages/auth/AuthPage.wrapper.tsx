@@ -69,7 +69,7 @@ const AuthPageWrapper: React.FC<PropsT> = ({
             {/* Title */}
             <h2
               className={clsx(
-                'mt-8 flex gap-x-2 text-2xl font-bold text-white max-[22.5em]:flex-col min-[33em]:text-3xl',
+                'mt-8 flex gap-x-2 text-2xl font-bold text-white max-[24em]:flex-col min-[33em]:text-3xl',
                 flexCenter,
               )}
             >

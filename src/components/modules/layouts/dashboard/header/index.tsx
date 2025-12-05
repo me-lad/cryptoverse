@@ -24,11 +24,11 @@ const DashboardHeader: React.FC<PropsT> = async ({ title }) => {
         </div>
 
         <div className="flex items-center gap-2.5 min-[28em]:gap-5">
-          <SidebarSettings />
-          <ThemeSwitcher />
-          <div className="max-[28em]:hidden">
-            <Profile />
+          <div className="max-lg:hidden">
+            <SidebarSettings />
           </div>
+          <ThemeSwitcher />
+          <Profile />
         </div>
       </div>
     </header>

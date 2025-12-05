@@ -76,7 +76,9 @@ const NewsListItem: React.FC<NewsDataEntity> = (props) => {
           <Link href={SOURCE_DATA.URL} className="text-status-warning-200">
             {SOURCE_DATA.NAME}
           </Link>
-          <TimeAgo publishedAt={PUBLISHED_ON * 1000} />
+          <div className="line-clamp-1">
+            <TimeAgo publishedAt={PUBLISHED_ON * 1000} />
+          </div>
         </div>
 
         {/* Title */}
