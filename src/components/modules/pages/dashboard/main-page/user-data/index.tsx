@@ -56,14 +56,15 @@ const UserData = async () => {
         <div className="hidden flex-col gap-2 font-medium *:last:tracking-wide *:last:opacity-70 xl:flex">
           <p>Account Registration Date</p>
           <p>
-            {new Date(userData?.createdAt).toLocaleString('en-US', {
-              year: 'numeric',
-              day: 'numeric',
-              month: 'long',
-              hour: '2-digit',
-              minute: '2-digit',
-              second: '2-digit',
-            })}
+            {!!userData?.createdAt &&
+              new Date(userData?.createdAt).toLocaleString('en-US', {
+                year: 'numeric',
+                day: 'numeric',
+                month: 'long',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+              })}
           </p>
         </div>
       </div>
