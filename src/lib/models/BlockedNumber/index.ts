@@ -6,7 +6,7 @@ import { BlockSourcesEnum, type BlockedNumberDocumentType } from './types';
 
 class BlockedNumberModel {
   private schema;
-  public model;
+  public model: Model<BlockedNumberDocumentType>;
 
   constructor() {
     this.schema = this.createSchema();

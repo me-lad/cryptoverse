@@ -17,13 +17,14 @@ import { SessionServices } from '~services/repositories/session';
 import { decrypt, encrypt } from '~helpers/token';
 import { getAccessTokenSecret, getRefreshTokenSecret } from '~helpers/token';
 import { verifyHash } from '~helpers/hash';
-import { setCookie, getCookie, deleteCookie } from '~helpers/cookies';
+import { setCookie, getCookie, getOrCreateDeviceId } from '~helpers/cookies';
 
 // 🧠 Session Creator
 const createUserSessions = async (
   username: string,
   remember?: 'on',
   calledInRouteHandler?: true,
+  deviceId?: string,
 ): Promise<SessionCreationResultT> => {
   try {
     await connectToDB();
@@ -31,12 +32,23 @@ const createUserSessions = async (
     const userData = await UserServices.getUserDataByIdentifier(username);
     if (!userData) return { success: false };
 
-    await SessionServices.deleteSession(userData.id);
+    if (!deviceId) {
+      deviceId = await getOrCreateDeviceId();
+    }
+
+    await SessionServices.deleteSession(deviceId);
+    await UserServices.removeSessionFromUserByDevice(userData.id, deviceId);
+
     const createdSession = await SessionServices.createSession(
-      userData.id,
+      userData._id as Schema.Types.ObjectId,
+      deviceId,
       userData.role,
       remember,
     );
+    if (!createUserSessions) {
+      await SessionServices.deleteSession(deviceId);
+      return { success: false };
+    }
 
     // Access Token
     const access_token = await encrypt(
@@ -45,8 +57,15 @@ const createUserSessions = async (
       getAccessTokenSecret(),
     );
     const access_token_exp = new Date(Date.now() + hoursToMillisecond(12));
-    if (!calledInRouteHandler)
+    if (!calledInRouteHandler) {
       await setCookie('access_token', access_token, access_token_exp);
+    }
+
+    await UserServices.addSessionToUser(
+      userData.id,
+      createdSession.id,
+      deviceId,
+    );
 
     if (remember) {
       // Refresh Token
@@ -56,14 +75,12 @@ const createUserSessions = async (
         getRefreshTokenSecret(),
       );
       const refresh_token_exp = new Date(Date.now() + daysToMillisecond(14));
-      if (!calledInRouteHandler)
+      if (!calledInRouteHandler) {
         await setCookie('refresh_token', refresh_token, refresh_token_exp);
+      }
 
-      await UserServices.updateUserSessionRelatedFields(
-        userData._id as Schema.Types.ObjectId,
-        refresh_token,
-        createdSession.id,
-      );
+      createdSession.refreshToken = refresh_token;
+      await createdSession.save();
       return {
         success: true,
         data: {
@@ -74,8 +91,6 @@ const createUserSessions = async (
         },
       };
     } else {
-      userData.sessionId = createdSession.id;
-      await userData.save();
       return {
         success: true,
         data: {
@@ -87,18 +102,6 @@ const createUserSessions = async (
   } catch (err) {
     return { success: false };
   }
-};
-
-const deleteUserSessions = async (userId: string) => {
-  const userData = await UserServices.getUserDataById(userId);
-  if (userData) {
-    userData.refreshToken = undefined;
-    userData.refreshTokenExpiresAt = new Date(Date.now() - 60_000);
-    await userData.save();
-  }
-  await deleteCookie('access_token');
-  await deleteCookie('refresh_token');
-  await SessionServices.deleteSession(userId);
 };
 
 // Data Access Layer
@@ -118,11 +121,18 @@ const verifyAccessSession =
       );
       if (!sessionData) return falsyReturn;
 
+      const deviceId = await getCookie('device_id');
+      if (!deviceId || deviceId !== sessionData.deviceId) return falsyReturn;
+
       const userData = await UserServices.getUserDataById(
         sessionData.userId.toString(),
       );
+      if (!userData) return falsyReturn;
 
-      if (!userData || userData.sessionId != sessionData.id) return falsyReturn;
+      const sessionExistenceInUserDocument = userData?.sessions?.find(
+        (s) => s.sessionId === sessionData.id && s.deviceId === deviceId,
+      );
+      if (!sessionExistenceInUserDocument) return falsyReturn;
 
       return {
         isAuthenticated: true,
@@ -150,6 +160,9 @@ const verifyRefreshSession =
       );
       if (!sessionData) return falsyReturn;
 
+      const deviceId = await getCookie('device_id');
+      if (deviceId !== sessionData.deviceId) return falsyReturn;
+
       const userData = await UserServices.getUserDataById(
         sessionData.userId.toString(),
       );
@@ -157,7 +170,7 @@ const verifyRefreshSession =
 
       const isRefreshSessionValid = verifyHash(
         cookie,
-        userData.refreshToken || '',
+        sessionData.refreshToken || '',
       );
       if (!isRefreshSessionValid) return falsyReturn;
 
@@ -173,7 +186,6 @@ const verifyRefreshSession =
 
 export const AuthServices = {
   createUserSessions,
-  deleteUserSessions,
   verifyAccessSession,
   verifyRefreshSession,
 } as const;

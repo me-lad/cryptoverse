@@ -1,6 +1,9 @@
 // 📌 Directives
 import 'server-only';
 
+// 📦 Third-Party imports
+import crypto from 'crypto';
+
 // 📦 Internal imports
 import type {
   OtpResendResultT,
@@ -21,7 +24,7 @@ import { AuthServices } from '~services/repositories/auth';
 const restrictionThresholds: number[] = [3, 6, 9, 10] as const;
 
 const buildRandomOtp = (length: number = 6): string => {
-  return Array.from({ length }, () => Math.floor(Math.random() * 10)).join('');
+  return crypto.randomInt(100_000, 999_999).toString();
 };
 
 // 🧠 Cache system

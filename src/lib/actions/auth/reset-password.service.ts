@@ -8,6 +8,7 @@ import { catchErrorFormState } from '~constants/form';
 import { connectToDB } from '~vendors/mongoose';
 import { Messages } from '~constants/messages';
 import { doHash } from '~helpers/hash';
+import { getCookie } from '~helpers/cookies';
 import { VerifyService } from './verify.service';
 import { UserServices } from '~services/repositories/user';
 import { OtpServices } from '~services/repositories/otp';
@@ -94,12 +95,12 @@ const doResetPassword = async (data: {
       };
     }
 
+    const deviceId = await getCookie('device_id');
+
     const hashedPassword = await doHash(data.password);
     userData.password = hashedPassword;
     userData.passwordChangedAt = new Date();
-    userData.refreshToken = undefined;
-    userData.refreshTokenExpiresAt = undefined;
-    userData.sessionId = undefined;
+    await UserServices.removeSessionFromUserByDevice(userData.id, deviceId);
     await userData.save();
 
     await SessionServices.deleteSession(userData.id);

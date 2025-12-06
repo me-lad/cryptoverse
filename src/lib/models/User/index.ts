@@ -9,7 +9,7 @@ import { connectToDB } from '~vendors/mongoose';
 
 class UserModel {
   private schema;
-  public model;
+  public model: Model<UserDocumentType>;
 
   constructor() {
     this.schema = this.createSchema();
@@ -68,15 +68,14 @@ class UserModel {
           type: Boolean,
           default: false,
         },
-        refreshToken: {
-          type: String,
-        },
-        refreshTokenExpiresAt: {
-          type: Date,
-        },
-        sessionId: {
-          type: Schema.Types.ObjectId,
-          ref: 'Session',
+        sessions: {
+          type: [
+            {
+              sessionId: { type: String, ref: 'Session' },
+              deviceId: { type: String },
+            },
+          ],
+          default: [],
         },
         expiresAt: {
           type: Date,

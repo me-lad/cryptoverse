@@ -1,11 +1,11 @@
-import mongoose, { Model } from "mongoose";
-import type { SessionDocumentType } from "./types";
-import { UserRolesEnum } from "../types";
-import { daysToMillisecond, hoursToMillisecond } from "~helpers/time";
+import mongoose, { Model } from 'mongoose';
+
+import type { SessionDocumentType } from './types';
+import { UserRolesEnum } from '../types';
 
 class SessionModel {
   private schema;
-  public model;
+  public model: Model<SessionDocumentType>;
 
   constructor() {
     this.schema = this.createSchema();
@@ -16,7 +16,7 @@ class SessionModel {
     this.schema ||= this.createSchema();
     return (
       (mongoose.models.Session as Model<SessionDocumentType>) ||
-      mongoose.model<SessionDocumentType>("Session", this.schema)
+      mongoose.model<SessionDocumentType>('Session', this.schema)
     );
   }
 
@@ -26,6 +26,11 @@ class SessionModel {
       {
         userId: {
           type: Schema.Types.ObjectId,
+          required: true,
+          index: true,
+        },
+        deviceId: {
+          type: String,
           required: true,
           unique: true,
           index: true,
@@ -38,6 +43,10 @@ class SessionModel {
         expiresAt: {
           type: Date,
           index: { expires: 0 },
+        },
+        refreshToken: {
+          type: String,
+          required: false,
         },
       },
       {

@@ -6,14 +6,12 @@ import mongoose, { Schema } from 'mongoose';
 
 // 📦 Internal imports
 import { connectToDB } from '~vendors/mongoose';
-import { doHash } from '~helpers/hash';
-import { daysToMillisecond } from '~helpers/time';
 import UserModel from '~models/User';
 
 // 🧠 Ensure DB is connected and model is initialized
 const initializeUserModel = async () => {
   await connectToDB();
-  if (!mongoose.models.Session) await UserModel.model.init();
+  if (!mongoose.models.User) await UserModel.model.init();
 };
 
 // 🔍 Get user by identifier
@@ -46,34 +44,47 @@ const createUser = async (data: any) => {
   return UserModel.model.create(data);
 };
 
-const updateUserSessionRelatedFields = async (
-  userId: Schema.Types.ObjectId,
-  refreshToken: string,
+const addSessionToUser = async (
+  userId: string,
   sessionDocumentId: string,
+  deviceId: string,
 ) => {
   try {
-    const hashedRefreshToken = await doHash(refreshToken);
-    const expDate = new Date(Date.now() + daysToMillisecond(14));
+    await initializeUserModel();
 
-    const result = await UserModel.model.findOneAndUpdate(
-      {
-        _id: userId,
-      },
-      {
-        $set: {
-          refreshToken: hashedRefreshToken,
-          refreshTokenExpiresAt: expDate,
-          sessionId: sessionDocumentId,
-        },
-      },
+    const sessionObj = { sessionId: sessionDocumentId, deviceId };
+
+    await UserModel.model.updateOne(
+      { _id: userId },
+      { $addToSet: { sessions: sessionObj } },
+      { new: true },
     );
-  } catch {}
+  } catch (err: any) {
+    console.log(err);
+  }
 };
+
+const removeSessionFromUserByDevice = async (
+  userId: string,
+  deviceId: string,
+) => {
+  await initializeUserModel();
+
+  await UserModel.model.updateOne(
+    { _id: userId },
+    { $pull: { sessions: { deviceId: String(deviceId) } } },
+  );
+};
+
+// Backwards compatibility alias
+const updateUserSessionRelatedFields = addSessionToUser;
 
 export const UserServices = {
   getUserDataByIdentifier,
   getUserDataById,
   countUsers,
   createUser,
+  addSessionToUser,
+  removeSessionFromUserByDevice,
   updateUserSessionRelatedFields,
 } as const;

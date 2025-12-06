@@ -12,9 +12,7 @@ export type UserModelType = {
   isVerified: boolean;
   isRestricted: boolean;
   favorites?: any[];
-  refreshToken?: string;
-  refreshTokenExpiresAt?: Date;
-  sessionId?: ObjectId;
+  sessions?: { sessionId: string; deviceId: string }[];
   passwordChangedAt?: Date;
   expiresAt?: Date;
   createdAt?: Date;

@@ -4,6 +4,7 @@ import { NextResponse } from 'next/server';
 // 📦 Internal imports
 import { AuthServices } from '~services/repositories/auth';
 import { UserServices } from '~services/repositories/user';
+import { getOrCreateDeviceId } from '~helpers/cookies';
 
 export async function POST(req: Request) {
   const { userId } = await req.json();
@@ -11,20 +12,28 @@ export async function POST(req: Request) {
   if (!userId) return NextResponse.json({ success: false });
 
   const userData = await UserServices.getUserDataById(userId);
+  const deviceId = await getOrCreateDeviceId(true);
   const creationResult = await AuthServices.createUserSessions(
     userData?.username || '',
     'on',
     true,
+    deviceId,
   );
   if (!creationResult.success) {
     const response = NextResponse.json({ success: false });
-    await AuthServices.deleteUserSessions(userId);
     response.cookies.delete('access_token');
     return response;
   }
 
   const response = NextResponse.json({ success: true });
   const isDev = process.env.NODE_ENV !== 'production';
+  response.cookies.set('device_id', deviceId, {
+    httpOnly: true,
+    secure: !isDev,
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 60 * 60 * 24 * 365,
+  });
   response.cookies.set('access_token', creationResult.data.access_token, {
     httpOnly: true,
     secure: !isDev,

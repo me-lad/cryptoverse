@@ -1,9 +1,9 @@
 import { connectToDB } from '~vendors/mongoose';
 import { AuthServices } from './auth';
+import { UserServices } from './user';
 import { Messages } from '~constants/messages';
+import { getCookie } from '~helpers/cookies';
 import SessionModel from '~models/Session';
-import OtpModel from '~models/Otp';
-import UserModel from '~models/User';
 
 export const doSignout = async () => {
   try {
@@ -17,20 +17,13 @@ export const doSignout = async () => {
     if (!accessReceivedId && !refreshReceivedId)
       throw new Error(Messages.Error.CatchHandler);
 
-    const id = accessReceivedId || refreshReceivedId;
-    const user = await UserModel.model.findOneAndUpdate(
-      { _id: id },
-      {
-        $unset: {
-          sessionId: '',
-          refreshToken: '',
-          refreshTokenExpiresAt: '',
-        },
-      },
-    );
+    const userId = accessReceivedId || refreshReceivedId;
+    const deviceId = await getCookie('device_id');
 
-    await OtpModel.model.deleteMany({ phoneNumber: user?.phoneNumber });
-    await SessionModel.model.deleteOne({ userId: id });
+    if (!userId || !deviceId) return null;
+
+    await UserServices.removeSessionFromUserByDevice(userId, deviceId);
+    await SessionModel.model.deleteOne({ userId });
 
     return true;
   } catch (err) {

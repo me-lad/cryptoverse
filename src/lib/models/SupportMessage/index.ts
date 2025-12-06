@@ -1,9 +1,9 @@
-import mongoose, { Model } from "mongoose";
-import type { SupportMessageDocumentType } from "./types";
+import mongoose, { Model } from 'mongoose';
+import type { SupportMessageDocumentType } from './types';
 
 class SupportMessageModel {
   private schema;
-  public model;
+  public model: Model<SupportMessageDocumentType>;
 
   constructor() {
     this.schema = this.createSchema();
@@ -14,7 +14,7 @@ class SupportMessageModel {
     this.schema ||= this.createSchema();
     return (
       (mongoose.models.SupportMessage as Model<SupportMessageDocumentType>) ||
-      mongoose.model<SupportMessageDocumentType>("SupportMessage", this.schema)
+      mongoose.model<SupportMessageDocumentType>('SupportMessage', this.schema)
     );
   }
 

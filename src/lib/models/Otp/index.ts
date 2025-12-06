@@ -10,7 +10,7 @@ import { minutesToMillisecond } from '~helpers/time';
 
 class OtpModel {
   private schema;
-  public model;
+  public model: Model<OtpDocumentType>;
   constructor() {
     this.schema = this.createSchema();
     this.attachHooks();

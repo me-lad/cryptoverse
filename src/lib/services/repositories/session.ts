@@ -2,7 +2,7 @@
 import 'server-only';
 
 // Package imports
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 // 📦 Internal imports
 import { connectToDB } from '~vendors/mongoose';
@@ -32,7 +32,8 @@ const getCurrentSessionById = async (id?: string) => {
 
 // 🆕 Create a new session
 const createSession = async (
-  id: string,
+  userId: Schema.Types.ObjectId,
+  deviceId: string,
   role: UserRolesType,
   remember?: 'on',
 ) => {
@@ -41,13 +42,13 @@ const createSession = async (
   const expTime = remember ? daysToMillisecond(14) : hoursToMillisecond(12);
   const expiresAt = new Date(Date.now() + expTime);
 
-  return SessionModel.model.create({ userId: id, role, expiresAt });
+  return SessionModel.model.create({ userId, deviceId, role, expiresAt });
 };
 
 // ❌ Delete session by user ID
-const deleteSession = async (userId: string) => {
+const deleteSession = async (deviceId: string) => {
   await initializeSessionModel();
-  await SessionModel.model.deleteOne({ userId });
+  await SessionModel.model.deleteOne({ deviceId });
 };
 
 export const SessionServices = {
