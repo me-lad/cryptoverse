@@ -80,7 +80,7 @@ const Profile: React.FC<PropsT> = ({ userData, signoutHandler }) => {
               Manage Account
             </Button>
           </Link>
-          <Link href={'/dashboard/account-management'}>
+          <Link href={'/dashboard/kyc'}>
             <Button
               variant={'ghost'}
               size={'lg'}
@@ -90,7 +90,7 @@ const Profile: React.FC<PropsT> = ({ userData, signoutHandler }) => {
               KYC Verification
             </Button>
           </Link>
-          <Link href={'/dashboard/account-management'}>
+          <Link href={'/dashboard/support'}>
             <Button
               variant={'ghost'}
               size={'lg'}
