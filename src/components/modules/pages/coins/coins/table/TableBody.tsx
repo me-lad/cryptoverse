@@ -129,13 +129,12 @@ function TableBody<TData>({ table }: PropsT<TData>) {
   return (
     <TableBodyShadcn>
       <TableRow className="!bg-transparent">
-        <TableCell
-          colSpan={table.getAllColumns().length + 2}
-          className="h-24 text-center text-lg"
-        >
-          {showFavorites
-            ? 'You have not added anything to your favorites list yet.'
-            : 'No results.'}
+        <TableCell colSpan={table.getAllColumns().length + 2} className="h-24">
+          <p className="text-center text-lg max-md:max-w-screen">
+            {showFavorites
+              ? 'You have not added anything to your favorites list yet.'
+              : 'No results.'}
+          </p>
         </TableCell>
       </TableRow>
     </TableBodyShadcn>

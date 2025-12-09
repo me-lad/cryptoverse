@@ -46,7 +46,7 @@ const ThemeSwitcher = () => {
                   width={24}
                   height={24}
                   alt="Theme Toggler"
-                  className={clsx(theme === 'light' && 'invert-[85]')}
+                  className={clsx(theme === 'light' && 'invert')}
                 />
               )}
             </Button>

@@ -3,12 +3,13 @@
 
 // 📦 Third-Party imports
 import { use } from 'react';
+import Image from 'next/image';
+import clsx from 'clsx';
 
 // 📦 Internal imports
 import type { NewsLanguagesT } from '~types/news';
 import { NewsContext } from '../NewsPage.context';
 import { containerDefault, flexCenter } from '~styles/tw-custom';
-import Image from 'next/image';
 
 // 🧾 Local variables
 const languagesMap: Record<string, string> = {
@@ -38,18 +39,22 @@ const Language = () => {
           <div
             key={lang}
             onClick={() => changeLanguage(lang.toUpperCase() as NewsLanguagesT)}
-            className="group relative h-52 w-1/4 cursor-pointer overflow-hidden rounded-sm border-2 max-xl:min-w-[17.5rem]"
+            className="group relative h-52 w-1/4 cursor-pointer overflow-hidden rounded-sm border max-xl:min-w-[17.5rem]"
           >
-            <div className="absolute inset-0 z-[1] h-full w-full">
+            <div className="group absolute inset-0 z-[1] h-full w-full">
               <Image
                 src={`/svgs/news-page/${lang}.svg`}
                 fill
                 alt={languagesMap[lang]}
-                className="object-cover max-sm:brightness-[25%]"
+                className="object-cover opacity-25 blur-xs transition-all group-hover:opacity-75 group-hover:blur-none"
               />
             </div>
             <div
-              className={`${flexCenter} absolute inset-0 z-[2] h-full w-full text-3xl font-medium backdrop-blur-xs backdrop-brightness-[25%] group-hover:backdrop-blur-none`}
+              className={clsx(
+                'absolute inset-0 z-[2] h-full w-full text-3xl font-medium group-hover:hidden',
+                flexCenter,
+                params.language?.toLowerCase() === lang && 'text-primary',
+              )}
             >
               {languagesMap[lang]}
             </div>

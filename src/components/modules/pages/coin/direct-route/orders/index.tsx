@@ -2,8 +2,9 @@
 import React from 'react';
 
 // 📦 Internal imports
+import type { GetCoinOrders } from '~types/api-generated/coins/getCoinOrders';
 import { getCoinOrders } from '~services/integrations/coins';
-import { CatchError } from '~core/ui/shared/typography';
+import { buildFakeOrderBookFromPrice } from '~helpers/generators';
 import TablesWrapper from './Tables.wrapper';
 
 // 🧾 Local types
@@ -14,7 +15,12 @@ interface PropsT {
 
 // ⚙️ Functional component
 const Orders: React.FC<PropsT> = async ({ coinSymbol, coinPrice }) => {
-  let orders = await getCoinOrders(coinSymbol);
+  const orders = await getCoinOrders(coinSymbol);
+  let fallbackOrders: GetCoinOrders;
+
+  if (!orders.success) {
+    fallbackOrders = buildFakeOrderBookFromPrice(coinPrice);
+  }
 
   return (
     <div className="bg-background-lighter relative h-full rounded-sm p-8">
@@ -24,7 +30,11 @@ const Orders: React.FC<PropsT> = async ({ coinSymbol, coinPrice }) => {
 
       <div>
         {!orders.success ? (
-          <CatchError />
+          <TablesWrapper
+            lastUpdateId={0}
+            asks={fallbackOrders!.asks}
+            bids={fallbackOrders!.bids}
+          />
         ) : (
           <TablesWrapper {...orders.result} />
         )}

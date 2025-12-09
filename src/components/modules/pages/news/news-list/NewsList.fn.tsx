@@ -38,17 +38,8 @@ const NewsListFn = () => {
     return <NewsLoading />;
   }
 
-  if (isError || !data?.success) {
-    return (
-      <CatchError
-        className="mt-20"
-        message={
-          (error?.message.includes('"type":1,') &&
-            'No article found with given filters or search string.') ||
-          ''
-        }
-      />
-    );
+  if (isError) {
+    return <CatchError className="mt-20" />;
   }
 
   return (

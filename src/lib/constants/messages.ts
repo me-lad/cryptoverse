@@ -33,7 +33,8 @@ export const Messages = {
       "You' ve been temporary limited due to high code request . Please wait.",
     VerificationIncorrectCode: 'The entered code is incorrect.',
     VerifyCodeExpire: 'The code has been expired. Please get a new one.',
-    VerifyCodeOverUse: 'This code is no longer valid due to excessive misuse.',
+    VerifyCodeOverUse:
+      'The code you have been received has no longer valid due to excessive misuse. please wait until you can get another code.',
     VerifyCodeLength: 'The verification code is 6 character length.',
   },
   Success: {

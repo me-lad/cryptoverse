@@ -35,14 +35,23 @@ const AuthPageWrapper: React.FC<PropsT> = ({
       </div>
 
       {/* Page content */}
-      <div className={clsx('relative z-[2] h-screen w-full', flexCenter)}>
+      <div
+        className={clsx(
+          'relative z-[2] min-h-screen w-full lg:py-5',
+          flexCenter,
+        )}
+      >
         <div
           className={clsx(
-            'border-t-primary overflow-x-hidden rounded-md border border-t-2 border-neutral-800 bg-[rgba(0,0,0,0.15)] backdrop-brightness-105',
-            'py-5 min-[27.5em]:py-8 min-[33em]:py-12',
-            '!no-scrollbar h-fit max-h-[95dvh]',
-            'px-8 min-[27.5em]:px-12 min-[33em]:px-18 min-[36em]:px-24 md:px-36',
-            'w-fit max-w-[97.5%] min-[29em]:max-w-[95%] lg:max-w-4/6 xl:max-w-3/6',
+            'border-t-primary border border-t-2 border-neutral-800 lg:rounded-md',
+
+            'w-screen max-lg:min-h-screen lg:w-[60dvw] xl:w-[45dvw]',
+
+            'p-5 sm:p-20',
+
+            'bg-[rgba(0,0,0,0.15)] lg:backdrop-blur-xs',
+
+            `${flexCenter} flex-col`,
           )}
         >
           {/* Form heading */}
@@ -91,12 +100,16 @@ const AuthPageWrapper: React.FC<PropsT> = ({
           {/* Form back button */}
           {backButtonVisibility && (
             <div className="absolute top-4 left-4">
-              <Button variant="outline" size="default">
-                <Link className="flex" href={backButtonPath || '/'}>
-                  <ChevronLeft />
+              <Link href={backButtonPath || '/'}>
+                <Button
+                  className="cursor-pointer !gap-1"
+                  variant="outline"
+                  size="default"
+                >
+                  <ChevronLeft className="mt-0.5" strokeWidth={2.5} />
                   <span>Back</span>
-                </Link>
-              </Button>
+                </Button>
+              </Link>
             </div>
           )}
 

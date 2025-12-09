@@ -27,36 +27,10 @@ const buildRandomOtp = (length: number = 6): string => {
   return crypto.randomInt(100_000, 999_999).toString();
 };
 
-// 🧠 Cache system
-interface CachedOtpStatusType {
-  value: OtpCheckerResultT;
-  expiresAt: number;
-}
-const otpStatusCache = new Map<string, CachedOtpStatusType>();
-
-function cleanExpiredCache() {
-  const now = Date.now();
-  for (const [key, { expiresAt }] of otpStatusCache.entries()) {
-    if (expiresAt <= now) {
-      otpStatusCache.delete(key);
-    }
-  }
-}
-
 // 🔍 Check OTP Status
 const checkUserOtpStatus = async (
   username: string,
 ): Promise<OtpCheckerResultT> => {
-  cleanExpiredCache();
-
-  const now = Date.now();
-  const cached = otpStatusCache.get(username);
-  if (cached && cached.expiresAt > now) {
-    return cached.value;
-  }
-
-  let result: OtpCheckerResultT;
-
   try {
     await connectToDB();
     const userData = await UserServices.getUserDataByIdentifier(username);
@@ -68,7 +42,7 @@ const checkUserOtpStatus = async (
     const validExistOtpData = await OtpServices.getValidOtp(phoneNumber);
 
     if (validExistOtpData) {
-      result = {
+      return {
         status: 'Waiting',
         referenceTime: validExistOtpData.createdAt!,
       };
@@ -79,7 +53,7 @@ const checkUserOtpStatus = async (
         if (recentOTPs === 10) {
           await BlockedNumberServices.blockNumber(phoneNumber);
           await userData.updateOne({ $set: { isRestricted: true } });
-          result = { status: 'Limited' };
+          return { status: 'Limited' };
         } else {
           const lastExpiredCode =
             await OtpServices.getLastExpiredOtp(phoneNumber);
@@ -88,7 +62,7 @@ const checkUserOtpStatus = async (
             lastExpiredCode?.expiresAt!,
             5,
           );
-          result = isRestrictionPassed
+          return isRestrictionPassed
             ? { status: 'Allowed' }
             : {
                 status: 'Waiting',
@@ -97,16 +71,9 @@ const checkUserOtpStatus = async (
               };
         }
       } else {
-        result = { status: 'Allowed' };
+        return { status: 'Allowed' };
       }
     }
-
-    otpStatusCache.set(username, {
-      value: result,
-      expiresAt: now + 60_000,
-    });
-
-    return result;
   } catch (err) {
     return { status: 'Error', message: Messages.Error.CatchHandler };
   }

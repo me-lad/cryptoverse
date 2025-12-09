@@ -16,7 +16,7 @@ const SidebarOpener = () => {
 
   return (
     <div onClick={openSidebar}>
-      <AlignJustify size={20} className="mt-1 mr-2.5 lg:hidden" />
+      <AlignJustify size={20} className="mt-1 mr-5 lg:hidden" />
     </div>
   );
 };

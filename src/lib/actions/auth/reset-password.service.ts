@@ -103,7 +103,7 @@ const doResetPassword = async (data: {
     await UserServices.removeSessionFromUserByDevice(userData.id, deviceId);
     await userData.save();
 
-    await SessionServices.deleteSession(userData.id);
+    await SessionServices.deleteAllSessions(userData.id);
     await OtpServices.deleteOTPs(userData.phoneNumber);
 
     return {

@@ -20,7 +20,7 @@ const DashboardHeader: React.FC<PropsT> = async ({ title }) => {
       <div className={`${flexBetween}`}>
         <div className="flex items-center">
           <SidebarOpener />
-          <h1 className="text-2xl font-semibold">{title}</h1>
+          <h1 className="line-clamp-1 pr-5 text-2xl font-semibold">{title}</h1>
         </div>
 
         <div className="flex items-center gap-2.5 min-[28em]:gap-5">

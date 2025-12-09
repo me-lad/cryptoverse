@@ -30,7 +30,7 @@ const NewsListUi: React.FC<PropsT> = ({ news }) => {
     <div className={`${containerDefault} mt-16`}>
       <div className="w-full">
         {news.length ? (
-          news.map((data, index) => <NewsListItem key={data.ID} {...data} />)
+          news.map((data) => <NewsListItem key={data.ID} {...data} />)
         ) : (
           <CatchError
             className="mt-20"

@@ -22,38 +22,10 @@ const CustomDot = ({ index, payload, ...props }: any) => {
 
   const color = isMax ? 'var(--chart-green-normal)' : 'var(--chart-red-normal)';
 
-  // >= 1024px → use Recharts width
-  // < 1024px  → full screen minus Tailwind padding (px-7 → 28px)
-  const chartWidth =
-    screenWidth >= 1024
-      ? props.width // ✔ desktop/tablet accurate
-      : screenWidth - 28; // ✔ mobile accurate
-
-  // Right-side detection
-  const isRightSide = props.cx > chartWidth * 0.5;
-
-  // Label positioning - calculate actual label width
-  let charWidth: number;
-  const priceLength = convertedPrice.length;
-
-  if (screenWidth >= 420) {
-    if (priceLength <= 6) charWidth = 10;
-    else if (priceLength <= 10) charWidth = 9.25;
-    else charWidth = 6;
-  } else {
-    if (priceLength <= 6) charWidth = 8;
-    else if (priceLength <= 10) charWidth = 7.5;
-    else charWidth = 5;
-  }
-
-  const labelWidth = convertedPrice.length * charWidth;
+  // SVG coordinate space: use cx directly; avoid screenWidth math for label placement
   const padding = 8;
-
-  const posX = isRightSide
-    ? props.cx - labelWidth - padding
-    : props.cx + padding;
-
-  const posY = props.cy + 5.5;
+  const isRightSide =
+    props.cx > (props.viewBox?.width ?? props.width ?? 0) * 0.5;
 
   // Clean text output
   const safeText = (() => {
@@ -62,6 +34,12 @@ const CustomDot = ({ index, payload, ...props }: any) => {
       ? sliced.slice(0, -1)
       : sliced;
   })();
+
+  const fontSize = screenWidth >= 420 ? 18 : 16;
+
+  // Position by anchoring instead of estimating label width
+  const labelX = isRightSide ? props.cx - padding : props.cx + padding;
+  const textAnchor = isRightSide ? 'end' : 'start';
 
   return (
     <g>
@@ -77,11 +55,13 @@ const CustomDot = ({ index, payload, ...props }: any) => {
 
       {isLabelNeed && (
         <text
-          x={posX}
-          y={posY}
-          fontSize={screenWidth >= 420 ? 18 : 16}
+          x={labelX}
+          y={props.cy}
+          fontSize={fontSize}
           fontWeight={600}
           fill={color}
+          textAnchor={textAnchor}
+          dominantBaseline="middle"
         >
           {safeText}
         </text>

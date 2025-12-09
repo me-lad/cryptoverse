@@ -58,6 +58,13 @@ const HamburgerMenu = () => {
           <nav className="mt-10 flex flex-col gap-y-5 border-b pb-10 text-lg">
             <NavLink
               className="before:bg-foreground relative pl-5 before:absolute before:top-0 before:bottom-0 before:left-0 before:m-auto before:h-1.5 before:w-1.5 before:rounded-full"
+              href="/"
+              activeClassName="bg-gradient-to-r rounded-sm  from-primary/50 via-primary/10 to-secondary opacity-100 from-1% via-5% to-150% before:hidden"
+            >
+              Home
+            </NavLink>
+            <NavLink
+              className="before:bg-foreground relative pl-5 before:absolute before:top-0 before:bottom-0 before:left-0 before:m-auto before:h-1.5 before:w-1.5 before:rounded-full"
               href="/coins"
               activeClassName="bg-gradient-to-r rounded-sm  from-primary/50 via-primary/10 to-secondary opacity-100 from-1% via-5% to-150% before:hidden"
             >

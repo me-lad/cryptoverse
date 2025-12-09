@@ -48,3 +48,13 @@
   );
   box-shadow: 0 0 6px #f6ba4788;
 }
+
+html.light .Toastify__toast {
+  background-color: var(--neutral-50);
+  color: var(--neutral-900);
+  box-shadow: 0 4px 12px oklch(100% 0 0 / 0.3);
+}
+
+html.light .Toastify__close-button {
+  color: var(--neutral-900);
+}

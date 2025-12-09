@@ -57,7 +57,7 @@ const TableBodyItem: React.FC<PropsT> = (props) => {
         />
         <span title={name}>{symbol}</span>
       </TableCell>
-      <TableCell className="min-w-max max-sm:px-5">
+      <TableCell className="min-w-max pr-10 max-sm:px-5">
         <Tooltip>
           <TooltipTrigger asChild>
             <Price

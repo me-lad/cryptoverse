@@ -3,7 +3,7 @@ import { AuthServices } from './auth';
 import { UserServices } from './user';
 import { Messages } from '~constants/messages';
 import { getCookie } from '~helpers/cookies';
-import SessionModel from '~models/Session';
+import { SessionServices } from './session';
 
 export const doSignout = async () => {
   try {
@@ -23,7 +23,7 @@ export const doSignout = async () => {
     if (!userId || !deviceId) return null;
 
     await UserServices.removeSessionFromUserByDevice(userId, deviceId);
-    await SessionModel.model.deleteOne({ userId });
+    await SessionServices.deleteSession(deviceId);
 
     return true;
   } catch (err) {

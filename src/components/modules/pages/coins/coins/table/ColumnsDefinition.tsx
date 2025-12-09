@@ -4,6 +4,11 @@
 // 📦 Third-Party imports
 import { useEffect, useState } from 'react';
 import { ColumnDef, Row } from '@tanstack/react-table';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~core/ui/shadcn/tooltip';
 import Image from 'next/image';
 
 // 📦 Internal imports
@@ -67,10 +72,23 @@ export const columns: ColumnDef<CoinEntity_Gecko>[] = [
             <h4 className="text-lg font-semibold">
               {row.original.symbol.toUpperCase()}
             </h4>
-            <p className="mt-0.5 text-sm text-neutral-400">
-              {row.original.id.slice(0, 1).toUpperCase() +
-                row.original.id.slice(1)}
-            </p>
+            <Tooltip>
+              <TooltipTrigger>
+                <p className="mt-0.5 pr-10 text-sm text-neutral-400">
+                  {row.original.id.slice(0, 1).toUpperCase() +
+                    row.original.id.slice(1, 12)}{' '}
+                  {row.original.id.length > 12 && '...'}
+                </p>
+              </TooltipTrigger>
+              {row.original.id.length > 12 && (
+                <TooltipContent>
+                  <p>
+                    {row.original.id.slice(0, 1).toUpperCase() +
+                      row.original.id.slice(1)}
+                  </p>
+                </TooltipContent>
+              )}
+            </Tooltip>
           </div>
         </div>
       );

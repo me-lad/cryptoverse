@@ -25,8 +25,8 @@ const ChartHeading: React.FC<PropsT> = (props) => {
   const { chartCycle, chartRef, coinName, children } = props;
 
   return (
-    <div className={`${flexBetween} max-[31em]:flex-col max-[31em]:gap-y-5`}>
-      <div className="*:max-[31em]:text-center">
+    <div className={`${flexBetween} max-[35em]:flex-col max-[35em]:gap-y-5`}>
+      <div className="*:max-[35em]:text-center">
         <h2 className="font-semibold md:text-xl">Historical Data</h2>
         <p className="mt-1.5 max-md:text-sm">
           Showing {coinName.toLowerCase()}{' '}

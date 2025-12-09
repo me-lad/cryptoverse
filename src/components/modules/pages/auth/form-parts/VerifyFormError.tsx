@@ -17,7 +17,7 @@ const VerifyFormError = () => {
   }, []);
 
   return (
-    <p className="text-status-error-200 mt-6 text-center text-xl font-bold tracking-wider">
+    <p className="text-status-error-200 mt-6 text-center text-xl font-bold sm:tracking-wider">
       {Messages.Error.VerificationPermanentLimit}
     </p>
   );

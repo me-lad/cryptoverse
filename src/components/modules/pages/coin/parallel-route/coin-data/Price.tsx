@@ -97,10 +97,10 @@ const Price: React.FC<GetCoinData> = ({ market_data, symbol }) => {
     <div
       className={`${flexCenter} mx-auto mt-8 w-[95%] gap-5 sm:w-fit *:md:text-xl`}
     >
-      <div className="flex items-center max-sm:flex-col max-sm:gap-y-2.5 sm:pl-10 md:gap-2">
+      <div className="flex items-center max-md:flex-col max-md:gap-y-2.5 md:gap-2 md:pl-10">
         <label
           htmlFor="calculate-price"
-          className="has-focus-visible:border-b-primary flex items-center rounded-sm border-2 border-neutral-600 px-4 max-md:scale-[0.8]"
+          className="has-focus-visible:border-b-primary flex items-center rounded-sm border-2 border-neutral-600 px-4"
         >
           <Pencil color="#ccc" size={20} />
           <Input
@@ -143,14 +143,14 @@ const Price: React.FC<GetCoinData> = ({ market_data, symbol }) => {
             +
           </Button>
         </label>
-        <div className={`${flexCenter} gap-2 max-sm:w-full`}>
-          <span className="ml-20 sm:ml-2">{symbol.toUpperCase()}</span>
+        <div className={`${flexCenter} gap-2 !text-lg max-md:w-full`}>
+          <span className="ml-[4.5rem] md:ml-2">{symbol.toUpperCase()}</span>
           <span> = </span>
           <Tooltip>
             <TooltipTrigger className="min-w-36">
               <PriceFormatter
                 price={price}
-                className="scale-100 opacity-100 transition-all duration-300 ease-in-out"
+                className="opacity-100 transition-all duration-300 ease-in-out"
                 shortenUnits
                 style={{ color: priceBg }}
               />

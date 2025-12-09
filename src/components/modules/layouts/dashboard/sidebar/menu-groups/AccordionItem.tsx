@@ -55,7 +55,7 @@ const AccordionItem: React.FC<DashboardSidebarMenuItemT> = (props) => {
             <TooltipTrigger asChild>
               {mounted && !!theme ? (
                 <Image
-                  className={clsx(theme === 'light' && 'invert-100')}
+                  className={clsx(theme === 'light' && 'invert')}
                   src={icon}
                   width={22}
                   height={22}

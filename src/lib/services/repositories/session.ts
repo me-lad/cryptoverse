@@ -45,10 +45,15 @@ const createSession = async (
   return SessionModel.model.create({ userId, deviceId, role, expiresAt });
 };
 
-// ❌ Delete session by user ID
+// ❌ Delete session
 const deleteSession = async (deviceId: string) => {
   await initializeSessionModel();
   await SessionModel.model.deleteOne({ deviceId });
+};
+
+const deleteAllSessions = async (userId: string) => {
+  await initializeSessionModel();
+  await SessionModel.model.deleteMany({ userId });
 };
 
 export const SessionServices = {
@@ -56,4 +61,5 @@ export const SessionServices = {
   getCurrentSessionByUserId,
   createSession,
   deleteSession,
+  deleteAllSessions,
 } as const;
