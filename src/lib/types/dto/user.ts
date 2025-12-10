@@ -1,6 +1,6 @@
 export interface HeaderReceivableUserDataT {
   profileImage: string;
-  fullName: string;
+  username: string;
   phoneNumber: string;
 }
 

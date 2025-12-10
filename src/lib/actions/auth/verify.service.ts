@@ -53,6 +53,7 @@ const checkUserOtpStatus = async (
         if (recentOTPs === 10) {
           await BlockedNumberServices.blockNumber(phoneNumber);
           await userData.updateOne({ $set: { isRestricted: true } });
+          await OtpServices.deleteOTPs(phoneNumber);
           return { status: 'Limited' };
         } else {
           const lastExpiredCode =

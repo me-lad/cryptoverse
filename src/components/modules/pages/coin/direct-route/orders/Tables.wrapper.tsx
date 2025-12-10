@@ -15,14 +15,14 @@ import OrderTypeToggler from './OrderTypeToggler';
 // ⚙️ Functional component
 const TablesWrapper: React.FC<GetCoinOrders> = (props) => {
   const { asks, bids } = props;
-  const [slicePoint, setSlicePoint] = useState(6);
+  const [slicePoint, setSlicePoint] = useState(7);
   const [whichToShow, setWhichToShow] = useState<ShowSectionT>('both');
 
   useEffect(() => {
     if (whichToShow !== 'both') {
       setSlicePoint(14);
     } else {
-      setSlicePoint(6);
+      setSlicePoint(7);
     }
   }, [whichToShow]);
 

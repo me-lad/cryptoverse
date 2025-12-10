@@ -51,11 +51,11 @@ const Profile: React.FC<PropsT> = ({ userData, signoutHandler }) => {
             </div>
           </div>
           <div>
-            <h2 className="font-semibold">Lucas Simon</h2>
+            <h2 className="font-semibold">{userData?.username}</h2>
             <p className="mt-1 text-xs opacity-80">
               {userData?.phoneNumber.slice(0, 4)}
-              <small className="mx-1">***</small>
-              {userData?.phoneNumber.slice(7)}
+              <small className="mx-1">****</small>
+              {userData?.phoneNumber.slice(8)}
             </p>
           </div>
         </div>

@@ -46,6 +46,8 @@ const AuthFormContext: React.FC<PropsT> = ({
     initialFormState,
   );
   const [verificationOtp, setVerificationOtp] = useState('');
+  const [isVerificationCodeIncorrect, setIsVerificationCodeIncorrect] =
+    useState(false);
   const [rpFormStep, setRPFormStep] = useState<ResetPasswordFormStepT>(
     resetPasswordFormStep,
   );
@@ -56,7 +58,12 @@ const AuthFormContext: React.FC<PropsT> = ({
         state,
         pending,
         activeForm: formType,
-        verifyForm: { otp: verificationOtp, setOtp: setVerificationOtp },
+        verifyForm: {
+          otp: verificationOtp,
+          setOtp: setVerificationOtp,
+          isCodeIncorrect: isVerificationCodeIncorrect,
+          setIsCodeIncorrect: setIsVerificationCodeIncorrect,
+        },
         resetPasswordForm: {
           formStep: rpFormStep,
           setFormStep: setRPFormStep,

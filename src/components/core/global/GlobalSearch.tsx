@@ -73,8 +73,11 @@ const GlobalSearchMenu: React.FC<PropsT> = ({ coinEvent }) => {
         <ul>
           {data.map((coin) => (
             <li key={coin.id} className="mt-5">
-              <a className={flexBetween} href={`/coin/${coin.id}`}>
-                <div className="min-[27.5emw-fit flex w-full items-center gap-4">
+              <a
+                className="grid grid-cols-2 items-center gap-x-20"
+                href={`/coin/${coin.id}`}
+              >
+                <div className="flex items-center gap-4">
                   <Image
                     src={coin.image}
                     width={30}
@@ -94,16 +97,12 @@ const GlobalSearchMenu: React.FC<PropsT> = ({ coinEvent }) => {
                     </p>
                   </div>
                 </div>
-                <div
-                  className={`hidden w-1/4 flex-col items-start justify-center min-[27.5em]:flex`}
-                >
-                  <div className={`${flexCenter} w-full flex-col`}>
-                    <Price className="w-full" price={coin.current_price} />
-                    <Percentage
-                      fontSize="0.7rem"
-                      percentage={coin.price_change_percentage_24h_in_currency}
-                    />
-                  </div>
+                <div className="hidden flex-col items-start justify-center min-[27.5em]:flex">
+                  <Price className="w-full" price={coin.current_price} />
+                  <Percentage
+                    fontSize="0.7rem"
+                    percentage={coin.price_change_percentage_24h_in_currency}
+                  />
                 </div>
               </a>
             </li>

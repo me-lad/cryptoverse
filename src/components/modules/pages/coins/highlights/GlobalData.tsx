@@ -45,8 +45,8 @@ const GlobalData = async () => {
         <div>
           <div className="flex items-end gap-2">
             Market Cap
-            <div className="max-[49em]:hidden max-md:flex">
-              <div className="flex items-center gap-2 max-[82.5em]:hidden max-xl:flex">
+            <div className="flex">
+              <div className="flex items-center gap-2">
                 <Percentage
                   percentage={change_percentage}
                   fontSize={'0.8rem'}
@@ -81,7 +81,7 @@ const GlobalData = async () => {
             </TooltipContent>
           </Tooltip>
         </div>
-        <div>
+        <div className="md:hidden">
           <Image
             src={'https://www.coingecko.com/total_market_cap.svg'}
             width={120}
@@ -113,7 +113,7 @@ const GlobalData = async () => {
             </TooltipContent>
           </Tooltip>
         </div>
-        <div>
+        <div className="md:hidden">
           <Image
             src={'https://www.coingecko.com/total_volume.svg'}
             width={120}

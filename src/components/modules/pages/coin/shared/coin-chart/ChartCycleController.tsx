@@ -57,7 +57,7 @@ const ChartCycleController: React.FC<PropsT> = (props) => {
   );
 
   return (
-    <div className={`${flexBetween} flex-wrap max-md:gap-y-2.5`}>
+    <div className={`${flexBetween} flex-wrap py-12 max-md:gap-y-2.5`}>
       {cycleEntities.map((entity, index) =>
         renderSource === 'DirectPage' ? (
           <a

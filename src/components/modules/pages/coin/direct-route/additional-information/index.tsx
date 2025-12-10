@@ -89,10 +89,11 @@ const CoinAdditionalInformation: React.FC<GetCoinData> = (props) => {
             <Price
               imageHeight={19}
               imageWidth={19}
-              className="border-r border-neutral-300 pr-2 text-sm"
+              className="text-xs min-[22em]:text-sm"
               price={atl.usd}
+              hideImage
             />
-            {timeFormatter(atl_date.usd)}
+            <small>( {timeFormatter(atl_date.usd)} )</small>
           </div>
         }
       />
@@ -103,10 +104,11 @@ const CoinAdditionalInformation: React.FC<GetCoinData> = (props) => {
             <Price
               imageHeight={19}
               imageWidth={19}
-              className="border-r border-neutral-300 pr-2 text-sm"
+              className="text-xs min-[22em]:text-sm"
+              hideImage
               price={ath.usd}
             />
-            {timeFormatter(ath_date.usd)}
+            <small>( {timeFormatter(ath_date.usd)} )</small>
           </div>
         }
       />

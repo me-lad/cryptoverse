@@ -30,7 +30,7 @@ const ChartsWrapper: React.FC<PropsT> = ({
     useState<ChartSourceT>('CryptoVerse');
 
   return (
-    <div className="bg-background-lighter relative rounded-sm p-8 max-[28em]:!px-4">
+    <div className="bg-background-lighter relative rounded-sm p-8 !pb-0 max-[28em]:!px-4">
       <SourceToggler
         source={selectedChartSource}
         changeSource={setSelectedChartSource}

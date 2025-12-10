@@ -87,7 +87,7 @@ const Card: React.FC<NewsDataEntity> = (props) => {
         </div>
 
         {/* Categories/Link */}
-        <div className={`${flexBetween} mt-6`}>
+        <div className={`${flexBetween} relative mt-6`}>
           <div className={`${flexCenter} !justify-start *:text-xs`}>
             <span className="min-w-fit">CATEGORIES :</span>
             <div className="grow">
@@ -101,7 +101,10 @@ const Card: React.FC<NewsDataEntity> = (props) => {
               ))}
             </div>
           </div>
-          <Link className="max-[25em]:relative max-[25em]:bottom-52" href={URL}>
+          <Link
+            className="max-[25em]:absolute max-[25em]:right-0 max-[25em]:bottom-52"
+            href={URL}
+          >
             <LucideLink size={18} />
           </Link>
         </div>

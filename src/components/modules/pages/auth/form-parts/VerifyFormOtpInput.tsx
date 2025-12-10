@@ -26,7 +26,7 @@ const VerifyFormOtpInput = () => {
   }, []);
 
   const {
-    verifyForm: { otp, setOtp },
+    verifyForm: { otp, setOtp, isCodeIncorrect, setIsCodeIncorrect },
   } = use(FormContext);
 
   const numberController = (value: string) => {
@@ -41,7 +41,10 @@ const VerifyFormOtpInput = () => {
       <InputOTP
         maxLength={6}
         value={otp}
-        onChange={(e) => numberController(e) && setOtp(e)}
+        onChange={(e) => {
+          numberController(e) && setOtp(e);
+          setIsCodeIncorrect && setIsCodeIncorrect(false);
+        }}
         name="code"
         id="otp-verify-input"
       >
@@ -52,6 +55,7 @@ const VerifyFormOtpInput = () => {
               className={clsx(
                 'data-[active=true]:border-primary !rounded-sm !border-0 !border-b-2 text-lg !ring-0 data-[active=true]:border-2',
                 'min-h-[38px] w-1/7 min-w-[38px] min-[25em]:min-h-[50px] min-[25em]:min-w-[50px] 2xl:min-w-[60px]',
+                isCodeIncorrect && '!border-status-error-200',
               )}
               index={index}
             />

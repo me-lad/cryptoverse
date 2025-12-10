@@ -26,6 +26,8 @@ export const NewsLoading = () => {
 
 // ⚙️ Functional component
 const NewsListUi: React.FC<PropsT> = ({ news }) => {
+  console.log(news);
+
   return (
     <div className={`${containerDefault} mt-16`}>
       <div className="w-full">

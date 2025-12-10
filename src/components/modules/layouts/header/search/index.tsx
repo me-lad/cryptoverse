@@ -26,9 +26,9 @@ export default function Search() {
 
       <DropDownMenu
         className={clsx(
-          '!no-scrollbar mt-7 max-h-96 w-max overflow-auto p-5',
-          'sm:min-w-96',
-          'max-sm:fixed max-sm:top-10 max-sm:right-0 max-sm:left-0 max-sm:mx-auto max-sm:w-[90vw] max-sm:translate-x-0',
+          '!no-scrollbar mt-7 max-h-96 w-max overflow-y-auto p-5',
+          'sm:w-[30rem]',
+          'max-md:fixed max-md:top-10 max-md:right-0 max-md:left-0 max-md:mx-auto max-md:w-[90dvw] max-md:translate-x-0',
         )}
       >
         <GlobalSearchMenu />

@@ -83,7 +83,7 @@ const Chart: React.FC<PropsT> = (props) => {
         <ChartFallback image={coinImage} />
       ) : (
         <ChartContainer
-          className="mt-4 h-92 w-full"
+          className="mt-4 h-max min-h-92 w-full"
           config={chartConfig}
           aria-label={`Chart showing ${chartRef} trends`}
           ref={chartContainerRef}

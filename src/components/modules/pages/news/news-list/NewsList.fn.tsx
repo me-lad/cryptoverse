@@ -15,7 +15,7 @@ import NewsListUi, { NewsLoading } from './NewsList.ui';
 // ⚙️ Functional component
 const NewsListFn = () => {
   const { data: contextData, params, actions } = use(NewsContext);
-  const { data, isLoading, isError, error } = useNewsQuery();
+  const { data, isLoading, isError } = useNewsQuery();
   const {
     scrollFetchTimes,
     isFetchingOnScroll,
@@ -25,8 +25,16 @@ const NewsListFn = () => {
   } = useInfiniteScroll();
 
   useEffect(() => {
+    if (!data?.success) {
+      if (params.searchString) {
+        actions?.setData('searchedNews', []);
+      } else {
+        actions?.setData('news', []);
+      }
+    }
+
     if (actions?.setData && data?.success) {
-      if (params.searchString && data.result?.Data) {
+      if (params.searchString) {
         actions.setData('searchedNews', data.result?.Data || []);
       } else {
         actions.setData('news', data.result?.Data || contextData.news);
@@ -45,11 +53,7 @@ const NewsListFn = () => {
   return (
     <>
       <NewsListUi
-        news={
-          contextData.searchedNews.length
-            ? contextData.searchedNews
-            : contextData.news
-        }
+        news={params.searchString ? contextData.searchedNews : contextData.news}
       />
       {!!scrollFetchTimes && !hasScrollFinished.current ? (
         <Button

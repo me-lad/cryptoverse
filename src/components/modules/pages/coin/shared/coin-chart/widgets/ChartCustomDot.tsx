@@ -29,10 +29,10 @@ const CustomDot = ({ index, payload, ...props }: any) => {
 
   // Clean text output
   const safeText = (() => {
-    const sliced = convertedPrice.toString().slice(0, 12);
-    return sliced.endsWith('.') || sliced.endsWith(',')
-      ? sliced.slice(0, -1)
-      : sliced;
+    const correctPart = convertedPrice.toString().split('.')[0];
+    return correctPart !== '0'
+      ? correctPart
+      : convertedPrice.toString().slice(0, 5);
   })();
 
   const fontSize = screenWidth >= 420 ? 18 : 16;

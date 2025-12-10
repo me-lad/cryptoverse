@@ -39,7 +39,7 @@ const AnimatedModal: React.FC<PropsT> = ({ children }) => {
 
       <div
         className={clsx(
-          'z-[51] overflow-x-hidden overflow-y-auto border border-neutral-700 bg-[#151515e6] p-7 py-11 transition-all duration-1000 ease-out *:transition-opacity *:duration-1000 *:ease-in sm:px-14 lg:rounded-sm',
+          'z-[51] overflow-x-hidden overflow-y-auto border border-neutral-700 bg-[#151515e6] px-6 pt-12 transition-all duration-1000 ease-out *:transition-opacity *:duration-1000 *:ease-in sm:px-[4.5rem] lg:rounded-sm',
           posCenter,
           hasMounted && !hasClosed
             ? 'max-lg:!no-scrollbar visible h-screen max-w-screen min-w-screen *:opacity-100 lg:h-[82%] lg:max-w-[72.5%] lg:min-w-[72.5%] xl:max-w-[65%] xl:min-w-[65%]'

@@ -13,7 +13,7 @@ import { errorToast, successToast } from '~vendors/react-toastify';
 // ⚙️ Functional component
 const FormResultHandler = () => {
   const router = useRouter();
-  const { state, activeForm, resetPasswordForm } = use(FormContext);
+  const { state, activeForm, resetPasswordForm, verifyForm } = use(FormContext);
 
   useEffect(() => {
     if (state.redirectNeed && state.toastNeed) {
@@ -46,6 +46,10 @@ const FormResultHandler = () => {
       const autoClose = state.toastMessage.length >= 100 ? 25000 : 10000;
 
       if (state.status === FormStatusKinds.Error) {
+        if (verifyForm?.setIsCodeIncorrect) {
+          verifyForm?.setIsCodeIncorrect(true);
+        }
+
         errorToast(state.toastMessage, { autoClose });
       } else {
         successToast(state.toastMessage, { autoClose });
