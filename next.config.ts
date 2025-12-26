@@ -69,6 +69,7 @@ const nextConfig: NextConfig = {
         hostname: 'data-api.coindesk.com',
       },
     ],
+    unoptimized: true,
   },
 };
 
