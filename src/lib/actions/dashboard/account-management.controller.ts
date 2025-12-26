@@ -142,11 +142,9 @@ export async function editAccount(
         };
       }
 
-      const deviceId = await getCookie('device_id');
-
       await userData?.updateOne({ $set: { username: sanitizedData.username } });
       await SessionServices.deleteAllSessions(userData.id);
-      await UserServices.removeSessionFromUserByDevice(userData.id, deviceId);
+      await UserServices.deleteAllSessions(userData.id);
       await deleteCookie('access_token');
       await deleteCookie('refresh_token');
 

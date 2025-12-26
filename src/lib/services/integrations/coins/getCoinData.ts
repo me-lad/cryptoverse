@@ -8,10 +8,6 @@ export const getCoinData = async (coinId: string) => {
   return await safeFetch<GetCoinData>(
     fetchUrl,
     'Something went wrong getting coin data.',
-    {
-      next: {
-        revalidate: minutesToMillisecond(2.5),
-      },
-    },
+    { next: { revalidate: minutesToMillisecond(2.5) } },
   );
 };

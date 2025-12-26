@@ -1,24 +1,22 @@
 // 📦 Third-Party imports
 import { NextResponse } from 'next/server';
-import fs from 'fs';
+import { put, del } from '@vercel/blob';
 import path from 'path';
 
 // 📦 Internal imports
 import UserModel from '~models/User';
 
-const UPLOAD_DIR = path.join(process.cwd(), 'uploads');
-
+// 🔹 Helper: delete old profile image from Blob
 async function deleteUserProfileImage(username: string) {
   const user = await UserModel.model.findOne({ username });
   if (!user || !user.profileImage) return;
 
-  const filename = path.basename(user.profileImage);
-  const filePath = path.join(UPLOAD_DIR, filename);
-
   try {
-    await fs.promises.unlink(filePath);
+    await del(user.profileImage, {
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+    });
   } catch (err) {
-    console.warn('File not found or already deleted:', filePath);
+    console.warn('Blob delete failed or not found:', user.profileImage);
   }
 
   await UserModel.model.updateOne(
@@ -28,12 +26,10 @@ async function deleteUserProfileImage(username: string) {
 }
 
 export async function POST(req: Request) {
-  // Extract file from request
   const formData = await req.formData();
   const img = formData.get('img') as File;
   const username = formData.get('identifier');
 
-  // Check file existence & being the FILE not String
   if (!img || !img.name || !username) {
     return NextResponse.json(
       { message: 'Please send required data.' },
@@ -63,24 +59,28 @@ export async function POST(req: Request) {
   const buffer = Buffer.from(await img.arrayBuffer());
   const safeName = path.basename(img.name).replace(/\s+/g, '_');
   const filename = `${Date.now()}-${Math.round(Math.random() * 1e9)}-${safeName}`;
-  const filePath = path.join(UPLOAD_DIR, filename);
 
   try {
     // 🔹 Delete old profile image if exists
     await deleteUserProfileImage(username as string);
 
-    await fs.promises.mkdir(UPLOAD_DIR, { recursive: true });
-    await fs.promises.writeFile(filePath, buffer);
+    // 🔹 Upload to Vercel Blob
+    const { url } = await put(filename, buffer, {
+      access: 'public',
+      contentType: img.type,
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      cacheControlMaxAge: 31536000,
+    });
 
-    // Store only the filename for portability
-    await UserModel.model.updateOne({ username }, { profileImage: filename });
+    // Store Blob URL in DB
+    await UserModel.model.updateOne({ username }, { profileImage: url });
 
     return NextResponse.json(
-      { message: 'File uploaded successfully :))' },
+      { message: 'File uploaded successfully :))', url },
       { status: 201 },
     );
   } catch (err) {
-    console.log(err);
+    console.error(err);
     return NextResponse.json(
       { message: 'Internal Server Error' },
       { status: 500 },
@@ -100,7 +100,6 @@ export async function DELETE(req: Request) {
       );
     }
 
-    // 🔹 Use the same helper function
     await deleteUserProfileImage(username);
 
     return NextResponse.json(

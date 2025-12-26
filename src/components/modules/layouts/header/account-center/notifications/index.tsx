@@ -109,7 +109,7 @@ const Notifications: React.FC<PropsT> = ({ userId }) => {
                   <span className="bg-primary mt-1 h-3 w-3 rounded-full"></span>
                   <h4 className="font-semibold">{n.title}</h4>
                 </div>
-                <p className="mt-2 line-clamp-1 text-sm opacity-90">
+                <p className="mt-2 line-clamp-2 text-sm opacity-90">
                   {n.description}
                 </p>
                 <p className="mt-2 text-sm opacity-90">

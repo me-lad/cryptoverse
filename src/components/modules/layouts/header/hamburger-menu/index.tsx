@@ -84,6 +84,13 @@ const HamburgerMenu = () => {
             >
               Support
             </NavLink>
+            <NavLink
+              className="before:bg-foreground relative pl-5 before:absolute before:top-0 before:bottom-0 before:left-0 before:m-auto before:h-1.5 before:w-1.5 before:rounded-full"
+              href="/tw-chart"
+              activeClassName="bg-gradient-to-r rounded-sm  from-primary/50 via-primary/10 to-secondary opacity-100 from-1% via-5% to-150% before:hidden"
+            >
+              Trading-View Chart
+            </NavLink>
           </nav>
 
           {/* Currency */}

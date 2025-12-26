@@ -85,7 +85,7 @@ const GlobalSearchMenu: React.FC<PropsT> = ({ coinEvent }) => {
                     alt={coin.name}
                     className="mix-blend-screen"
                   />
-                  <div className="max-[27.5em]:grow min-[27.5em]:w-2/3">
+                  <div className="max-[21em]:grow min-[21em]:w-2/3">
                     <h4 className="text-lg font-semibold">
                       {coin.symbol.toUpperCase()}
                     </h4>
@@ -97,7 +97,7 @@ const GlobalSearchMenu: React.FC<PropsT> = ({ coinEvent }) => {
                     </p>
                   </div>
                 </div>
-                <div className="hidden flex-col items-start justify-center min-[27.5em]:flex">
+                <div className="hidden flex-col items-start justify-center min-[21em]:flex">
                   <Price className="w-full" price={coin.current_price} />
                   <Percentage
                     fontSize="0.7rem"

@@ -4,7 +4,7 @@ import 'react-toastify/ReactToastify.css';
 const ReactToastify = () => {
   return (
     <ToastContainer
-      limit={5}
+      limit={3}
       position="top-left"
       autoClose={10000}
       hideProgressBar={false}

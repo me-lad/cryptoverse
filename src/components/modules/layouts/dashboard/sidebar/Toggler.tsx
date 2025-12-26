@@ -25,7 +25,9 @@ const SidebarToggler = () => {
       const ctrlKey = event.ctrlKey;
       const key = event.code;
 
-      if (key === 'KeyB' && ctrlKey) changeOpenState();
+      if (key === 'KeyB' && ctrlKey) {
+        changeOpenState();
+      }
     };
 
     if (typeof window !== 'undefined') {
@@ -33,7 +35,7 @@ const SidebarToggler = () => {
     }
 
     return () => window.removeEventListener('keyup', keyboardHandler);
-  }, []);
+  }, [flags.isOpen]);
 
   const changeOpenState = () => {
     const newState = !flags.isOpen;

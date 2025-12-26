@@ -128,7 +128,7 @@ const UploadProfileImage: React.FC<PropsT> = ({ profileImage, username }) => {
         </div>
         <div className="flex flex-col">
           <h4 className="text-base font-semibold">Photo</h4>
-          <p className="line-clamp-1 text-sm font-light opacity-75">
+          <p className="text-sm font-light opacity-75">
             Upload a profile picture to personalize your account and make it
             recognizable
           </p>
@@ -144,7 +144,7 @@ const UploadProfileImage: React.FC<PropsT> = ({ profileImage, username }) => {
               <div className="relative h-11/12 w-11/12 rounded-full">
                 <Image
                   className="rounded-full object-cover"
-                  src={`/api/uploads/${profileImage}`}
+                  src={profileImage}
                   fill
                   alt="Profile image"
                 />
@@ -163,9 +163,9 @@ const UploadProfileImage: React.FC<PropsT> = ({ profileImage, username }) => {
         )}
 
         <Button
-          className="min-w-20 cursor-pointer"
+          className="min-w-20 cursor-pointer text-white"
           size="sm"
-          variant="secondary"
+          variant={profileImage ? 'secondary' : 'default'}
           onClick={() => setUploaderStatus('visible')}
         >
           Upload
@@ -225,7 +225,7 @@ const UploadProfileImage: React.FC<PropsT> = ({ profileImage, username }) => {
                     )}
                     style={{ width: `${progress}%` }}
                   ></div>
-                  <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold text-white">
+                  <span className="absolute inset-0 flex items-center justify-center text-sm font-bold text-black">
                     {progress}%
                   </span>
                 </div>

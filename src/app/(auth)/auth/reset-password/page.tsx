@@ -12,6 +12,7 @@ import AuthPageWrapper from '~modules/pages/auth/AuthPage.wrapper';
 import AuthFormContext from '~modules/pages/auth/AuthForm.context';
 import ResetPasswordForm from '~modules/pages/auth/form-containers/ResetPasswordForm';
 import AuthVerifyFormErrorUnit from '~modules/pages/auth/form-parts/VerifyFormError';
+import { minutesToMillisecond } from '@/lib/helpers/time';
 
 // 🧾 Local types
 type PropsT = {
@@ -25,6 +26,7 @@ const ResetPasswordPage: React.FC<PropsT> = async ({ searchParams }) => {
   let { username } = await searchParams;
   let step: ResetPasswordFormStepT = '1';
   let showError = false;
+  let validOtpCreatedAt: Date | undefined = undefined;
 
   if (username) {
     // DB connection ensure
@@ -48,10 +50,11 @@ const ResetPasswordPage: React.FC<PropsT> = async ({ searchParams }) => {
 
     const validOtpData = await OtpServices.getValidOtp(userData.phoneNumber);
 
-    if (!validOtpData) {
+    if (!validOtpData || validOtpData.usageCount > 4) {
       return redirect('/auth/reset-password');
     }
 
+    validOtpCreatedAt = validOtpData.createdAt as Date;
     step = '2';
   }
 
@@ -70,7 +73,12 @@ const ResetPasswordPage: React.FC<PropsT> = async ({ searchParams }) => {
           formAction={resetPassword}
           resetPasswordFormStep={step}
         >
-          <ResetPasswordForm />
+          <ResetPasswordForm
+            expiresAt={
+              validOtpCreatedAt &&
+              new Date(validOtpCreatedAt?.getTime() + minutesToMillisecond(30))
+            }
+          />
 
           {/* Hidden username input */}
           <input type="hidden" name="username" value={username} />

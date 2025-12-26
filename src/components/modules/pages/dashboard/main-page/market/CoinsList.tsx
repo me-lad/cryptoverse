@@ -49,7 +49,7 @@ const CoinsList: React.FC<PropsT> = ({ targetOrder }) => {
   return (
     <div className="mt-8 grid min-h-[9.3rem] grid-cols-1 gap-2.5 min-[35em]:grid-cols-2 xl:grid-cols-4">
       {targetOrder !== 'favorite' ? (
-        coinsSymbolList[targetOrder]!.map((item) => (
+        coinsSymbolList[targetOrder]!.slice(0, 4).map((item) => (
           <ListRenderingItem key={item} symbol={item} />
         ))
       ) : !favoriteCoins.length ? (
@@ -60,7 +60,7 @@ const CoinsList: React.FC<PropsT> = ({ targetOrder }) => {
         </p>
       ) : (
         favoriteCoins
-          .slice(0, 3)
+          .slice(0, 4)
           .map((item) => (
             <ListRenderingItem key={item.id} symbol={item.symbol} />
           ))

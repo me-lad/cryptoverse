@@ -4,7 +4,7 @@
 // 📦 Third-Party imports
 import clsx from 'clsx';
 import Link from 'next/link';
-import React, { use } from 'react';
+import React, { use, useEffect } from 'react';
 import { flexRender, Table } from '@tanstack/react-table';
 import { Button } from '~core/ui/shadcn/button';
 import { Ellipsis, Link2 } from 'lucide-react';
@@ -42,8 +42,13 @@ function TableBody<TData>({ table }: PropsT<TData>) {
   const firstIndex = (params.page - 1) * params.perPage + 1;
   const hasMounted = useHasMounted();
 
+  useEffect(() => {
+    console.log('Favorites Fetching', isFetching);
+    console.log('Data Fetching', flags.isFetching);
+  }, [isFetching, flags.isFetching]);
+
   //   Loading ui
-  if (!hasMounted || flags?.isFetching || isFetching) {
+  if (!hasMounted || flags.isFetching || (isFetching && showFavorites)) {
     return (
       <TableBodyShadcn>
         {Array.from({ length: 10 }).map((_, index) => (

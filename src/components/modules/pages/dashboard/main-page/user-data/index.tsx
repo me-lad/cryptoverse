@@ -21,6 +21,21 @@ const UserData = async () => {
 
   if (!userData) return null;
 
+  const generateCreatedAt = () => {
+    if (!userData.createdAt) return '';
+    const date = new Date(userData.createdAt);
+
+    return new Intl.DateTimeFormat('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      timeZone: 'Asia/Tehran',
+    }).format(date);
+  };
+
   return (
     <FluidContainer className="mt-5" condense_title="Account Information">
       <div className={`${flexBetween}`}>
@@ -55,17 +70,7 @@ const UserData = async () => {
 
         <div className="hidden flex-col gap-2 font-medium *:last:tracking-wide *:last:opacity-70 xl:flex">
           <p>Account Registration Date</p>
-          <p>
-            {!!userData?.createdAt &&
-              new Date(userData?.createdAt).toLocaleString('en-US', {
-                year: 'numeric',
-                day: 'numeric',
-                month: 'long',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-              })}
-          </p>
+          <p>{generateCreatedAt()}</p>
         </div>
       </div>
     </FluidContainer>

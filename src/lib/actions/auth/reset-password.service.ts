@@ -77,9 +77,31 @@ const doResetPassword = async (data: {
     const userData = await UserServices.getUserDataByIdentifier(data.username);
     if (!userData) return catchErrorFormState;
 
+    if (!userData.isVerified) {
+      return {
+        status: 'Error',
+        toastNeed: true,
+        toastMessage:
+          'You should verify and signin to your account once to get able to change your password',
+        redirectNeed: true,
+        redirectPath: `/auth/verify?username=${userData.username}`,
+      };
+    }
+
     // 6. Find otp data
     const otpData = await OtpServices.getValidOtp(userData.phoneNumber);
     if (!otpData) return catchErrorFormState;
+
+    if (otpData.usageCount > 5) {
+      return {
+        status: 'Error',
+        toastNeed: true,
+        toastMessage:
+          'Your code has expired due to many unsuccessful verification. Please do the process again.',
+        redirectNeed: true,
+        redirectPath: '1',
+      };
+    }
 
     // 7. Check code existence
     if (data.code !== otpData.code) {
@@ -95,12 +117,10 @@ const doResetPassword = async (data: {
       };
     }
 
-    const deviceId = await getCookie('device_id');
-
     const hashedPassword = await doHash(data.password);
     userData.password = hashedPassword;
     userData.passwordChangedAt = new Date();
-    await UserServices.removeSessionFromUserByDevice(userData.id, deviceId);
+    await UserServices.deleteAllSessions(userData.id);
     await userData.save();
 
     await SessionServices.deleteAllSessions(userData.id);

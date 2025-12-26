@@ -14,6 +14,7 @@ import {
 import type { GetCoinChartData } from '~types/api-generated/coins/getCoinChartData';
 import type { GetCoinData } from '~types/api-generated/coins/getCoinData';
 import { buildCoinChartData } from '~helpers/generators';
+import { useLocalStorage } from '~hooks/useLocalStorage';
 import ChartHeading from './ChartHeading';
 import ChartDataRefSelect from './ChartDataRefSelect';
 import ChartCycleController from './ChartCycleController';
@@ -32,12 +33,17 @@ interface PropsT {
 // ⚙️ Functional component
 const CoinChartWrapper: React.FC<PropsT> = (props) => {
   const { chartData, coinData, chartCycle, renderSource } = props;
-  const [chartRef, setChartRef] = useState<keyof GetCoinChartData>('prices');
+  const [chartRef, setChartRef] = useLocalStorage<keyof GetCoinChartData>(
+    'coin_chart_reference',
+    'prices',
+  );
   const [formattedChartData, setFormattedChartData] = useState<
     FormattedChartDataT[]
   >([]);
 
   useEffect(() => {
+    if (!chartRef) return;
+
     const formattedData = buildCoinChartData(
       chartData,
       chartRef,
@@ -50,13 +56,13 @@ const CoinChartWrapper: React.FC<PropsT> = (props) => {
     <div className={clsx(renderSource === 'ParallelPage' && 'pt-8')}>
       {/* Heading */}
       <ChartHeading
-        chartRef={chartRef}
+        chartRef={chartRef || 'prices'}
         chartCycle={chartCycle}
         coinName={coinData.id}
         renderSource={renderSource}
       >
         <ChartDataRefSelect
-          chartRef={chartRef}
+          chartRef={chartRef || 'prices'}
           changeRefHandler={setChartRef}
           renderSource={renderSource}
         />
@@ -66,7 +72,7 @@ const CoinChartWrapper: React.FC<PropsT> = (props) => {
       <Suspense fallback={<ChartFallback image={coinData.image.large} />}>
         <Chart
           chartData={formattedChartData}
-          chartRef={chartRef}
+          chartRef={chartRef || 'prices'}
           coinImage={coinData.image.large}
           coinReferenceValues={{
             market_caps: coinData.market_data.market_cap.usd,
@@ -80,7 +86,7 @@ const CoinChartWrapper: React.FC<PropsT> = (props) => {
       <ChartCycleController
         coinData={coinData}
         chartCycle={chartCycle}
-        chartRef={chartRef}
+        chartRef={chartRef || 'prices'}
         renderSource={renderSource}
       />
     </div>

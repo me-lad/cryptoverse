@@ -32,7 +32,7 @@ interface PropsT {
 // ⚙️ Functional component
 const Profile: React.FC<PropsT> = ({ userData, signoutHandler }) => {
   const src = userData?.profileImage
-    ? `/api/uploads/${userData.profileImage}`
+    ? userData.profileImage
     : '/images/dashboard/avatar.png';
 
   return (

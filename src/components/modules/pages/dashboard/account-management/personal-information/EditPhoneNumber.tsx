@@ -25,7 +25,7 @@ const EditPhoneNumber: React.FC<PropsT> = ({ value }) => {
 
         <div className="flex flex-col">
           <h4 className="text-base font-semibold">Phone Number</h4>
-          <p className="line-clamp-1 text-sm font-light opacity-75">
+          <p className="text-sm font-light opacity-75">
             Your phone number helps secure your account with two-factor
             authentication
           </p>
@@ -33,7 +33,7 @@ const EditPhoneNumber: React.FC<PropsT> = ({ value }) => {
       </div>
 
       <div className="flex items-center gap-5 sm:max-w-2/5">
-        <p className="line-clamp-1">{value}</p>
+        <p>{value}</p>
         <Button
           className="min-w-20 cursor-pointer"
           variant={'secondary'}

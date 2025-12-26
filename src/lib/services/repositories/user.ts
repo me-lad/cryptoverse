@@ -78,6 +78,10 @@ const removeSessionFromUserByDevice = async (
   );
 };
 
+const deleteAllSessions = async (userId: string) => {
+  return UserModel.model.updateOne({ _id: userId }, { $set: { sessions: [] } });
+};
+
 const getUserNotifications = async (userId: string) => {
   const userData = await UserModel.model
     .findOne({ _id: userId })
@@ -108,4 +112,5 @@ export const UserServices = {
   removeSessionFromUserByDevice,
   updateUserSessionRelatedFields,
   deleteUserAccount,
+  deleteAllSessions,
 } as const;

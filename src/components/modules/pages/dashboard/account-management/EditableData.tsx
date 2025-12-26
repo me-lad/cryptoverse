@@ -13,6 +13,7 @@ import { Input } from '~core/ui/shadcn/input';
 import { Check, X } from 'lucide-react';
 import { editAccount } from '~actions/dashboard/account-management.controller';
 import { errorToast, infoToast, successToast } from '~vendors/react-toastify';
+import clsx from 'clsx';
 
 // 🧾 Local types
 interface PropsT {
@@ -67,73 +68,62 @@ const EditableData: React.FC<PropsT> = (props) => {
 
   return (
     <form action={action}>
-      <div className={`${flexBetween} flex-col gap-y-5 sm:flex-row`}>
-        <div className="flex items-center gap-2.5 sm:max-w-3/5">
+      <div className="grid grid-cols-12 max-sm:gap-y-10">
+        <div className="col-span-12 flex items-center gap-2.5 max-sm:justify-center sm:col-span-7">
           <div>{Icon}</div>
 
           <div className="flex flex-col">
             <h4 className="text-base font-semibold">{title}</h4>
-            <p className="line-clamp-1 text-sm font-light opacity-75">
-              {description}
-            </p>
+            <p className="text-sm font-light opacity-75">{description}</p>
           </div>
         </div>
 
-        {isEditing ? (
-          <div className="flex max-w-2/5 items-center gap-5">
-            <Input
-              placeholder={value || `Enter your ${title}`}
-              className="min-w-20 !rounded-sm !ring-0 max-md:placeholder:text-transparent md:min-w-40 lg:min-w-60"
-              name={name}
-            />
-
-            <input type="hidden" name="identifier" value={identifier} />
-
-            <div className="flex items-center">
-              <Button
-                className="cursor-pointer"
-                variant={'ghost'}
-                size={'icon'}
-                type="submit"
-              >
-                <Check />
-              </Button>
-              <Button
-                className="cursor-pointer"
-                variant={'ghost'}
-                size={'icon'}
-                onClick={changeIsEditing}
-              >
-                <X />
-              </Button>
-            </div>
-          </div>
-        ) : (
-          <>
-            {value ? (
-              <div className="flex items-center gap-5 sm:max-w-2/5">
-                <p className="line-clamp-1">{value}</p>
+        <div className="col-span-12 flex flex-wrap items-center justify-center gap-5 sm:col-span-5 sm:justify-end">
+          {isEditing ? (
+            <>
+              <Input
+                placeholder={value || `Enter your ${title}`}
+                className="!rounded-sm !ring-0"
+                name={name}
+                defaultValue={value}
+              />
+              <input type="hidden" name="identifier" value={identifier} />
+              <div className="flex items-center">
                 <Button
-                  className="min-w-20 cursor-pointer"
-                  variant={'secondary'}
-                  size={'sm'}
+                  className="cursor-pointer"
+                  variant={'ghost'}
+                  size={'icon'}
+                  type="submit"
+                >
+                  <Check />
+                </Button>
+                <Button
+                  className="cursor-pointer"
+                  variant={'ghost'}
+                  size={'icon'}
                   onClick={changeIsEditing}
                 >
-                  Edit
+                  <X />
                 </Button>
               </div>
-            ) : (
+            </>
+          ) : (
+            <>
+              {value && <p className="line-clamp-1 max-w-full">{value}</p>}
               <Button
-                className="min-w-20 cursor-pointer text-white"
-                variant={'default'}
+                className={clsx(
+                  'min-w-20 cursor-pointer !text-white',
+                  !value && '!bg-primary',
+                )}
+                variant={'secondary'}
                 size={'sm'}
                 onClick={changeIsEditing}
               >
-                Submit
+                {value ? 'Edit' : 'Submit'}
               </Button>
-            )}
-          </>
-        )}
+            </>
+          )}
+        </div>
       </div>
     </form>
   );

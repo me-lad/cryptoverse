@@ -75,7 +75,7 @@ class OtpModel {
       // @ts-expect-error
       if (this.usage && this.usage === 'ResetPassword') {
         // @ts-expect-error
-        this.expiresAt = new Date(Date.now() + minutesToMillisecond(10));
+        this.expiresAt = new Date(Date.now() + minutesToMillisecond(30));
       }
       next();
     });

@@ -29,6 +29,14 @@ const FormResultHandler = () => {
 
       if (
         activeForm === FormKinds.ResetPassword &&
+        state.status === FormStatusKinds.Error &&
+        state.redirectPath === '1'
+      ) {
+        resetPasswordForm.setFormStep(state.redirectPath);
+      }
+
+      if (
+        activeForm === FormKinds.ResetPassword &&
         state.status === FormStatusKinds.Success &&
         state.redirectPath === '2'
       ) {

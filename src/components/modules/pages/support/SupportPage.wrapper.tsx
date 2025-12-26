@@ -47,7 +47,7 @@ const SupportPageWrapper = () => {
             <div className="flex items-center justify-center max-sm:flex-col sm:gap-10">
               <div className="mt-4 flex items-center gap-2 text-neutral-300">
                 <Phone size={17} className="mt-0.5" />
-                <span className="tracking-wider">021-01020316</span>
+                <span className="tracking-wide">021-01020316</span>
               </div>
               <div className="mt-4 flex items-center gap-2 text-neutral-300">
                 <Mail size={17} className="mt-0.5" />

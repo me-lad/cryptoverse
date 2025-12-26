@@ -53,8 +53,10 @@ const ChartsWrapper: React.FC<PropsT> = ({
               {coinName.slice(0, 1).toUpperCase() + coinName.slice(1)}{' '}
               Historical Data
             </h2>
-            <div className="mt-8 h-[28.5rem] min-h-[28.5rem] overflow-hidden rounded-sm outline-1">
-              <TradingViewChart symbol={coinSymbol} theme="dark" />
+            <div className="py-8">
+              <div className="h-[28.5rem] min-h-[28.5rem] overflow-hidden rounded-sm outline-1">
+                <TradingViewChart symbol={coinSymbol} theme="dark" />
+              </div>
             </div>
           </Suspense>
         ) : (
