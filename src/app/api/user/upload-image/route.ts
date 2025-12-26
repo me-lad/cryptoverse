@@ -9,6 +9,8 @@ import { connectToDB } from '~vendors/mongoose';
 
 // 🔹 Helper: delete old profile image from Blob
 async function deleteUserProfileImage(username: string) {
+  await connectToDB();
+  await UserModel.model.init();
   const user = await UserModel.model.findOne({ username });
   if (!user || !user.profileImage) return;
 
