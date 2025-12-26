@@ -5,6 +5,7 @@ import path from 'path';
 
 // 📦 Internal imports
 import UserModel from '~models/User';
+import { connectToDB } from '~vendors/mongoose';
 
 // 🔹 Helper: delete old profile image from Blob
 async function deleteUserProfileImage(username: string) {
@@ -73,6 +74,8 @@ export async function POST(req: Request) {
     });
 
     // Store Blob URL in DB
+    await connectToDB();
+    await UserModel.model.init();
     await UserModel.model.updateOne({ username }, { profileImage: url });
 
     return NextResponse.json(
