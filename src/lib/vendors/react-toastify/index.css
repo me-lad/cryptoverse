@@ -7,11 +7,15 @@
   max-width: 36dvw;
   font-size: 1.1rem;
   padding: 20px 35px 20px 25px;
+}
 
-  @media screen and (max-width: 50em) {
-    max-width: 98%;
+@media screen and (max-width: 48em) {
+  .Toastify__toast {
+    width: 95dvw !important;
+    max-width: unset !important;
   }
 }
+
 .Toastify__close-button {
   color: var(--foreground);
   opacity: 0.7;

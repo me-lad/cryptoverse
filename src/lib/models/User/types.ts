@@ -1,5 +1,6 @@
-import { Document, ObjectId } from 'mongoose';
+import type { NotificationModelType } from '../Notification/types';
 import type { UserRolesType } from '../types';
+import { Document } from 'mongoose';
 
 export type UserModelType = {
   username: string;
@@ -13,6 +14,7 @@ export type UserModelType = {
   isRestricted: boolean;
   favorites?: any[];
   sessions?: { sessionId: string; deviceId: string }[];
+  notifications?: NotificationModelType[];
   passwordChangedAt?: Date;
   expiresAt?: Date;
   createdAt?: Date;

@@ -26,7 +26,7 @@ const UserData = async () => {
       <div className={`${flexBetween}`}>
         <h2 className="text-xl font-semibold">{userData.username}</h2>
         <Link
-          href={'/dashboard/account-management'}
+          href={'/dashboard/account-management/personal-information'}
           className="flex min-w-8 justify-end"
         >
           <PenSquare size={18} className="mt-1" />

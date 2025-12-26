@@ -8,6 +8,7 @@ import { Messages } from '~constants/messages';
 import { connectToDB } from '~vendors/mongoose';
 import { catchErrorFormState, FormStatusKinds } from '~constants/form';
 import { UserServices } from '~services/repositories/user';
+import { NotificationServices } from '~services/repositories/notification';
 import { doHash } from '~helpers/hash';
 
 const signupUser = async (
@@ -37,6 +38,9 @@ const signupUser = async (
 
     // 4. Create user in DB
     const createdUser = await UserServices.createUser(userData);
+    await NotificationServices.createDefaultRegistrationNotifications(
+      createdUser.id,
+    );
 
     // 5. Return appropriate result
     return {

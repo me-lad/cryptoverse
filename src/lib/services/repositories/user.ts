@@ -7,6 +7,8 @@ import mongoose, { Schema } from 'mongoose';
 // 📦 Internal imports
 import { connectToDB } from '~vendors/mongoose';
 import UserModel from '~models/User';
+import { SessionServices } from './session';
+import { NotificationServices } from './notification';
 
 // 🧠 Ensure DB is connected and model is initialized
 const initializeUserModel = async () => {
@@ -76,6 +78,23 @@ const removeSessionFromUserByDevice = async (
   );
 };
 
+const getUserNotifications = async (userId: string) => {
+  const userData = await UserModel.model
+    .findOne({ _id: userId })
+    .populate('notifications');
+
+  return userData ? userData.notifications : [];
+};
+
+const deleteUserAccount = async (username: string) => {
+  const deletedUser = await UserModel.model.findOneAndDelete({ username });
+  if (deletedUser) {
+    await SessionServices.deleteAllSessions(deletedUser.id);
+    await NotificationServices.deleteNotifications(deletedUser.id);
+  }
+  return deletedUser;
+};
+
 // Backwards compatibility alias
 const updateUserSessionRelatedFields = addSessionToUser;
 
@@ -84,7 +103,9 @@ export const UserServices = {
   getUserDataById,
   countUsers,
   createUser,
+  getUserNotifications,
   addSessionToUser,
   removeSessionFromUserByDevice,
   updateUserSessionRelatedFields,
+  deleteUserAccount,
 } as const;

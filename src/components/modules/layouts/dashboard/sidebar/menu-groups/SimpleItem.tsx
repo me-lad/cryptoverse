@@ -4,7 +4,7 @@
 // 📦 Third-Party imports
 import clsx from 'clsx';
 import Image from 'next/image';
-import React, { use } from 'react';
+import React, { use, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { Button } from '~core/ui/shadcn/button';
 import { useTheme } from 'next-themes';
@@ -66,6 +66,16 @@ const SimpleItem: React.FC<DashboardSidebarMenuItemT> = (props) => {
   const pathname = usePathname();
   const isContentActive = subItems?.find((item) => item.url === pathname);
 
+  const dropDownTrigger = useRef<null | HTMLButtonElement>(null);
+  const [dropDownMenuTop, setDropDownMenuTop] = useState(0);
+
+  const calculateDropDownMenuTop = () => {
+    if (!dropDownTrigger.current) return;
+    const rect = dropDownTrigger.current.getBoundingClientRect();
+
+    setDropDownMenuTop(+rect.top.toFixed());
+  };
+
   return (
     <>
       {url ? (
@@ -105,6 +115,8 @@ const SimpleItem: React.FC<DashboardSidebarMenuItemT> = (props) => {
                   'before:from-primary before:via-primary/10 before:to-secondary before:absolute before:left-0 before:-z-[2] before:h-full before:w-[100%] before:rounded-sm before:bg-gradient-to-r before:from-[8%] before:via-[8%] before:to-150% before:py-[1.1rem] before:opacity-100',
               )}
               variant={'ghost'}
+              ref={dropDownTrigger}
+              onClick={calculateDropDownMenuTop}
             >
               <Tooltip>
                 <InnerUi {...props} />
@@ -114,7 +126,8 @@ const SimpleItem: React.FC<DashboardSidebarMenuItemT> = (props) => {
 
           <DropDownMenu
             side="right"
-            className="!fixed !top-[18%] !right-0 !left-[8.5rem] z-50 ml-8 h-fit w-fit overflow-hidden !shadow-none"
+            className="!fixed !left-[150%] z-50 ml-8 h-fit w-max !min-w-[170px] overflow-hidden !shadow-none"
+            style={{ top: `${dropDownMenuTop}px` }}
           >
             <div className="border-b border-neutral-400 px-4 py-2 text-start text-sm dark:border-neutral-700">
               {title}

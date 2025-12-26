@@ -28,7 +28,7 @@ class UserModel {
 
   private createSchema() {
     const Schema = mongoose.Schema;
-    return new Schema<UserDocumentType>(
+    const userSchema = new Schema<UserDocumentType>(
       {
         username: {
           type: String,
@@ -90,6 +90,14 @@ class UserModel {
         toObject: { virtuals: true },
       },
     );
+
+    userSchema.virtual('notifications', {
+      ref: 'Notification',
+      localField: '_id',
+      foreignField: 'userId',
+    });
+
+    return userSchema;
   }
 
   private attachHooks() {

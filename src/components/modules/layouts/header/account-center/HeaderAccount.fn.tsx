@@ -42,8 +42,8 @@ export default function HeaderAccountFn() {
     queryFn: async () => {
       const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
       const query: HeaderReceivableUserDataQueryT =
-        'username profileImage phoneNumber';
-      const fetchUrl = `${baseUrl}/api/user/user-data?username=${username}&query=${query}`;
+        'username profileImage phoneNumber id';
+      const fetchUrl = `${baseUrl}/api/user/user-data?username=${username}&query=${query} id`;
       const resp = await fetch(fetchUrl);
       if (!resp.ok) throw new Error('User data fetch failed');
       return resp.json();

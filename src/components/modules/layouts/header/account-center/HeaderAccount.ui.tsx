@@ -26,7 +26,7 @@ export default function HeaderAccountUi({
     <>
       {isAuthenticated ? (
         <div className={`${flexCenter} ml-1 gap-4 pt-1`}>
-          <Notifications />
+          <Notifications userId={userData?.id || ''} />
 
           {/* Account center */}
           <Profile userData={userData} signoutHandler={signoutHandler} />

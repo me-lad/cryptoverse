@@ -4,3 +4,5 @@ export const flexBetween = 'flex justify-between items-center';
 
 export const containerDefault =
   'px-5 lg:px-0 w-full lg:w-[90%] xl:w-[86%] 2xl:w-[75%] mx-auto';
+
+export const accountManagementContainer = 'rounded-sm p-5 w-full bg-background';

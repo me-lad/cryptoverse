@@ -16,17 +16,17 @@ const coreMenuGroupItems: DashboardSidebarMenuItemT[] = [
     subItems: [
       {
         title: 'Assets',
-        url: '/dashboard/assets',
+        url: '/dashboard/wallet/assets',
       },
 
       {
         title: 'Deposit',
-        url: '/dashboard/deposit',
+        url: '/dashboard/wallet/deposit',
       },
 
       {
         title: 'Withdraw',
-        url: '/dashboard/withdraw',
+        url: '/dashboard/wallet/withdraw',
       },
     ],
   },
@@ -82,7 +82,27 @@ const settingsMenuGroupItems: DashboardSidebarMenuItemT[] = [
   {
     title: 'Account Management',
     icon: '/svgs/dashboard/icons/account-management.svg',
-    url: '/dashboard/account-management',
+    subItems: [
+      {
+        title: 'Personal Information',
+        url: '/dashboard/account-management/personal-information',
+      },
+
+      {
+        title: 'Security',
+        url: '/dashboard/account-management/security',
+      },
+
+      {
+        title: 'Trading',
+        url: '/dashboard/account-management/trading',
+      },
+
+      {
+        title: 'Notification',
+        url: '/dashboard/account-management/notification',
+      },
+    ],
   },
 
   {

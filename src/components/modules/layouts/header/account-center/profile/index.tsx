@@ -31,6 +31,10 @@ interface PropsT {
 
 // ⚙️ Functional component
 const Profile: React.FC<PropsT> = ({ userData, signoutHandler }) => {
+  const src = userData?.profileImage
+    ? `/api/uploads/${userData.profileImage}`
+    : '/images/dashboard/avatar.png';
+
   return (
     <DropDownAggregator overlay="dark">
       <DropDownTrigger>
@@ -39,17 +43,40 @@ const Profile: React.FC<PropsT> = ({ userData, signoutHandler }) => {
 
       <DropDownMenu className="mt-7 w-80 p-5 max-[37.5em]:-left-32 max-[22.5em]:fixed max-[22.5em]:top-10 max-[22.5em]:right-0 max-[22.5em]:left-0 max-[22.5em]:mx-auto max-[22.5em]:w-[19rem] max-[22.5em]:translate-x-0 lg:-left-28 xl:-left-20 2xl:left-1/2">
         <div className="flex items-center gap-4 border-b pb-5">
-          <div
-            className={`${flexCenter} bg-primary/25 h-[50px] w-[50px] rounded-full`}
-          >
-            <div className="relative h-11/12 w-11/12 rounded-full">
-              <Image
-                src={'/images/dashboard/avatar.png'}
-                fill
-                alt="Profile image"
-              />
+          {userData?.profileImage ? (
+            <div
+              className={`${flexCenter} bg-primary/25 h-[50px] w-[50px] rounded-full`}
+            >
+              <div className="relative h-11/12 w-11/12 rounded-full">
+                <Image
+                  className="rounded-full object-cover"
+                  src={src}
+                  fill
+                  alt="Profile image"
+                />
+              </div>
             </div>
-          </div>
+          ) : (
+            <div
+              className={`${flexCenter} border-foreground h-10 w-10 rounded-full border p-1`}
+            >
+              <svg
+                viewBox="0 0 16 16"
+                xmlns="http://www.w3.org/2000/svg"
+                className="fill-foreground"
+              >
+                <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path d="m 8 1 c -1.65625 0 -3 1.34375 -3 3 s 1.34375 3 3 3 s 3 -1.34375 3 -3 s -1.34375 -3 -3 -3 z m -1.5 7 c -2.492188 0 -4.5 2.007812 -4.5 4.5 v 0.5 c 0 1.109375 0.890625 2 2 2 h 8 c 1.109375 0 2 -0.890625 2 -2 v -0.5 c 0 -2.492188 -2.007812 -4.5 -4.5 -4.5 z m 0 0"></path>
+                </g>
+              </svg>
+            </div>
+          )}
           <div>
             <h2 className="font-semibold">{userData?.username}</h2>
             <p className="mt-1 text-xs opacity-80">
@@ -70,7 +97,7 @@ const Profile: React.FC<PropsT> = ({ userData, signoutHandler }) => {
               Dashboard
             </Button>
           </Link>
-          <Link href={'/dashboard/account-management'}>
+          <Link href={'/dashboard/account-management/personal-information'}>
             <Button
               variant={'ghost'}
               size={'lg'}

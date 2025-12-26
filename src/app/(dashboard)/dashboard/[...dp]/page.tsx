@@ -8,21 +8,23 @@ import ContentLayout from '~modules/layouts/dashboard/content-layout';
 
 // 🧾 Local types and variables
 interface PropsT {
-  params: Promise<{ dp: string }>;
+  params: Promise<{ dp: string | string[] }>;
 }
 
 const developingPages: { [key: string]: string } = {
   kyc: 'KYC Verification',
-  assets: 'Wallet / Assets',
-  deposit: 'Wallet / Deposit',
-  withdraw: 'Wallet / Withdraw',
+  'wallet/assets': 'Assets ',
+  'wallet/deposit': 'Deposit ',
+  'wallet/withdraw': 'Withdraw ',
   transactions: 'Transactions',
   'market-overview': 'Market Overview',
   'two-factor-auth': 'Two Factor Authentication',
   'device-management': 'Device Management',
   performance: 'Performance',
   'tax-reports': 'Tax Reports',
-  'account-management': 'Account Management',
+  'account-management/security': 'Security',
+  'account-management/trading': 'Trading',
+  'account-management/notification': 'Notification',
   support: 'Support & Help Center',
   notifications: 'Notification Center',
 };
@@ -31,9 +33,11 @@ const developingPages: { [key: string]: string } = {
 const Page = async ({ params }: PropsT) => {
   const { dp } = await params;
 
-  if (!developingPages?.[dp]) return redirect('/not-found');
+  const developingPage = typeof dp === 'string' ? dp : dp.join('/');
 
-  const title = developingPages[dp];
+  if (!developingPages?.[developingPage]) return redirect('/not-found');
+
+  const title = developingPages[developingPage];
 
   return (
     <>
