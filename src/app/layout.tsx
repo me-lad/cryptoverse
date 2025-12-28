@@ -17,10 +17,32 @@ import '../lib/vendors/react-toastify/index.css';
 
 // Metadata
 export const metadata: Metadata = {
-  title: 'Crypto Verse',
+  title: {
+    default: 'Crypto Verse',
+    template: '%s | Cryptoverse',
+  },
   icons: {
     icon: '/svgs/logo/logo.svg',
   },
+  openGraph: {
+    title: 'CryptoVerse',
+    description: 'Your gateway to live crypto prices and market insights.',
+    url: 'https://iesmaeili-cryptoverse.vercel.app/',
+    siteName: 'iesmaeili',
+    locale: 'en_US',
+    type: 'website',
+    images: [
+      {
+        url: 'https://vmpa66r4xpmzwbot.public.blob.vercel-storage.com/cryptoverse-home.png',
+        width: 1919,
+        height: 973,
+        alt: 'iesmaeili cryptoverse',
+      },
+    ],
+  },
+  keywords: ['CryptoVerse', 'iesmaeili', 'MohammadMahdi Esmaeili', 'Esmaeili'],
+  description:
+    'CryptoVerse is a modern cryptocurrency tracking platform that lets you explore live prices, market trends, and detailed coin insights in real time. Designed with a focus on speed, accessibility, and user experience, the project has been developed using Next.js to deliver a highly performant and scalable web application.',
 };
 
 // Fonts
