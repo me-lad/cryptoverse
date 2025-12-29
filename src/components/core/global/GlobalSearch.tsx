@@ -56,9 +56,9 @@ const GlobalSearchMenu: React.FC<PropsT> = ({ coinEvent }) => {
           ) : (
             <>
               <Image
-                src={'/svgs/header/search-magnifier.svg'}
-                width={65}
-                height={65}
+                src={'/images/header/search-magnifier.png'}
+                width={75}
+                height={75}
                 alt="search"
               />
               <p className="text-lg">
